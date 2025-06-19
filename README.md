@@ -1,6 +1,6 @@
 # ProjectVS 팀 프로젝트 
 
-Unity Version: 2022.3.61f1
+- Unity Version: 2022.3.61f1
 
 ## 컨벤션
 
@@ -24,7 +24,61 @@ Unity Version: 2022.3.61f1
 2. `dev` 브랜치 - 오전, 오후 작업한 것들을 머지하여 관리하는 브랜치치
 3. `담당자(이니셜)/기능 명 등` - 개발 중인 기능을 따로 브랜치로 관리한다. (담당중인 기능 이름/담당자(개발자 본인 영어 앞글자 스팰링만))
 
-## 코드 컨벤션
+### 코드 컨벤션
 프로젝트는 아래의 코드 컨벤션을 따라 작성됩니다. 
-https://learn.microsoft.com/ko-kr/dotnet/csharp/fundamentals/coding-style/identifier-names
-https://learn.microsoft.com/ko-kr/dotnet/csharp/fundamentals/coding-style/coding-conventions
+
+
+| 요소                    | 규칙                | 예시                                  |
+| --------------------- | ----------------- | ----------------------------------- |
+| **클래스 / 인터페이스**       | `PascalCase`      | `PlayerController`, `IGameService`  |
+| **메서드**               | `PascalCase`      | `StartGame()`, `GetData()`          |
+| **변수 / 필드 (private)** | `camelCase`       | `playerName`, `currentHealth`       |
+| **상수 / readonly 필드**  | `PascalCase`      | `MaxHealth`, `DefaultSpeed`         |
+| **이벤트**               | `PascalCase` + 동사 | `OnDamageTaken`, `PlayerDied`       |
+| **로컬 변수**             | `camelCase`       | `index`, `tempScore`                |
+| **enum 타입**           | `PascalCase`      | `PlayerState` / `Idle`, `Running` 등 |
+| **제네릭 타입 매개변수**       | `T` 접두어 사용        | `TEntity`, `TResult`                |
+
+private는 `_`로 시작해서 카멜 규칙을 적용해주시면 됩니다.
+
+> 링크: https://learn.microsoft.com/ko-kr/dotnet/csharp/fundamentals/coding-style/identifier-names
+
+<br><br>
+
+| 항목                 | 스타일                            | 예시                            |
+| ------------------ | ------------------------------ | ----------------------------- |
+| **중괄호 `{}`**       | 항상 새 줄에                        | `if ()\n{\n}`                 |
+| **들여쓰기**           | 공백 4칸                          | VS 기본 설정                      |
+| **공백 규칙**          | 연산자 양 옆 공백                     | `x = y + z;`                  |
+| **줄바꿈**            | 논리 단위로 구분                      | 함수 간 한 줄 띄움                   |
+| **파일 하나에 하나의 클래스** | 권장                             | `ClassA.cs`, `ClassB.cs` 따로   |
+| **`this.` 사용**     | 선택적 (모호할 때만)                   | `this.name = name;`           |
+| **접근제한자 순서**       | `public → protected → private` | 클래스/메서드/필드 모두 해당              |
+| **네임스페이스**         | PascalCase로                    | `namespace MyApp.Controllers` |
+
+> 링크: https://learn.microsoft.com/ko-kr/dotnet/csharp/fundamentals/coding-style/coding-conventions
+
+<br>
+
+### 추가 규칙
+- 네임 스페이스 규칙
+  - 폴더 이름에 따라서 처리 명명.
+  - 예시
+    ```text
+        Assets/
+        └── Scripts/
+            ├── Core/
+            │   └── Singleton/
+            ├── Game/
+            │   ├── Enemy/
+            │   └── Player/
+            └── UI/
+                ├── HUD/
+                └── Popup/
+    ```
+    - `프로젝트 이름`.`Core`.`Singleton`
+    - `프로젝트 이름`.`Game`.`Enemy`
+
+- 코루틴
+  - 변수 `Coroutine` => `currentCo` 변수 뒤, `Co`
+  - 함수 `IEnumerator` => `IE_Attack() { }` 함수 네임 앞 `IE_`
