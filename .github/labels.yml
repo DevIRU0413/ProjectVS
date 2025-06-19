@@ -1,4 +1,3 @@
-# Priority 라벨
 - name: Priority: Critical
   color: B60205
   description: 우선순위 긴급
@@ -15,7 +14,6 @@
   color: C2E0C6
   description: 우선순위 하
 
-# Status 라벨
 - name: Status: To Do
   color: F9D0C4
   description: 처리해야 되는 이슈
@@ -40,7 +38,6 @@
   color: E4E669
   description: 이미 보고된 이슈
 
-# Type 라벨
 - name: Type: Bugfix/Function
   color: B60205
   description: 정상 동작하지 않는 기능
