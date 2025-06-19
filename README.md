@@ -40,6 +40,7 @@
 | **제네릭 타입 매개변수**       | `T` 접두어 사용        | `TEntity`, `TResult`                |
 
 `private`는 `_`로 시작해서 카멜 규칙을 적용해주시면 됩니다.
+
 `상수 / readonly` 필드는 링크의 규칙을 따르지 않고 위의 표의 규칙을 따릅니다.
 
 > 링크: https://learn.microsoft.com/ko-kr/dotnet/csharp/fundamentals/coding-style/identifier-names
