@@ -77,7 +77,9 @@ namespace ProjectVS.Utils.UIManager
         {
             if (_uiPanels.TryGetValue(key, out GameObject panel))
             {
-                Enqueue(() => {
+
+                Enqueue(() =>
+                {
                     var uiBase = panel.GetComponent<UIBase>();
                     if (uiBase != null) uiBase.AnimateShow(OnAnimationComplete);
                     else { panel.SetActive(true); OnAnimationComplete(); }
@@ -109,7 +111,14 @@ namespace ProjectVS.Utils.UIManager
         {
             if (_uiPanels.TryGetValue(key, out GameObject panel))
             {
-                Enqueue(() => {
+                if (!panel.activeSelf)
+                {
+                    Debug.Log($"[UIManager] {panel.name}이 비활성화 되어있어 Hide 메서드 실행 건너뜀.");
+                    return;
+                }
+
+                Enqueue(() =>
+                {
                     var uiBase = panel.GetComponent<UIBase>();
                     if (uiBase != null) uiBase.AnimateHide(OnAnimationComplete);
                     else { panel.SetActive(false); OnAnimationComplete(); }
@@ -121,6 +130,13 @@ namespace ProjectVS.Utils.UIManager
         public void Hide(GameObject panel, string key = null)
         {
             if (panel == null) return;
+            if (!panel.activeSelf)
+            {
+                Debug.Log($"[UIManager] {panel.name}이 비활성화 되어있어 Hide 메서드 실행 건너뜀.");
+                return;
+            }
+
+
             string panelKey = key ?? panel.name;
 
             if (_uiPanels.ContainsKey(panelKey))
@@ -136,7 +152,8 @@ namespace ProjectVS.Utils.UIManager
             GameObject topPanel = _uiStack.Pop();
             GameObject previousPanel = _uiStack.Peek();
 
-            Enqueue(() => {
+            Enqueue(() =>
+            {
                 var topUI = topPanel.GetComponent<UIBase>();
                 var prevUI = previousPanel.GetComponent<UIBase>();
 
