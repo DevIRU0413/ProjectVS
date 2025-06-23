@@ -11,20 +11,25 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
     {
         public void OnClickNewButton()
         {
-            UIManager.Instance.Hide("Control File Panel");
+            //UIManager.Instance.Hide("Control File Panel");
             UIManager.Instance.Show("File Select Panel");
         }
 
         public void OnClickLoadButton()
         {
-            UIManager.Instance.Hide("Control File Panel");
+            //UIManager.Instance.Hide("Control File Panel");
             UIManager.Instance.Show("File Select Panel");
         }
 
         public void OnClickDeleteButton()
         {
-            UIManager.Instance.Hide("Control File Panel");
+            //UIManager.Instance.Hide("Control File Panel");
             UIManager.Instance.Show("File Select Panel");
+        }
+
+        public void OnClickESCButton()
+        {
+            UIManager.Instance.CloseTopPanel();
         }
     }
 }
