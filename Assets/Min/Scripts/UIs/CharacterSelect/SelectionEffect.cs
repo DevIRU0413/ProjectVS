@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using DG.Tweening;
 
 using ProjectVS.UIs.PanelBehaviours.CharacterIndicator;
@@ -44,7 +45,10 @@ namespace ProjectVS.UIs.CharacterSelect.SelectionEffect
 
         private void OnDisable()
         {
-            _characterIndicator.SetActive(false);
+            if (_characterIndicator != null)
+            {
+                _characterIndicator.SetActive(false);
+            }
         }
 
         private void Start()
