@@ -3,23 +3,25 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Area
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - HpDown
+  - HpUp
+  - SpeedUp
+  - PowerUp
+  - MagicAttackSpeed
+  - DefenseUp
+  - AxAttackSpeed
+  - SwordAttackSpeed
+  - Aera
   - 
   - 
   - 

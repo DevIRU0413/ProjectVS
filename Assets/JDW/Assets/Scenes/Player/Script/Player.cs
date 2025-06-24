@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,44 +16,44 @@ public class Player : MonoBehaviour
     {
         int layer = collision.gameObject.layer;
 
-        if(layer == LayerMask.NameToLayer("Monster"))
+        if(layer == LayerMask.NameToLayer("HpDown"))
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î Ã¼·Â °¨¼Ò");
+            Debug.Log("í”Œë ˆì´ì–´ ì²´ë ¥ ê°ì†Œ");
             Hp--;
         }
         if (layer == LayerMask.NameToLayer("HpUp"))
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î Ã¼·Â Áõ°¡");
+            Debug.Log("í”Œë ˆì´ì–´ ì²´ë ¥ ì¦ê°€");
             Hp ++;
         }
         if (layer == LayerMask.NameToLayer("SpeedUp"))
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î ¼Óµµ Áõ°¡");
+            Debug.Log("í”Œë ˆì´ì–´ ì†ë„ ì¦ê°€");
             MoveSpeed ++;
         }
         if (layer == LayerMask.NameToLayer("PowerUp"))
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î °ø°İ·Â Áõ°¡");
+            Debug.Log("í”Œë ˆì´ì–´ ê³µê²©ë ¥ ì¦ê°€");
             Power ++;
         }
         if (layer == LayerMask.NameToLayer("MagicAttackSpeed"))
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î ¸¶¹ı °ø°İ ¼Óµµ Áõ°¡");
+            Debug.Log("í”Œë ˆì´ì–´ ë§ˆë²• ê³µê²© ì†ë„ ì¦ê°€");
             MagicAttackSpeed -= 0.1f;
         }
         if (layer == LayerMask.NameToLayer("DefenseUp"))
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î ¹æ¾î·Â Áõ°¡");
+            Debug.Log("í”Œë ˆì´ì–´ ë°©ì–´ë ¥ ì¦ê°€");
             Defense++;
         }
         if (layer == LayerMask.NameToLayer("AxAttackSpeed"))
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î µµ³¢ °ø°İ ¼Óµµ Áõ°¡");
+            Debug.Log("í”Œë ˆì´ì–´ ë„ë¼ ê³µê²© ì†ë„ ì¦ê°€");
             AxAttackSpeed -= 0.1f;
         }
         if (layer == LayerMask.NameToLayer("SwordAttackSpeed"))
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î °Ë °ø°İ ¼Óµµ Áõ°¡");
+            Debug.Log("í”Œë ˆì´ì–´ ê²€ ê³µê²© ì†ë„ ì¦ê°€");
             SwordAttackSpeed -= 0.1f;
         }
     }
