@@ -56,5 +56,6 @@ public class Player : MonoBehaviour
             Debug.Log("플레이어 검 공격 속도 증가");
             SwordAttackSpeed -= 0.1f;
         }
+        
     }
 }

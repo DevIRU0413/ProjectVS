@@ -8,12 +8,18 @@ public class Timer : MonoBehaviour
     public float totalTime = 900f; //15분
     private float _currentTime;
 
+    public Transform storeSpawnPoint;
+
     public TextMeshProUGUI timerText; // TMP 사용
     public FadeManager fadeManager;
     private bool _isFading = false;
 
     public string bossTag = "Boss";
     public string storeTag = "Store";
+   
+    public GameObject BattleField;
+    public GameObject StoreField;
+    public GameObject player; // 이동시킬 플레이어
 
     private void Start()
     {
@@ -48,6 +54,7 @@ public class Timer : MonoBehaviour
         else
         {
             timerText.text = "00:00"; // 시간 종료시
+            // 시간 종료시 코루틴을 호출해 페이드 효과
             StartCoroutine(HandleFadeTransition());
         }
     }
@@ -55,7 +62,12 @@ public class Timer : MonoBehaviour
     {
         _isFading = true;
         yield return StartCoroutine(fadeManager.FadeOut());
-
+        BattleField.SetActive(false); // 페이드아웃 이후 배틀필드 오프
+        StoreField.SetActive(true); // 페이드인 이후 스토어필드 온
+        player.transform.position = storeSpawnPoint.position; // 스토어 중앙으로 이동
         yield return StartCoroutine(fadeManager.FadeIn());
+        _currentTime = totalTime; // 타이머 초기화
+        _isFading = false;
     }
+    
 }

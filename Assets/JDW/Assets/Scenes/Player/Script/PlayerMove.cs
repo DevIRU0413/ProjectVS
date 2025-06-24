@@ -9,6 +9,15 @@ public class PlayerMove : MonoBehaviour
     public Vector2 MoveInput;
     Animator anim;
     private Vector2? _blockedDirection = null;
+    public FadeManager fadeManager;
+    public Timer timer;
+    private bool _isFading = false;
+
+    public Transform battleSpawnPoint;
+
+    public GameObject BattleField;
+    public GameObject StoreField;
+    public GameObject player; // 이동시킬 플레이어
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -68,10 +77,31 @@ public class PlayerMove : MonoBehaviour
             Vector2 hitDirection = other.transform.position - transform.position;
             BlockDirection(hitDirection); // 장애물 오브젝트쪽 이동 방향 차단
         }
+        else if (other.CompareTag("Door"))
+        {
+            Debug.Log("상점을 나감");
+            StartCoroutine(HandleFadeTransition());
+        }
     }
     private void OnTriggerExit2D(Collider2D other) // 충돌 종료
     {
         if (other.CompareTag("Obstacle")) 
             ClearBlockedDirection();
+    }
+    private IEnumerator HandleFadeTransition()
+    {
+        _isFading = true;
+        yield return StartCoroutine(fadeManager.FadeOut());
+        timer.StoreField.SetActive(false); // 페이드인 이후 스토어필드 오프
+        timer.BattleField.SetActive(true); // 페이드아웃 이후 배틀필드 온
+        timer.BattleField.transform.position = new Vector3(0f, 0f, 1f); // 배틀필드의 위치를 초기화
+
+        Vector3 battlefieldCenter = timer.BattleField.transform.position;// 배틀필드 중앙으로 이동
+        timer.player.transform.position = battlefieldCenter;
+
+        yield return StartCoroutine(fadeManager.FadeIn());
+
+
+        _isFading = false;
     }
 }
