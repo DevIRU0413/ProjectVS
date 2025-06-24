@@ -1,43 +1,50 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
+    public bool isActive = true;
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // ¹ş¾î³­ Äİ¶óÀÌ´õ°¡ "Area" ÅÂ±×¸¦ °¡Áö°í ÀÖÁö ¾ÊÀ¸¸é ¾Æ¹« ÀÛ¾÷µµ ÇÏÁö ¾Ê°í Á¾·á
+        if (!isActive) return;
+
         if (!collision.CompareTag("Area"))
             return;
-        // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç À§Ä¡¸¦ °¡Á®¿È
+
+
+        // ë²—ì–´ë‚œ ì½œë¼ì´ë”ê°€ "Area" íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆì§€ ì•Šìœ¼ë©´ ì•„ë¬´ ì‘ì—…ë„ í•˜ì§€ ì•Šê³  ì¢…ë£Œ
+        if (!collision.CompareTag("Area"))
+            return;
+        // í”Œë ˆì´ì–´ì˜ í˜„ì¬ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜´
         Vector3 _playerPos = GameManager.instance._playerMove.transform.position;
-        // ÇöÀç ¿ÀºêÁ§Æ®ÀÇ À§Ä¡
+        // í˜„ì¬ ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜
         Vector3 _myPos = transform.position;
-        // ÇÃ·¹ÀÌ¾î À§Ä¡¿Í ¿ÀºêÁ§Æ® À§Ä¡ÀÇ x, y °Å¸® Â÷ÀÌ °è»ê
+        // í”Œë ˆì´ì–´ ìœ„ì¹˜ì™€ ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ì˜ x, y ê±°ë¦¬ ì°¨ì´ ê³„ì‚°
         float _diffx = Mathf.Abs(_playerPos.x - _myPos.x);
         float _diffy = Mathf.Abs(_playerPos.y - _myPos.y);
-        // ÇÃ·¹ÀÌ¾î°¡ ÀÔ·ÂÇÑ ¹æÇâ º¤ÅÍ
+        // í”Œë ˆì´ì–´ê°€ ì…ë ¥í•œ ë°©í–¥ ë²¡í„°
         Vector3 _playerDir = GameManager.instance._playerMove.MoveInput;
-        // xÃà ¹æÇâ : ¿ŞÂÊÀÌ¸é -1, ¾Æ´Ï¸é +1
+        // xì¶• ë°©í–¥ : ì™¼ìª½ì´ë©´ -1, ì•„ë‹ˆë©´ +1
         float _dirx = _playerDir.x < 0 ? -1 : 1;
-        // yÃà ¹æÇâ : ¾Æ·¡ÂÊÀÌ¸é -1 , ¾Æ´Ï¸é +1
+        // yì¶• ë°©í–¥ : ì•„ë˜ìª½ì´ë©´ -1 , ì•„ë‹ˆë©´ +1
         float _diry = _playerDir.y < 0 ? -1 : 1;
 
-        //ÇöÀç ¿ÀºêÁ§Æ®ÀÇ ÅÂ±×¿¡ µû¶ó Ã³¸® ºĞ±â
+        //í˜„ì¬ ì˜¤ë¸Œì íŠ¸ì˜ íƒœê·¸ì— ë”°ë¼ ì²˜ë¦¬ ë¶„ê¸°
         switch (transform.tag)
         {
             case "Ground":
-                // xÃà Â÷ÀÌ°¡ ´õ Å©¸é ÁÂ¿ì·Î ÀÌµ¿
+                // xì¶• ì°¨ì´ê°€ ë” í¬ë©´ ì¢Œìš°ë¡œ ì´ë™
                 if(_diffx > _diffy)
                 {
-                    // xÃà ¹æÇâÀ¸·Î 40¸¸Å­ ÀÌµ¿
-                    transform.Translate(Vector3.right * _dirx * 40);
+                    // xì¶• ë°©í–¥ìœ¼ë¡œ 40ë§Œí¼ ì´ë™
+                    transform.Translate(Vector3.right * _dirx * 80);
                 }
-                // yÃà Â÷ÀÌ°¡ ´õ Å©¸é »óÇÏ·Î ÀÌµ¿
+                // yì¶• ì°¨ì´ê°€ ë” í¬ë©´ ìƒí•˜ë¡œ ì´ë™
                 else if(_diffx < _diffy)
                 {
-                    // yÃà ¹æÇâÀ¸·Î 40¸¸Å­ ÀÌµ¿
-                    transform.Translate(Vector3.up * _diry * 40);
+                    // yì¶• ë°©í–¥ìœ¼ë¡œ 40ë§Œí¼ ì´ë™
+                    transform.Translate(Vector3.up * _diry * 80);
                 }
                 break;
             case "Enemy":
