@@ -1,29 +1,39 @@
 ﻿using PVS;
 
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 namespace ProjectVS.Monster.State
 {
     public class MonsterIdleState : MonsterState
     {
-        public MonsterIdleState(MonsterController controller) : base(controller) { }
+        private const int STATE_VALUE = (int)MonsterStateType.Idle;
+        private int _aniHashState = 0;
+
+        public MonsterIdleState(MonsterController controller, Animator animator) : base(controller, animator) { }
+        protected override void Init()
+        {
+            base.Init();
+            _aniHashState = Animator.StringToHash("State");
+        }
 
         public override void Enter()
         {
-            Debug.Log("Entered Idle State");
-            // 애니메이션 시작 처리
+            animator.SetInteger(_aniHashState, STATE_VALUE);
         }
 
-        public override void Exit()
-        {
-            Debug.Log("Exited Idle State");
-        }
+        public override void Exit() { }
 
         public override void Update()
         {
-            if (controller.Target != null)
+            // 거리 체크
+            if (controller.IsMove)
             {
                 controller.ChangeState(MonsterStateType.Move);
+            }
+            else if (controller.IsWin)
+            {
+                controller.ChangeState(MonsterStateType.Win);
             }
         }
     }
