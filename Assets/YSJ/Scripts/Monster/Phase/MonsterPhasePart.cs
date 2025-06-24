@@ -13,5 +13,8 @@ namespace ProjectVS.Phase
 
         [Range(0.0f, 1.0f)]
         public float Weight = 1f;
+
+        [Min(0.0f)]
+        public float AamageMultiplier = 1f;
     }
 }

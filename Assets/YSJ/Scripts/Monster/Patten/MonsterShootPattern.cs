@@ -4,6 +4,7 @@ using ProjectVS.Player;
 using ProjectVS.Phase;
 using PVS;
 using System.Collections.Generic;
+using ProjectVS.Manager;
 
 namespace ProjectVS.Monster.Pattern
 {
