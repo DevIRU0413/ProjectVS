@@ -33,6 +33,8 @@ namespace ProjectVS.UIs.UIBase
             transform.DOScale(1f, 0.3f)
                 .SetEase(Ease.OutBack)
                 .OnComplete(() => onComplete?.Invoke());
+
+            Debug.Log($"[UIBase] {gameObject.name}의 AnimateShow 호출 됨");
         }
 
         public virtual void AnimateHide(Action onComplete = null)
