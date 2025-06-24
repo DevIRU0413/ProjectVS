@@ -32,6 +32,7 @@ public class PlayerMove : MonoBehaviour
         //대각선 이동 속도 유지
         MoveInput.Normalize();
 
+        // 이동 애니메이션, 이동시 IsWalking을 ture로 바꿈
         bool IsWalking = MoveInput != Vector2.zero;
         anim.SetBool("IsWalking", IsWalking);
     }
