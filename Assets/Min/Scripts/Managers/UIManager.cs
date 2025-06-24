@@ -168,6 +168,43 @@ namespace ProjectVS.Utils.UIManager
             }, priority: 0);
         }
 
+
+        // 패널을 아예 닫아야될 때 사용하는 메서드
+        public void ForceCloseTopPanel()
+        {
+            if (_uiStack.Count == 0)
+            {
+                Debug.LogWarning("[UIManager] 스택에 패널이 없습니다");
+                return;
+            }
+
+            GameObject topPanel = _uiStack.Pop();
+            GameObject previousPanel = _uiStack.Count > 0 ? _uiStack.Peek() : null;
+
+            Enqueue(() =>
+            {
+                var topUI = topPanel.GetComponent<UIBase>();
+                var prevUI = previousPanel?.GetComponent<UIBase>();
+
+                void OnCloseComplete()
+                {
+                    if (previousPanel != null)
+                    {
+                        if (prevUI != null) prevUI.AnimateShow(OnAnimationComplete);
+                        else { previousPanel.SetActive(true); OnAnimationComplete(); }
+                    }
+                    else
+                    {
+                        OnAnimationComplete(); // 이전 패널이 없으면 그냥 끝
+                    }
+                }
+
+                if (topUI != null) topUI.AnimateHide(OnCloseComplete);
+                else { topPanel.SetActive(false); OnCloseComplete(); }
+            }, priority: 0);
+        }
+
+
         public void ShowAsFirst(string key)
         {
             if (_uiPanels.TryGetValue(key, out GameObject panel))
@@ -180,7 +217,8 @@ namespace ProjectVS.Utils.UIManager
             }
         }
 
-        public void HideAll()
+        // 씬 이동 시 호출해야될 메서드
+        public void ClearAll()
         {
             foreach (var panel in _uiPanels.Values)
             {
