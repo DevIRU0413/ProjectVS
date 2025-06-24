@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace Scripts.Util
+namespace ProjectVS.Util
 {
     public static class UnityUtilEx
     {
@@ -15,7 +15,7 @@ namespace Scripts.Util
             return comp;
         }
 
-        public static GameObject FindOrCreateGameObject(string name) 
+        public static GameObject FindOrCreateGameObject(string name)
         {
             GameObject go = GameObject.Find(name);
             if (go == null)
@@ -34,7 +34,7 @@ namespace Scripts.Util
                 if (obj == null) continue;
 
                 var target = obj;
-                if(condition(target) == false) continue;
+                if (condition(target) == false) continue;
 
                 float dist = Vector2.Distance(originPos, target.transform.position);
                 if (dist < minDist)

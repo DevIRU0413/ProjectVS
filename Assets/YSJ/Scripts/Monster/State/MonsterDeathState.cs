@@ -1,4 +1,4 @@
-﻿namespace PVS.Monster.State
+﻿namespace ProjectVS.Monster.State
 {
     public class MonsterDeathState : MonsterState
     {
@@ -8,9 +8,6 @@
 
         public override void Exit() { }
 
-        public override void Update()
-        {
-
-        }
+        public override void Update() { }
     }
 }

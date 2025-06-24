@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 
-using PVS.Player.State;
+using ProjectVS.Player.State;
+
+using PVS;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace PVS.Player
+namespace ProjectVS.Player
 {
     [RequireComponent(typeof(PlayerConfig))]
     public class PlayerController : MonoBehaviour

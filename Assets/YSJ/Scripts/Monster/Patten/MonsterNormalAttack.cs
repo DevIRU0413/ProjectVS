@@ -1,35 +1,31 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 
-using PVS.Player;
+using ProjectVS.Phase;
+using ProjectVS.Player;
 
-using Scripts.Util;
+using PVS;
 
 using Unity.VisualScripting;
 
 using UnityEngine;
 
-namespace PVS.Monster
+namespace ProjectVS.Monster.Pattern
 {
-    public class MonsterNormalAttack : MonsterPatten
+    public class MonsterNormalAttack : MonsterPattern
     {
         [Header("Target Search")]
         [SerializeField] private string _inputSearchTargetTag = "Player";
         [SerializeField] private Collider2D _searchCollider;
 
         [Header("Attack Info")]
-
-        [SerializeField]
-        [Min(0.0f)]
-        private float _damageMultiplier = 0.0f;
+        [SerializeField, Min(0.0f)] private float _damageMultiplier = 0.0f;
         [SerializeField] private GameObject _projectilePrefab;
         [SerializeField] private AudioClip _attackClip;
         [SerializeField] private AudioClip _attackCastClip;
 
-        private string _searchTargetTag;
-
-        private Collider2DAction _collider2DAction;
-        private PlayerController _target;
+        protected string _searchTargetTag;
+        protected PlayerController _target;
+        protected Collider2DAction _collider2DAction;
 
         public override void Init(MonsterPhaseController phaseController)
         {
@@ -47,7 +43,9 @@ namespace PVS.Monster
             _searchCollider.isTrigger = true;
             var circle = _searchCollider as CircleCollider2D;
             if (circle != null)
+            {
                 circle.radius = phaseController.OnwerController.Status.CurrentAtkRange;
+            }
 
             _collider2DAction = _searchCollider.GetOrAddComponent<Collider2DAction>();
 
@@ -65,36 +63,42 @@ namespace PVS.Monster
 
         protected override IEnumerator IE_PlayAction()
         {
-            // 선딜
             if (CastDelay > 0f)
+            {
                 yield return new WaitForSeconds(CastDelay);
+            }
 
-            // 실제 공격 처리
             if (_target != null)
             {
                 float damage = _phaseController.OnwerController.Status.CurrentAtk * _damageMultiplier;
 
                 if (_projectilePrefab == null)
+                {
                     PerformMeleeAttack(damage);
+                }
                 else
+                {
                     PerformRangedAttack(damage);
+                }
             }
 
-            // 후딜
             if (RecoveryTime > 0f)
+            {
                 yield return new WaitForSeconds(RecoveryTime);
+            }
 
-            // 종료
-            PattenState = MonsterPattenState.Done;
-            yield break;
+            PatternState = MonsterPatternState.Done;
         }
+
         private void AddTarget(Collider2D coll)
         {
             if (!coll.CompareTag(_searchTargetTag)) return;
 
             var pc = coll.GetComponentInParent<PlayerController>();
             if (pc != null)
+            {
                 _target = pc;
+            }
         }
 
         private void RemoveTarget(Collider2D coll)
@@ -103,7 +107,9 @@ namespace PVS.Monster
 
             var pc = coll.GetComponentInParent<PlayerController>();
             if (pc != null && pc == _target)
+            {
                 _target = null;
+            }
         }
 
         private void PerformMeleeAttack(float damage)
@@ -117,7 +123,7 @@ namespace PVS.Monster
 
         private void PerformRangedAttack(float damage)
         {
-            // 발사체 발사.
+            // 발사체 발사 예정
         }
     }
 }

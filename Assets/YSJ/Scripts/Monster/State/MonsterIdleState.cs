@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using PVS;
 
-namespace PVS.Monster.State
+using UnityEngine;
+
+namespace ProjectVS.Monster.State
 {
     public class MonsterIdleState : MonsterState
     {
@@ -19,9 +21,9 @@ namespace PVS.Monster.State
 
         public override void Update()
         {
-            if (_controller.Target != null)
+            if (controller.Target != null)
             {
-                _controller.ChangeState(MonsterStateType.Move);
+                controller.ChangeState(MonsterStateType.Move);
             }
         }
     }

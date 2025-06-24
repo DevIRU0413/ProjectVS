@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace PVS
+namespace ProjectVS
 {
     public class Collider2DAction : MonoBehaviour
     {

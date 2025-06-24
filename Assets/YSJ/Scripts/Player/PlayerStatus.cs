@@ -1,4 +1,4 @@
-﻿namespace PVS.Player
+﻿namespace ProjectVS.Player
 {
     public class PlayerStatus
     {

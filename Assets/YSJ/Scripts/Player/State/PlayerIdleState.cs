@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using PVS;
 
-namespace PVS.Player.State
+using UnityEngine;
+
+namespace ProjectVS.Player.State
 {
     public class PlayerIdleState : PlayerState
     {

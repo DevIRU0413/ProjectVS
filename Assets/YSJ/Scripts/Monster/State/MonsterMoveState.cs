@@ -1,24 +1,26 @@
-﻿using UnityEngine;
+﻿using PVS;
 
-namespace PVS.Monster.State
+using UnityEngine;
+
+namespace ProjectVS.Monster.State
 {
     public class MonsterMoveState : MonsterState
     {
         public MonsterMoveState(MonsterController controller) : base(controller) { }
 
-        private float m_moveSpeed;
+        private float _moveSpeed;
 
         public override void Enter()
         {
-            m_moveSpeed = _controller.Status.CurrentSpd;
+            _moveSpeed = controller.Status.CurrentSpd;
         }
 
         public override void Update()
         {
-            if (_controller.MoveDirection != Vector3.zero)
-                _controller.transform.Translate(m_moveSpeed * Time.deltaTime * _controller.MoveDirection);
+            if (controller.MoveDirection != Vector3.zero)
+                controller.transform.Translate(_moveSpeed * Time.deltaTime * controller.MoveDirection);
             else
-                _controller.ChangeState(MonsterStateType.Idle);
+                controller.ChangeState(MonsterStateType.Idle);
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 
-using PVS.Monster;
+using ProjectVS.Monster;
+using ProjectVS.Util;
 
-using Scripts.Util;
+using PVS;
 
 using UnityEngine;
 
-namespace PVS.Player
+namespace ProjectVS.Player
 {
     public class PlayerNormalAttack : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-﻿namespace PVS.Player.State
+﻿namespace ProjectVS.Player.State
 {
     public class PlayerDeathState : PlayerState
     {

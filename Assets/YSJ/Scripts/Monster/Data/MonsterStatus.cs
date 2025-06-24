@@ -1,4 +1,4 @@
-﻿namespace PVS.Monster
+﻿namespace ProjectVS.Monster.Data
 {
     public class MonsterStatus
     {

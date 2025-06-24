@@ -1,4 +1,4 @@
-﻿namespace PVS
+﻿namespace ProjectVS.Interface
 {
     public interface IStateLifecycle
     {

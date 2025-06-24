@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PVS.Player
+namespace ProjectVS.Player
 {
     // 외부 값 변경용
     public class PlayerConfig : MonoBehaviour

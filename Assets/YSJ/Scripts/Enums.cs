@@ -1,22 +1,25 @@
-﻿public enum PlayerStateType
+﻿namespace PVS
 {
-    Idle,
-    Move,
-    Death,
-}
+    public enum PlayerStateType
+    {
+        Idle,
+        Move,
+        Death,
+    }
 
-public enum MonsterStateType
-{
-    None,
-    Idle,
-    Move,
-    Win,
-    Death,
-}
+    public enum MonsterStateType
+    {
+        None,
+        Idle,
+        Move,
+        Win,
+        Death,
+    }
 
-public enum MonsterPattenState
-{
-    None,
-    Play,
-    Done,
+    public enum MonsterPatternState
+    {
+        None,
+        Play,
+        Done,
+    }
 }
