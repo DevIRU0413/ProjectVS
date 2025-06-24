@@ -1,6 +1,8 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
 public class AttackPosition : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class AttackPosition : MonoBehaviour
     [SerializeField] private GameObject _swordPerfab;
     [SerializeField] private GameObject _axPerfab;
     [SerializeField] private GameObject _bulletPerfab;
+    [SerializeField] private GameObject Store;
     [SerializeField] private Transform _muzzlePos;
     [SerializeField] private float _bulletTime;
     [SerializeField] private float _meleeAttack = 0.2f;
@@ -18,6 +21,7 @@ public class AttackPosition : MonoBehaviour
     private Vector3 _direction;
 
     private Coroutine _currentRoutine;
+    
 
 
 
@@ -30,10 +34,10 @@ public class AttackPosition : MonoBehaviour
     private void Update()
     {
         if (Player == null) return;
-        // ¸¶¿ì½º À§Ä¡¸¦ ¿ùµå±âÁØÀ¸·Î ÀüÈ¯
+        // ë§ˆìš°ìŠ¤ ìœ„ì¹˜ë¥¼ ì›”ë“œê¸°ì¤€ìœ¼ë¡œ ì „í™˜
         Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         _mouseWorldPos.z = 0f;
-        // ¹æÇâ¹éÅÍ °è»ê
+        // ë°©í–¥ë°±í„° ê³„ì‚°
         Vector3 _direction = (_mouseWorldPos - Player.position).normalized;
 
         Vector3 _ovjPos = Player.position + _direction * Radius;
@@ -42,29 +46,39 @@ public class AttackPosition : MonoBehaviour
 
         transform.right = _direction;
 
+        if (Store.activeSelf && _currentRoutine != null)
+        {
+            StopCoroutine(_currentRoutine);
+            _currentRoutine = null;
+            Debug.Log("Store í™œì„±í™” â†’ ì½”ë£¨í‹´ ì¤‘ë‹¨");
+        }
 
-        // Å×½ºÆ®¿ë ¹«±â ½ºÀ§Äª
+        // í…ŒìŠ¤íŠ¸ìš© ë¬´ê¸° ìŠ¤ìœ„ì¹­
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Debug.Log("¸¶¹ı°ø°İ");
+            if (Store.activeSelf) return;
+            Debug.Log("ë§ˆë²•ê³µê²©");
             SwitchCoroutine(Fire());
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Debug.Log("µµ³¢°ø°İ");
+            if (Store.activeSelf) return;
+            Debug.Log("ë„ë¼ê³µê²©");
             SwitchCoroutine(Ax());
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Debug.Log("°Ë°ø°İ");
+            if (Store.activeSelf) return;
+            Debug.Log("ê²€ê³µê²©");
             SwitchCoroutine(Sword());
         }
 
+       
 
     }
     private void SwitchCoroutine(IEnumerator newRoutine)
     {
-        // ÄÚ·çÆ¾ ½ºÀ§Äª ÇÔ¼ö
+        // ì½”ë£¨í‹´ ìŠ¤ìœ„ì¹­ í•¨ìˆ˜
         if(_currentRoutine != null)
         {
             StopCoroutine(_currentRoutine);
@@ -73,52 +87,52 @@ public class AttackPosition : MonoBehaviour
     }
     private IEnumerator Fire()
     {
-        // ¹«ÇÑ ¹İº¹
+        // ë¬´í•œ ë°˜ë³µ
         while (true)
         {
             if (_bulletPerfab != null)
             {
-                // Åõ»çÃ¼ »ı¼º
+                // íˆ¬ì‚¬ì²´ ìƒì„±
                 GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
                 _bullet.transform.right = _direction;
-                // ½Ã°£ÀÌ Áö³ª¸é »èÁ¦
+                // ì‹œê°„ì´ ì§€ë‚˜ë©´ ì‚­ì œ
                 Destroy(_bullet, _bulletTime);
             }
-            // Åõ»çÃ¼ÀÇ ¹ß»ç °£°İ
+            // íˆ¬ì‚¬ì²´ì˜ ë°œì‚¬ ê°„ê²©
             yield return new WaitForSeconds(GameManager.instance._player.MagicAttackSpeed);
         }
     }
     private IEnumerator Ax()
     {
-        // ¹«ÇÑ ¹İº¹
+        // ë¬´í•œ ë°˜ë³µ
         while (true)
         {
             if (_bulletPerfab != null)
             {
-                // Åõ»çÃ¼ »ı¼º
+                // íˆ¬ì‚¬ì²´ ìƒì„±
                 GameObject _ax = Instantiate(_axPerfab, _muzzlePos.position, Quaternion.identity);
                 _ax.transform.right = _direction;
-                // ½Ã°£ÀÌ Áö³ª¸é »èÁ¦
+                // ì‹œê°„ì´ ì§€ë‚˜ë©´ ì‚­ì œ
                 Destroy(_ax, _meleeAttack);
             }
-            // Åõ»çÃ¼ÀÇ ¹ß»ç °£°İ
+            // íˆ¬ì‚¬ì²´ì˜ ë°œì‚¬ ê°„ê²©
             yield return new WaitForSeconds(GameManager.instance._player.AxAttackSpeed);
         }
     }
     private IEnumerator Sword()
     {
-        // ¹«ÇÑ ¹İº¹
+        // ë¬´í•œ ë°˜ë³µ
         while (true)
         {
             if (_bulletPerfab != null)
             {
-                // Åõ»çÃ¼ »ı¼º
+                // íˆ¬ì‚¬ì²´ ìƒì„±
                 GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity);
                 _sword.transform.right = _direction;
-                // ½Ã°£ÀÌ Áö³ª¸é »èÁ¦
+                // ì‹œê°„ì´ ì§€ë‚˜ë©´ ì‚­ì œ
                 Destroy(_sword, _meleeAttack);
             }
-            // Åõ»çÃ¼ÀÇ ¹ß»ç °£°İ
+            // íˆ¬ì‚¬ì²´ì˜ ë°œì‚¬ ê°„ê²©
             yield return new WaitForSeconds(GameManager.instance._player.SwordAttackSpeed);
         }
     }
