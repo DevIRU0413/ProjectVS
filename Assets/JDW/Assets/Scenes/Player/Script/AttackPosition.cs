@@ -1,0 +1,126 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AttackPosition : MonoBehaviour
+{
+    public Transform Player;
+    public float Radius = 1.5f;
+
+    [SerializeField] private GameObject _swordPerfab;
+    [SerializeField] private GameObject _axPerfab;
+    [SerializeField] private GameObject _bulletPerfab;
+    [SerializeField] private Transform _muzzlePos;
+    [SerializeField] private float _bulletTime;
+    [SerializeField] private float _meleeAttack = 0.2f;
+
+
+    private Vector3 _direction;
+
+    private Coroutine _currentRoutine;
+
+
+
+    private void Start()
+    {
+        //StartCoroutine(Fire());
+        //StartCoroutine(Ax());
+        //StartCoroutine(Sword());
+    }
+    private void Update()
+    {
+        if (Player == null) return;
+        // 마우스 위치를 월드기준으로 전환
+        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _mouseWorldPos.z = 0f;
+        // 방향백터 계산
+        Vector3 _direction = (_mouseWorldPos - Player.position).normalized;
+
+        Vector3 _ovjPos = Player.position + _direction * Radius;
+
+        transform.position = _ovjPos;
+
+        transform.right = _direction;
+
+
+        // 테스트용 무기 스위칭
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Debug.Log("마법공격");
+            SwitchCoroutine(Fire());
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Debug.Log("도끼공격");
+            SwitchCoroutine(Ax());
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Debug.Log("검공격");
+            SwitchCoroutine(Sword());
+        }
+
+
+    }
+    private void SwitchCoroutine(IEnumerator newRoutine)
+    {
+        // 코루틴 스위칭 함수
+        if(_currentRoutine != null)
+        {
+            StopCoroutine(_currentRoutine);
+        }
+        _currentRoutine = StartCoroutine(newRoutine);
+    }
+    private IEnumerator Fire()
+    {
+        // 무한 반복
+        while (true)
+        {
+            if (_bulletPerfab != null)
+            {
+                // 투사체 생성
+                GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
+                _bullet.transform.right = _direction;
+                // 시간이 지나면 삭제
+                Destroy(_bullet, _bulletTime);
+            }
+            // 투사체의 발사 간격
+            yield return new WaitForSeconds(GameManager.instance._player.MagicAttackSpeed);
+        }
+    }
+    private IEnumerator Ax()
+    {
+        // 무한 반복
+        while (true)
+        {
+            if (_bulletPerfab != null)
+            {
+                // 투사체 생성
+                GameObject _ax = Instantiate(_axPerfab, _muzzlePos.position, Quaternion.identity);
+                _ax.transform.right = _direction;
+                // 시간이 지나면 삭제
+                Destroy(_ax, _meleeAttack);
+            }
+            // 투사체의 발사 간격
+            yield return new WaitForSeconds(GameManager.instance._player.AxAttackSpeed);
+        }
+    }
+    private IEnumerator Sword()
+    {
+        // 무한 반복
+        while (true)
+        {
+            if (_bulletPerfab != null)
+            {
+                // 투사체 생성
+                GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity);
+                _sword.transform.right = _direction;
+                // 시간이 지나면 삭제
+                Destroy(_sword, _meleeAttack);
+            }
+            // 투사체의 발사 간격
+            yield return new WaitForSeconds(GameManager.instance._player.SwordAttackSpeed);
+        }
+    }
+
+}
