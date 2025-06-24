@@ -9,6 +9,6 @@ namespace ProjectVS.Player
         [field: SerializeField] public float ATK { get; private set; }
         [field: SerializeField] public float SPD { get; private set; }
 
-        [field: SerializeField] public float AtkRAnge { get; private set; }
+        [field: SerializeField] public float AtkRange { get; private set; }
     }
 }

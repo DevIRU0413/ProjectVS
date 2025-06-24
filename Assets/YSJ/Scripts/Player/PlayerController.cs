@@ -3,12 +3,14 @@
 using ProjectVS.Player.State;
 
 using PVS;
+using ProjectVS.Util;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ProjectVS.Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PlayerConfig))]
     public class PlayerController : MonoBehaviour
     {
@@ -36,19 +38,21 @@ namespace ProjectVS.Player
         private void Awake() => Init();
         private void Update()
         {
-            if (CurrentStateType == PlayerStateType.Death)
-                return;
-
-            if(Status.CurrentHp < 0)
+            if (Status.CurrentHp <= 0 && CurrentStateType != PlayerStateType.Death)
                 ChangeState(PlayerStateType.Death, true);
-
             m_currentState?.Update();
         }
 
         private void Init()
         {
+            // 데이터
             m_config = GetComponent<PlayerConfig>();
-            Status = new PlayerStatus(m_config.Hp, m_config.ATK, m_config.SPD, m_config.AtkRAnge);
+            Status = new PlayerStatus(m_config.Hp, m_config.ATK, m_config.SPD, m_config.AtkRange);
+
+            // 리지드바디 세팅
+            var rig = gameObject.GetOrAddComponent<Rigidbody2D>();
+            rig.gravityScale = 0.0f;
+            rig.freezeRotation = true;
 
             // 상태 추가
             m_states.Add(PlayerStateType.Idle, new PlayerIdleState(this));
