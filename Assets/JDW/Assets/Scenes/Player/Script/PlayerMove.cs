@@ -62,16 +62,16 @@ public class PlayerMove : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) // 충돌 시작
     {
-        if (other.CompareTag("Rocks")) // 바위와 충돌했을 때
+        if (other.CompareTag("Obstacle")) // 장애물 오브젝트와 충돌했을 때
         {
             Debug.Log("바위와 부딪힘");
             Vector2 hitDirection = other.transform.position - transform.position;
-            BlockDirection(hitDirection); // 바위쪽 이동 방향 차단
+            BlockDirection(hitDirection); // 장애물 오브젝트쪽 이동 방향 차단
         }
     }
     private void OnTriggerExit2D(Collider2D other) // 충돌 종료
     {
-        if (other.CompareTag("Rocks")) 
+        if (other.CompareTag("Obstacle")) 
             ClearBlockedDirection();
     }
 }

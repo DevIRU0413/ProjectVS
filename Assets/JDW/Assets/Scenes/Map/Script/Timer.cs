@@ -9,6 +9,11 @@ public class Timer : MonoBehaviour
     private float _currentTime;
 
     public TextMeshProUGUI timerText; // TMP 사용
+    public FadeManager fadeManager;
+    private bool _isFading = false;
+
+    public string bossTag = "Boss";
+    public string storeTag = "Store";
 
     private void Start()
     {
@@ -16,6 +21,20 @@ public class Timer : MonoBehaviour
     }
     private void Update()
     {
+        // 보스 존재를 태그를 통해 확인
+        GameObject boss = GameObject.FindWithTag(bossTag);
+        if(boss != null)
+        {
+            timerText.text = "Boss!";
+            return;
+        }
+        // 상점을 태그를 통해 확인
+        GameObject store = GameObject.FindWithTag(storeTag);
+        if (store != null)
+        {
+            timerText.text = "$Store$";
+            return;
+        }
         if (_currentTime > 0f)
         {
             // 현재 남은 시간에서 실시간 감소
@@ -27,6 +46,16 @@ public class Timer : MonoBehaviour
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
         else
-            timerText.text = "Time Over!"; // 시간 종료시 
+        {
+            timerText.text = "00:00"; // 시간 종료시
+            StartCoroutine(HandleFadeTransition());
+        }
+    }
+    private IEnumerator HandleFadeTransition()
+    {
+        _isFading = true;
+        yield return StartCoroutine(fadeManager.FadeOut());
+
+        yield return StartCoroutine(fadeManager.FadeIn());
     }
 }
