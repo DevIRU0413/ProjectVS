@@ -42,19 +42,17 @@ public class PlayerMove : MonoBehaviour
         Vector2 input = new Vector2(h, v).normalized;
 
         // 차단된 방향일 경우 입력 무시
-        if (_blockedDirection.HasValue)
-        {
-            float dot = Vector2.Dot(input, _blockedDirection.Value);
-            if (dot > 0.7f) // 같은 방향이면 막기
-            {
-                input = Vector2.zero;
-            }
-        }
+      // if (_blockedDirection.HasValue)
+      // {
+      //     float dot = Vector2.Dot(input, _blockedDirection.Value);
+      //     if (dot > 0.7f) // 같은 방향이면 막기
+      //     {
+      //         input = Vector2.zero;
+      //     }
+      // }
 
         MoveInput = input;
-        //   // W,A,S,D 상하좌우 이동
-        //   MoveInput.x = Input.GetAxisRaw("Horizontal");
-        //   MoveInput.y = Input.GetAxisRaw("Vertical");
+
         //대각선 이동 속도 유지
         MoveInput.Normalize();
 
