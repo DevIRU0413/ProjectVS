@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,14 +9,14 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        // ¸¶¿ì½º À§Ä¡¸¦ ¿ùµå±âÁØÀ¸·Î ÀüÈ¯
+        // ë§ˆìš°ìŠ¤ ìœ„ì¹˜ë¥¼ ì›”ë“œê¸°ì¤€ìœ¼ë¡œ ì „í™˜
         Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         _mouseWorldPos.z = 0f;
-        // ÇöÀç ¿ÀºêÁ§Æ® À§Ä¡¿¡¼­¸¶¿ì½º À§Ä¡±îÁöÀÇ º¤ÅÍ °è»ê
+        // í˜„ì¬ ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ì—ì„œë§ˆìš°ìŠ¤ ìœ„ì¹˜ê¹Œì§€ì˜ ë²¡í„° ê³„ì‚°
         Vector2 _dir = (_mouseWorldPos - transform.position).normalized;
 
         transform.up = _dir;
-        // ÇØ´ç ¹æÇâÀ¸·Î ¼³Á¤ÇÑ ÈûÀ» °¡ÇÔ
+        // í•´ë‹¹ ë°©í–¥ìœ¼ë¡œ ì„¤ì •í•œ í˜ì„ ê°€í•¨
         _rigid.AddForce(_dir * FirePower,ForceMode2D.Impulse);
     }
 }

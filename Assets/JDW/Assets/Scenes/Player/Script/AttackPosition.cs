@@ -8,6 +8,7 @@ public class AttackPosition : MonoBehaviour
 {
     public Transform Player;
     public float Radius = 1.5f;
+    public Vector3 Direction => _direction;
 
     [SerializeField] private GameObject _swordPerfab;
     [SerializeField] private GameObject _axPerfab;
@@ -17,33 +18,16 @@ public class AttackPosition : MonoBehaviour
     [SerializeField] private float _bulletTime;
     [SerializeField] private float _meleeAttack = 0.2f;
 
-
     private Vector3 _direction;
 
     private Coroutine _currentRoutine;
     
-
-
-
-    private void Start()
-    {
-        //StartCoroutine(Fire());
-        //StartCoroutine(Ax());
-        //StartCoroutine(Sword());
-    }
     private void Update()
     {
         if (Player == null) return;
-        // 마우스 위치를 월드기준으로 전환
-        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _mouseWorldPos.z = 0f;
-        // 방향백터 계산
-        Vector3 _direction = (_mouseWorldPos - Player.position).normalized;
-
+        CursorCoordinates();
         Vector3 _ovjPos = Player.position + _direction * Radius;
-
         transform.position = _ovjPos;
-
         transform.right = _direction;
 
         if (Store.activeSelf && _currentRoutine != null)
@@ -54,27 +38,18 @@ public class AttackPosition : MonoBehaviour
         }
 
         // 테스트용 무기 스위칭
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            if (Store.activeSelf) return;
-            Debug.Log("마법공격");
-            SwitchCoroutine(Fire());
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (Store.activeSelf) return;
-            Debug.Log("도끼공격");
-            SwitchCoroutine(Ax());
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            if (Store.activeSelf) return;
-            Debug.Log("검공격");
-            SwitchCoroutine(Sword());
-        }
-
-       
-
+        if (Input.GetKeyDown(KeyCode.Alpha1)) { if (Store.activeSelf) return; SwitchCoroutine(Fire()); }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) { if (Store.activeSelf) return; SwitchCoroutine(Ax()); }
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) { if (Store.activeSelf) return; SwitchCoroutine(Sword()); }
+    }
+    public void CursorCoordinates()
+    {
+        
+        // 마우스 위치를 월드기준으로 전환
+        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _mouseWorldPos.z = 0f;
+        // 방향백터 계산
+        _direction = (_mouseWorldPos - Player.position).normalized;
     }
     private void SwitchCoroutine(IEnumerator newRoutine)
     {
