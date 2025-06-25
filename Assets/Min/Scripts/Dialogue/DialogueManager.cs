@@ -10,7 +10,8 @@ using ChoiceDataClass = ProjectVS.Dialogue.ChoiceData.ChoiceData;
 using DialogueDataParserClass = ProjectVS.Dialogue.DialogueDataParser.DialogueDataParser;
 using ChoiceDataParserClass = ProjectVS.Dialogue.ChoiceDataParser.ChoiceDataParser;
 using NPCAffinityModelClass = ProjectVS.Shop.NPCAffinityModel.NPCAffinityModel;
-
+using DialogueTextTyperClass = ProjectVS.Dialogue.TextEffect.DialogueTextTyper.DialogueTextTyper;
+using ProjectVS.Dialogue.TextEffect.TextTyperBase;
 
 namespace ProjectVS.Dialogue.DialogueManager
 {
@@ -21,13 +22,13 @@ namespace ProjectVS.Dialogue.DialogueManager
 
         //[SerializeField] private TMP_Text _dialogueText;
 
-        [SerializeField] private TMP_Text _shopEnterText;
-        [SerializeField] private TMP_Text _repeatText;
-        [SerializeField] private TMP_Text _eventText;
-        [SerializeField] private TMP_Text _stageClearText;
+        [SerializeField] private DialogueTextTyperClass _shopEnterText;
+        [SerializeField] private DialogueTextTyperClass _repeatText;
+        [SerializeField] private DialogueTextTyperClass _eventText;
+        [SerializeField] private DialogueTextTyperClass _stageClearText;
 
 
-        private TMP_Text _currentText;
+        private DialogueTextTyperClass _currentText;
 
         [Header("CSV 파일 경로")]
         [SerializeField] private string _dialoguePath = "Min/Resources/DialogueData.csv";
@@ -72,7 +73,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             _choiceList = ChoiceDataParserClass.Parse(_choiceTable);
         }
 
-        private void ShowDialogue(int dialogueID, TMP_Text text)
+        private void ShowDialogue(int dialogueID, DialogueTextTyperClass text)
         {
             DialogueDataClass data = _dialogueList.Find(d => d.ID == dialogueID);
             if (data == null)
@@ -86,17 +87,18 @@ namespace ProjectVS.Dialogue.DialogueManager
 
             if (text == null)
             {
-                _currentText.text = $"{data.CharacterName}: {data.Content}";
+                StartCoroutine(IE_WaitForAnimation(_currentText, $"{data.CharacterName}: {data.Content}"));
             }
             else
             {
                 _currentText = text;
-                text.text = $"{data.CharacterName}: {data.Content}";
+                StartCoroutine(IE_WaitForAnimation(text, $"{data.CharacterName}: {data.Content}"));
             }
 
             data.IsPrinted = true;
 
             Debug.Log($"[DialogueManager] 현재 대사: {data.ID} - {data.Content}");
+
             // TODO: 일러스트, 선택지 UI 등 출력 처리
         }
 
@@ -168,7 +170,7 @@ namespace ProjectVS.Dialogue.DialogueManager
                 if (data.IsPrinted) continue;
 
                 ShowDialogue(data.ID, _shopEnterText);
-                data.IsPrinted = true;
+                //data.IsPrinted = true;
                 break;
             }
         }
@@ -185,7 +187,7 @@ namespace ProjectVS.Dialogue.DialogueManager
 
                 ShowDialogue(data.ID, _eventText);
 
-                data.IsPrinted = true;
+                //data.IsPrinted = true;
                 return;
             }
 
@@ -256,7 +258,7 @@ namespace ProjectVS.Dialogue.DialogueManager
                 if (data.IsPrinted) continue;
 
                 ShowDialogue(data.ID, _stageClearText);
-                data.IsPrinted = true;
+                //data.IsPrinted = true;
                 return;
             }
 
@@ -266,6 +268,15 @@ namespace ProjectVS.Dialogue.DialogueManager
         public void ShowCutsceneDialogue()
         {
             // TODO: 컷신 대사 출력 로직 구현
+        }
+
+        // 패널의 애니메이션으로 인한 활성화 지연 대기 코루틴
+        private IEnumerator IE_WaitForAnimation(TextTyperBase text, string content)
+        {
+            yield return new WaitUntil(() => text.gameObject.activeInHierarchy);
+            yield return null;
+
+            text.StartTyping(content);
         }
     }
 }
