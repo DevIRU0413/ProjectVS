@@ -18,19 +18,18 @@ namespace ProjectVS.Dialogue.DialogueManager
     // TODO: IllustPath를 참조한 이미지 로딩 시스템
     public class DialogueManager : MonoBehaviour
     {
+        [Header("NPC 호감도 데이터")]
         [SerializeField] private NPCAffinityModelClass _npcAffinityModel; // 싱글톤으로 바꿔서 접근해야될 듯
 
-        //[SerializeField] private TMP_Text _dialogueText;
-
+        [Header("각 분기별 텍스트")]
         [SerializeField] private DialogueTextTyperClass _shopEnterText;
         [SerializeField] private DialogueTextTyperClass _repeatText;
         [SerializeField] private DialogueTextTyperClass _eventText;
         [SerializeField] private DialogueTextTyperClass _stageClearText;
 
-
         private DialogueTextTyperClass _currentText;
 
-        [Header("CSV 파일 경로")]
+        [Header("TSV 파일 경로")]
         [SerializeField] private string _dialoguePath = "Min/Resources/DialogueData.csv";
         [SerializeField] private string _choicePath = "Min/Resources/ChoiceData.csv";
 
