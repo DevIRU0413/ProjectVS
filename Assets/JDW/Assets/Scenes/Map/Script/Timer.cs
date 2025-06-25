@@ -6,7 +6,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public float totalTime = 900f; //15분
-    private float _currentTime;
+    public float _currentTime;
 
     public Transform storeSpawnPoint;
 
@@ -24,10 +24,10 @@ public class Timer : MonoBehaviour
     public GameObject StoreField;
     public GameObject player; // 이동시킬 플레이어
    
-    public GameObject Tilemap1;
-    public GameObject Tilemap2;
-    public GameObject Tilemap3;
-    public GameObject Tilemap4;
+  //  public GameObject Tilemap1;
+  //  public GameObject Tilemap2;
+  //  public GameObject Tilemap3;
+  //  public GameObject Tilemap4;
 
     private void Start()
     {
@@ -41,17 +41,17 @@ public class Timer : MonoBehaviour
             // 현재 남은 시간에서 실시간 감소
             _currentTime -= Time.deltaTime;
 
-            if (_currentTime <= 1f) // 남은 시간이 1초가되면
-            {
-                Debug.Log("스크립트가 오프됨");
-                Tilemap1.GetComponent<Reposition>().isActive = false; // 무한맵 스크립트를 멈춤
-                Tilemap2.GetComponent<Reposition>().isActive = false;
-                Tilemap3.GetComponent<Reposition>().isActive = false;
-                Tilemap4.GetComponent<Reposition>().isActive = false;
-
-
-                _scriptDisabled = true;
-            }
+           // if (_currentTime <= 1f) // 남은 시간이 1초가되면
+           // {
+           //     Debug.Log("스크립트가 오프됨");
+           //     Tilemap1.GetComponent<Reposition>().isActive = false; // 무한맵 스크립트를 멈춤
+           //     Tilemap2.GetComponent<Reposition>().isActive = false;
+           //     Tilemap3.GetComponent<Reposition>().isActive = false;
+           //     Tilemap4.GetComponent<Reposition>().isActive = false;
+           //
+           //
+           //     _scriptDisabled = true;
+           // }
 
             int minutes = Mathf.FloorToInt(_currentTime / 60f);
             int seconds = Mathf.FloorToInt(_currentTime % 60f);
