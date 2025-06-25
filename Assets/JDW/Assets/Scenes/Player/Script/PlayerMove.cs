@@ -38,7 +38,7 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         // rigidbody를 통해 이동 , 게임 매니저를 통해 player의 move값을 가져옴
-        rigid.velocity = MoveInput * GameManager.instance._player.MoveSpeed;
+        rigid.velocity = MoveInput * GameManager.instance.player.MoveSpeed;
     }
     private void playerMove()
     {

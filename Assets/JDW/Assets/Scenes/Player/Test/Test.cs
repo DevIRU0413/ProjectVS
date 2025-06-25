@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,14 +7,14 @@ public class Test : MonoBehaviour
 {
     private void TriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Ãæµ¹°¨Áö");
+        Debug.Log("ì¶©ëŒê°ì§€");
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GameManager.instance._player.Hp -= 1;
-            Debug.Log("ÇÃ·¹ÀÌ¾î Ã¼·Â°¨¼Ò");
-            if(GameManager.instance._player.Hp == 0)
+            GameManager.instance.player.Hp -= 1;
+            Debug.Log("í”Œë ˆì´ì–´ ì²´ë ¥ê°ì†Œ");
+            if(GameManager.instance.player.Hp == 0)
             {
-                Debug.Log("ÇÃ·¹ÀÌ¾î »ç¸ÁÃ³¸®");
+                Debug.Log("í”Œë ˆì´ì–´ ì‚¬ë§ì²˜ë¦¬");
             }
         }
     }

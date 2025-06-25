@@ -12,13 +12,12 @@ public class Timer : MonoBehaviour
 
     public TextMeshProUGUI timerText; // TMP 사용
     public FadeManager fadeManager;
-    public Tilemap tilemap;
+    
 
     private bool _isFading = false;
     private bool _scriptDisabled = false;
 
-    public string bossTag = "Boss";
-    public string storeTag = "Store";
+  
 
    
     public GameObject BattleField;
@@ -36,20 +35,7 @@ public class Timer : MonoBehaviour
     }
     private void Update()
     {
-        // 보스 존재를 태그를 통해 확인
-        GameObject boss = GameObject.FindWithTag(bossTag);
-        if(boss != null)
-        {
-            timerText.text = "Boss!";
-            return;
-        }
-        // 상점을 태그를 통해 확인
-        GameObject store = GameObject.FindWithTag(storeTag);
-        if (store != null)
-        {
-            timerText.text = "$Store$";
-            return;
-        }
+     
         if (_currentTime > 0f)
         {
             // 현재 남은 시간에서 실시간 감소

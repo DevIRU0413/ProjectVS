@@ -99,7 +99,7 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_bullet, _bulletTime);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance._player.MagicAttackSpeed);
+            yield return new WaitForSeconds(GameManager.instance.player.MagicAttackSpeed);
         }
     }
     private IEnumerator Ax()
@@ -116,7 +116,7 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_ax, _meleeAttack);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance._player.AxAttackSpeed);
+            yield return new WaitForSeconds(GameManager.instance.player.AxAttackSpeed);
         }
     }
     private IEnumerator Sword()
@@ -133,7 +133,7 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_sword, _meleeAttack);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance._player.SwordAttackSpeed);
+            yield return new WaitForSeconds(GameManager.instance.player.SwordAttackSpeed);
         }
     }
 
