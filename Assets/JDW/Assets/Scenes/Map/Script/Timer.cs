@@ -13,14 +13,12 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI timerText; // TMP 사용
     public FadeManager fadeManager;
     public MapSwitcer mapSwitcer;
+    public PlayerMove PlayerMove;
     
 
     private bool _isFading = false;
     private bool _scriptDisabled = false;
     private bool _paused = false;
-
-    public GameObject player; // 이동시킬 플레이어
-   
 
     private void Start()
     {
@@ -63,8 +61,7 @@ public class Timer : MonoBehaviour
         _isFading = true;
         yield return StartCoroutine(fadeManager.FadeOut()); // 패이드 아웃
         mapSwitcer.OnstoreField(); // 상점 온/ 배틀 오프
-        player.transform.position = new Vector3(0f, 0f, -1f); //플레이어의 위치 초기화
-        
+        PlayerMove.PlayerPositionReset();
         yield return StartCoroutine(fadeManager.FadeIn());
         currentTime = totalTime; // 타이머 초기화
         _isFading = false;

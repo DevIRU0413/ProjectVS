@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -9,18 +10,14 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody2D rigid;
     public MapSwitcer mapSwitcer;
     public Vector2 MoveInput;
-    Animator anim;
+    public Animator anim;
     private Vector2? _blockedDirection = null;
+
     public FadeManager fadeManager;
     public Timer timer;
-    private bool _isFading = false;
 
-    public GameObject player; // 이동시킬 플레이어
-    
-    public GameObject Tilemap1;
-    public GameObject Tilemap2;
-    public GameObject Tilemap3;
-    public GameObject Tilemap4;
+    private bool _isFading = false;
+  
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -75,13 +72,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) // 충돌 시작
     {
-        if (other.CompareTag("Obstacle")) // 장애물 오브젝트와 충돌했을 때
-        {
-            Debug.Log("바위와 부딪힘");
-            Vector2 hitDirection = other.transform.position - transform.position;
-            BlockDirection(hitDirection); // 장애물 오브젝트쪽 이동 방향 차단
-        }
-        else if (other.CompareTag("Door"))
+        if (other.CompareTag("Door")) // 문과 충돌 했을시
         {
             Debug.Log("상점을 나감");
             StartCoroutine(HandleFadeTransition());
@@ -95,10 +86,10 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator HandleFadeTransition()
     {
         _isFading = true;
-        yield return StartCoroutine(fadeManager.FadeOut());
+        yield return StartCoroutine(fadeManager.FadeOut()); // 페이드 아웃
         mapSwitcer.OnBattleField(); // 배틀 온/ 상점 오프
-        player.transform.position = new Vector3(0f, 0f, -1f); //플레이어의 위치 초기화
-        DisableTilemapTriggers();
+        PlayerPositionReset();
+        mapSwitcer.ResetTileMap(); // 상점에서 나왔을 때 타일들의 초기 위치
         
         
         yield return StartCoroutine(fadeManager.FadeIn());
@@ -106,17 +97,12 @@ public class PlayerMove : MonoBehaviour
 
         _isFading = false;
     }
-    private void DisableTilemapTriggers()
+    public void PlayerPositionReset()
     {
-     //  Tilemap1.GetComponent<Reposition>().isActive = true; // 무한맵 스크립트 재가동
-     //  Tilemap2.GetComponent<Reposition>().isActive = true;
-     //  Tilemap3.GetComponent<Reposition>().isActive = true;
-     //  Tilemap4.GetComponent<Reposition>().isActive = true;
-        Tilemap1.transform.position = new Vector3(24f, 11f, 0f);
-        Tilemap2.transform.position = new Vector3(-14f, 11f, 0f);
-        Tilemap3.transform.position = new Vector3(-16f,-29f, 0f);
-        Tilemap4.transform.position = new Vector3(26f, -29f, 0f);
+        transform.position = new Vector3(0f, 0f, -1f); // 플레이어의 위치 초기화
     }
+
+
 
 
 }
