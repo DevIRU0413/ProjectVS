@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using ProjectVS.Manager;
+
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
@@ -25,7 +29,8 @@ public class AttackPosition : MonoBehaviour
     private void Update()
     {
         if (Player == null) return;
-        CursorCoordinates();
+        // CursorCoordinates();
+
         Vector3 _ovjPos = Player.position + _direction * Radius;
         transform.position = _ovjPos;
         transform.right = _direction;
@@ -37,6 +42,11 @@ public class AttackPosition : MonoBehaviour
             Debug.Log("Store 활성화 → 코루틴 중단");
         }
 
+        // TestInput();
+    }
+
+    private void TestInput()
+    {
         // 테스트용 무기 스위칭
         if (Input.GetKeyDown(KeyCode.Alpha1)) { if (Store.activeSelf) return; SwitchCoroutine(Fire()); }
         else if (Input.GetKeyDown(KeyCode.Alpha2)) { if (Store.activeSelf) return; SwitchCoroutine(Ax()); }
@@ -44,12 +54,11 @@ public class AttackPosition : MonoBehaviour
     }
     public void CursorCoordinates()
     {
-        
-        // 마우스 위치를 월드기준으로 전환
+        /*// 마우스 위치를 월드기준으로 전환
         Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         _mouseWorldPos.z = 0f;
         // 방향백터 계산
-        _direction = (_mouseWorldPos - Player.position).normalized;
+        _direction = (_mouseWorldPos - Player.position).normalized;*/
     }
     private void SwitchCoroutine(IEnumerator newRoutine)
     {
@@ -74,7 +83,7 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_bullet, _bulletTime);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance.player.MagicAttackSpeed);
+            yield return new WaitForSeconds(GameManager.Instance.player.MagicAttackSpeed);
         }
     }
     private IEnumerator Ax()
@@ -91,7 +100,7 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_ax, _meleeAttack);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance.player.AxAttackSpeed);
+            yield return new WaitForSeconds(GameManager.Instance.player.AxAttackSpeed);
         }
     }
     private IEnumerator Sword()
@@ -108,8 +117,17 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_sword, _meleeAttack);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance.player.SwordAttackSpeed);
+            yield return new WaitForSeconds(GameManager.Instance.player.SwordAttackSpeed);
         }
     }
+    public void OnMouse(InputValue value)
+    {
+        Vector2 input = value.Get<Vector2>();
 
+        // 마우스 위치를 월드기준으로 전환
+        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(input);
+        _mouseWorldPos.z = 0f;
+        // 방향백터 계산
+        _direction = (_mouseWorldPos - Player.position).normalized;
+    }
 }

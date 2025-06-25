@@ -30,11 +30,11 @@ namespace ProjectVS.Monster
 
         public bool IsDeath => CurrentStateType == MonsterStateType.Death;
         public bool IsMove => Target != null && MoveDirection != Vector3.zero && MoveDirection.magnitude > _stopMoveRange;
-        public bool IsWin => Target == null || Target.CurrentStateType == PlayerStateType.Death;
+        public bool IsWin => Target == null;
 
         // 대상
         [field: SerializeField, Header("Target")]
-        public PlayerController Target { get; private set; }
+        public PlayerConfig Target { get; private set; }
         public Vector3 MoveDirection { get; private set; }
 
         // 몬스터 정보
@@ -84,7 +84,7 @@ namespace ProjectVS.Monster
 
             // 타겟 세팅
             var playerGo = GameObject.FindGameObjectWithTag("Player");
-            Target = playerGo?.GetComponentInParent<PlayerController>();
+            Target = playerGo?.GetComponentInParent<PlayerConfig>();
 
             // 초기 상태 세팅
             if (_config == null)

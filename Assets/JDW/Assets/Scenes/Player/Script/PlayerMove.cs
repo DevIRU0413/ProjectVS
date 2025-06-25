@@ -1,8 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+
+using ProjectVS.Manager;
+
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -16,23 +17,21 @@ public class PlayerMove : MonoBehaviour
     public Timer timer;
 
     private bool _isFading = false;
-  
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
     }
 
     public void Update()
     {
-        playerMove();
-       
+        // playerMove();
     }
     private void FixedUpdate()
     {
         // rigidbody를 통해 이동 , 게임 매니저를 통해 player의 move값을 가져옴
-        rigid.velocity = MoveInput * GameManager.instance.player.MoveSpeed;
+        rigid.velocity = MoveInput * GameManager.Instance.player.MoveSpeed;
     }
     private void playerMove()
     {
@@ -40,7 +39,7 @@ public class PlayerMove : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         Vector2 input = new Vector2(h, v).normalized;
 
-       
+
 
         MoveInput = input;
 
@@ -66,10 +65,10 @@ public class PlayerMove : MonoBehaviour
         mapSwitcer.OnBattleField(); // 배틀 온/ 상점 오프
         PlayerPositionReset();
         mapSwitcer.ResetTileMap(); // 상점에서 나왔을 때 타일들의 초기 위치
-        
-        
+
+
         yield return StartCoroutine(fadeManager.FadeIn());
-        
+
 
         _isFading = false;
     }
@@ -78,7 +77,13 @@ public class PlayerMove : MonoBehaviour
         transform.position = new Vector3(0f, 0f, -1f); // 플레이어의 위치 초기화
     }
 
+    public void OnMove(InputValue value)
+    {
+        Vector2 input = value.Get<Vector2>();
+        input.Normalize();
+        MoveInput = input;
 
-
-
+        bool IsWalking = MoveInput != Vector2.zero;
+        anim.SetBool("IsWalking", IsWalking);
+    }
 }

@@ -28,12 +28,12 @@ namespace ProjectVS.Monster.Pattern
 
         [SerializeField] private List<float> stepBaseAngleList = new(); // 사용 시, 랜덤한 
 
-        protected PlayerController _target;
+        protected PlayerConfig _target;
 
         public override void Init(MonsterPhaseController phaseController)
         {
             base.Init(phaseController);
-            _target = GameManager.ForceInstance.Player;
+            _target = GameManager.ForceInstance.player;
         }
 
         public override bool Condition()
@@ -97,7 +97,7 @@ namespace ProjectVS.Monster.Pattern
 
             for (int s = 0; s < step; s++)
             {
-                if (stepBaseAngleList != null)
+                if (stepBaseAngleList != null && stepBaseAngleList.Count > 0)
                     baseStartAngle = stepBaseAngleList[s];
 
                 for (int g = 0; g < groupsPerStep; g++)

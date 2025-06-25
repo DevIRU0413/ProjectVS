@@ -14,21 +14,21 @@ public class MapSwitcer : MonoBehaviour
 
     public void OnBattleField()
     {
-        battleField.SetActive(true);
-        storeField.SetActive(false);
+        battleField?.SetActive(true);
+        storeField?.SetActive(false);
     }
     public bool IsBattleActive()
     {
-        return battleField.activeSelf;
+        return (battleField == null) ? false : battleField.activeSelf;
     }
     public void OnstoreField()
     {
-        battleField.SetActive(false);
-        storeField.SetActive(true);
+        battleField?.SetActive(false);
+        storeField?.SetActive(true);
     }
     public bool IsStoreActive()
     {
-        return storeField.activeSelf;
+        return (storeField == null) ? false : storeField.activeSelf;
     }
     public void ResetTileMap()
     {

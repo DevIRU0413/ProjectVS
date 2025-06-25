@@ -31,6 +31,7 @@
         public float CurrentAtk;
         public float CurrentSpd;
         public float CurrentAtkRange;
+
         // 나중에 아래에 함수 만들어서 처리
     }
 }

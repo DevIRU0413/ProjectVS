@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerConfig : MonoBehaviour
 {
     public float Hp = 50;
     public float Power = 5;
