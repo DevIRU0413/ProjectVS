@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-using UIButtonAnimatorClass = ProjectVS.UIs.UIBase.UIButtonAnimator.UIButtonAnimator;
+using UIButtonAnimatorClass = ProjectVS.UIs.UIBase.UIButtonAnimator.UIAnimator;
 
 
 namespace ProjectVS.UIs.UIBase.UIButtonGroupController
