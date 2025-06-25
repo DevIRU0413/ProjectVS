@@ -14,9 +14,9 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
         Vertical
     }
 
-    public class UIButtonAnimator : MonoBehaviour
+    public class UIAnimator : MonoBehaviour
     {
-        [SerializeField] private List<RectTransform> _buttons;
+        [SerializeField] private List<RectTransform> _uiList;
 
         [Header("방향 설정")]
         [SerializeField] private SlideDirection _slideDirection = SlideDirection.Horizontal;
@@ -35,7 +35,7 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
 
         [Header("Ease 설정")]
         [SerializeField] private Ease _moveInEase = Ease.OutBack;
-        [SerializeField] private Ease _moveOutEase = Ease.InBack;
+        [SerializeField] private Ease _moveOutEase = Ease.OutCirc;
 
         private Vector2 GetOffsetPosition(RectTransform rect, float offset)
         {
@@ -46,7 +46,7 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
 
         public IEnumerator AnimateIn(Action onComplete = null)
         {
-            foreach (var rect in _buttons)
+            foreach (var rect in _uiList)
             {
                 rect.gameObject.SetActive(true);
                 rect.anchoredPosition = GetOffsetPosition(rect, _moveInOffset);
@@ -65,7 +65,7 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
 
         public IEnumerator AnimateOut(Action onComplete = null)
         {
-            foreach (var rect in _buttons)
+            foreach (var rect in _uiList)
             {
                 rect.DOAnchorPos(GetOffsetPosition(rect, _moveOutOffset), _moveOutDuration)
                     .SetEase(_moveOutEase);
@@ -77,7 +77,7 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
                 yield return new WaitForSeconds(_interval);
             }
 
-            foreach (var rect in _buttons)
+            foreach (var rect in _uiList)
             {
                 rect.gameObject.SetActive(false);
             }
@@ -87,7 +87,7 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
 
         public void ShowInstant()
         {
-            foreach (var rect in _buttons)
+            foreach (var rect in _uiList)
             {
                 rect.gameObject.SetActive(true);
                 rect.anchoredPosition = GetOffsetPosition(rect, _originOffset);
@@ -100,7 +100,7 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
 
         public void HideInstant()
         {
-            foreach (var rect in _buttons)
+            foreach (var rect in _uiList)
             {
                 rect.gameObject.SetActive(false);
             }
