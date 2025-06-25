@@ -75,5 +75,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Assets/Imports
+
+/Assets/JDW/Temp
 /Assets/Min/Imports
 /Assets/Min/Resources
