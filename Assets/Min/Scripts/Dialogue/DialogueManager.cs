@@ -44,6 +44,10 @@ namespace ProjectVS.Dialogue.DialogueManager
 
         private int _currentDialogueIndex = 100001;
 
+        [Header("자동 진행 설정")]
+        [SerializeField] private float _autoNextDelay = 1f;
+        private bool _isAuto = false;
+
         private void Awake()
         {
             LoadDialogueCSV();
@@ -87,18 +91,27 @@ namespace ProjectVS.Dialogue.DialogueManager
 
             if (text == null)
             {
-                StartCoroutine(IE_WaitForAnimation(_currentText, $"{data.CharacterName}: {data.Content}"));
+                text = _currentText;
             }
             else
             {
                 _currentText = text;
-                StartCoroutine(IE_WaitForAnimation(text, $"{data.CharacterName}: {data.Content}"));
             }
+
+            _currentText.ClearAction();
+            if (_isAuto)
+            {
+                _currentText.OnTypingComplete += () =>
+                {
+                    StartCoroutine(IE_AutoNextDelay());
+                };
+            }
+
+            StartCoroutine(IE_WaitForAnimation(_currentText, $"{data.CharacterName}: {data.Content}"));
 
             data.IsPrinted = true;
 
             Debug.Log($"[DialogueManager] 현재 대사: {data.ID} - {data.Content}");
-
             // TODO: 일러스트, 선택지 UI 등 출력 처리
         }
 
@@ -277,6 +290,18 @@ namespace ProjectVS.Dialogue.DialogueManager
             yield return null;
 
             text.StartTyping(content);
+        }
+
+        public void OnToggleAutoMode()
+        {
+            _isAuto = !_isAuto;
+            Debug.Log($"현재 AutoMode: {_isAuto}");
+        }
+
+        private IEnumerator IE_AutoNextDelay()
+        {
+            yield return new WaitForSeconds(_autoNextDelay);
+            Next();
         }
     }
 }

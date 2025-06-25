@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using System;
 using System.Text;
-
 using UnityEngine;
 
 
@@ -15,6 +15,9 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
 
         protected Coroutine _typingCo;
         protected string _currentContent;
+
+        public Action OnTypingComplete;
+
 
         public virtual void StartTyping(string content)
         {
@@ -51,6 +54,12 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
             }
 
             _typingCo = null;
+            OnTypingComplete?.Invoke();
+        }
+
+        public virtual void ClearAction()
+        {
+            OnTypingComplete = null;
         }
     }
 }
