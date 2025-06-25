@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
 {
 
     private Rigidbody2D rigid;
+    public MapSwitcer mapSwitcer;
     public Vector2 MoveInput;
     Animator anim;
     private Vector2? _blockedDirection = null;
@@ -14,8 +15,6 @@ public class PlayerMove : MonoBehaviour
     public Timer timer;
     private bool _isFading = false;
 
-    public GameObject BattleField;
-    public GameObject StoreField;
     public GameObject player; // 이동시킬 플레이어
     
     public GameObject Tilemap1;
@@ -26,7 +25,6 @@ public class PlayerMove : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        Tilemap tilemap = timer.BattleField.GetComponentInChildren<Tilemap>();
         
     }
 
@@ -98,8 +96,7 @@ public class PlayerMove : MonoBehaviour
     {
         _isFading = true;
         yield return StartCoroutine(fadeManager.FadeOut());
-        timer.StoreField.SetActive(false); // 페이드인 이후 스토어필드 오프
-        timer.BattleField.SetActive(true); // 페이드아웃 이후 배틀필드 온
+        mapSwitcer.OnBattleField(); // 배틀 온/ 상점 오프
         player.transform.position = new Vector3(0f, 0f, -1f); //플레이어의 위치 초기화
         DisableTilemapTriggers();
         
@@ -111,10 +108,10 @@ public class PlayerMove : MonoBehaviour
     }
     private void DisableTilemapTriggers()
     {
-        Tilemap1.GetComponent<Reposition>().isActive = true; // 무한맵 스크립트 재가동
-        Tilemap2.GetComponent<Reposition>().isActive = true;
-        Tilemap3.GetComponent<Reposition>().isActive = true;
-        Tilemap4.GetComponent<Reposition>().isActive = true;
+     //  Tilemap1.GetComponent<Reposition>().isActive = true; // 무한맵 스크립트 재가동
+     //  Tilemap2.GetComponent<Reposition>().isActive = true;
+     //  Tilemap3.GetComponent<Reposition>().isActive = true;
+     //  Tilemap4.GetComponent<Reposition>().isActive = true;
         Tilemap1.transform.position = new Vector3(24f, 11f, 0f);
         Tilemap2.transform.position = new Vector3(-14f, 11f, 0f);
         Tilemap3.transform.position = new Vector3(-16f,-29f, 0f);

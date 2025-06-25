@@ -6,55 +6,38 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public float totalTime = 900f; //15분
-    public float _currentTime;
+    public float currentTime;
+    
 
     public Transform storeSpawnPoint;
-
     public TextMeshProUGUI timerText; // TMP 사용
     public FadeManager fadeManager;
+    public MapSwitcer mapSwitcer;
     
 
     private bool _isFading = false;
     private bool _scriptDisabled = false;
+    private bool _paused = false;
 
-  
-
-   
-    public GameObject BattleField;
-    public GameObject StoreField;
     public GameObject player; // 이동시킬 플레이어
    
-  //  public GameObject Tilemap1;
-  //  public GameObject Tilemap2;
-  //  public GameObject Tilemap3;
-  //  public GameObject Tilemap4;
 
     private void Start()
     {
-        _currentTime = totalTime;
+        currentTime = totalTime;
     }
     private void Update()
     {
-     
-        if (_currentTime > 0f)
+        if (_paused) return;
+
+        if (currentTime > 0f)
         {
             // 현재 남은 시간에서 실시간 감소
-            _currentTime -= Time.deltaTime;
+            currentTime -= Time.deltaTime;
 
-           // if (_currentTime <= 1f) // 남은 시간이 1초가되면
-           // {
-           //     Debug.Log("스크립트가 오프됨");
-           //     Tilemap1.GetComponent<Reposition>().isActive = false; // 무한맵 스크립트를 멈춤
-           //     Tilemap2.GetComponent<Reposition>().isActive = false;
-           //     Tilemap3.GetComponent<Reposition>().isActive = false;
-           //     Tilemap4.GetComponent<Reposition>().isActive = false;
-           //
-           //
-           //     _scriptDisabled = true;
-           // }
 
-            int minutes = Mathf.FloorToInt(_currentTime / 60f);
-            int seconds = Mathf.FloorToInt(_currentTime % 60f);
+            int minutes = Mathf.FloorToInt(currentTime / 60f);
+            int seconds = Mathf.FloorToInt(currentTime % 60f);
 
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
@@ -66,16 +49,24 @@ public class Timer : MonoBehaviour
             StartCoroutine(HandleFadeTransition());
         }
     }
+    public void PauseTimer()
+    {
+        _paused = true; // 타임 스탑
+    }
+
+    public void ResumeTimer()
+    {
+        _paused = false; // 타임 온
+    }
     private IEnumerator HandleFadeTransition()
     {
         _isFading = true;
-        yield return StartCoroutine(fadeManager.FadeOut());
-        BattleField.SetActive(false); // 페이드아웃 이후 배틀필드 오프
-        StoreField.SetActive(true); // 페이드인 이후 스토어필드 온
+        yield return StartCoroutine(fadeManager.FadeOut()); // 패이드 아웃
+        mapSwitcer.OnstoreField(); // 상점 온/ 배틀 오프
         player.transform.position = new Vector3(0f, 0f, -1f); //플레이어의 위치 초기화
         
         yield return StartCoroutine(fadeManager.FadeIn());
-        _currentTime = totalTime; // 타이머 초기화
+        currentTime = totalTime; // 타이머 초기화
         _isFading = false;
     }
    
