@@ -848,15 +848,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 84568005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 1835700418}
   _slideDirection: 0
   _originOffset: -800
-  _moveInOffset: 1000
-  _moveOutOffset: 1000
+  _moveInOffset: -1300
+  _moveOutOffset: -1300
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -877,7 +877,7 @@ GameObject:
   - component: {fileID: 91547841}
   - component: {fileID: 91547840}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ESC Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1863,10 +1863,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 279268081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 1664050601}
   - {fileID: 1651138516}
   - {fileID: 457294010}
@@ -2416,7 +2416,7 @@ GameObject:
   - component: {fileID: 429783683}
   - component: {fileID: 429783682}
   m_Layer: 5
-  m_Name: Button (7)
+  m_Name: ESC Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2751,6 +2751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _group:
   - {fileID: 1900098131}
+  - {fileID: 1613793567}
 --- !u!114 &462256263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2836,17 +2837,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 536437468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 2056438656}
   - {fileID: 1149641820}
   - {fileID: 781063352}
   _slideDirection: 0
-  _originOffset: -500
-  _moveInOffset: 1000
-  _moveOutOffset: 1000
+  _originOffset: -400
+  _moveInOffset: 500
+  _moveOutOffset: 500
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -2993,15 +2994,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 568435325}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 91547839}
   _slideDirection: 0
   _originOffset: -800
-  _moveInOffset: 1000
-  _moveOutOffset: 1000
+  _moveInOffset: -1300
+  _moveOutOffset: -1300
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -3381,7 +3382,7 @@ GameObject:
   - component: {fileID: 713188960}
   - component: {fileID: 713188959}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ESC Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4095,15 +4096,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 811506193}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 429783681}
   _slideDirection: 0
   _originOffset: -800
-  _moveInOffset: 1000
-  _moveOutOffset: 1000
+  _moveInOffset: -1300
+  _moveOutOffset: -1300
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -5037,17 +5038,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1018242672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 422975645}
   - {fileID: 799874953}
   - {fileID: 1220608850}
   _slideDirection: 1
   _originOffset: 200
-  _moveInOffset: 1000
-  _moveOutOffset: 1000
+  _moveInOffset: 500
+  _moveOutOffset: 500
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -5125,6 +5126,7 @@ MonoBehaviour:
   _group:
   - {fileID: 1018242674}
   - {fileID: 1963558253}
+  - {fileID: 84568007}
 --- !u!114 &1026877018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5717,10 +5719,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1191297352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 1074806283}
   - {fileID: 896786199}
   - {fileID: 2076972692}
@@ -6928,15 +6930,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1613793565}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 713188958}
   _slideDirection: 0
   _originOffset: -800
-  _moveInOffset: 1000
-  _moveOutOffset: 1000
+  _moveInOffset: -1300
+  _moveOutOffset: -1300
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -7736,7 +7738,7 @@ GameObject:
   - component: {fileID: 1835700420}
   - component: {fileID: 1835700419}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ESC Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8038,16 +8040,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1900098129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 29402217}
   - {fileID: 1377816906}
   _slideDirection: 1
-  _originOffset: -400
-  _moveInOffset: -1000
-  _moveOutOffset: -1000
+  _originOffset: -300
+  _moveInOffset: -800
+  _moveOutOffset: -800
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -8138,17 +8140,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1963558251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 1504527220}
   - {fileID: 1666285229}
   - {fileID: 256845602}
   _slideDirection: 1
   _originOffset: -200
-  _moveInOffset: -1000
-  _moveOutOffset: -1000
+  _moveInOffset: -500
+  _moveOutOffset: -500
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -8908,16 +8910,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2090567955}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc58431b989909a4d950274e7440ac3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ac98b31c54238d47839d8860bb6592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttons:
+  _uiList:
   - {fileID: 847884163}
   - {fileID: 1824183778}
   - {fileID: 969297929}
   - {fileID: 1473767386}
   _slideDirection: 0
-  _originOffset: -500
+  _originOffset: -600
   _moveInOffset: -1000
   _moveOutOffset: -1000
   _moveInDuration: 0.5
