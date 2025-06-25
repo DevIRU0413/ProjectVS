@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class AttackPosition : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class AttackPosition : MonoBehaviour
     [SerializeField] private Transform _muzzlePos;
     [SerializeField] private float _bulletTime;
     [SerializeField] private float _meleeAttack = 0.2f;
+
 
     private Vector3 _direction;
 
@@ -38,15 +40,31 @@ public class AttackPosition : MonoBehaviour
         }
 
         // 테스트용 무기 스위칭
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { if (Store.activeSelf) return; SwitchCoroutine(Fire()); }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) { if (Store.activeSelf) return; SwitchCoroutine(Ax()); }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) { if (Store.activeSelf) return; SwitchCoroutine(Sword()); }
+        if (Keyboard.current != null && Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            if (Store.activeSelf) return;
+            SwitchCoroutine(Fire());
+        }
+        else if (Keyboard.current != null && Keyboard.current.digit2Key.wasPressedThisFrame)
+        {
+            if (Store.activeSelf) return;
+            SwitchCoroutine(Ax());
+        }
+        else if (Keyboard.current != null && Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            if (Store.activeSelf) return;
+            SwitchCoroutine(Sword());
+        }
     }
     public void CursorCoordinates()
     {
-        
+        if (Mouse.current == null || Camera.main == null) return;
         // 마우스 위치를 월드기준으로 전환
-        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(
+        new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(Camera.main.transform.position.z))
+    );
         _mouseWorldPos.z = 0f;
         // 방향백터 계산
         _direction = (_mouseWorldPos - Player.position).normalized;

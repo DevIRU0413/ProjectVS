@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerMove : MonoBehaviour
     public MapSwitcer mapSwitcer;
     public Vector2 MoveInput;
     public Animator anim;
+
+    private PlayerAction inputActions;
 
     public FadeManager fadeManager;
     public Timer timer;
@@ -21,18 +24,36 @@ public class PlayerMove : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
+        inputActions = new PlayerAction();
+        inputActions.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
+        inputActions.Player.Move.canceled += ctx => MoveInput = Vector2.zero;
         
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
     }
 
     public void Update()
     {
-        playerMove();
+       // playerMove();
        
     }
     private void FixedUpdate()
     {
         // rigidbody를 통해 이동 , 게임 매니저를 통해 player의 move값을 가져옴
-        rigid.velocity = MoveInput * GameManager.instance.player.MoveSpeed;
+        rigid.velocity = MoveInput.normalized * GameManager.instance.player.MoveSpeed;
+        // rigid.velocity = MoveInput * GameManager.instance.player.MoveSpeed;
+        bool isWalking = MoveInput != Vector2.zero;
+        anim.SetBool("IsWalking", isWalking);
+        // 이동 애니메이션, 이동시 IsWalking을 ture로 바꿈
+        bool IsWalking = MoveInput != Vector2.zero;
+        anim.SetBool("IsWalking", IsWalking);
     }
     private void playerMove()
     {
@@ -47,9 +68,7 @@ public class PlayerMove : MonoBehaviour
         //대각선 이동 속도 유지
         MoveInput.Normalize();
 
-        // 이동 애니메이션, 이동시 IsWalking을 ture로 바꿈
-        bool IsWalking = MoveInput != Vector2.zero;
-        anim.SetBool("IsWalking", IsWalking);
+      
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
