@@ -35,9 +35,9 @@ public enum CharacterClass
     {// 클레스별 초기 스탯을 설정해 놓은 보관함
         public static readonly Dictionary<CharacterClass, PlayerStats> DefaultStats = new Dictionary<CharacterClass, PlayerStats>
         {
-            {CharacterClass.Axe, new PlayerStats(20,30,10,2,3) }, // 도끼 클레스는 튼튼하고 강하지만 느림
-            {CharacterClass.Sword, new PlayerStats(25,20,8,5,8) },// 검 클레스는 안정적이고 빠름
-            {CharacterClass.Magic, new PlayerStats(15,25,5,3,5) } // 마법 클레스는 공격 사거리가 길지만 약함
+            {CharacterClass.Axe, new PlayerStats(20,30,10,3,1) }, // 도끼 클레스는 튼튼하고 강하지만 느림
+            {CharacterClass.Sword, new PlayerStats(25,20,8,6,3) },// 검 클레스는 안정적이고 빠름
+            {CharacterClass.Magic, new PlayerStats(15,25,5,4,2) } // 마법 클레스는 공격 사거리가 길지만 약함
         };
     }
 

@@ -78,7 +78,7 @@ public class AttackPosition : MonoBehaviour
         }
         _currentRoutine = StartCoroutine(newRoutine);
     }
-    
+
     public IEnumerator Axe()
     {
         // 무한 반복
@@ -86,14 +86,12 @@ public class AttackPosition : MonoBehaviour
         {
             if (_axePerfab != null)
             {
-                // 투사체 생성
                 GameObject _axe = Instantiate(_axePerfab, _muzzlePos.position, Quaternion.identity);
                 _axe.transform.right = _direction;
-                // 시간이 지나면 삭제
                 Destroy(_axe, _meleeAttack);
             }
-            float atkSpeed = Mathf.Max(0.01f, GameManager.instance.player.stats.AttackSpeed); // 0 방지
-            yield return new WaitForSeconds(1f / atkSpeed);
+
+            yield return new WaitForSeconds(GetAttackDelay());
         }
     }
     public IEnumerator Sword()
@@ -101,17 +99,16 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
-            if (_swordPerfab != null)
+
+            if (_swordPerfab != null)// 프리팹에 설정되있는 경우에만 실행
             {
-                // 투사체 생성
+                //투사체 생성
                 GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity);
-                _sword.transform.right = _direction;
-                // 시간이 지나면 삭제
-                Destroy(_sword, _meleeAttack);
+                _sword.transform.right = _direction;// 방향
+                Destroy(_sword, _meleeAttack); // 일정시간 후 제거
             }
-            // 투사체의 발사 간격
-            float atkSpeed = Mathf.Max(0.01f, GameManager.instance.player.stats.AttackSpeed); // 0 방지
-            yield return new WaitForSeconds(1f / atkSpeed);
+
+            yield return new WaitForSeconds(GetAttackDelay()); // 공격속도의 맞춰 딜레이 계산 
         }
     }
     public IEnumerator Fire()
@@ -121,15 +118,22 @@ public class AttackPosition : MonoBehaviour
         {
             if (_bulletPerfab != null)
             {
-                // 투사체 생성
                 GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
                 _bullet.transform.right = _direction;
-                // 시간이 지나면 삭제
-                Destroy(_bullet, _bulletTime);
+                Destroy(_bullet, _bulletTime); // bulletTime은 일반적으로 발사체 수명
             }
-            // 투사체의 발사 간격
-            float atkSpeed = Mathf.Max(0.01f, GameManager.instance.player.stats.AttackSpeed); // 0 방지
-            yield return new WaitForSeconds(1f / atkSpeed);
+
+            yield return new WaitForSeconds(GetAttackDelay());
         }
+    }
+    private float GetAttackDelay()
+    {
+        float atkSpeed = GameManager.instance.player.stats.AttackSpeed;
+        if (atkSpeed <= 0.01f)
+        {
+            // 공격속도가 비정상이면 자동으로 5로 맞춤
+            atkSpeed = 5f;
+        }
+        return 1f / atkSpeed;
     }
 }
