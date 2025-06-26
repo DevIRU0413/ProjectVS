@@ -15,20 +15,9 @@ public class MapSwitcer : MonoBehaviour
 
     public void OnBattleField()
     {
-        Debug.Log("맵전환 실행");
-
-        if (battleField == null || storeField == null)
-        {
-            Debug.LogError("❌ battleField 또는 storeField가 null입니다.");
-            return;
-        }
-
-        Debug.Log($"[전환 전] battleField.activeSelf = {battleField.activeSelf}, storeField.activeSelf = {storeField.activeSelf}");
-
+        Debug.Log("맵전환 실행");   
         battleField.SetActive(true);
         storeField.SetActive(false);
-
-        Debug.Log($"[전환 후] battleField.activeSelf = {battleField.activeSelf}, storeField.activeSelf = {storeField.activeSelf}");
     }
     public bool IsBattleActive()
     {

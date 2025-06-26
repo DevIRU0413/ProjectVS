@@ -7,7 +7,7 @@ using UnityEngine;
 public class TestItem
 {
     public string name;
-    public int bonusHealth;
+    public int recovery;
     public int bonusAttack;
     public int bonusDefense;
     public float bonusAttackSpeed;
@@ -15,7 +15,7 @@ public class TestItem
     public TestItem(string name, int hp, int atk, int def = 0, float atkSpeed = 0f, float moveSpeed = 0 )
     {
         this.name = name;
-        this.bonusHealth = hp;
+        this.recovery = hp;
         this.bonusAttack = atk;
         this.bonusDefense = def;
         this.bonusAttackSpeed = atkSpeed;

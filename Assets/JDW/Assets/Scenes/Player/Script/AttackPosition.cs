@@ -15,7 +15,7 @@ public class AttackPosition : MonoBehaviour
     [SerializeField] private GameObject _bulletPerfab;
     [SerializeField] private GameObject Store;
     [SerializeField] private Transform _muzzlePos;
-    [SerializeField] private float _bulletTime;
+    [SerializeField] private float _bulletTime = 3f;
     [SerializeField] private float _meleeAttack = 0.2f;
 
     private bool storeWasActive = false;
@@ -26,9 +26,9 @@ public class AttackPosition : MonoBehaviour
     private Coroutine _currentRoutine;
     private Player _playerScript;
 
-    private void Start()
+    private void Awake()
     {
-        if(Player != null)
+        if (Player != null)
         {
             _playerScript = Player.GetComponent<Player>();
         }
@@ -102,10 +102,24 @@ public class AttackPosition : MonoBehaviour
                 Debug.Log("플레이어 사망 → Axe 공격 중단");
                 yield break;
             }
+
+            // Store 열려 있으면 코루틴 중단
+            if (Store != null && Store.activeSelf)
+            {
+                Debug.Log("Store 진입 중 → Axe 중단");
+                yield break;
+            }
+
             if (_axePerfab != null)
             {
                 GameObject _axe = Instantiate(_axePerfab, _muzzlePos.position, Quaternion.identity);
                 _axe.transform.right = _direction;
+                float atk = _playerScript.stats.Attack; // 플레이어의 공격력값을 가져옴
+                Attack attackScript = _axe.GetComponent<Attack>();
+                if (attackScript != null)
+                {
+                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                }
                 Destroy(_axe, _meleeAttack);
             }
 
@@ -119,18 +133,31 @@ public class AttackPosition : MonoBehaviour
         {
             if (_playerScript != null && _playerScript.isDead)
             {
-                Debug.Log("플레이어 사망 → Sword 공격 중단");
+                Debug.Log("플레이어 사망 → Attack 공격 중단");
                 yield break;
             }
-            if (_swordPerfab != null)// 프리팹에 설정되있는 경우에만 실행
+
+            // Store 열려 있으면 코루틴 중단
+            if (Store != null && Store.activeSelf)
             {
-                //투사체 생성
-                GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity);
-                _sword.transform.right = _direction;// 방향
-                Destroy(_sword, _meleeAttack); // 일정시간 후 제거
+                Debug.Log("Store 진입 중 → Attack 중단");
+                yield break;
             }
 
-            yield return new WaitForSeconds(GetAttackDelay()); // 공격속도의 맞춰 딜레이 계산 
+            if (_swordPerfab != null)
+            {
+                GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity); 
+                _sword.transform.right = _direction;
+                float atk = _playerScript.stats.Attack; // 플레이어의 공격력값을 가져옴
+                Attack attackScript = _sword.GetComponent<Attack>();
+                if (attackScript != null)
+                {
+                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                }
+                Destroy(_sword, _meleeAttack);
+            }
+
+            yield return new WaitForSeconds(GetAttackDelay());
         }
     }
     public IEnumerator Fire()
@@ -140,14 +167,28 @@ public class AttackPosition : MonoBehaviour
         {
             if (_playerScript != null && _playerScript.isDead)
             {
-                Debug.Log("플레이어 사망 → Fire 공격 중단");
+                Debug.Log("플레이어 사망 → Magic 중단");
                 yield break;
             }
-            if (_bulletPerfab != null)
+
+            // Store 열려 있으면 코루틴 중단
+            if (Store != null && Store.activeSelf)
+            {
+                Debug.Log("Store 진입 중 → Magic 중단");
+                yield break;
+            }
+
+            if (_bulletPerfab!= null)
             {
                 GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
                 _bullet.transform.right = _direction;
-                Destroy(_bullet, _bulletTime); // bulletTime은 일반적으로 발사체 수명
+                float atk = _playerScript.stats.Attack; // 플레이어의 공격력값을 가져옴
+                Attack attackScript = _bullet.GetComponent<Attack>();
+                if (attackScript != null)
+                {
+                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                }
+                Destroy(_bullet, _bulletTime);
             }
 
             yield return new WaitForSeconds(GetAttackDelay());

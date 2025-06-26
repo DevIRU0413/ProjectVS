@@ -11,16 +11,47 @@ public enum CharacterClass
     [System.Serializable]
     public class PlayerStats
     {
-        public float Health;      //체력
-        public float Attack;      //공격력
-        public float Defense;     //방어력
-        public float MoveSpeed;   //이동속도
-        public float AttackSpeed; //공격속도
+    public int Level = 1; // 현재 레벨
+    public float CurrentExp = 0f; // 현재 경험치
+    public float MaxExp = 100f; // 레벨업 까지 필요한 경험치
 
+    public float MaxHealth;       //최대 체력
+    public float Health;      //현재 체력
+    public float Attack;      //공격력
+    public float Defense;     //방어력
+    public float MoveSpeed;   //이동속도
+    public float AttackSpeed; //공격속도
+
+
+    public bool AddExp(float amount)
+    {
+        CurrentExp += amount;
+        if(CurrentExp >= MaxExp)
+        {
+            LevelUp();
+            return true;
+        }
+        return false;
+    }
+    private void LevelUp()
+    {
+        CurrentExp -= MaxExp;
+        Level++;
+        MaxExp *= 1.2f; // 다음 레벨업까지 필요한 경험치 증가
+
+        MaxHealth += 5;
+        Attack += 2;
+        Defense += 1;
+        MoveSpeed += 0;
+        AttackSpeed += 0;
+
+        Debug.Log($"레벨 업, 현재 레벨 : {Level}, 남은 경험치 : {CurrentExp}, 다음 레벨까지 : {MaxExp}");
+    }
         //플레이어를 생성할 때 사용할 수 있도록 값을 받음
         public PlayerStats(float health, float attack, float defense, float moveSpeed, float attackSpeed)
         {
-            Health = health;
+        MaxHealth = health;
+        Health = health;
             Attack = attack;
             Defense = defense;
             MoveSpeed = moveSpeed;
@@ -28,7 +59,7 @@ public enum CharacterClass
         }
         public PlayerStats Clone()
         {//원본 값이 수정되지 않도록 클론을 이용
-            return new PlayerStats(Health, Attack, Defense, MoveSpeed, AttackSpeed);
+            return new PlayerStats(MaxHealth, Attack, Defense, MoveSpeed, AttackSpeed);
         }
     }
     public static class PlayerClassData

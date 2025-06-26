@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class StoreItem : MonoBehaviour
 {
+
     public string itemName = "임시 아이템";
     public int price;
-    public int bonusHealth;
+    public int recovery;
     public int bonusAttack;
     public int bonusDefense;
     public float bonusAttackSpeed;
@@ -18,7 +19,7 @@ public class StoreItem : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                bool bought = player.TryBuyItem(price, bonusHealth, bonusAttack, bonusDefense, bonusAttackSpeed, bonusMoveSpeed, itemName);
+                bool bought = player.TryBuyItem(price, recovery, bonusAttack, bonusDefense, bonusAttackSpeed, bonusMoveSpeed, itemName);
                 if (bought)
                 {
                     Destroy(gameObject); // 아이템 제거

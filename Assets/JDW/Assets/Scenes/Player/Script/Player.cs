@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         stats = PlayerClassData.DefaultStats[selectedClass].Clone();
-        Debug.Log($"선택 클래스: {selectedClass}, 체력: {stats.Health}, 공격력: {stats.Attack}, 방어력: {stats.Defense}, 공격속도 : {stats.AttackSpeed}, 이동속도 : {stats.MoveSpeed} 골드: {gold}");
+        Debug.Log($"선택 클래스: {selectedClass}, 체력: {stats.MaxHealth}, 공격력: {stats.Attack}, 방어력: {stats.Defense}, 공격속도 : {stats.AttackSpeed}, 이동속도 : {stats.MoveSpeed} 골드: {gold}");
         
     }
     public bool TryBuyItem(int price, int bonusHealth, int bonusAttack, int bonusDefense, float bonusAttackSpeed, float bonusMoveSpeed, string itemName)
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
             return false;
         }
         gold -= price;
-        stats.Health += bonusHealth;
+        stats.Health = Mathf.Min(stats.Health + bonusHealth, stats.MaxHealth); // 회복이 최대체력을 넘기 못하게
         stats.Attack += bonusAttack;
         stats.Defense += bonusDefense;
         stats.AttackSpeed += bonusAttackSpeed;
@@ -72,5 +72,15 @@ public class Player : MonoBehaviour
         // TODO : 플레이어 사망시 UI출력 또는 씬 이동 로직 추가
 
         Debug.Log("플레이어 사망");
+    }
+    public void ExpUp(float amount)
+    {
+        if (isDead) return;
+        bool LeveledUp = stats.AddExp(amount);
+        Debug.Log($"경험치 흭득 : {amount}, 현재 경험치 : {stats.CurrentExp}/{stats.MaxExp}");
+        if(LeveledUp)
+        {
+            Debug.Log($"레벨 업 {stats.Level}");
+        }
     }
 }
