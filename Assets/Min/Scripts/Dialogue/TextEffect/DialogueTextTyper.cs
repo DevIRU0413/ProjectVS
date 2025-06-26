@@ -9,11 +9,12 @@ namespace ProjectVS.Dialogue.TextEffect.DialogueTextTyper
 {
     public class DialogueTextTyper : TextTyperBaseClass
     {
-        private void Awake()
+        protected override void Awake()
         {
-            if (_text == null)
+            base.Awake();
+            if (_contentText == null)
             {
-                _text = GetComponent<TMPro.TMP_Text>();
+                _contentText = GetComponent<TMPro.TMP_Text>();
             }
         }
     }
