@@ -12,6 +12,8 @@ namespace ProjectVS.Dialogue.ChoiceData
         public int NextDialogueID;
         public string ChoiceText1;
         public string ChoiceText2;
+
+        public string CharacterName => "주인공";
     }
 }
 
