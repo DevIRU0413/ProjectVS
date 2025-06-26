@@ -38,37 +38,17 @@ public class PlayerMove : MonoBehaviour
     {
         inputActions.Disable();
     }
-
-    public void Update()
-    {
-       // playerMove();
-       
-    }
     private void FixedUpdate()
     {
+        playerMove();
+    }
+    public void playerMove()
+    {
         // rigidbody를 통해 이동 , 게임 매니저를 통해 player의 move값을 가져옴
-        rigid.velocity = MoveInput.normalized * GameManager.instance.player.MoveSpeed;
-        // rigid.velocity = MoveInput * GameManager.instance.player.MoveSpeed;
-        bool isWalking = MoveInput != Vector2.zero;
-        anim.SetBool("IsWalking", isWalking);
+        rigid.velocity = MoveInput.normalized * GameManager.instance.player.stats.MoveSpeed;
         // 이동 애니메이션, 이동시 IsWalking을 ture로 바꿈
         bool IsWalking = MoveInput != Vector2.zero;
         anim.SetBool("IsWalking", IsWalking);
-    }
-    private void playerMove()
-    {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-        Vector2 input = new Vector2(h, v).normalized;
-
-       
-
-        MoveInput = input;
-
-        //대각선 이동 속도 유지
-        MoveInput.Normalize();
-
-      
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

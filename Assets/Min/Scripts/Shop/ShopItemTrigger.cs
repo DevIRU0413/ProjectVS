@@ -34,8 +34,8 @@ namespace ProjectVS.Shop.ShopItemTrigger
                 if (_isPurchased) return;
 
                 // ItemSO 의 가격 판단
-                // if (ItemSO.price > Player.Money) return
-                // else Player.Money - ItemSO.price;
+                // if (ItemSO.price > PlayerStats.Money) return
+                // else PlayerStats.Money - ItemSO.price;
 
                 // 상점 NPC 말풍선 팝업
 

@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
     public Player player;
     public PlayerMove playerMove;
     public Bullet bullet;
@@ -15,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     private string _bossTag = "Boss";
     private string _storeTag = "Store";
+
+    public GameObject[] playerPrefabs; // 0 = 검, 1 = 도끼, 2 = 마법
 
     [SerializeField] GameObject Boss;
     [SerializeField] GameObject Store;
@@ -28,6 +29,10 @@ public class GameManager : MonoBehaviour
         TimeTxet();
         StopTile();
         StratrTile();
+    }
+    private void PlayerSpawnInput()
+    {
+        
     }
     private void TimeTxet()
     {

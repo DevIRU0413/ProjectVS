@@ -10,7 +10,6 @@ public class AttackPosition : MonoBehaviour
     public Transform Player;
     public float Radius = 1.5f;
     public Vector3 Direction => _direction;
-
     [SerializeField] private GameObject _swordPerfab;
     [SerializeField] private GameObject _axPerfab;
     [SerializeField] private GameObject _bulletPerfab;
@@ -92,7 +91,7 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_bullet, _bulletTime);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance.player.MagicAttackSpeed);
+            yield return new WaitForSeconds(GameManager.instance.player.stats.AttackSpeed);
         }
     }
     private IEnumerator Ax()
@@ -109,7 +108,7 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_ax, _meleeAttack);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance.player.AxAttackSpeed);
+            yield return new WaitForSeconds(GameManager.instance.player.stats.AttackSpeed);
         }
     }
     private IEnumerator Sword()
@@ -126,7 +125,7 @@ public class AttackPosition : MonoBehaviour
                 Destroy(_sword, _meleeAttack);
             }
             // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance.player.SwordAttackSpeed);
+            yield return new WaitForSeconds(GameManager.instance.player.stats.AttackSpeed);
         }
     }
 
