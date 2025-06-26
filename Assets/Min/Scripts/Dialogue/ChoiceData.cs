@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ProjectVS.Dialogue.ChoiceData
 {
     [System.Serializable]
-    public class ChoiceData : MonoBehaviour
+    public class ChoiceData
     {
         public int ID;
         public int NextDialogueID;
