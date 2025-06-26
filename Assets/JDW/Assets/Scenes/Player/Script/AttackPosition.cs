@@ -24,7 +24,15 @@ public class AttackPosition : MonoBehaviour
     private Vector3 _direction;
 
     private Coroutine _currentRoutine;
-    
+    private Player _playerScript;
+
+    private void Start()
+    {
+        if(Player != null)
+        {
+            _playerScript = Player.GetComponent<Player>();
+        }
+    }
     private void Update()
     {
         if (Player == null) return;
@@ -38,6 +46,11 @@ public class AttackPosition : MonoBehaviour
             StopCoroutine(_currentRoutine);
             _currentRoutine = null;
             Debug.Log("Store 활성화 → 코루틴 중단");
+        }
+        if (_playerScript != null && _playerScript.isDead)
+        {
+            Debug.Log("플레이어 사망 상태 → 공격 재시작 안 함");
+            return;
         }
         if (!Store.activeSelf && storeWasActive && _currentRoutine == null)
         {
@@ -84,6 +97,11 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
+            if (_playerScript != null && _playerScript.isDead)
+            {
+                Debug.Log("플레이어 사망 → Axe 공격 중단");
+                yield break;
+            }
             if (_axePerfab != null)
             {
                 GameObject _axe = Instantiate(_axePerfab, _muzzlePos.position, Quaternion.identity);
@@ -99,7 +117,11 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
-
+            if (_playerScript != null && _playerScript.isDead)
+            {
+                Debug.Log("플레이어 사망 → Sword 공격 중단");
+                yield break;
+            }
             if (_swordPerfab != null)// 프리팹에 설정되있는 경우에만 실행
             {
                 //투사체 생성
@@ -116,6 +138,11 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
+            if (_playerScript != null && _playerScript.isDead)
+            {
+                Debug.Log("플레이어 사망 → Fire 공격 중단");
+                yield break;
+            }
             if (_bulletPerfab != null)
             {
                 GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);

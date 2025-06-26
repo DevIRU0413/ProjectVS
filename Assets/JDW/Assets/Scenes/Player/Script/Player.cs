@@ -9,13 +9,20 @@ public class Player : MonoBehaviour
     public CharacterClass selectedClass;
     public PlayerStats stats;
     public int gold = 100; // 재화
+    public bool isDead = false;
+
+    private Animator anim;
 
     public List<string> inventory = new List<string>(); // 아이템 이름 저장용
-
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
     private void Start()
     {
         stats = PlayerClassData.DefaultStats[selectedClass].Clone();
         Debug.Log($"선택 클래스: {selectedClass}, 체력: {stats.Health}, 공격력: {stats.Attack}, 방어력: {stats.Defense}, 공격속도 : {stats.AttackSpeed}, 이동속도 : {stats.MoveSpeed} 골드: {gold}");
+        
     }
     public bool TryBuyItem(int price, int bonusHealth, int bonusAttack, int bonusDefense, float bonusAttackSpeed, float bonusMoveSpeed, string itemName)
     {
@@ -34,5 +41,36 @@ public class Player : MonoBehaviour
 
         Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHealth}, 공격력 +{bonusAttack}, 방어력 +{bonusDefense},  공격속도 +{bonusAttackSpeed}, 이동속도 +{bonusMoveSpeed} 남은 골드: {gold}");
         return true;
+    }
+    public void TakeDamage(float damage)
+    {
+        if (isDead) return;
+
+        stats.Health -= damage;
+        Debug.Log($"피해 : {damage}, 남은 체력 : {stats.Health}");
+
+        if(stats.Health <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        isDead = true;
+
+        if(anim !=null)
+                anim.SetTrigger("IsDead");
+
+        GetComponent<PlayerFlipbyMouse>().enabled = false;
+        GetComponent<PlayerMove>().enabled = false;
+        AttackPosition attack = GetComponentInChildren<AttackPosition>();
+        if (attack != null)
+            attack.enabled = false;
+        stats.AttackSpeed = 0;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        // TODO : 플레이어 사망시 UI출력 또는 씬 이동 로직 추가
+
+        Debug.Log("플레이어 사망");
     }
 }
