@@ -257,8 +257,8 @@ MonoBehaviour:
   mapSwitcer: {fileID: 0}
   MoveInput: {x: 0, y: 0}
   anim: {fileID: 8930400971873860480}
-  fadeManager: {fileID: 0}
-  timer: {fileID: 0}
+  fadeManager: {fileID: 1705760944804791855, guid: 933bb90b50166bf44911b92fa7f0ddda, type: 3}
+  timer: {fileID: 7439314377194012607, guid: e751d69887daeff448c05c857ec5922e, type: 3}
 --- !u!114 &8915004436936648237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,7 +473,7 @@ MonoBehaviour:
   _swordPerfab: {fileID: 1044545731354326905, guid: a7255bb8d3e804340a0be510b5dadd8d, type: 3}
   _axPerfab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
   _bulletPerfab: {fileID: 2418890576715569026, guid: c18e72a2d75595f459f7497f27fccc53, type: 3}
-  Store: {fileID: 0}
+  Store: {fileID: 6334962763312544992, guid: 0b106adf611f274479a32f663ce94a87, type: 3}
   _muzzlePos: {fileID: 846167591246401027}
   _bulletTime: 2
   _meleeAttack: 0.2

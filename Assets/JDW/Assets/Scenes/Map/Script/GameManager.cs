@@ -1,21 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
     public Player player;
     public PlayerMove playerMove;
     public Bullet bullet;
     public Timer timer;
     public MapSwitcer mapSwitcer;
+    public AttackPosition attackPosition;
 
     private string _bossTag = "Boss";
     private string _storeTag = "Store";
 
     public GameObject[] playerPrefabs; // 0 = 검, 1 = 도끼, 2 = 마법
+    public Transform playerSpawnPoint;
+    public int CurrentClassIndex { get; private set; }
+
+    private PlayerAction inputActions;
+    private GameObject currentPlayerInstance;
 
     [SerializeField] GameObject Boss;
     [SerializeField] GameObject Store;
@@ -23,16 +32,67 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        inputActions = new PlayerAction();
+        inputActions.CharacterSelect.Enable();
+        inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
     }
+    private void OnDestroy()
+    {
+        
+        inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect;
+    }
+    private void OnClassSelect(InputAction.CallbackContext ctx)
+    {
+        if (currentPlayerInstance != null) return; // 이미 플레이어가 생성되었으면 무시
+
+        string key = ctx.control.displayName; // 입력된 키 문자열 ("1", "2", "3")
+        int index = -1;
+
+        // 키에 따라 프리팹 인덱스 결정
+        switch (key)
+        {
+            case "1": index = 0; break;
+            case "2": index = 1; break;
+            case "3": index = 2; break;
+        }
+
+        if (index >= 0 && index < playerPrefabs.Length)
+            SpawnPlayer(index); // 해당 인덱스의 클래스 생성
+    }
+    private void SpawnPlayer(int index)
+    {
+        currentPlayerInstance = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
+        player = currentPlayerInstance.GetComponent<Player>();
+        playerMove = currentPlayerInstance.GetComponent<PlayerMove>();
+
+        attackPosition = currentPlayerInstance.GetComponentInChildren<AttackPosition>();
+        if (attackPosition == null)
+        {
+            Debug.LogError("AttackPosition 컴포넌트가 프리팹에 없음!");
+            return;
+        }
+
+        // 번호에 따라 공격 코루틴 자동 실행
+        switch (index)
+        {
+            case 0:
+                attackPosition.SwitchCoroutine(attackPosition.Axe());
+                break;
+            case 1:
+                attackPosition.SwitchCoroutine(attackPosition.Sword());
+                break;
+            case 2:
+                attackPosition.SwitchCoroutine(attackPosition.Fire());
+                break;
+        }
+        CurrentClassIndex = index;
+    }
+
     private void Update()
     {
         TimeTxet();
         StopTile();
         StratrTile();
-    }
-    private void PlayerSpawnInput()
-    {
-        
     }
     private void TimeTxet()
     {

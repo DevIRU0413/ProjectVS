@@ -83,6 +83,56 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "CharacterSelect",
+            "id": "99ec0dae-9f35-4906-bb5a-af346c54e0ce",
+            "actions": [
+                {
+                    "name": "SelectClass",
+                    "type": "Button",
+                    "id": "f66d6ddd-b841-4bd5-94ee-66a2368981d4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ec4b80ab-348b-48ef-96b5-d3280a50c292",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectClass",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c516672-7edd-422a-bbd7-1fd234b8fd3f",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectClass",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f12e470-f020-4e21-9931-4442d8490a9d",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectClass",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

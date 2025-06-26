@@ -18,6 +18,8 @@ public class AttackPosition : MonoBehaviour
     [SerializeField] private float _bulletTime;
     [SerializeField] private float _meleeAttack = 0.2f;
 
+    private bool storeWasActive = false;
+
 
     private Vector3 _direction;
 
@@ -37,23 +39,22 @@ public class AttackPosition : MonoBehaviour
             _currentRoutine = null;
             Debug.Log("Store 활성화 → 코루틴 중단");
         }
+        if (!Store.activeSelf && storeWasActive && _currentRoutine == null)
+        {
+            Debug.Log("Store 비활성화 → 공격 재시작");
 
-        // 테스트용 무기 스위칭
-        if (Keyboard.current != null && Keyboard.current.digit1Key.wasPressedThisFrame)
-        {
-            if (Store.activeSelf) return;
-            SwitchCoroutine(Fire());
+            // 클래스에 따라 재실행 (GameManager에 저장된 클래스 인덱스 사용)
+            int index = GameManager.instance.CurrentClassIndex;
+            switch (index)
+            {
+                case 0: SwitchCoroutine(Axe()); break;
+                case 1: SwitchCoroutine(Sword()); break;
+                case 2: SwitchCoroutine(Fire()); break;
+            }
         }
-        else if (Keyboard.current != null && Keyboard.current.digit2Key.wasPressedThisFrame)
-        {
-            if (Store.activeSelf) return;
-            SwitchCoroutine(Ax());
-        }
-        else if (Keyboard.current != null && Keyboard.current.digit3Key.wasPressedThisFrame)
-        {
-            if (Store.activeSelf) return;
-            SwitchCoroutine(Sword());
-        }
+
+        storeWasActive = Store.activeSelf;
+
     }
     public void CursorCoordinates()
     {
@@ -68,7 +69,7 @@ public class AttackPosition : MonoBehaviour
         // 방향백터 계산
         _direction = (_mouseWorldPos - Player.position).normalized;
     }
-    private void SwitchCoroutine(IEnumerator newRoutine)
+    public void SwitchCoroutine(IEnumerator newRoutine)
     {
         // 코루틴 스위칭 함수
         if(_currentRoutine != null)
@@ -77,24 +78,8 @@ public class AttackPosition : MonoBehaviour
         }
         _currentRoutine = StartCoroutine(newRoutine);
     }
-    private IEnumerator Fire()
-    {
-        // 무한 반복
-        while (true)
-        {
-            if (_bulletPerfab != null)
-            {
-                // 투사체 생성
-                GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
-                _bullet.transform.right = _direction;
-                // 시간이 지나면 삭제
-                Destroy(_bullet, _bulletTime);
-            }
-            // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.instance.player.stats.AttackSpeed);
-        }
-    }
-    private IEnumerator Ax()
+    
+    public IEnumerator Axe()
     {
         // 무한 반복
         while (true)
@@ -111,7 +96,7 @@ public class AttackPosition : MonoBehaviour
             yield return new WaitForSeconds(GameManager.instance.player.stats.AttackSpeed);
         }
     }
-    private IEnumerator Sword()
+    public IEnumerator Sword()
     {
         // 무한 반복
         while (true)
@@ -128,5 +113,21 @@ public class AttackPosition : MonoBehaviour
             yield return new WaitForSeconds(GameManager.instance.player.stats.AttackSpeed);
         }
     }
-
+public IEnumerator Fire()
+    {
+        // 무한 반복
+        while (true)
+        {
+            if (_bulletPerfab != null)
+            {
+                // 투사체 생성
+                GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
+                _bullet.transform.right = _direction;
+                // 시간이 지나면 삭제
+                Destroy(_bullet, _bulletTime);
+            }
+            // 투사체의 발사 간격
+            yield return new WaitForSeconds(GameManager.instance.player.stats.AttackSpeed);
+        }
+    }
 }
