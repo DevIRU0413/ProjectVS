@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 using ProjectVS.Utils.PriorityQueue;
 using ProjectVS.Utils.Singleton;
@@ -28,16 +29,12 @@ namespace ProjectVS.Utils.UIManager
         {
             if (_isAnimating) return;
 
-            // TODO: New Input System 패키지 설치 후 주석 해제 및 수정
+            // TODO: 플레이어 컨트롤러로 이관해야될 수도
 
-            //if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
-            //{
-            //    CloseTopPanel();
-            //}
-
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
             {
-                CloseTopPanel();
+                // MEMO: 이 메서드는 한 개의 패널만이 남았을 때도 닫는거라 메인메뉴에서는 사용하면 안됨
+                ForceCloseTopPanel();
             }
         }
 
