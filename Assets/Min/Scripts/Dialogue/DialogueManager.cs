@@ -14,11 +14,14 @@ using ProjectVS.Dialogue.TextEffect.TextTyperBase;
 using DialogueLogManagerClass = ProjectVS.Dialogue.DialogueLogManager.DialogueLogManager;
 using ProjectVS.Utils.UIManager;
 using ProjectVS.Utils.ObservableProperty;
+using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.ChoiceDialogueManager;
 
 
 namespace ProjectVS.Dialogue.DialogueManager
 {
     // TODO: IllustPath를 참조한 이미지 로딩 시스템
+    // TODO: 클래스에 책임이 너무 많은 것 같아서 분리해야 될 듯
+
     public class DialogueManager : MonoBehaviour
     {
         [Header("NPC 호감도 데이터")]
@@ -52,6 +55,8 @@ namespace ProjectVS.Dialogue.DialogueManager
         [Header("대화 로그 매니저")]
         [SerializeField] private DialogueLogManagerClass _dialogueLogManager;
 
+        [Header("선택지 매니저")]
+        [SerializeField] private ChoiceDialogueManagerClass _choiceDialogueManager;
 
         public ObservableProperty<bool> IsAutoMode = new(false);
 
@@ -172,6 +177,26 @@ namespace ProjectVS.Dialogue.DialogueManager
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 _currentDialogueIndex--;
+                return;
+            }
+
+            ChoiceDataClass choiceData = _choiceList.Find(d => d.NextDialogueID == nextID);
+            if (choiceData != null)
+            {
+                _choiceDialogueManager.ShowChoiceButtons(
+                    choiceData.ChoiceText1,
+                    choiceData.ChoiceText2,
+                    () =>
+                    {
+                        _dialogueLogManager.AddLogBox(choiceData.CharacterName, choiceData.ChoiceText1);
+                        ShowDialogue(choiceData.NextDialogueID, null);
+                    },
+                    () =>
+                    {
+                        _dialogueLogManager.AddLogBox(choiceData.CharacterName, choiceData.ChoiceText2);
+                        ShowDialogue(choiceData.NextDialogueID, null);
+                    });
+
                 return;
             }
 
