@@ -14,6 +14,7 @@ public enum CharacterClass
     public int Level = 1; // 현재 레벨
     public float CurrentExp = 0f; // 현재 경험치
     public float MaxExp = 100f; // 레벨업 까지 필요한 경험치
+    public int Gold = 0; // 플레이어 재화
 
     public float MaxHealth;       //최대 체력
     public float Health;      //현재 체력
@@ -22,7 +23,11 @@ public enum CharacterClass
     public float MoveSpeed;   //이동속도
     public float AttackSpeed; //공격속도
 
-
+    public void GainReward(float exp, int gold)
+    {
+        Gold += gold;
+        AddExp(exp);
+    }
     public bool AddExp(float amount)
     {
         CurrentExp += amount;
@@ -59,8 +64,13 @@ public enum CharacterClass
         }
         public PlayerStats Clone()
         {//원본 값이 수정되지 않도록 클론을 이용
-            return new PlayerStats(MaxHealth, Attack, Defense, MoveSpeed, AttackSpeed);
-        }
+        PlayerStats clone = new PlayerStats(MaxHealth, Attack, Defense, MoveSpeed, AttackSpeed);
+        clone.Level = this.Level;
+        clone.CurrentExp = this.CurrentExp;
+        clone.MaxExp = this.MaxExp;
+        clone.Gold = this.Gold;
+        return clone;
+    }
     }
     public static class PlayerClassData
     {// 클레스별 초기 스탯을 설정해 놓은 보관함

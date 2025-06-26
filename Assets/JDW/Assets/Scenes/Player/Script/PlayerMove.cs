@@ -56,6 +56,7 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.Log("상점을 나감");
             StartCoroutine(HandleFadeTransition());
+            // TODO : 씬전환으로 진행할경우 코드추가
         }
     }
     private IEnumerator HandleFadeTransition()

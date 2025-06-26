@@ -11,11 +11,11 @@ public class GameManager : MonoBehaviour
     
     public Timer timer;
     public MapSwitcer mapSwitcer;
+    public PlayerStats playerStats;
 
     [HideInInspector] public Player player;
     [HideInInspector] public PlayerMove playerMove;
     [HideInInspector] public AttackPosition attackPosition;
-    [HideInInspector] public Bullet bullet;
 
     private string _bossTag = "Boss";
     private string _storeTag = "Store";
@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
         player = currentPlayerInstance.GetComponent<Player>();
         playerMove = currentPlayerInstance.GetComponent<PlayerMove>();
 
+       
+
         attackPosition = currentPlayerInstance.GetComponentInChildren<AttackPosition>();
         if (attackPosition == null)
         {
@@ -91,16 +93,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        TimeTxet();
+        TimeText();
         StopTile();
         StratrTile();
     }
-    private void TimeTxet()
+    private void TimeText()
     {
         GameObject boss = GameObject.FindWithTag(_bossTag);// 보스 태그를 확인
         if (boss != null) { timer.timerText.text = "Boss!"; timer.PauseTimer(); return; }//시간을 멈추고 그 태그로 표기
         GameObject store = GameObject.FindWithTag(_storeTag);// 상점 태그를 확인
-        if (store != null) { timer.timerText.text = "$Store$"; timer.PauseTimer(); return; }//시간을 멈추고 그 태그로 표기
+        if (store != null) { timer.timerText.text = "$Sore$"; timer.PauseTimer(); return; }//시간을 멈추고 그 태그로 표기
         timer.ResumeTimer();
     }
     private void StopTile()

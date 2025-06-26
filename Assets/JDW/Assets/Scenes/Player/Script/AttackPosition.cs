@@ -12,14 +12,11 @@ public class AttackPosition : MonoBehaviour
     public Vector3 Direction => _direction;
     [SerializeField] private GameObject _swordPerfab;
     [SerializeField] private GameObject _axePerfab;
-    [SerializeField] private GameObject _bulletPerfab;
-    [SerializeField] private GameObject Store;
+    [SerializeField] private GameObject _bulletPerfab; 
+
     [SerializeField] private Transform _muzzlePos;
     [SerializeField] private float _bulletTime = 3f;
     [SerializeField] private float _meleeAttack = 0.2f;
-
-    private bool storeWasActive = false;
-
 
     private Vector3 _direction;
 
@@ -40,40 +37,13 @@ public class AttackPosition : MonoBehaviour
         Vector3 _ovjPos = Player.position + _direction * Radius;
         transform.position = _ovjPos;
         transform.right = _direction;
-
-        if (Store.activeSelf && _currentRoutine != null)
-        {
-            StopCoroutine(_currentRoutine);
-            _currentRoutine = null;
-            Debug.Log("Store 활성화 → 코루틴 중단");
-        }
-        if (_playerScript != null && _playerScript.isDead)
-        {
-            Debug.Log("플레이어 사망 상태 → 공격 재시작 안 함");
-            return;
-        }
-        if (!Store.activeSelf && storeWasActive && _currentRoutine == null)
-        {
-            Debug.Log("Store 비활성화 → 공격 재시작");
-
-            // 클래스에 따라 재실행 (GameManager에 저장된 클래스 인덱스 사용)
-            int index = GameManager.instance.CurrentClassIndex;
-            switch (index)
-            {
-                case 0: SwitchCoroutine(Axe()); break;
-                case 1: SwitchCoroutine(Sword()); break;
-                case 2: SwitchCoroutine(Fire()); break;
-            }
-        }
-
-        storeWasActive = Store.activeSelf;
+                      
 
     }
     public void CursorCoordinates()
     {
         if (Mouse.current == null || Camera.main == null) return;
         // 마우스 위치를 월드기준으로 전환
-        // Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(
         new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(Camera.main.transform.position.z))
@@ -97,16 +67,10 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
-            if (_playerScript != null && _playerScript.isDead)
+           // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
+            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
             {
-                Debug.Log("플레이어 사망 → Axe 공격 중단");
-                yield break;
-            }
-
-            // Store 열려 있으면 코루틴 중단
-            if (Store != null && Store.activeSelf)
-            {
-                Debug.Log("Store 진입 중 → Axe 중단");
+                Debug.Log("공격 중단");//코루틴 중단
                 yield break;
             }
 
@@ -131,16 +95,10 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
-            if (_playerScript != null && _playerScript.isDead)
+            // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
+            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
             {
-                Debug.Log("플레이어 사망 → Attack 공격 중단");
-                yield break;
-            }
-
-            // Store 열려 있으면 코루틴 중단
-            if (Store != null && Store.activeSelf)
-            {
-                Debug.Log("Store 진입 중 → Attack 중단");
+                Debug.Log("공격 중단");
                 yield break;
             }
 
@@ -165,16 +123,10 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
-            if (_playerScript != null && _playerScript.isDead)
+            // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
+            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
             {
-                Debug.Log("플레이어 사망 → Magic 중단");
-                yield break;
-            }
-
-            // Store 열려 있으면 코루틴 중단
-            if (Store != null && Store.activeSelf)
-            {
-                Debug.Log("Store 진입 중 → Magic 중단");
+                Debug.Log("공격 중단");
                 yield break;
             }
 
@@ -204,4 +156,5 @@ public class AttackPosition : MonoBehaviour
         }
         return 1f / atkSpeed;
     }
+    
 }

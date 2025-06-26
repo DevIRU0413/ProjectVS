@@ -8,7 +8,9 @@ public class Player : MonoBehaviour
 {
     public CharacterClass selectedClass;
     public PlayerStats stats;
-    public int gold = 100; // 재화
+    public Timer timer;
+
+    public int gold = 100; // 기본 재화
     public bool isDead = false;
 
     private Animator anim;
@@ -59,15 +61,15 @@ public class Player : MonoBehaviour
         isDead = true;
 
         if(anim !=null)
-                anim.SetTrigger("IsDead");
+                anim.SetTrigger("IsDead"); // 사망 애니메이션
 
         GetComponent<PlayerFlipbyMouse>().enabled = false;
         GetComponent<PlayerMove>().enabled = false;
+        timer.PauseTimer(); // 플레어 사망시 시간 멈춤
         AttackPosition attack = GetComponentInChildren<AttackPosition>();
         if (attack != null)
             attack.enabled = false;
-        stats.AttackSpeed = 0;
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero; // 사망시 플레이어 스탑
 
         // TODO : 플레이어 사망시 UI출력 또는 씬 이동 로직 추가
 

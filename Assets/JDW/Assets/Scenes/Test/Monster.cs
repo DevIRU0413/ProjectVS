@@ -8,6 +8,9 @@ public class Monster : MonoBehaviour
 
     private float currentHp;
 
+    [SerializeField] private int _exp = 1;
+    [SerializeField] private int _gold = 5;
+
     private void Start()
     {
         currentHp = maxHp;
@@ -23,7 +26,19 @@ public class Monster : MonoBehaviour
     }
     private void Die()
     {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if(playerObj != null)
+        {
+            Player player = playerObj.GetComponent<Player>();
+            if(player != null)
+            {
+                player.ExpUp(_exp);
+                player.gold += _gold;
+                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.gold}");
+            }
+        }
         Debug.Log("몬스터 사망");
+        
         Destroy(gameObject);
     }
 }

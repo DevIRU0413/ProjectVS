@@ -59,7 +59,7 @@ public class Timer : MonoBehaviour
     {
         _isFading = true;
         yield return StartCoroutine(fadeManager.FadeOut()); // 패이드 아웃
-        mapSwitcer.OnstoreField(); // 상점 온/ 배틀 오프
+        mapSwitcer.OnStoreField(); // 상점 온/ 배틀 오프
         // TODO : 씬 변경일 경우 맵 스위처에서 씬이동으로 코드변경
 
         GameManager.instance.playerMove.PlayerPositionReset();

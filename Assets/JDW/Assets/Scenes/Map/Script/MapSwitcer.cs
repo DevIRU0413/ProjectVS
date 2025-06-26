@@ -23,7 +23,7 @@ public class MapSwitcer : MonoBehaviour
     {
         return battleField.activeSelf;
     }
-    public void OnstoreField()
+    public void OnStoreField()
     {
         Debug.Log("맵전환 실행");
         battleField.SetActive(false);
