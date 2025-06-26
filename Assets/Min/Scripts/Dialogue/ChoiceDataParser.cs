@@ -20,7 +20,7 @@ namespace ProjectVS.Dialogue.ChoiceDataParser
 
             for (int r = 3; r < rowCount; r++)
             {
-                ChoiceDataClass data = new GameObject($"ChoiceData_{r}").AddComponent<ChoiceDataClass>();
+                ChoiceDataClass data = new();
 
                 data.ID = TryParseInt(table.GetData(r, 0));
                 data.NextDialogueID = TryParseInt(table.GetData(r, 4));
