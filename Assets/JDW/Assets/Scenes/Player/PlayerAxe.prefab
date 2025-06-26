@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8930400971873860480}
   m_Layer: 3
   m_Name: PlayerAxe
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38afd9017f7565458e944c8818215cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSwitcer: {fileID: 0}
+  mapSwitcer: {fileID: 7238456504662222757, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}
   MoveInput: {x: 0, y: 0}
   anim: {fileID: 8930400971873860480}
   fadeManager: {fileID: 1705760944804791855, guid: 933bb90b50166bf44911b92fa7f0ddda, type: 3}
@@ -290,6 +290,8 @@ MonoBehaviour:
     Defense: 0
     MoveSpeed: 0
     AttackSpeed: 0
+  gold: 100
+  inventory: []
 --- !u!95 &8930400971873860480
 Animator:
   serializedVersion: 5
@@ -471,7 +473,7 @@ MonoBehaviour:
   Player: {fileID: 5327371813207693605}
   Radius: 1.5
   _swordPerfab: {fileID: 1044545731354326905, guid: a7255bb8d3e804340a0be510b5dadd8d, type: 3}
-  _axPerfab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
+  _axePerfab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
   _bulletPerfab: {fileID: 2418890576715569026, guid: c18e72a2d75595f459f7497f27fccc53, type: 3}
   Store: {fileID: 6334962763312544992, guid: 0b106adf611f274479a32f663ce94a87, type: 3}
   _muzzlePos: {fileID: 846167591246401027}

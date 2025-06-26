@@ -104,6 +104,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5069666792634985185, guid: d07c24919c9f9d743814699e83560225, type: 3}
+      propertyPath: m_Name
+      value: Tilemap2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069666792634985185, guid: d07c24919c9f9d743814699e83560225, type: 3}
       propertyPath: m_Layer
       value: 17
       objectReference: {fileID: 0}
@@ -277,7 +281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000409565023592145, guid: 2f8052768fc61c141a5e5930e437666b, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[4].second.m_AnimationSpeed
-      value: 5
+      value: 5.0000005
       objectReference: {fileID: 0}
     - target: {fileID: 4000409565023592145, guid: 2f8052768fc61c141a5e5930e437666b, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[5].second.m_AnimationSpeed
@@ -301,7 +305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000409565023592145, guid: 2f8052768fc61c141a5e5930e437666b, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[11].second.m_AnimationSpeed
-      value: 5.0000005
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4000409565023592145, guid: 2f8052768fc61c141a5e5930e437666b, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[12].second.m_AnimationSpeed
@@ -333,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000409565023592145, guid: 2f8052768fc61c141a5e5930e437666b, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[21].second.m_AnimationSpeed
-      value: 5
+      value: 5.0000005
       objectReference: {fileID: 0}
     - target: {fileID: 4000409565023592145, guid: 2f8052768fc61c141a5e5930e437666b, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[22].second.m_AnimationSpeed
@@ -472,6 +476,10 @@ PrefabInstance:
     - target: {fileID: 5464682261396461137, guid: c016f98d32f7b884893671b15678b8ec, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5791968754009969992, guid: c016f98d32f7b884893671b15678b8ec, type: 3}
+      propertyPath: m_Name
+      value: Tilemap4
       objectReference: {fileID: 0}
     - target: {fileID: 5791968754009969992, guid: c016f98d32f7b884893671b15678b8ec, type: 3}
       propertyPath: m_Layer
@@ -3952,6 +3960,10 @@ PrefabInstance:
     - target: {fileID: 6788642681070444425, guid: c8a843924278ed54dab4f76699675248, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9050781737844371492, guid: c8a843924278ed54dab4f76699675248, type: 3}
+      propertyPath: m_Name
+      value: Tilemap3
       objectReference: {fileID: 0}
     - target: {fileID: 9050781737844371492, guid: c8a843924278ed54dab4f76699675248, type: 3}
       propertyPath: m_Layer

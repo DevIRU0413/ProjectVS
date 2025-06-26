@@ -65,6 +65,7 @@ public class PlayerMove : MonoBehaviour
         mapSwitcer.OnBattleField(); // 배틀 온/ 상점 오프
         PlayerPositionReset();
         mapSwitcer.ResetTileMap(); // 상점에서 나왔을 때 타일들의 초기 위치
+        // TODO : 씬 변경일 경우 맵 스위처에서 씬이동으로 코드변경
         
         
         yield return StartCoroutine(fadeManager.FadeIn());

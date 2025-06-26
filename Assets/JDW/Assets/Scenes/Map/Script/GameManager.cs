@@ -8,13 +8,14 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public Player player;
-    public PlayerMove playerMove;
-    public Bullet bullet;
+    
     public Timer timer;
     public MapSwitcer mapSwitcer;
-    public AttackPosition attackPosition;
+
+    [HideInInspector] public Player player;
+    [HideInInspector] public PlayerMove playerMove;
+    [HideInInspector] public AttackPosition attackPosition;
+    [HideInInspector] public Bullet bullet;
 
     private string _bossTag = "Boss";
     private string _storeTag = "Store";
