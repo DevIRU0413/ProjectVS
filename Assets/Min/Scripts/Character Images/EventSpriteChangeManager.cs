@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.UI;
 
+using CostumeStateManagerClass = ProjectVS.CharacterImages.CostumeStateManager.CostumeStateManager;
 
-namespace ProjectVS.CharacterImages.SpriteChangeManager
+
+namespace ProjectVS.CharacterImages.EventSpriteChangeManager
 {
     public class EventSpriteChangeManager : MonoBehaviour
     {
@@ -13,7 +14,10 @@ namespace ProjectVS.CharacterImages.SpriteChangeManager
 
         [SerializeField] private Image _heroinEventImage;
         [SerializeField] private Image _shopNPCEvnetImage;
+        [SerializeField] private Image _cutSceneImage; // 대화 중 배경이 바뀔 때 사용되는 이미지, 아직 사용하지 않음
         [SerializeField] private Image _repeatImage;
+
+        [SerializeField] private CostumeStateManagerClass _costumeStateManager;
 
         private Color _disabledColor;
         private Color _enabledColor;
@@ -60,6 +64,9 @@ namespace ProjectVS.CharacterImages.SpriteChangeManager
 
         public void ChangeRepeatImage(string path)
         {
+            // 코스튬을 장착 중이라면 기존 스프라이트 무시하고 스프라이트 코스튬 스프라이트 사용
+            if (_costumeStateManager.CurrentCostume != null) return;
+
             if (!_spriteDict.TryGetValue(path, out Sprite sprite))
             {
                 sprite = Resources.Load<Sprite>(path);
@@ -78,6 +85,16 @@ namespace ProjectVS.CharacterImages.SpriteChangeManager
             _repeatImage.sprite = sprite;
             Debug.Log($"[SpriteChangeManager] ChangeRepeatImage: 이미지 변경 완료. 경로: {path}");
             Debug.Log($"[SpriteChangeManager] ChangeRepeatImage: 현재 스프라이트 이름: {_repeatImage.sprite?.name}");
+        }
+
+        public void ChangeCostumeImage()
+        {
+            if (_costumeStateManager.CurrentCostume != null)
+            {
+                _repeatImage.sprite = _costumeStateManager.CurrentCostume.CostumeSprite;
+                Debug.Log($"[SpriteChangeManager] ChangeRepeatImage: 코스튬 스프라이트 사용: {_repeatImage.sprite.name}");
+                return;
+            }
         }
 
         private void InitColor()
