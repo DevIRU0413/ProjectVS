@@ -15,6 +15,7 @@ using DialogueLogManagerClass = ProjectVS.Dialogue.DialogueLogManager.DialogueLo
 using ProjectVS.Utils.UIManager;
 using ProjectVS.Utils.ObservableProperty;
 using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.ChoiceDialogueManager;
+using SpriteChangeManagerClass = ProjectVS.CharacterImages.SpriteChangeManager.EventSpriteChangeManager;
 
 
 namespace ProjectVS.Dialogue.DialogueManager
@@ -58,6 +59,9 @@ namespace ProjectVS.Dialogue.DialogueManager
         [Header("선택지 매니저")]
         [SerializeField] private ChoiceDialogueManagerClass _choiceDialogueManager;
 
+        [Header("일러스트 변경 매니저")]
+        [SerializeField] private SpriteChangeManagerClass _spriteChangeManager;
+
         [Header("스테이지 이벤트 호감도 검사 통과 조건")]
         [SerializeField] private int _passAffinity = 50;
 
@@ -98,6 +102,15 @@ namespace ProjectVS.Dialogue.DialogueManager
 
             _currentDialogueData = data;
             _currentDialogueIndex = data.ID;
+
+            if (_currentDialogueData.IsRepeatable)
+            {
+                _spriteChangeManager.ChangeRepeatImage(_currentDialogueData.IllustPath);
+            }
+            else
+            {
+                _spriteChangeManager.ChangeEventImage(_currentDialogueData.IllustPath, _currentDialogueData.CharacterID);
+            }
 
             if (text == null)
             {
