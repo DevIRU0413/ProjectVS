@@ -2,7 +2,7 @@
 
 using ProjectVS.Player.State;
 
-using PVS;
+using ProjectVS;
 using ProjectVS.Util;
 
 using UnityEngine;
