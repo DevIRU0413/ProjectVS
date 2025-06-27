@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using ProjectVS;
+
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 // 추후 Ui관련 팀원분과 조율해서 합칠예정
 public class UiManager : MonoBehaviour
 {
     public Image ExpBar;//경험치바를 채울 이미지
     public Image HpBar; //체력바를 채울 이미지
-    public Player player;
+    public PlayerConfig player;
     public TextMeshProUGUI expText; // 경험치 
     public TextMeshProUGUI levelText; // 레벨 
     public TextMeshProUGUI hpText;// 체력
@@ -19,12 +20,12 @@ public class UiManager : MonoBehaviour
         ExpBar.fillAmount = 0f;
         expText.text = "0 / ?";
     }
- 
+
     private void Update()
     {
         if (player == null)
         {
-            player = FindObjectOfType<Player>(); // 자동으로 플레이어 찾음       
+            player = FindObjectOfType<PlayerConfig>(); // 자동으로 플레이어 찾음       
         }
 
         // 플레이어나 스탯이 없으면 실행x
@@ -37,7 +38,7 @@ public class UiManager : MonoBehaviour
         // 플레이어나 스탯이 없으면 실행x
         if (player == null || player.stats == null) return;
         // 체력 비율 
-        float hpRatio = player.stats.Health / player.stats.MaxHealth;
+        float hpRatio = player.stats.CurrentHp / player.stats.CurrentMaxHp;
         // 이미지 채움 정도 설정
         HpBar.fillAmount = Mathf.Clamp01(hpRatio);
 
@@ -52,8 +53,8 @@ public class UiManager : MonoBehaviour
         int currentGold = Mathf.FloorToInt(player.stats.Gold);
         goldText.text = $"{currentGold}";
         //플레이어 체력
-        int currentHp = Mathf.FloorToInt(player.stats.Health);
-        int maxHp = Mathf.FloorToInt(player.stats.MaxHealth);
+        int currentHp = Mathf.FloorToInt(player.stats.CurrentHp);
+        int maxHp = Mathf.FloorToInt(player.stats.CurrentMaxHp);
         hpText.text = $"HP {currentHp}/{maxHp}";
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 
 using ProjectVS.Interface;
-using ProjectVS.Manager;
 
 using UnityEngine;
-
-using static UnityEngine.GraphicsBuffer;
 
 namespace ProjectVS.Monster
 {

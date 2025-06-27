@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 
 using ProjectVS.Interface;
-using ProjectVS.Manager;
 using ProjectVS.Monster.Data;
 using ProjectVS.Monster.State;
 using ProjectVS.Phase;
+using ProjectVS.Player;
 using ProjectVS.Util;
 
 using UnityEngine;

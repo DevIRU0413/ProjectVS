@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using ProjectVS;
+
 using UnityEngine;
 
 public class StoreItem : MonoBehaviour
@@ -16,7 +19,7 @@ public class StoreItem : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 플레이어 태그가 붙어있는 대상과 충돌
         {
-            Player player = other.GetComponent<Player>();
+            PlayerConfig player = other.GetComponent<PlayerConfig>();
             if (player != null)
             {
                 bool bought = player.TryBuyItem(price, recovery, bonusAttack, bonusDefense, bonusAttackSpeed, bonusMoveSpeed, itemName);

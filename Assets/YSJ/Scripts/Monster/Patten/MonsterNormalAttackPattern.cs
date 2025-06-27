@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 
 using ProjectVS.Phase;
-using ProjectVS.Player;
-
-using ProjectVS;
 
 using Unity.VisualScripting;
 
@@ -24,7 +21,7 @@ namespace ProjectVS.Monster.Pattern
         [SerializeField] private AudioClip _attackCastClip;
 
         protected string _searchTargetTag;
-        protected PlayerController _target;
+        protected PlayerConfig _target;
         protected Collider2DAction _collider2DAction;
 
         public override void Init(MonsterPhaseController phaseController)
@@ -94,7 +91,7 @@ namespace ProjectVS.Monster.Pattern
         {
             if (!coll.CompareTag(_searchTargetTag)) return;
 
-            var pc = coll.GetComponentInParent<PlayerController>();
+            var pc = coll.GetComponentInParent<PlayerConfig>();
             if (pc != null)
             {
                 _target = pc;
@@ -105,7 +102,7 @@ namespace ProjectVS.Monster.Pattern
         {
             if (!coll.CompareTag(_searchTargetTag)) return;
 
-            var pc = coll.GetComponentInParent<PlayerController>();
+            var pc = coll.GetComponentInParent<PlayerConfig>();
             if (pc != null && pc == _target)
             {
                 _target = null;
@@ -114,9 +111,9 @@ namespace ProjectVS.Monster.Pattern
 
         private void PerformMeleeAttack(float damage)
         {
-            _target.Status.CurrentHp -= damage;
+            _target.stats.CurrentHp -= damage;
 
-            Debug.Log($"[Monster] {_phaseController.name} attacks {_target.name} for {damage} / Target HP {_target.Status.CurrentHp + damage} > {_target.Status.CurrentHp}");
+            Debug.Log($"[Monster] {_phaseController.name} attacks {_target.name} for {damage} / Target HP {_target.stats.CurrentHp + damage} > {_target.stats.CurrentHp}");
 
             // _target.OnHit?.Invoke();
         }

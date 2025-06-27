@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using ProjectVS;
+
 using UnityEngine;
 
 public class Boss : MonoBehaviour
@@ -8,10 +8,10 @@ public class Boss : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player player = other.GetComponent<Player>();
+            PlayerConfig player = other.GetComponent<PlayerConfig>();
             if (player != null)
             {
-                player.TakeDamage(50); 
+                player.TakeDamage(50);
             }
         }
     }

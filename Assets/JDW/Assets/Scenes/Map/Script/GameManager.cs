@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+using ProjectVS.Util;
+using ProjectVS;
 
-
-public class GameManager : MonoBehaviour
+public class GameManager : SimpleSingleton<GameManager>
 {
-    public static GameManager instance;
-    
     public Timer timer;
     public MapSwitcer mapSwitcer;
     public PlayerStats playerStats;
 
-    [HideInInspector] public Player player;
+    [HideInInspector] public PlayerConfig player;
     [HideInInspector] public PlayerMove playerMove;
     [HideInInspector] public AttackPosition attackPosition;
 
@@ -30,16 +29,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Boss;
     [SerializeField] GameObject Store;
     [SerializeField] GameObject Tilemap;
-    private void Awake()
+    protected override void Awake()
     {
-        instance = this;
         inputActions = new PlayerAction();
         inputActions.CharacterSelect.Enable();
         inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
     }
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
-        
         inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect;
     }
     private void OnClassSelect(InputAction.CallbackContext ctx)
@@ -63,7 +60,7 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayer(int index)
     {
         currentPlayerInstance = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
-        player = currentPlayerInstance.GetComponent<Player>();
+        player = currentPlayerInstance.GetComponent<PlayerConfig>();
         playerMove = currentPlayerInstance.GetComponent<PlayerMove>();
 
         UiManager ui = FindObjectOfType<UiManager>();

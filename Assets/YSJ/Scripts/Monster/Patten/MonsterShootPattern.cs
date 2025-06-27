@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-using ProjectVS.Manager;
 using ProjectVS.Phase;
 
 using UnityEngine;

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ProjectVS;
+
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -29,7 +31,7 @@ public class Monster : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if(playerObj != null)
         {
-            Player player = playerObj.GetComponent<Player>();
+            PlayerConfig player = playerObj.GetComponent<PlayerConfig>();
             if(player != null)
             {
                 player.ExpUp(_exp);

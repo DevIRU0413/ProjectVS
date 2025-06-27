@@ -1,6 +1,4 @@
-﻿using ProjectVS.Manager;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {

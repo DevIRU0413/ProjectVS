@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1266270028313418252}
   - component: {fileID: 6946014322182539346}
   - component: {fileID: 6671980498047598897}
+  - component: {fileID: 398037287332112161}
+  - component: {fileID: 5288185394540465648}
   m_Layer: 0
   m_Name: Ax
   m_TagString: Untagged
@@ -29,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1476766215471760246}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.6, y: -1.13, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.5749474, y: 2.1681225, z: 1.6677866}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -172,8 +174,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0960422e503d19344830eeabd7e735dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigid: {fileID: 1266270028313418252}
-  FirePower: 10
+  _rigid: {fileID: 0}
+  FirePower: 0
+--- !u!114 &398037287332112161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476766215471760246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c19e641ae107934f82d805e0892e1d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitCollider: {fileID: 3415793958859715375}
+  _hitLayer:
+    serializedVersion: 2
+    m_Bits: 262144
+  hitCount: 1
+  baseDamage: 10
+  canCrit: 1
+  critChance: 0.2
+  critMultiplier: 2
+  knockbackForce: 5
+--- !u!114 &5288185394540465648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476766215471760246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b223efe12d55fda4d801b603d599c3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delayDstory: 2
+  _vfx: {fileID: 0}
 --- !u!1001 &7845432621345995639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -243,6 +281,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d228c9cd621d8640aa77981a096524a, type: 3}
+--- !u!61 &3415793958859715375 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4866075509724072024, guid: 2d228c9cd621d8640aa77981a096524a, type: 3}
+  m_PrefabInstance: {fileID: 7845432621345995639}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9129211976813136693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1320094045928075330, guid: 2d228c9cd621d8640aa77981a096524a, type: 3}
