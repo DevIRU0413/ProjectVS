@@ -28,9 +28,9 @@ namespace ProjectVS.UIs.AffinityBar
 
         private void RenewAffinity()
         {
-            _affinityValueText.text = _affinityModel.Affinity.ToString();
+            _affinityValueText.text = _affinityModel.AffinityLevel.ToString();
 
-            float fillAmount = _affinityModel.Affinity / 100f;
+            float fillAmount = _affinityModel.AffinityLevel / 100f;
             _affinityFillImage.fillAmount = fillAmount;
         }
     }

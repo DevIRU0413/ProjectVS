@@ -224,7 +224,7 @@ namespace ProjectVS.Dialogue.DialogueManager
         {
             DialogueDataClass data = _dialogueList.Find(d => d.ID == _currentDialogueIndex);
 
-            if (_npcAffinityModel.Affinity < data.NeedAffinity)
+            if (_npcAffinityModel.AffinityLevel < data.NeedAffinity)
             {
                 return false;
             }
@@ -239,7 +239,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 1) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
 
                 return true;
@@ -255,7 +255,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 1) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
 
                 ShowDialogue(data.ID, _shopEnterText);
@@ -270,7 +270,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 2) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
 
                 ShowDialogue(data.ID, _eventText);
@@ -287,7 +287,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 2) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
 
                 return true;
@@ -305,7 +305,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (!data.IsRepeatable) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
 
                 repeatables.Add(data);
             }
@@ -338,7 +338,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 4) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
                 if (HasUnshownPreviousEventDialogue(data)) continue;
 
@@ -356,7 +356,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 4) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
                 if (HasUnshownPreviousEventDialogue(data)) continue;
 
@@ -384,7 +384,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             return _dialogueList.Exists(data =>
                 data.OccurTiming == 2 && // 이벤트 대사가 존재했는지 확인
                 data.NeedAffinity < stageClearData.NeedAffinity && // 현재 스테이지 클리어 호감도보다 낮은 호감도 조건인데
-                _npcAffinityModel.Affinity >= data.NeedAffinity && // 현재 호감도로 볼 수 있는 대사가 존재하는지 확인
+                _npcAffinityModel.AffinityLevel >= data.NeedAffinity && // 현재 호감도로 볼 수 있는 대사가 존재하는지 확인
                 !data.IsPrinted // 아직 보지 않은 대사인지 확인
             );
         }
