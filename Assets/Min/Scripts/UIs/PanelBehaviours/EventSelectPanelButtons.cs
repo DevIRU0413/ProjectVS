@@ -51,6 +51,11 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
             UIManager.Instance.Show("Event Panel");
         }
 
+        public void OnClickChangeCostumeButton()
+        {
+            UIManager.Instance.Show("Costume Change Panel");
+        }
+
         private void InitColor()
         {
             _clickableNormalColor = _eventButton.colors.selectedColor;
