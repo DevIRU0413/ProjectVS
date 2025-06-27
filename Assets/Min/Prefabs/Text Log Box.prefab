@@ -329,8 +329,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC598\uB294 \uC0C8\uAC70\uC5D0\uC6A9"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 20d194f4f659f214190523375a536440, type: 2}
-  m_sharedMaterial: {fileID: -2280895748991200849, guid: 20d194f4f659f214190523375a536440, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f52c09e18de49dc4ebbdceb78ce58f93, type: 2}
+  m_sharedMaterial: {fileID: 3097285094314802316, guid: f52c09e18de49dc4ebbdceb78ce58f93, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
