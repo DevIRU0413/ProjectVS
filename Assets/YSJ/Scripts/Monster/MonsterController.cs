@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using ProjectVS.Interface;
+using ProjectVS.Manager;
 using ProjectVS.Monster.Data;
 using ProjectVS.Monster.State;
 using ProjectVS.Phase;
-using ProjectVS.Player;
-
-using PVS;
 using ProjectVS.Util;
 
 using UnityEngine;
@@ -16,17 +15,21 @@ namespace ProjectVS.Monster
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(MonsterConfig))]
     [RequireComponent(typeof(MonsterPhaseController))]
-    public class MonsterController : MonoBehaviour
+    public class MonsterController : MonoBehaviour, IDamageable
     {
         [field: SerializeField]
         private Animator _animator;
 
         // 상태
-        [field: SerializeField, Header("State")]
+        [field: SerializeField]
         public MonsterStateType CurrentStateType { get; private set; } = MonsterStateType.None;
+
+        [Header("Move State")]
         [SerializeField] private float _stopMoveRange = 0.1f;
+        private bool _isMovementDelegated = false;
 
         public bool IsStateLock { get; private set; } = false;
+
 
         public bool IsDeath => CurrentStateType == MonsterStateType.Death;
         public bool IsMove => Target != null && MoveDirection != Vector3.zero && MoveDirection.magnitude > _stopMoveRange;
@@ -47,11 +50,7 @@ namespace ProjectVS.Monster
         private Dictionary<MonsterStateType, MonsterState> _states = new();
         private MonsterState _currentState;
 
-        private void Awake()
-        {
-            Init();
-        }
-
+        private void Awake() => Init();
         private void Update()
         {
             // 죽었을 때
@@ -61,7 +60,10 @@ namespace ProjectVS.Monster
                 ChangeState(MonsterStateType.Death, true);
             }
 
-            GetMoveDirection();
+            // 이동 권한 위임이 안일어났을 때
+            if (!_isMovementDelegated)
+                SetMoveDirection(Target.transform.position);
+
             _currentState?.Update();
         }
 
@@ -83,8 +85,7 @@ namespace ProjectVS.Monster
             _states.Add(MonsterStateType.Death, new MonsterDeathState(this, _animator));
 
             // 타겟 세팅
-            var playerGo = GameObject.FindGameObjectWithTag("Player");
-            Target = playerGo?.GetComponentInParent<PlayerConfig>();
+            Target = GameManager.ForceInstance.player;
 
             // 초기 상태 세팅
             if (_config == null)
@@ -121,9 +122,21 @@ namespace ProjectVS.Monster
             IsStateLock = false;
         }
 
-        private void GetMoveDirection()
+        // 이동 권한 위임, 해제
+        public void DelegateMovementAuthority()
         {
-            MoveDirection = (Target.transform.position - transform.position);
+            if (_isMovementDelegated) return;
+            _isMovementDelegated = true;
+        }
+        public void RevokeMovementAuthority()
+        {
+            if (!_isMovementDelegated) return;
+            _isMovementDelegated = false;
+        }
+
+        public void SetMoveDirection(Vector3 movePoint, bool onlySetMovePoint = false)
+        {
+            MoveDirection = (onlySetMovePoint) ? movePoint : (movePoint - transform.position);
         }
 
         private void OnDrawGizmos()
@@ -133,8 +146,15 @@ namespace ProjectVS.Monster
             // 방향
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, transform.position + MoveDirection.normalized * 3.0f);
-                
+
             Gizmos.DrawWireSphere(transform.position, _stopMoveRange);
+        }
+
+        public void TakeDamage(DamageInfo info)
+        {
+            // Debug.Log("몬스터 데미지 테스트");
+            Status.CurrentHp -= info.Amount;
+            OnHit.Invoke();
         }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4842759914165352858}
   - component: {fileID: 6774233982832850712}
   m_Layer: 0
-  m_Name: NormalAttackRange
+  m_Name: NormalAttackRangeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5991109044786636311}
   - component: {fileID: 5418725901387466130}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,6 +346,7 @@ Transform:
   m_Children:
   - {fileID: 1595064588322703561}
   - {fileID: 4842759914165352858}
+  - {fileID: 3107525380162803361}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8755618264959023760
@@ -374,7 +375,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &2295030452133988641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,9 +388,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75c4a0767410754783640c778641651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Hp>k__BackingField: 1
+  <Hp>k__BackingField: 25
   <ATK>k__BackingField: 1
-  <SPD>k__BackingField: 1
+  <SPD>k__BackingField: 5
   <AtkRange>k__BackingField: 1
   <ExpPoint>k__BackingField: 1
 --- !u!114 &607968483408253690
@@ -410,6 +411,7 @@ MonoBehaviour:
     MonsterPatternList:
     - monsterPattern: {fileID: 2321390148805907380}
       Weight: 1
+      AamageMultiplier: 1
 --- !u!114 &257882931130782202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,3 +450,84 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 0}
   _attackClip: {fileID: 0}
   _attackCastClip: {fileID: 0}
+--- !u!1 &6895914390915293306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3107525380162803361}
+  - component: {fileID: 3009707736585258255}
+  - component: {fileID: 3372086272022670783}
+  m_Layer: 18
+  m_Name: DamageableCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3107525380162803361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6895914390915293306}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5120001472748250191}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &3009707736585258255
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6895914390915293306}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &3372086272022670783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6895914390915293306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e379a4521d153804abc3ec9cf6754357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2924864599327088652}
