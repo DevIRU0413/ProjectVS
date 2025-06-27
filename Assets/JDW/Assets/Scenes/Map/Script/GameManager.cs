@@ -66,6 +66,10 @@ public class GameManager : MonoBehaviour
         player = currentPlayerInstance.GetComponent<Player>();
         playerMove = currentPlayerInstance.GetComponent<PlayerMove>();
 
+        UiManager ui = FindObjectOfType<UiManager>();
+        if (ui != null)
+            ui.player = player; // 생성된 플레이어를 ui매니저한테 줌
+
        
 
         attackPosition = currentPlayerInstance.GetComponentInChildren<AttackPosition>();
