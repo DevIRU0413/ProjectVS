@@ -1,4 +1,4 @@
-﻿namespace PVS
+﻿namespace ProjectVS
 {
     public enum PlayerStateType
     {
