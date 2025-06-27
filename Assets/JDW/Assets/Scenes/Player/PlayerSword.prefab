@@ -285,12 +285,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedClass: 0
   stats:
+    Level: 0
+    CurrentExp: 0
+    MaxExp: 0
+    Gold: 0
+    MaxHealth: 0
     Health: 0
     Attack: 0
     Defense: 0
     MoveSpeed: 0
     AttackSpeed: 0
+  timer: {fileID: 7439314377194012607, guid: e751d69887daeff448c05c857ec5922e, type: 3}
   gold: 100
+  isDead: 0
   inventory: []
 --- !u!95 &8930400971873860480
 Animator:
@@ -475,7 +482,6 @@ MonoBehaviour:
   _swordPerfab: {fileID: 1044545731354326905, guid: a7255bb8d3e804340a0be510b5dadd8d, type: 3}
   _axePerfab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
   _bulletPerfab: {fileID: 2418890576715569026, guid: c18e72a2d75595f459f7497f27fccc53, type: 3}
-  Store: {fileID: 6334962763312544992, guid: 0b106adf611f274479a32f663ce94a87, type: 3}
   _muzzlePos: {fileID: 846167591246401027}
   _bulletTime: 2
   _meleeAttack: 0.2

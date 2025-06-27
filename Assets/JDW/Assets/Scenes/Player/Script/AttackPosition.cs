@@ -16,7 +16,7 @@ public class AttackPosition : MonoBehaviour
 
     [SerializeField] private Transform _muzzlePos;
     [SerializeField] private float _bulletTime = 3f;
-    [SerializeField] private float _meleeAttack = 0.2f;
+    [SerializeField] private float _meleeAttack = 2; // 오브젝트의 잔존시간
 
     private Vector3 _direction;
 

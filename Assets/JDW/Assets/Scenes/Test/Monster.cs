@@ -33,8 +33,8 @@ public class Monster : MonoBehaviour
             if(player != null)
             {
                 player.ExpUp(_exp);
-                player.gold += _gold;
-                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.gold}");
+                player.stats.Gold += _gold;
+                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.stats.Gold}");
             }
         }
         Debug.Log("몬스터 사망");

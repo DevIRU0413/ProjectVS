@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public PlayerStats stats;
     public Timer timer;
 
-    public int gold = 100; // 기본 재화
+   // public int gold = 100; // 기본 재화
     public bool isDead = false;
 
     private Animator anim;
@@ -23,17 +23,17 @@ public class Player : MonoBehaviour
     private void Start()
     {
         stats = PlayerClassData.DefaultStats[selectedClass].Clone();
-        Debug.Log($"선택 클래스: {selectedClass}, 체력: {stats.MaxHealth}, 공격력: {stats.Attack}, 방어력: {stats.Defense}, 공격속도 : {stats.AttackSpeed}, 이동속도 : {stats.MoveSpeed} 골드: {gold}");
+        Debug.Log($"선택 클래스: {selectedClass}, 체력: {stats.MaxHealth}, 공격력: {stats.Attack}, 방어력: {stats.Defense}, 공격속도 : {stats.AttackSpeed}, 이동속도 : {stats.MoveSpeed} 골드: {stats.Gold}");
         
     }
     public bool TryBuyItem(int price, int bonusHealth, int bonusAttack, int bonusDefense, float bonusAttackSpeed, float bonusMoveSpeed, string itemName)
     {
-        if(gold < price)
+        if(stats.Gold < price)
         {
             Debug.Log("골드 부족");
             return false;
         }
-        gold -= price;
+        stats.Gold -= price;
         stats.Health = Mathf.Min(stats.Health + bonusHealth, stats.MaxHealth); // 회복이 최대체력을 넘기 못하게
         stats.Attack += bonusAttack;
         stats.Defense += bonusDefense;
@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         stats.MoveSpeed += bonusMoveSpeed;
         inventory.Add(itemName);
 
-        Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHealth}, 공격력 +{bonusAttack}, 방어력 +{bonusDefense},  공격속도 +{bonusAttackSpeed}, 이동속도 +{bonusMoveSpeed} 남은 골드: {gold}");
+        Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHealth}, 공격력 +{bonusAttack}, 방어력 +{bonusDefense},  공격속도 +{bonusAttackSpeed}, 이동속도 +{bonusMoveSpeed} 남은 골드: {stats.Gold}");
         return true;
     }
     public void TakeDamage(float damage)
