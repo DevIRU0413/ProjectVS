@@ -15,12 +15,12 @@ using DialogueLogManagerClass = ProjectVS.Dialogue.DialogueLogManager.DialogueLo
 using ProjectVS.Utils.UIManager;
 using ProjectVS.Utils.ObservableProperty;
 using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.ChoiceDialogueManager;
-using SpriteChangeManagerClass = ProjectVS.CharacterImages.SpriteChangeManager.EventSpriteChangeManager;
+using SpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
+using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
 
 
 namespace ProjectVS.Dialogue.DialogueManager
 {
-    // TODO: IllustPath를 참조한 이미지 로딩 시스템
     // TODO: 클래스에 책임이 너무 많은 것 같아서 분리해야 될 듯
 
     public class DialogueManager : MonoBehaviour
@@ -44,6 +44,8 @@ namespace ProjectVS.Dialogue.DialogueManager
         private CsvTable _choiceTable;
 
         private DialogueDataClass _currentDialogueData;
+
+        public DialogueDataClass CurrentDialogueData => _currentDialogueData; // 코스튬 상점에서 접근하기 위해 열어둠
 
         private List<DialogueDataClass> _dialogueList = new();
         private List<ChoiceDataClass> _choiceList = new();
@@ -142,7 +144,24 @@ namespace ProjectVS.Dialogue.DialogueManager
 
             Debug.Log($"[DialogueManager] 현재 대사: {data.ID} - {data.Content}");
 
-            // TODO: 일러스트, 선택지 UI 등 출력 처리
+        }
+
+        // 캐릭터 구매 시 대화 출력 메서드
+        // _currentDialogueData, _currentText 등의 갱신 없이 일회성으로 사용가능함
+        public void ShowBuyDialogue(int id)
+        {
+            DialogueDataClass data = _dialogueList.Find(d => d.ID == id);
+            if (data == null)
+            {
+                Debug.LogWarning($"[DialogueManager] 해당 ID의 대사가 없습니다: {id}");
+                return;
+            }
+
+            _repeatText.ClearAction();
+            _repeatText.StartContentTyping(data.Content);
+            _repeatText.StartNameTyping(data.CharacterName);
+
+            Debug.Log($"[DialogueManager] 코스튬 구매 대사 출력: {data.ID} - {data.Content}");
         }
 
 
@@ -392,6 +411,16 @@ namespace ProjectVS.Dialogue.DialogueManager
         public void ShowCutsceneDialogue()
         {
             // TODO: 컷신 대사 출력 로직 구현
+        }
+
+        // TODO: 최종 스테이지 직전, 상점을 나가고 대사 나오게 구현
+        public void ShowBeforeFinalStageDialogue()
+        {
+            foreach (var data in _dialogueList)
+            {
+                if (data.OccurTiming != 6) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
+            }
         }
 
         // 패널의 애니메이션으로 인한 활성화 지연 대기 코루틴
