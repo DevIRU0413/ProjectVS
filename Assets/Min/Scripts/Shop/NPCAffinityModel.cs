@@ -8,31 +8,59 @@ namespace ProjectVS.Shop.NPCAffinityModel
 {
     public class NPCAffinityModel : MonoBehaviour
     {
-        private int _affinityExp = 0;
-        private int _affinityLevel = 0;
+        private int _affinityCurrentExp = 0;
+        private int _affinityLevel = 1;
 
         private const int AFFINITY_EXP_MAX = 100;
         private const int AFFINITY_EXP_MIN = 0;
         private const int AFFINITY_LEVEL_MAX = 100;
-        private const int AFFINITY_LEVEL_MIN = 0;
+        private const int AFFINITY_LEVEL_MIN = 1;
 
 
         public int AffinityLevel => _affinityLevel;
-        public int AffinityExp => _affinityExp;
+
+        public string AffinityLevelString
+        {
+            get
+            {
+                if (_affinityLevel >= AFFINITY_LEVEL_MAX)
+                {
+                    return "Max";
+                }
+                return _affinityLevel.ToString();
+            }
+        }
+        public int AffinityCurrentExp => _affinityCurrentExp;
         public int AffinityExpMax => AFFINITY_EXP_MAX;
 
 
         public void IncreaseAffinity(int amount)
         {
-            _affinityExp += amount;
+            _affinityCurrentExp += amount;
 
-            while (_affinityExp >= AFFINITY_EXP_MAX)
+            while (_affinityCurrentExp >= AFFINITY_EXP_MAX)
             {
                 _affinityLevel++;
-                _affinityExp -= AFFINITY_EXP_MAX;
+                _affinityCurrentExp -= AFFINITY_EXP_MAX;
 
                 _affinityLevel = Mathf.Clamp(_affinityLevel, AFFINITY_LEVEL_MIN, AFFINITY_LEVEL_MAX);
             }
+        }
+
+        [ContextMenu("Test Up Affinity")]
+        private void TestUpAffinity()
+        {
+            _affinityCurrentExp += 50;
+
+            while (_affinityCurrentExp >= AFFINITY_EXP_MAX)
+            {
+                _affinityLevel++;
+                _affinityCurrentExp -= AFFINITY_EXP_MAX;
+
+                _affinityLevel = Mathf.Clamp(_affinityLevel, AFFINITY_LEVEL_MIN, AFFINITY_LEVEL_MAX);
+            }
+
+            Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
         }
     }
 }
