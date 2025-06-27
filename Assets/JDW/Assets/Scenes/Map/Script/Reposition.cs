@@ -8,11 +8,6 @@ public class Reposition : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!isActive) return;
-
-        if (!collision.CompareTag("Area"))
-            return;
-
-
         // 벗어난 콜라이더가 "Area" 태그를 가지고 있지 않으면 아무 작업도 하지 않고 종료
         if (!collision.CompareTag("Area"))
             return;

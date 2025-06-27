@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-
-using ProjectVS.Manager;
-
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
@@ -13,39 +13,39 @@ public class PlayerMove : MonoBehaviour
     public Vector2 MoveInput;
     public Animator anim;
 
+    private PlayerAction inputActions;
+
     public FadeManager fadeManager;
     public Timer timer;
 
     private bool _isFading = false;
-
+  
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-    }
 
-    public void Update()
+        inputActions = new PlayerAction();
+        inputActions.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
+        inputActions.Player.Move.canceled += ctx => MoveInput = Vector2.zero;
+        
+    }
+    private void OnEnable()
     {
-        // playerMove();
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
     }
     private void FixedUpdate()
     {
-        // rigidbody를 통해 이동 , 게임 매니저를 통해 player의 move값을 가져옴
-        rigid.velocity = MoveInput * GameManager.Instance.player.MoveSpeed;
+        playerMove();
     }
-    private void playerMove()
+    public void playerMove()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-        Vector2 input = new Vector2(h, v).normalized;
-
-
-
-        MoveInput = input;
-
-        //대각선 이동 속도 유지
-        MoveInput.Normalize();
-
+        // rigidbody를 통해 이동 , 게임 매니저를 통해 player의 move값을 가져옴
+        rigid.velocity = MoveInput.normalized * GameManager.instance.player.stats.MoveSpeed;
         // 이동 애니메이션, 이동시 IsWalking을 ture로 바꿈
         bool IsWalking = MoveInput != Vector2.zero;
         anim.SetBool("IsWalking", IsWalking);
@@ -56,6 +56,7 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.Log("상점을 나감");
             StartCoroutine(HandleFadeTransition());
+            // TODO : 씬전환으로 진행할경우 코드추가
         }
     }
     private IEnumerator HandleFadeTransition()
@@ -65,10 +66,11 @@ public class PlayerMove : MonoBehaviour
         mapSwitcer.OnBattleField(); // 배틀 온/ 상점 오프
         PlayerPositionReset();
         mapSwitcer.ResetTileMap(); // 상점에서 나왔을 때 타일들의 초기 위치
-
-
+        // TODO : 씬 변경일 경우 맵 스위처에서 씬이동으로 코드변경
+        
+        
         yield return StartCoroutine(fadeManager.FadeIn());
-
+        
 
         _isFading = false;
     }
@@ -77,13 +79,7 @@ public class PlayerMove : MonoBehaviour
         transform.position = new Vector3(0f, 0f, -1f); // 플레이어의 위치 초기화
     }
 
-    public void OnMove(InputValue value)
-    {
-        Vector2 input = value.Get<Vector2>();
-        input.Normalize();
-        MoveInput = input;
 
-        bool IsWalking = MoveInput != Vector2.zero;
-        anim.SetBool("IsWalking", IsWalking);
-    }
+
+
 }

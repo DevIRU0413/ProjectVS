@@ -1,66 +1,58 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
-using ProjectVS.Manager;
-
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class AttackPosition : MonoBehaviour
 {
     public Transform Player;
     public float Radius = 1.5f;
     public Vector3 Direction => _direction;
-
     [SerializeField] private GameObject _swordPerfab;
-    [SerializeField] private GameObject _axPerfab;
-    [SerializeField] private GameObject _bulletPerfab;
-    [SerializeField] private GameObject Store;
+    [SerializeField] private GameObject _axePerfab;
+    [SerializeField] private GameObject _bulletPerfab; 
+
     [SerializeField] private Transform _muzzlePos;
-    [SerializeField] private float _bulletTime;
-    [SerializeField] private float _meleeAttack = 0.2f;
+    [SerializeField] private float _bulletTime = 3f;
+    [SerializeField] private float _meleeAttack = 2; // 오브젝트의 잔존시간
 
     private Vector3 _direction;
 
     private Coroutine _currentRoutine;
-    
+    private Player _playerScript;
+
+    private void Awake()
+    {
+        if (Player != null)
+        {
+            _playerScript = Player.GetComponent<Player>();
+        }
+    }
     private void Update()
     {
         if (Player == null) return;
-        // CursorCoordinates();
-
+        CursorCoordinates();
         Vector3 _ovjPos = Player.position + _direction * Radius;
         transform.position = _ovjPos;
         transform.right = _direction;
+                      
 
-        if (Store.activeSelf && _currentRoutine != null)
-        {
-            StopCoroutine(_currentRoutine);
-            _currentRoutine = null;
-            Debug.Log("Store 활성화 → 코루틴 중단");
-        }
-
-        // TestInput();
-    }
-
-    private void TestInput()
-    {
-        // 테스트용 무기 스위칭
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { if (Store.activeSelf) return; SwitchCoroutine(Fire()); }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) { if (Store.activeSelf) return; SwitchCoroutine(Ax()); }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) { if (Store.activeSelf) return; SwitchCoroutine(Sword()); }
     }
     public void CursorCoordinates()
     {
-        /*// 마우스 위치를 월드기준으로 전환
-        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Mouse.current == null || Camera.main == null) return;
+        // 마우스 위치를 월드기준으로 전환
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(
+        new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(Camera.main.transform.position.z))
+    );
         _mouseWorldPos.z = 0f;
         // 방향백터 계산
-        _direction = (_mouseWorldPos - Player.position).normalized;*/
+        _direction = (_mouseWorldPos - Player.position).normalized;
     }
-    private void SwitchCoroutine(IEnumerator newRoutine)
+    public void SwitchCoroutine(IEnumerator newRoutine)
     {
         // 코루틴 스위칭 함수
         if(_currentRoutine != null)
@@ -69,65 +61,100 @@ public class AttackPosition : MonoBehaviour
         }
         _currentRoutine = StartCoroutine(newRoutine);
     }
-    private IEnumerator Fire()
+
+    public IEnumerator Axe()
     {
         // 무한 반복
         while (true)
         {
-            if (_bulletPerfab != null)
+           // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
+            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
             {
-                // 투사체 생성
-                GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
-                _bullet.transform.right = _direction;
-                // 시간이 지나면 삭제
-                Destroy(_bullet, _bulletTime);
+                Debug.Log("공격 중단");//코루틴 중단
+                yield break;
             }
-            // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.Instance.player.MagicAttackSpeed);
+
+            if (_axePerfab != null)
+            {
+                GameObject _axe = Instantiate(_axePerfab, _muzzlePos.position, Quaternion.identity);
+                _axe.transform.right = _direction;
+                float atk = _playerScript.stats.Attack; // 플레이어의 공격력값을 가져옴
+                Attack attackScript = _axe.GetComponent<Attack>();
+                if (attackScript != null)
+                {
+                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                }
+                Destroy(_axe, _meleeAttack);
+            }
+
+            yield return new WaitForSeconds(GetAttackDelay());
         }
     }
-    private IEnumerator Ax()
+    public IEnumerator Sword()
     {
         // 무한 반복
         while (true)
         {
-            if (_bulletPerfab != null)
+            // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
+            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
             {
-                // 투사체 생성
-                GameObject _ax = Instantiate(_axPerfab, _muzzlePos.position, Quaternion.identity);
-                _ax.transform.right = _direction;
-                // 시간이 지나면 삭제
-                Destroy(_ax, _meleeAttack);
+                Debug.Log("공격 중단");
+                yield break;
             }
-            // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.Instance.player.AxAttackSpeed);
-        }
-    }
-    private IEnumerator Sword()
-    {
-        // 무한 반복
-        while (true)
-        {
-            if (_bulletPerfab != null)
+
+            if (_swordPerfab != null)
             {
-                // 투사체 생성
-                GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity);
+                GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity); 
                 _sword.transform.right = _direction;
-                // 시간이 지나면 삭제
+                float atk = _playerScript.stats.Attack; // 플레이어의 공격력값을 가져옴
+                Attack attackScript = _sword.GetComponent<Attack>();
+                if (attackScript != null)
+                {
+                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                }
                 Destroy(_sword, _meleeAttack);
             }
-            // 투사체의 발사 간격
-            yield return new WaitForSeconds(GameManager.Instance.player.SwordAttackSpeed);
+
+            yield return new WaitForSeconds(GetAttackDelay());
         }
     }
-    public void OnMouse(InputValue value)
+    public IEnumerator Fire()
     {
-        Vector2 input = value.Get<Vector2>();
+        // 무한 반복
+        while (true)
+        {
+            // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
+            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
+            {
+                Debug.Log("공격 중단");
+                yield break;
+            }
 
-        // 마우스 위치를 월드기준으로 전환
-        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(input);
-        _mouseWorldPos.z = 0f;
-        // 방향백터 계산
-        _direction = (_mouseWorldPos - Player.position).normalized;
+            if (_bulletPerfab!= null)
+            {
+                GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
+                _bullet.transform.right = _direction;
+                float atk = _playerScript.stats.Attack; // 플레이어의 공격력값을 가져옴
+                Attack attackScript = _bullet.GetComponent<Attack>();
+                if (attackScript != null)
+                {
+                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                }
+                Destroy(_bullet, _bulletTime);
+            }
+
+            yield return new WaitForSeconds(GetAttackDelay());
+        }
     }
+    private float GetAttackDelay()
+    {
+        float atkSpeed = GameManager.instance.player.stats.AttackSpeed;
+        if (atkSpeed <= 0.01f)
+        {
+            // 공격속도가 비정상이면 자동으로 5로 맞춤
+            atkSpeed = 5f;
+        }
+        return 1f / atkSpeed;
+    }
+    
 }

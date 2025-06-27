@@ -6,29 +6,32 @@ public class MapSwitcer : MonoBehaviour
 {
     public GameObject battleField;
     public GameObject storeField;
-    public GameObject Tilemap1;
-    public GameObject Tilemap2;
-    public GameObject Tilemap3;
-    public GameObject Tilemap4;
+
+     public GameObject Tilemap1;
+     public GameObject Tilemap2;
+     public GameObject Tilemap3;
+     public GameObject Tilemap4;
 
 
     public void OnBattleField()
     {
-        battleField?.SetActive(true);
-        storeField?.SetActive(false);
+        Debug.Log("맵전환 실행");   
+        battleField.SetActive(true);
+        storeField.SetActive(false);
     }
     public bool IsBattleActive()
     {
-        return (battleField == null) ? false : battleField.activeSelf;
+        return battleField.activeSelf;
     }
-    public void OnstoreField()
+    public void OnStoreField()
     {
-        battleField?.SetActive(false);
-        storeField?.SetActive(true);
+        Debug.Log("맵전환 실행");
+        battleField.SetActive(false);
+        storeField.SetActive(true);
     }
     public bool IsStoreActive()
     {
-        return (storeField == null) ? false : storeField.activeSelf;
+        return storeField.activeSelf;
     }
     public void ResetTileMap()
     {
