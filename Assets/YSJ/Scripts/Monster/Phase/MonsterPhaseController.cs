@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectVS.Monster;
 using ProjectVS.Monster.Pattern;
-using PVS;
+using ProjectVS;
 
 namespace ProjectVS.Phase
 {

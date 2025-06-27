@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using UnityEngine;
-using ProjectVS.Player;
-using ProjectVS.Phase;
-using PVS;
 using System.Collections.Generic;
+
 using ProjectVS.Manager;
+using ProjectVS.Phase;
+
+using UnityEngine;
 
 namespace ProjectVS.Monster.Pattern
 {
