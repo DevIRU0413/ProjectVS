@@ -5,7 +5,7 @@ using ProjectVS.Util;
 
 using UnityEngine;
 
-namespace ProjectVS.Managers
+namespace ProjectVS.Manager
 {
     public class AudioManager : SimpleSingleton<AudioManager> //, IManager
     {

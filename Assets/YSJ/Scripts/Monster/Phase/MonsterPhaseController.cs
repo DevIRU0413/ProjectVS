@@ -63,7 +63,7 @@ namespace ProjectVS.Phase
             if (OnwerController.IsStateLock)
                 return;
 
-            float hpRatio = OnwerController.Status.CurrentHp / OnwerController.Status.CurrentMaxHp;
+            float hpRatio = OnwerController.Stats.CurrentHp / OnwerController.Stats.CurrentMaxHp;
 
             for (int i = 0; i < _phases.Count; i++)
             {

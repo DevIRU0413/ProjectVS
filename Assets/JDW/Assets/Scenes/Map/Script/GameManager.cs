@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using ProjectVS;
+using ProjectVS.Util;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-using ProjectVS.Util;
-using ProjectVS;
 
 public class GameManager : SimpleSingleton<GameManager>
 {
@@ -12,7 +10,7 @@ public class GameManager : SimpleSingleton<GameManager>
     public MapSwitcer mapSwitcer;
     public PlayerStats playerStats;
 
-    [HideInInspector] public PlayerConfig player;
+    [HideInInspector] public PlayerConfig Player;
     [HideInInspector] public PlayerMove playerMove;
     [HideInInspector] public AttackPosition attackPosition;
 
@@ -29,6 +27,7 @@ public class GameManager : SimpleSingleton<GameManager>
     [SerializeField] GameObject Boss;
     [SerializeField] GameObject Store;
     [SerializeField] GameObject Tilemap;
+
     protected override void Awake()
     {
         inputActions = new PlayerAction();
@@ -60,14 +59,14 @@ public class GameManager : SimpleSingleton<GameManager>
     private void SpawnPlayer(int index)
     {
         currentPlayerInstance = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
-        player = currentPlayerInstance.GetComponent<PlayerConfig>();
+        Player = currentPlayerInstance.GetComponent<PlayerConfig>();
         playerMove = currentPlayerInstance.GetComponent<PlayerMove>();
 
         UiManager ui = FindObjectOfType<UiManager>();
         if (ui != null)
-            ui.player = player; // 생성된 플레이어를 ui매니저한테 줌
+            ui.player = Player; // 생성된 플레이어를 ui매니저한테 줌
 
-       
+
 
         attackPosition = currentPlayerInstance.GetComponentInChildren<AttackPosition>();
         if (attackPosition == null)
@@ -94,9 +93,10 @@ public class GameManager : SimpleSingleton<GameManager>
 
     private void Update()
     {
-        TimeText();
+        // 타이머 기능 이전 > StageMaanger
+        /*TimeText();
         StopTile();
-        StratrTile();
+        StratrTile();*/
     }
     private void TimeText()
     {

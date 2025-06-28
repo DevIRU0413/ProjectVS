@@ -32,7 +32,7 @@ namespace ProjectVS.Monster.Pattern
         public override void Init(MonsterPhaseController phaseController)
         {
             base.Init(phaseController);
-            _target = GameManager.ForceInstance.player;
+            _target = GameManager.ForceInstance.Player;
         }
 
         public override bool Condition()

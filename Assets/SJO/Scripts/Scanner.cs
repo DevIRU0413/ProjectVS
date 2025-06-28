@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,30 +11,30 @@ public class Scanner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // ¿øÇüÀ¸·Î ÄÉ½ºÆ®¸¦ ½î°í ¸ğµç °á°úÀ» ¹İÈ¯
-        // Ä³½ºÆÃ ½ÃÀÛ À§Ä¡, ¿øÀÇ ¹İÁö¸§, Ä³½ºÆÃ ¹æÇâ, Ä³½ºÆÃ ±æÀÌ, ´ë»ó ·¹ÀÌ¾î
+        // ì›í˜•ìœ¼ë¡œ ì¼€ìŠ¤íŠ¸ë¥¼ ì˜ê³  ëª¨ë“  ê²°ê³¼ì„ ë°˜í™˜
+        // ìºìŠ¤íŒ… ì‹œì‘ ìœ„ì¹˜, ì›ì˜ ë°˜ì§€ë¦„, ìºìŠ¤íŒ… ë°©í–¥, ìºìŠ¤íŒ… ê¸¸ì´, ëŒ€ìƒ ë ˆì´ì–´
         targets = Physics2D.CircleCastAll(transform.position, scanRange, Vector2.zero, 0, targetLayer);
 
         nearestTarget = GetNearest();
     }
 
-    // °¡Àå °¡±î¿î °ÍÀ» Ã£´Â ÇÔ¼ö
+    // ê°€ì¥ ê°€ê¹Œìš´ ê²ƒì„ ì°¾ëŠ” í•¨ìˆ˜
     public Transform GetNearest()
     {
-        // ÇöÀç °á°ú¹°Àº ºñ¾îÀÖÀ½
+        // í˜„ì¬ ê²°ê³¼ë¬¼ì€ ë¹„ì–´ìˆìŒ
         Transform result = null;
 
         float distance = 100;
 
         foreach (RaycastHit2D target in targets)
         {
-            // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡
+            // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜
             Vector3 playerPos = transform.position;
 
-            // Å¸°ÙÀÇ À§Ä¡
+            // íƒ€ê²Ÿì˜ ìœ„ì¹˜
             Vector3 targetPos = target.transform.position;
 
-            // º¤ÅÍ µÎ °³ °Å¸® °è»ê
+            // ë²¡í„° ë‘ ê°œ ê±°ë¦¬ ê³„ì‚°
             float currentDis = Vector3.Distance(playerPos, targetPos);
 
             if (currentDis < distance)
@@ -45,5 +45,11 @@ public class Scanner : MonoBehaviour
         }
 
         return result;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, scanRange);
     }
 }

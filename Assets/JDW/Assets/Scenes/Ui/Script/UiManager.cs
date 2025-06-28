@@ -29,32 +29,32 @@ public class UiManager : MonoBehaviour
         }
 
         // 플레이어나 스탯이 없으면 실행x
-        if (player == null || player.stats == null) return;
+        if (player == null || player.Stats == null) return;
         // 경험치 비율 
-        float expRatio = player.stats.CurrentExp / player.stats.MaxExp;
+        float expRatio = player.Stats.CurrentExp / player.Stats.MaxExp;
         // 이미지 채움 정도 설정
         ExpBar.fillAmount = Mathf.Clamp01(expRatio);
 
         // 플레이어나 스탯이 없으면 실행x
-        if (player == null || player.stats == null) return;
+        if (player == null || player.Stats == null) return;
         // 체력 비율 
-        float hpRatio = player.stats.CurrentHp / player.stats.CurrentMaxHp;
+        float hpRatio = player.Stats.CurrentHp / player.Stats.CurrentMaxHp;
         // 이미지 채움 정도 설정
         HpBar.fillAmount = Mathf.Clamp01(hpRatio);
 
         //플레이어 경험치 텍스트
-        int currentExp = Mathf.FloorToInt(player.stats.CurrentExp);
-        int maxExp = Mathf.FloorToInt(player.stats.MaxExp);
+        int currentExp = Mathf.FloorToInt(player.Stats.CurrentExp);
+        int maxExp = Mathf.FloorToInt(player.Stats.MaxExp);
         expText.text = $"{currentExp}/{maxExp}";
         //플레이어 레벨 텍스트
-        int currentLevel = Mathf.FloorToInt(player.stats.Level);
+        int currentLevel = Mathf.FloorToInt(player.Stats.Level);
         levelText.text = $"LEVEL : {currentLevel}";
         //플레이어 골드 텍스트
-        int currentGold = Mathf.FloorToInt(player.stats.Gold);
+        int currentGold = Mathf.FloorToInt(player.Stats.Gold);
         goldText.text = $"{currentGold}";
         //플레이어 체력
-        int currentHp = Mathf.FloorToInt(player.stats.CurrentHp);
-        int maxHp = Mathf.FloorToInt(player.stats.CurrentMaxHp);
+        int currentHp = Mathf.FloorToInt(player.Stats.CurrentHp);
+        int maxHp = Mathf.FloorToInt(player.Stats.CurrentMaxHp);
         hpText.text = $"HP {currentHp}/{maxHp}";
     }
 }

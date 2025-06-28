@@ -12,7 +12,7 @@ public class Equipment : MonoBehaviour
     {
         // Basic Set
         name = "Equipment" + data.itemId;
-        transform.parent = GameManager.instance.playerController.transform;
+        transform.parent = GameManager.Instance.Player.transform;
         transform.localPosition = Vector3.zero;
         
         // Property Set
@@ -70,7 +70,6 @@ public class Equipment : MonoBehaviour
     private void SpeedUp()
     {
         float speed = 3f;
-
-        GameManager.instance.playerController._moveSpeed = speed + speed * levelData;
+        GameManager.Instance.Player.Stats.CurrentSpd = speed + speed * levelData;
     }
 }

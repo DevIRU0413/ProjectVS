@@ -67,7 +67,4 @@ public class Timer : MonoBehaviour
         currentTime = totalTime; // 타이머 초기화
         _isFading = false;
     }
-   
-
-
 }

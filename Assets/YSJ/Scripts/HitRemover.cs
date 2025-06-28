@@ -8,8 +8,8 @@ public class HitRemover : MonoBehaviour
     private void Awake()
     {
         Hitable hitable = GetComponent<Hitable>();
-        hitable.OnHitEnd -= Remove;
-        hitable.OnHitEnd += Remove;
+        hitable.OnEnterHitEnd -= Remove;
+        hitable.OnEnterHitEnd += Remove;
     }
 
     private void Remove()

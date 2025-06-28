@@ -26,7 +26,7 @@ namespace ProjectVS.Monster.State
             base.Enter();
             animator.SetInteger(_aniHashState, STATE_VALUE);
 
-            _moveSpeed = controller.Status.CurrentSpd;
+            _moveSpeed = controller.Stats.CurrentSpd;
         }
         public override void Update()
         {

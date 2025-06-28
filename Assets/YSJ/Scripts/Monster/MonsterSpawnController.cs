@@ -8,7 +8,6 @@ namespace ProjectVS.Monster
 {
     public class MonsterSpawnController : MonoBehaviour
     {
-
         /// <summary>
         /// 몬스터 스폰 제어를 담당하는 컨트롤러.
         /// 다양한 유형의 스포너(IUnitSpawner 인터페이스 기반)를 지원하며,
@@ -47,7 +46,7 @@ namespace ProjectVS.Monster
                 entry.timer = 0f;
                 entry.spawnedCount = 0;
                 entry.activeTime = 0f;
-                entry.target = GameManager.ForceInstance.player.gameObject;
+                entry.target = GameManager.ForceInstance.Player.gameObject;
 
                 if (entry.autoStart && CanSpawn(entry))
                 {
@@ -89,7 +88,7 @@ namespace ProjectVS.Monster
 
             // 유닛 생성
             entry.Spawner.SpawnUnits(
-                GameManager.Instance.player.transform.position,
+                GameManager.Instance.Player.transform.position,
                 entry.unitCount);
 
             // 유닛 초기화 (예: 타겟 방향 설정)

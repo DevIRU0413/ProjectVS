@@ -390,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Hp>k__BackingField: 25
   <ATK>k__BackingField: 1
-  <SPD>k__BackingField: 5
+  <SPD>k__BackingField: 1
   <AtkRange>k__BackingField: 1
   <ExpPoint>k__BackingField: 1
 --- !u!114 &607968483408253690

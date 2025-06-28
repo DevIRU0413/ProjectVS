@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 
 using ProjectVS.Interface;
+using ProjectVS.Manager;
 using ProjectVS.Monster.Data;
 using ProjectVS.Monster.State;
 using ProjectVS.Phase;
-using ProjectVS.Player;
 using ProjectVS.Util;
 
 using UnityEngine;
@@ -13,7 +13,7 @@ using UnityEngine;
 namespace ProjectVS.Monster
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(MonsterConfig))]
+    [RequireComponent(typeof(UnitStatsConfig))]
     [RequireComponent(typeof(MonsterPhaseController))]
     public class MonsterController : MonoBehaviour, IDamageable
     {
@@ -33,7 +33,7 @@ namespace ProjectVS.Monster
 
         public bool IsDeath => CurrentStateType == MonsterStateType.Death;
         public bool IsMove => Target != null && MoveDirection != Vector3.zero && MoveDirection.magnitude > _stopMoveRange;
-        public bool IsWin => Target == null;
+        public bool IsWin => StageManager.Instance.StageResult == StageResult.Lose;
 
         // 대상
         [field: SerializeField, Header("Target")]
@@ -42,11 +42,12 @@ namespace ProjectVS.Monster
 
         // 몬스터 정보
         [field: SerializeField]
-        public MonsterStatus Status { get; private set; }
+        public MonsterStats Stats { get; private set; }
 
         public Action OnHit;
+        public Action OnDeath;
 
-        private MonsterConfig _config;
+        private UnitStatsConfig _config;
         private Dictionary<MonsterStateType, MonsterState> _states = new();
         private MonsterState _currentState;
 
@@ -54,24 +55,26 @@ namespace ProjectVS.Monster
         private void Update()
         {
             // 죽었을 때
-            if (Status.CurrentHp <= 0 && CurrentStateType != MonsterStateType.Death)
+            if (Stats.CurrentHp <= 0 && CurrentStateType != MonsterStateType.Death)
             {
                 UnLockChangeState();
                 ChangeState(MonsterStateType.Death, true);
             }
 
             // 이동 권한 위임이 안일어났을 때
-            if (!_isMovementDelegated)
+            if (!_isMovementDelegated && Target != null)
                 SetMoveDirection(Target.transform.position);
 
             _currentState?.Update();
         }
 
-        private void Init()
+        private void Init(UnitStatsConfig config = null)
         {
             // 데이터
-            _config = GetComponent<MonsterConfig>();
-            Status = new MonsterStatus(_config.Hp, _config.ATK, _config.SPD, _config.AtkRange, _config.ExpPoint);
+            if (config == null)
+                _config = GetComponent<UnitStatsConfig>();
+
+            Stats = new MonsterStats(_config.Hp, _config.ATK, _config.DFS, _config.ATKSPD, _config.ATKSPD);
 
             // 리지드바디 세팅
             var rig =gameObject.GetOrAddComponent<Rigidbody2D>();
@@ -85,13 +88,11 @@ namespace ProjectVS.Monster
             _states.Add(MonsterStateType.Death, new MonsterDeathState(this, _animator));
 
             // 타겟 세팅
-            Target = GameManager.ForceInstance.player;
+            Target = GameManager.ForceInstance.Player;
 
             // 초기 상태 세팅
             if (_config == null)
                 ChangeState(MonsterStateType.Death, true);
-            else if (Target == null)
-                ChangeState(MonsterStateType.Win);
             else
                 ChangeState(MonsterStateType.Idle);
 
@@ -153,7 +154,7 @@ namespace ProjectVS.Monster
         public void TakeDamage(DamageInfo info)
         {
             // Debug.Log("몬스터 데미지 테스트");
-            Status.CurrentHp -= info.Amount;
+            Stats.CurrentHp -= info.Amount;
             OnHit.Invoke();
         }
     }

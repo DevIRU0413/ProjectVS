@@ -45,7 +45,7 @@ public class PlayerMove : MonoBehaviour
     public void playerMove()
     {
         // rigidbody를 통해 이동 , 게임 매니저를 통해 player의 move값을 가져옴
-        rigid.velocity = MoveInput.normalized * GameManager.Instance.player.stats.CurrentSpd;
+        rigid.velocity = MoveInput.normalized * GameManager.Instance.Player.Stats.CurrentSpd;
         // 이동 애니메이션, 이동시 IsWalking을 ture로 바꿈
         bool IsWalking = MoveInput != Vector2.zero;
         anim.SetBool("IsWalking", IsWalking);

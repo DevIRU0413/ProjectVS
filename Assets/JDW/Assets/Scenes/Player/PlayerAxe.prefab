@@ -86,13 +86,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5327371813207693605}
+  - component: {fileID: 8930400971873860480}
   - component: {fileID: 4570456193400426826}
   - component: {fileID: 8199952907249586132}
   - component: {fileID: 6834672242544337}
   - component: {fileID: 3629046773934369504}
   - component: {fileID: 8915004436936648237}
   - component: {fileID: 8042441434584137574}
-  - component: {fileID: 8930400971873860480}
+  - component: {fileID: 5786611776289020374}
   m_Layer: 3
   m_Name: PlayerAxe
   m_TagString: Player
@@ -118,6 +119,27 @@ Transform:
   - {fileID: 846167591246401027}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8930400971873860480
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345928038722599383}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e434ad236fa3f1143ae5cabe87920d1b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &4570456193400426826
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -284,41 +306,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedClass: 1
-  stats:
+  Stats:
     Level: 0
+    CurrentHp: 0
+    CurrentMaxHp: 0
+    CurrentAtk: 0
+    CurrentDfs: 0
+    CurrentSpd: 0
+    AtkSpd: 0
     CurrentExp: 0
     MaxExp: 0
-    MaxHealth: 0
-    Health: 0
-    Attack: 0
-    Defense: 0
-    MoveSpeed: 0
-    AttackSpeed: 0
+    Gold: 0
+    CharacterClass: 0
   timer: {fileID: 7439314377194012607, guid: e751d69887daeff448c05c857ec5922e, type: 3}
-  gold: 100
+  scanner: {fileID: 0}
   isDead: 0
   inventory: []
---- !u!95 &8930400971873860480
-Animator:
-  serializedVersion: 5
+--- !u!114 &5786611776289020374
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345928038722599383}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e434ad236fa3f1143ae5cabe87920d1b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7fc66bb56a94fa42bce600644935fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scanRange: 10
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 262144
+  nearestTarget: {fileID: 0}
 --- !u!1 &5919637639147977788
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,8 +501,6 @@ MonoBehaviour:
   _swordPerfab: {fileID: 1044545731354326905, guid: a7255bb8d3e804340a0be510b5dadd8d, type: 3}
   _axePerfab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
   _bulletPerfab: {fileID: 2418890576715569026, guid: c18e72a2d75595f459f7497f27fccc53, type: 3}
-  _store: {fileID: 6334962763312544992, guid: 0b106adf611f274479a32f663ce94a87, type: 3}
   _muzzlePos: {fileID: 846167591246401027}
   _bulletTime: 2
   _meleeAttack: 0.2
-  mapSwitcer: {fileID: 7238456504662222757, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}

@@ -7,8 +7,9 @@ namespace ProjectVS
     public class PlayerConfig : MonoBehaviour
     {
         public CharacterClass selectedClass;
-        public PlayerStats stats;
+        public PlayerStats Stats;
         public Timer timer;
+        public Scanner scanner;
 
         // public int gold = 100; // 기본 재화
         public bool isDead = false;
@@ -19,39 +20,39 @@ namespace ProjectVS
         private void Awake()
         {
             anim = GetComponent<Animator>();
+            scanner = GetComponent<Scanner>();
+            Stats = PlayerClassData.DefaultStats[selectedClass].Clone();
         }
         private void Start()
         {
-            stats = PlayerClassData.DefaultStats[selectedClass].Clone();
-            Debug.Log($"선택 클래스: {selectedClass}, 체력: {stats.CurrentMaxHp}, 공격력: {stats.CurrentAtk}, 방어력: {stats.CurrentDfs}, 공격속도 : {stats.AtkSpd}, 이동속도 : {stats.CurrentSpd} 골드: {stats.Gold}");
-
+            Debug.Log($"선택 클래스: {selectedClass}, 체력: {Stats.CurrentMaxHp}, 공격력: {Stats.CurrentAtk}, 방어력: {Stats.CurrentDfs}, 공격속도 : {Stats.AtkSpd}, 이동속도 : {Stats.CurrentSpd} 골드: {Stats.Gold}");
         }
         public bool TryBuyItem(int price, int bonusHealth, int bonusAttack, int bonusDefense, float bonusAttackSpeed, float bonusMoveSpeed, string itemName)
         {
-            if (stats.Gold < price)
+            if (Stats.Gold < price)
             {
                 Debug.Log("골드 부족");
                 return false;
             }
-            stats.Gold -= price;
-            stats.CurrentHp = Mathf.Min(stats.CurrentHp + bonusHealth, stats.CurrentMaxHp); // 회복이 최대체력을 넘기 못하게
-            stats.CurrentAtk += bonusAttack;
-            stats.CurrentDfs += bonusDefense;
-            stats.AtkSpd += bonusAttackSpeed;
-            stats.CurrentSpd += bonusMoveSpeed;
+            Stats.Gold -= price;
+            Stats.CurrentHp = Mathf.Min(Stats.CurrentHp + bonusHealth, Stats.CurrentMaxHp); // 회복이 최대체력을 넘기 못하게
+            Stats.CurrentAtk += bonusAttack;
+            Stats.CurrentDfs += bonusDefense;
+            Stats.AtkSpd += bonusAttackSpeed;
+            Stats.CurrentSpd += bonusMoveSpeed;
             inventory.Add(itemName);
 
-            Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHealth}, 공격력 +{bonusAttack}, 방어력 +{bonusDefense},  공격속도 +{bonusAttackSpeed}, 이동속도 +{bonusMoveSpeed} 남은 골드: {stats.Gold}");
+            Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHealth}, 공격력 +{bonusAttack}, 방어력 +{bonusDefense},  공격속도 +{bonusAttackSpeed}, 이동속도 +{bonusMoveSpeed} 남은 골드: {Stats.Gold}");
             return true;
         }
         public void TakeDamage(float damage)
         {
             if (isDead) return;
 
-            stats.CurrentHp -= damage;
-            Debug.Log($"피해 : {damage}, 남은 체력 : {stats.CurrentHp}");
+            Stats.CurrentHp -= damage;
+            Debug.Log($"피해 : {damage}, 남은 체력 : {Stats.CurrentHp}");
 
-            if (stats.CurrentHp <= 0)
+            if (Stats.CurrentHp <= 0)
             {
                 Die();
             }
@@ -78,11 +79,11 @@ namespace ProjectVS
         public void ExpUp(float amount)
         {
             if (isDead) return;
-            bool LeveledUp = stats.AddExp(amount);
-            Debug.Log($"경험치 흭득 : {amount}, 현재 경험치 : {stats.CurrentExp}/{stats.MaxExp}");
+            bool LeveledUp = Stats.AddExp(amount);
+            Debug.Log($"경험치 흭득 : {amount}, 현재 경험치 : {Stats.CurrentExp}/{Stats.MaxExp}");
             if (LeveledUp)
             {
-                Debug.Log($"레벨 업 {stats.Level}");
+                Debug.Log($"레벨 업 {Stats.Level}");
             }
         }
     }
