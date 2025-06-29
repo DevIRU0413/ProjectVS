@@ -28,15 +28,16 @@ namespace ProjectVS.UIs.CharacterSelect.SelectionEffect
         [SerializeField] private float _moveDuration = 0.5f;
         [SerializeField] private float _curveHeight = 50f;
 
-
-        // TODO
-        // 현재 선택된 인덱스의 캐릭터의 정보를 읽어오기
-        // List<캐릭터의 정보>로 인스펙터에 연결하고 인덱스와 동기화하면 될 듯?
+        [Header("캐릭터 설명창, 왼쪽부터 등록")]
+        [SerializeField] private List<GameObject> _characterDescriptionList;
 
 
         private int currentIndex = 0;
+
         private bool _isMoving = false;
         private Coroutine _moveCo;
+
+
 
         private void OnEnable()
         {
@@ -55,6 +56,7 @@ namespace ProjectVS.UIs.CharacterSelect.SelectionEffect
         {
             // 애니메이션 없이 즉시 업데이트
             UpdatePositions(0f);
+            UpdateCharacterDescriptionEnable();
         }
 
         private Vector3[] GetCurvedPath(Vector3 from, Vector3 to)
@@ -134,9 +136,37 @@ namespace ProjectVS.UIs.CharacterSelect.SelectionEffect
         private IEnumerator AnimateMove()
         {
             _isMoving = true;
+            SetDisableAllTexts();
             UpdatePositions(_moveDuration);
             yield return new WaitForSeconds(_moveDuration);
             _isMoving = false;
+
+            UpdateCharacterDescriptionEnable();
+        }
+
+        private void UpdateCharacterDescriptionEnable()
+        {
+            for (int i = 0; i < _characterImages.Count; i++)
+            {
+                int offset = (i - currentIndex + _characterImages.Count) % _characterImages.Count;
+
+                if (offset == 0)
+                {
+                    _characterDescriptionList[i].SetActive(true);
+                }
+                else
+                {
+                    _characterDescriptionList[i].SetActive(false);
+                }
+            }
+        }
+
+        private void SetDisableAllTexts()
+        {
+            foreach (var description in _characterDescriptionList)
+            {
+                description.SetActive(false);
+            }
         }
     }
 }
