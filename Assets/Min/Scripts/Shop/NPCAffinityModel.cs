@@ -62,5 +62,14 @@ namespace ProjectVS.Shop.NPCAffinityModel
 
             Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
         }
+
+
+        [ContextMenu("Test Full Up Affinity")]
+        private void TestFullUpAffinity()
+        {
+            _affinityLevel = 20;
+
+            Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
+        }
     }
 }
