@@ -20,6 +20,8 @@ namespace ProjectVS.Utils.UIManager
         private bool _isAnimating = false;
 
 
+        public int PanelCount => _uiPanels.Count;
+
         private void Awake()
         {
             SingletonInit();
@@ -33,7 +35,21 @@ namespace ProjectVS.Utils.UIManager
 
             if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
             {
-                // MEMO: 이 메서드는 한 개의 패널만이 남았을 때도 닫는거라 메인메뉴에서는 사용하면 안됨
+                if (_uiStack.Count == 0)
+                {
+                    Show("Pause Buttons Panel");
+                    return;
+                }
+
+                if (_uiStack.Count == 1)
+                {
+                    GameObject topPanel = _uiStack.Peek();
+                    if (topPanel.name == "Main Menu Panel")
+                    {
+                        return;
+                    }
+                }
+
                 ForceCloseTopPanel();
             }
         }
