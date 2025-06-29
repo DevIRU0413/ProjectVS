@@ -5,7 +5,7 @@ using UnityEngine;
 using ProjectVS.Utils.CsvTable;
 using ProjectVS.Utils.CsvReader;
 using DialogueDataClass = ProjectVS.Dialogue.DialogueData.DialogueData;
-
+using ProjectVS.Utils.CsvParseUtils;
 
 namespace ProjectVS.Dialogue.DialogueDataParser
 {
@@ -22,29 +22,19 @@ namespace ProjectVS.Dialogue.DialogueDataParser
             {
                 DialogueDataClass data = new()
                 {
-                    ID = TryParseInt(table.GetData(r, 0)),
-                    CharacterID = TryParseInt(table.GetData(r, 1)),
-                    NeedAffinity = TryParseInt(table.GetData(r, 2)),
-                    IllustPath = TryParseString(table.GetData(r, 3)),
-                    Content = TryParseString(table.GetData(r, 4)),
-                    ContextNote = TryParseString(table.GetData(r, 6)),
-                    OccurTiming = TryParseInt(table.GetData(r, 7))
+                    ID = CsvParseUtils.TryParseInt(table.GetData(r, 0)),
+                    CharacterID = CsvParseUtils.TryParseInt(table.GetData(r, 1)),
+                    NeedAffinity = CsvParseUtils.TryParseInt(table.GetData(r, 2)),
+                    IllustPath = CsvParseUtils.TryParseString(table.GetData(r, 3)),
+                    Content = CsvParseUtils.TryParseString(table.GetData(r, 4)),
+                    ContextNote = CsvParseUtils.TryParseString(table.GetData(r, 6)),
+                    OccurTiming = CsvParseUtils.TryParseInt(table.GetData(r, 7))
                 };
 
                 list.Add(data);
             }
 
             return list;
-        }
-
-        private static string TryParseString(string raw)
-        {
-            return string.IsNullOrEmpty(raw) ? "N/A" : raw;
-        }
-
-        private static int TryParseInt(string raw)
-        {
-            return int.TryParse(raw, out int result) ? result : -1;
         }
     }
 }
