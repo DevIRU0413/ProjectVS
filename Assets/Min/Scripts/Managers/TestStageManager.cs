@@ -46,5 +46,22 @@ namespace ProjectVS.Managers.TestStageManager
                 _dialogueManager.ShowShopEnterDialogue();
             }
         }
+
+
+        [ContextMenu("Test Before Final Stage Event")]
+        private void CheckAnyEventWhenBeforeFinalStage()
+        {
+            if (!_dialogueManager.CanShowBeforeFinalStageDialogue())
+            {
+                Debug.Log("[TestStageManager] 출력 가능한 최종 스테이지 전 대사가 없습니다.");
+                return;
+            }
+            else
+            {
+                Debug.Log("[TestStageManager] 출력 가능한 최종 스테이지 전 대사가 있습니다. 대사 출력 시작.");
+                UIManager.Instance.Show("Event Panel");
+                _dialogueManager.ShowBeforeFinalStageDialogue();
+            }
+        }
     }
 }
