@@ -54,7 +54,7 @@ public class Weapon : MonoBehaviour
                 break;
 
             default:
-                // 일단 총알 생성 속도를 speed로 놔둠
+                // 일단 총알 연사 속도
                 speed = 0.3f;
                 break;
         }
