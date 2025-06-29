@@ -50,6 +50,7 @@ namespace ProjectVS.Utils.UIManager
                     }
                 }
 
+                Debug.Log($"[UIManager] Escape 키 입력으로 최상위 패널 닫음: {_uiStack.Peek().name}");
                 ForceCloseTopPanel();
             }
         }
