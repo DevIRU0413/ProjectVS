@@ -23,8 +23,8 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
 
         protected string _currentContent;
 
-        protected WaitForSeconds normalTypingSeconds;
-        protected WaitForSeconds skippedTypingSeconds;
+        protected WaitForSecondsRealtime normalTypingSeconds;
+        protected WaitForSecondsRealtime skippedTypingSeconds;
 
 
         public Action OnTypingComplete;
@@ -37,8 +37,8 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
 
         protected virtual void Awake()
         {
-            normalTypingSeconds = new WaitForSeconds(_normalTypingSpeed);
-            skippedTypingSeconds = new WaitForSeconds(_skippedTypingSpeed);
+            normalTypingSeconds = new WaitForSecondsRealtime(_normalTypingSpeed);
+            skippedTypingSeconds = new WaitForSecondsRealtime(_skippedTypingSpeed);
         }
 
         protected virtual void OnEnable()
