@@ -17,6 +17,7 @@ using ProjectVS.Utils.ObservableProperty;
 using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.ChoiceDialogueManager;
 using SpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
 using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
+using UnityEngine.Rendering;
 
 
 namespace ProjectVS.Dialogue.DialogueManager
@@ -92,6 +93,34 @@ namespace ProjectVS.Dialogue.DialogueManager
 
             _choiceList = ChoiceDataParserClass.Parse(_choiceTable);
         }
+
+
+        // 씬이 변경될 때 TMP_Text를 등록해주는 메서드
+        public void AssignTextWhenSceneChanged(
+            DialogueTextTyperClass shopEnterText = null,
+            DialogueTextTyperClass repeatText = null,
+            DialogueTextTyperClass eventText = null,
+            DialogueTextTyperClass stageClearText = null
+            )
+        {
+            if (shopEnterText != null)
+            {
+                _shopEnterText = shopEnterText;
+            }
+            if (repeatText != null)
+            {
+                _repeatText = repeatText;
+            }
+            if (eventText != null)
+            {
+                _eventText = eventText;
+            }
+            if (stageClearText != null)
+            {
+                _stageClearText = stageClearText;
+            }
+        }
+
 
         private void ShowDialogue(int dialogueID, DialogueTextTyperClass text)
         {
@@ -413,6 +442,21 @@ namespace ProjectVS.Dialogue.DialogueManager
             // TODO: 컷신 대사 출력 로직 구현
         }
 
+
+        public bool CanShowBeforeFinalStageDialogue()
+        {
+            foreach (var data in _dialogueList)
+            {
+                if (data.OccurTiming != 6) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
+                // if (_stageManager.CurrentStage != _stageManager.FinalStage - 1) continue; // 현재 스테이지 = 최종 스테이지 - 1 인지 확인
+
+                return true;
+            }
+
+            return false;
+        }
+
         // TODO: 최종 스테이지 직전, 상점을 나가고 대사 나오게 구현
         public void ShowBeforeFinalStageDialogue()
         {
@@ -420,6 +464,9 @@ namespace ProjectVS.Dialogue.DialogueManager
             {
                 if (data.OccurTiming != 6) continue;
                 if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
+                // if (_stageManager.CurrentStage != _stageManager.FinalStage - 1) continue; // 현재 스테이지 = 최종 스테이지 - 1 인지 확인
+
+                ShowDialogue(data.ID, _stageClearText);
             }
         }
 
