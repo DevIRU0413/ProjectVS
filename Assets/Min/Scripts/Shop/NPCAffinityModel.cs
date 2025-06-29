@@ -48,7 +48,7 @@ namespace ProjectVS.Shop.NPCAffinityModel
         }
 
         [ContextMenu("Test Up Affinity")]
-        private void TestUpAffinity()
+        public void TestUpAffinity()
         {
             _affinityCurrentExp += 50;
 
@@ -65,7 +65,7 @@ namespace ProjectVS.Shop.NPCAffinityModel
 
 
         [ContextMenu("Test Full Up Affinity")]
-        private void TestFullUpAffinity()
+        public void TestFullUpAffinity()
         {
             _affinityLevel = 20;
 
