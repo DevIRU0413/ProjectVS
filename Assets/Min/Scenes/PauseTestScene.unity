@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 16945399}
   - component: {fileID: 16945400}
+  - component: {fileID: 16945401}
   m_Layer: 5
   m_Name: Log Panel
   m_TagString: Untagged
@@ -171,6 +172,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a2578bc2adf65149923165457cf5e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &16945401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16945398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38f66650c40f9749b20d75bda8d650e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &43383939
@@ -366,8 +379,8 @@ MonoBehaviour:
   - {fileID: 1111083940}
   _slideDirection: 0
   _originOffset: 0
-  _moveInOffset: 500
-  _moveOutOffset: 500
+  _moveInOffset: 1000
+  _moveOutOffset: 1000
   _moveInDuration: 0.5
   _fadeInDuration: 0.5
   _moveOutDuration: 0.5
@@ -532,7 +545,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 125272801}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 328018122}
+        m_TargetAssemblyTypeName: ProjectVS.UIs.PanelBehaviours.CharacterIndicatorPausePanelButtons.PausePanelButtons,
+          Assembly-CSharp
+        m_MethodName: OnClickSettingsButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &125272801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1424,7 +1450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &337168304
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1690,7 +1716,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 408407083}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 328018122}
+        m_TargetAssemblyTypeName: ProjectVS.UIs.PanelBehaviours.CharacterIndicatorPausePanelButtons.PausePanelButtons,
+          Assembly-CSharp
+        m_MethodName: OnClickRecipeButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &408407083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2932,7 +2971,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1111083942}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 328018122}
+        m_TargetAssemblyTypeName: ProjectVS.UIs.PanelBehaviours.CharacterIndicatorPausePanelButtons.PausePanelButtons,
+          Assembly-CSharp
+        m_MethodName: OnClickGoToMainMenuButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1111083942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3287,7 +3339,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1149752030}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 328018122}
+        m_TargetAssemblyTypeName: ProjectVS.UIs.PanelBehaviours.CharacterIndicatorPausePanelButtons.PausePanelButtons,
+          Assembly-CSharp
+        m_MethodName: OnClickResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1149752030
 MonoBehaviour:
   m_ObjectHideFlags: 0
