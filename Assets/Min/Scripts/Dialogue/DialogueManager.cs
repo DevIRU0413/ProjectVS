@@ -166,7 +166,7 @@ namespace ProjectVS.Dialogue.DialogueManager
 
             data.IsPrinted = true;
 
-            if (data.OccurTiming == 1 || data.OccurTiming == 2 || data.OccurTiming == 4)
+            if (data.OccurTiming == 1 || data.OccurTiming == 2 || data.OccurTiming == 4 || data.OccurTiming == 6)
             {
                 _dialogueLogManager.AddLogBox(data.CharacterName, data.Content);
             }
@@ -467,6 +467,7 @@ namespace ProjectVS.Dialogue.DialogueManager
                 // if (_stageManager.CurrentStage != _stageManager.FinalStage - 1) continue; // 현재 스테이지 = 최종 스테이지 - 1 인지 확인
 
                 ShowDialogue(data.ID, _stageClearText);
+                return;
             }
         }
 
