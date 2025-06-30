@@ -5,6 +5,8 @@ using UnityEngine;
 using ProjectVS.Utils.CsvReader;
 using ProjectVS.Utils.CsvTable;
 using ChoiceDataClass = ProjectVS.Dialogue.ChoiceData.ChoiceData;
+using ProjectVS.Utils.CsvParseUtils;
+
 
 namespace ProjectVS.Dialogue.ChoiceDataParser
 {
@@ -20,27 +22,17 @@ namespace ProjectVS.Dialogue.ChoiceDataParser
 
             for (int r = 3; r < rowCount; r++)
             {
-                ChoiceDataClass data = new GameObject($"ChoiceData_{r}").AddComponent<ChoiceDataClass>();
+                ChoiceDataClass data = new();
 
-                data.ID = TryParseInt(table.GetData(r, 0));
-                data.NextDialogueID = TryParseInt(table.GetData(r, 4));
-                data.ChoiceText1 = TryParseString(table.GetData(r, 2));
-                data.ChoiceText2 = TryParseString(table.GetData(r, 3));
+                data.ID = CsvParseUtils.TryParseInt(table.GetData(r, 0));
+                data.NextDialogueID = CsvParseUtils.TryParseInt(table.GetData(r, 4));
+                data.ChoiceText1 = CsvParseUtils.TryParseString(table.GetData(r, 2));
+                data.ChoiceText2 = CsvParseUtils.TryParseString(table.GetData(r, 3));
 
                 list.Add(data);
             }
 
             return list;
-        }
-
-        private static string TryParseString(string raw)
-        {
-            return string.IsNullOrEmpty(raw) ? "N/A" : raw;
-        }
-
-        private static int TryParseInt(string raw)
-        {
-            return int.TryParse(raw, out int result) ? result : -1;
         }
     }
 }

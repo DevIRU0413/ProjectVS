@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ProjectVS.Monster;
+
 using UnityEngine;
-using ProjectVS.Monster;
 
 namespace ProjectVS.Data
 {

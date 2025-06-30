@@ -51,13 +51,17 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
                 rect.gameObject.SetActive(true);
                 rect.anchoredPosition = GetOffsetPosition(rect, _moveInOffset);
                 rect.DOAnchorPos(GetOffsetPosition(rect, _originOffset), _moveInDuration)
-                    .SetEase(_moveInEase);
+                    .SetEase(_moveInEase)
+                    .SetUpdate(true);
 
                 CanvasGroup cg = rect.GetComponent<CanvasGroup>();
                 if (cg != null)
-                    cg.DOFade(1f, _fadeInDuration);
+                {
+                    cg.DOFade(1f, _fadeInDuration)
+                    .SetUpdate(true);
+                }
 
-                yield return new WaitForSeconds(_interval);
+                yield return new WaitForSecondsRealtime(_interval);
             }
 
             onComplete?.Invoke();
@@ -68,13 +72,17 @@ namespace ProjectVS.UIs.UIBase.UIButtonAnimator
             foreach (var rect in _uiList)
             {
                 rect.DOAnchorPos(GetOffsetPosition(rect, _moveOutOffset), _moveOutDuration)
-                    .SetEase(_moveOutEase);
+                    .SetEase(_moveOutEase)
+                    .SetUpdate(true);
 
                 CanvasGroup cg = rect.GetComponent<CanvasGroup>();
                 if (cg != null)
-                    cg.DOFade(0f, _fadeOutDuration);
+                {
+                    cg.DOFade(0f, _fadeOutDuration)
+                    .SetUpdate(true);
+                }
 
-                yield return new WaitForSeconds(_interval);
+                yield return new WaitForSecondsRealtime(_interval);
             }
 
             foreach (var rect in _uiList)

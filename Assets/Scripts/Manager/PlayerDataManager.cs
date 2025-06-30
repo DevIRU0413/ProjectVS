@@ -1,56 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
+
+using ProjectVS.Data;
+using ProjectVS.Interface;
+using ProjectVS.Util;
 
 using UnityEngine;
 
 namespace ProjectVS.Manager
 {
-    [System.Serializable]
-    public class Item
+    /// <summary>
+    /// 저장된 정보들로 저장 데이터를 만듭니다.
+    /// </summary>
+    public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IGamePlayTypeListener
     {
-        public string itemName;
-        public int itemID;
-    }
+        public GamePlayType GamePlayType;
 
-    [System.Serializable]
-    public class NPC
-    {
-        public string npcName;
-        public int npcID;
-    }
+        [Header("Test Play Config")]
+        public CharacterClass TestCharacterClass;
 
-    [Serializable]
-    public class ItemUpgradeData
-    {
-        public string itemName;
-        public int upgradeLevel;
-    }
-
-    [Serializable]
-    public class AffectionData
-    {
-        public string npcName;
-        public int affectionLevel;
-    }
-
-    [Serializable]
-    public class NpcCostumeData
-    {
-        public string npcName;
-        public string costumeId;
-    }
-
-    public class PlayerDataManager : MonoBehaviour
-    {
         [Header("Player Status")]
-        public int playerLevel;
-        public int playerExp;
-        public int currentHP;
+        public PlayerStats stats;
 
         [Header("Inventory & Items")]
         public List<Item> inventoryItems = new List<Item>();
-        public Dictionary<Item, int> itemUpgradeLevels = new Dictionary<Item, int>();
 
         [Header("Progress Info")]
         public int currentStageFloor;
@@ -60,158 +32,90 @@ namespace ProjectVS.Manager
         public int gold;
         public int diamonds;
 
-        [Header("Affection System")]
-        public Dictionary<NPC, int> affectionLevels = new Dictionary<NPC, int>();
-        public HashSet<string> affectionEventFlags = new HashSet<string>(); // 이벤트 ID
+        [Header("Dialogue")]
+        public HashSet<int> ReadDialogeIDs;
 
-        [Header("Dialogue Tracking")]
-        public HashSet<string> dialogueProgressFlags = new HashSet<string>(); // 대사 ID
+        [Header("Affinity")]
+        public int CurrentAffinityExp;
+        public int CurrentAffinityLevel;
 
-        [Header("Costumes")]
-        public HashSet<string> ownedCostumes = new HashSet<string>(); // 코스튬 ID
-        public Dictionary<NPC, string> npcCostumeMap = new Dictionary<NPC, string>(); // NPC -> 착용 코스튬
+        [Header("NPC Costume")]
+        public HashSet<string> AcquiredCostumeName;
+        public string WornCostumeName;
 
-        [Header("Misc")]
-        public bool isMoodShifted;
-
-        public void SavePlayerData()
+        public void SavePlayerData(int index)
         {
             PlayerData data = new PlayerData();
 
-            data.playerLevel = playerLevel;
-            data.playerExp = playerExp;
-            data.currentHP = currentHP;
-            data.inventoryItems = inventoryItems;
+            data.Stats = stats;
 
-            data.itemUpgrades = new List<ItemUpgradeData>();
-            foreach (var pair in itemUpgradeLevels)
-            {
-                data.itemUpgrades.Add(new ItemUpgradeData { itemName = pair.Key.itemName, upgradeLevel = pair.Value });
-            }
+            data.InventoryItems = inventoryItems;
 
-            data.currentStageFloor = currentStageFloor;
-            data.monstersDefeated = monstersDefeated;
+            data.CurrentStage = currentStageFloor;
+            data.MonstersDefeated = monstersDefeated;
 
-            data.gold = gold;
-            data.diamonds = diamonds;
+            data.Gold = gold;
+            data.Diamonds = diamonds;
 
-            data.affectionLevels = new List<AffectionData>();
-            foreach (var pair in affectionLevels)
-            {
-                data.affectionLevels.Add(new AffectionData { npcName = pair.Key.npcName, affectionLevel = pair.Value });
-            }
+            data.ReadDialogeIDs = ReadDialogeIDs;
 
-            data.affectionEventFlags = new List<string>(affectionEventFlags);
-            data.dialogueProgressFlags = new List<string>(dialogueProgressFlags);
-            data.ownedCostumes = new List<string>(ownedCostumes);
+            data.CurrentAffinityExp = CurrentAffinityExp;
+            data.CurrentAffinityLevel = CurrentAffinityLevel;
 
-            data.npcCostumes = new List<NpcCostumeData>();
-            foreach (var pair in npcCostumeMap)
-            {
-                data.npcCostumes.Add(new NpcCostumeData { npcName = pair.Key.npcName, costumeId = pair.Value });
-            }
+            data.AcquiredCostumeName = AcquiredCostumeName;
+            data.WornCostumeName = WornCostumeName;
 
-            data.isMoodShifted = isMoodShifted;
-
-            SaveSystem.Save(data);
+            // Save
+            SaveFileSystem.Save(data, index);
+            print("저장");
         }
 
-        public void LoadPlayerData()
+        public void LoadPlayerData(int index)
         {
-            PlayerData data = SaveSystem.Load();
+            // Load
+            PlayerData data = SaveFileSystem.Load(index);
             if (data == null) return;
 
-            playerLevel = data.playerLevel;
-            playerExp = data.playerExp;
-            currentHP = data.currentHP;
-            inventoryItems = data.inventoryItems;
+            inventoryItems = data.InventoryItems;
 
-            itemUpgradeLevels.Clear();
-            foreach (var upgrade in data.itemUpgrades)
-            {
-                var item = inventoryItems.Find(i => i.itemName == upgrade.itemName);
-                if (item != null)
-                    itemUpgradeLevels[item] = upgrade.upgradeLevel;
-            }
+            currentStageFloor = data.CurrentStage;
+            monstersDefeated = data.MonstersDefeated;
 
-            currentStageFloor = data.currentStageFloor;
-            monstersDefeated = data.monstersDefeated;
+            gold = data.Gold;
+            diamonds = data.Diamonds;
 
-            gold = data.gold;
-            diamonds = data.diamonds;
+            ReadDialogeIDs = data.ReadDialogeIDs;
 
-            affectionLevels.Clear();
-            foreach (var aff in data.affectionLevels)
-            {
-                affectionLevels[new NPC { npcName = aff.npcName }] = aff.affectionLevel;
-            }
+            CurrentAffinityExp = data.CurrentAffinityExp;
+            CurrentAffinityLevel = data.CurrentAffinityLevel;
 
-            affectionEventFlags = new HashSet<string>(data.affectionEventFlags);
-            dialogueProgressFlags = new HashSet<string>(data.dialogueProgressFlags);
-            ownedCostumes = new HashSet<string>(data.ownedCostumes);
+            AcquiredCostumeName = data.AcquiredCostumeName;
+            WornCostumeName = data.WornCostumeName;
 
-            npcCostumeMap.Clear();
-            foreach (var npcCostume in data.npcCostumes)
-            {
-                npcCostumeMap[new NPC { npcName = npcCostume.npcName }] = npcCostume.costumeId;
-            }
-
-            isMoodShifted = data.isMoodShifted;
+            print("불러오기");
         }
-    }
 
-    public static class SaveSystem
-    {
-        private static readonly string savePath = Path.Combine(Application.persistentDataPath, "playerdata.json");
-
-        public static void Save(PlayerData data)
+        public void DeletePlayerData(int index)
         {
-            string json = JsonUtility.ToJson(data, true);
-            File.WriteAllText(savePath, json);
-            Debug.Log("Game Saved to: " + savePath);
+            SaveFileSystem.Delete(index);
         }
 
-        public static PlayerData Load()
+        public bool CheckPlayerData(int index)
         {
-            if (File.Exists(savePath))
-            {
-                string json = File.ReadAllText(savePath);
-                return JsonUtility.FromJson<PlayerData>(json);
-            }
-            else
-            {
-                Debug.LogWarning("Save file not found");
-                return null;
-            }
+            return SaveFileSystem.HasSaveData(index);
+        }
+
+        public void OnGamePlayTypeChanged(GamePlayType type)
+        {
+            GamePlayType = type;
+            if (type == GamePlayType.Build) return;
+
+            if (TestCharacterClass == CharacterClass.None)
+                TestCharacterClass = CharacterClass.Sword;
+
+            stats = new PlayerStats();
+            stats = stats.TestStats(TestCharacterClass);
         }
     }
-
-    [Serializable]
-    public class PlayerData
-    {
-        public int playerLevel;
-        public int playerExp;
-        public int currentHP;
-
-        public List<Item> inventoryItems;
-        public List<ItemUpgradeData> itemUpgrades;
-
-        public int currentStageFloor;
-        public int monstersDefeated;
-
-        public int gold;
-        public int diamonds;
-
-        public List<AffectionData> affectionLevels;
-        public List<string> affectionEventFlags;
-
-        public List<string> dialogueProgressFlags;
-
-        public List<string> ownedCostumes;
-        public List<NpcCostumeData> npcCostumes;
-
-        public bool isMoodShifted;
-    }
-
 }
 

@@ -54,7 +54,7 @@ namespace ProjectVS.Monster
         private void Awake() => Init();
         private void Update()
         {
-            // 죽었을 때
+            // 체력이 없는데, 죽지 않았을 때
             if (Stats.CurrentHp <= 0 && CurrentStateType != MonsterStateType.Death)
             {
                 UnLockChangeState();
@@ -68,6 +68,8 @@ namespace ProjectVS.Monster
             _currentState?.Update();
         }
 
+
+        // 나중에 데이터 정보 넣어줄 매개변수
         private void Init(UnitStatsConfig config = null)
         {
             // 데이터

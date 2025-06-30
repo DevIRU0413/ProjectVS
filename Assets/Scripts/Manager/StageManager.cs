@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using ProjectVS.Data;
+using ProjectVS.Interface;
 using ProjectVS.Monster;
 using ProjectVS.UI.Model;
 using ProjectVS.UI.Presenter;
@@ -12,26 +13,42 @@ using UnityEngine;
 
 namespace ProjectVS.Manager
 {
-    public class StageManager : SimpleSingleton<StageManager>
+    // 0. 스테이지 흐름 관리
+    // 1. 타이머 타임 오버 체크
+    // 2. 일시 정지 시, 팝업
+    public class StageManager : SimpleSingleton<StageManager>, IGameStateListener
     {
-        [Header("Stage 설정 데이터")]
+        [Header("Stage Config Data")]
         [SerializeField] private StageDataSO stageData;
 
         [field: Header("Stage State")]
-        public StageFlowState StageFlowState { get; private set; } = StageFlowState.None;
-        public StageResult StageResult { get; private set; } = StageResult.None;
+        [field: SerializeField] public StageFlowState StageFlowState { get; private set; } = StageFlowState.None;
+        [field: SerializeField] public StageResult StageResult { get; private set; } = StageResult.None;
 
         [Header("UI")]                                              
         [SerializeField] private TimerView _timerView;  // timer  HUD
         [SerializeField] private TimerView _pausedView; // paused pupup
-        [SerializeField] private TimerView _resultView; // result pupup
+        // [SerializeField] private TimerView _resultView; // result pupup
 
         // 내부 상태
         private PlayerConfig _player;
         private TimerPresenter _timerPresenter;
 
-        private bool _bossDeath = false;
         private MonsterController _bossCtrl;
+
+        private void OnEnable()
+        {
+            GameManager.Instance.OnStateChanged -= OnGameStateChanged;
+            GameManager.Instance.OnStateChanged += OnGameStateChanged;
+        }
+        private void OnDisable()
+        {
+            GameManager.Instance.OnStateChanged -= OnGameStateChanged;
+        }
+        protected override void OnDestroy()
+        {
+            GameManager.Instance.OnStateChanged -= OnGameStateChanged;
+        }
 
         private void Start()
         {
@@ -39,7 +56,6 @@ namespace ProjectVS.Manager
             InitTimer();
             StageFlowState = StageFlowState.Enter;
         }
-
         private void Update()
         {
             StageFlow();
@@ -49,7 +65,9 @@ namespace ProjectVS.Manager
         #region Init
         private void InitPlayer()
         {
-            _player = GameManager.Instance.Player;
+            // 플레이어 소환
+
+            // _player = GameManager.Instance.Player;
         }
         private void InitTimer()
         {
@@ -152,6 +170,10 @@ namespace ProjectVS.Manager
         private Vector3 GetBossSpawnPoint()
         {
             return _player.transform.position + Vector3.right * 10f;
+        }
+
+        public void OnGameStateChanged(GameState state)
+        {
         }
 
         #endregion

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 using ProjectVS.Utils.CsvReader;
 using ProjectVS.Utils.CsvTable;
@@ -12,10 +11,19 @@ using ChoiceDataParserClass = ProjectVS.Dialogue.ChoiceDataParser.ChoiceDataPars
 using NPCAffinityModelClass = ProjectVS.Shop.NPCAffinityModel.NPCAffinityModel;
 using DialogueTextTyperClass = ProjectVS.Dialogue.TextEffect.DialogueTextTyper.DialogueTextTyper;
 using ProjectVS.Dialogue.TextEffect.TextTyperBase;
+using DialogueLogManagerClass = ProjectVS.Dialogue.DialogueLogManager.DialogueLogManager;
+using ProjectVS.Utils.UIManager;
+using ProjectVS.Utils.ObservableProperty;
+using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.ChoiceDialogueManager;
+using SpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
+using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
+using UnityEngine.Rendering;
+
 
 namespace ProjectVS.Dialogue.DialogueManager
 {
-    // TODO: IllustPath를 참조한 이미지 로딩 시스템
+    // TODO: 클래스에 책임이 너무 많은 것 같아서 분리해야 될 듯
+
     public class DialogueManager : MonoBehaviour
     {
         [Header("NPC 호감도 데이터")]
@@ -30,13 +38,15 @@ namespace ProjectVS.Dialogue.DialogueManager
         private DialogueTextTyperClass _currentText;
 
         [Header("TSV 파일 경로")]
-        [SerializeField] private string _dialoguePath = "Min/Resources/DialogueData.csv";
-        [SerializeField] private string _choicePath = "Min/Resources/ChoiceData.csv";
+        [SerializeField] private string _dialoguePath = "Min/Resources/DialogueData.tsv";
+        [SerializeField] private string _choicePath = "Min/Resources/ChoiceData.tsv";
 
         private CsvTable _dialogueTable;
         private CsvTable _choiceTable;
 
         private DialogueDataClass _currentDialogueData;
+
+        public DialogueDataClass CurrentDialogueData => _currentDialogueData; // 코스튬 상점에서 접근하기 위해 열어둠
 
         private List<DialogueDataClass> _dialogueList = new();
         private List<ChoiceDataClass> _choiceList = new();
@@ -45,7 +55,20 @@ namespace ProjectVS.Dialogue.DialogueManager
 
         [Header("자동 진행 설정")]
         [SerializeField] private float _autoNextDelay = 1f;
-        private bool _isAuto = false;
+
+        [Header("대화 로그 매니저")]
+        [SerializeField] private DialogueLogManagerClass _dialogueLogManager;
+
+        [Header("선택지 매니저")]
+        [SerializeField] private ChoiceDialogueManagerClass _choiceDialogueManager;
+
+        [Header("일러스트 변경 매니저")]
+        [SerializeField] private SpriteChangeManagerClass _spriteChangeManager;
+
+        [Header("스테이지 이벤트 호감도 검사 통과 조건")]
+        [SerializeField] private int _passAffinity = 50;
+
+        public ObservableProperty<bool> IsAutoMode = new(false);
 
         private void Awake()
         {
@@ -53,11 +76,6 @@ namespace ProjectVS.Dialogue.DialogueManager
             LoadChoiceCSV();
 
             _currentText = _shopEnterText; // 임의 초기 텍스트 설정
-        }
-
-        private void Start()
-        {
-            //ShowDialogue(_currentDialogueIndex);
         }
 
         private void LoadDialogueCSV()
@@ -76,6 +94,34 @@ namespace ProjectVS.Dialogue.DialogueManager
             _choiceList = ChoiceDataParserClass.Parse(_choiceTable);
         }
 
+
+        // 씬이 변경될 때 TMP_Text를 등록해주는 메서드
+        public void AssignTextWhenSceneChanged(
+            DialogueTextTyperClass shopEnterText = null,
+            DialogueTextTyperClass repeatText = null,
+            DialogueTextTyperClass eventText = null,
+            DialogueTextTyperClass stageClearText = null
+            )
+        {
+            if (shopEnterText != null)
+            {
+                _shopEnterText = shopEnterText;
+            }
+            if (repeatText != null)
+            {
+                _repeatText = repeatText;
+            }
+            if (eventText != null)
+            {
+                _eventText = eventText;
+            }
+            if (stageClearText != null)
+            {
+                _stageClearText = stageClearText;
+            }
+        }
+
+
         private void ShowDialogue(int dialogueID, DialogueTextTyperClass text)
         {
             DialogueDataClass data = _dialogueList.Find(d => d.ID == dialogueID);
@@ -88,6 +134,15 @@ namespace ProjectVS.Dialogue.DialogueManager
             _currentDialogueData = data;
             _currentDialogueIndex = data.ID;
 
+            if (_currentDialogueData.IsRepeatable)
+            {
+                _spriteChangeManager.ChangeRepeatImage(_currentDialogueData.IllustPath);
+            }
+            else
+            {
+                _spriteChangeManager.ChangeEventImage(_currentDialogueData.IllustPath, _currentDialogueData.CharacterID);
+            }
+
             if (text == null)
             {
                 text = _currentText;
@@ -98,7 +153,8 @@ namespace ProjectVS.Dialogue.DialogueManager
             }
 
             _currentText.ClearAction();
-            if (_isAuto)
+
+            if (IsAutoMode.Value)
             {
                 _currentText.OnTypingComplete += () =>
                 {
@@ -106,13 +162,37 @@ namespace ProjectVS.Dialogue.DialogueManager
                 };
             }
 
-            StartCoroutine(IE_WaitForAnimation(_currentText, $"{data.CharacterName}: {data.Content}"));
+            StartCoroutine(IE_WaitForAnimation(_currentText, data.CharacterName, data.Content));
 
             data.IsPrinted = true;
 
+            if (data.OccurTiming == 1 || data.OccurTiming == 2 || data.OccurTiming == 4 || data.OccurTiming == 6)
+            {
+                _dialogueLogManager.AddLogBox(data.CharacterName, data.Content);
+            }
+
             Debug.Log($"[DialogueManager] 현재 대사: {data.ID} - {data.Content}");
-            // TODO: 일러스트, 선택지 UI 등 출력 처리
+
         }
+
+        // 캐릭터 구매 시 대화 출력 메서드
+        // _currentDialogueData, _currentText 등의 갱신 없이 일회성으로 사용가능함
+        public void ShowBuyDialogue(int id)
+        {
+            DialogueDataClass data = _dialogueList.Find(d => d.ID == id);
+            if (data == null)
+            {
+                Debug.LogWarning($"[DialogueManager] 해당 ID의 대사가 없습니다: {id}");
+                return;
+            }
+
+            _repeatText.ClearAction();
+            _repeatText.StartContentTyping(data.Content);
+            _repeatText.StartNameTyping(data.CharacterName);
+
+            Debug.Log($"[DialogueManager] 코스튬 구매 대사 출력: {data.ID} - {data.Content}");
+        }
+
 
         // TODO: 100090 ~ 100094 이미지 대체 필터링
         // TODO: Choice가 다음에 있는지 확인
@@ -127,12 +207,18 @@ namespace ProjectVS.Dialogue.DialogueManager
             if (nextData == null)
             {
                 Debug.LogWarning($"[DialogueManager] 다음 대사(ID {nextID})가 존재하지 않음");
+                UIManager.Instance.ForceCloseTopPanel();
+                IsAutoMode.Value = false;
+                _dialogueLogManager.ClearLogBox();
                 return;
             }
 
             if (_currentDialogueIndex >= _dialogueList.Count + 100000) // csv가 100000 부터 시작하여 (Count + 100000) 하드코딩 됨
             {
                 Debug.Log("[DialogueManager] 더 이상 대사가 없습니다");
+                UIManager.Instance.ForceCloseTopPanel();
+                IsAutoMode.Value = false;
+                _dialogueLogManager.ClearLogBox();
                 _currentDialogueIndex--;
                 return;
             }
@@ -142,13 +228,39 @@ namespace ProjectVS.Dialogue.DialogueManager
                 Debug.Log($"현재 데이터 {_currentDialogueData.OccurTiming}, 다음 {nextData.OccurTiming}");
                 Debug.Log($"현재 {_currentDialogueData.ID}, 다음 {nextData.ID}");
                 Debug.Log("[DialogueManager] 다음 대사의 OccurTiming이 달라서 대화를 중단합니다.");
+                UIManager.Instance.ForceCloseTopPanel();
+                IsAutoMode.Value = false;
+                _dialogueLogManager.ClearLogBox();
                 return;
             }
 
             if (!CheckAffinity())
             {
                 Debug.Log($"[DialogueManager] 다음 대사는 접근할 수 없는 호감도 대화입니다");
+                UIManager.Instance.ForceCloseTopPanel();
+                IsAutoMode.Value = false;
+                _dialogueLogManager.ClearLogBox();
                 _currentDialogueIndex--;
+                return;
+            }
+
+            ChoiceDataClass choiceData = _choiceList.Find(d => d.NextDialogueID == nextID);
+            if (choiceData != null)
+            {
+                _choiceDialogueManager.ShowChoiceButtons(
+                    choiceData.ChoiceText1,
+                    choiceData.ChoiceText2,
+                    () =>
+                    {
+                        _dialogueLogManager.AddLogBox(choiceData.CharacterName, choiceData.ChoiceText1);
+                        ShowDialogue(choiceData.NextDialogueID, null);
+                    },
+                    () =>
+                    {
+                        _dialogueLogManager.AddLogBox(choiceData.CharacterName, choiceData.ChoiceText2);
+                        ShowDialogue(choiceData.NextDialogueID, null);
+                    });
+
                 return;
             }
 
@@ -160,10 +272,8 @@ namespace ProjectVS.Dialogue.DialogueManager
         {
             DialogueDataClass data = _dialogueList.Find(d => d.ID == _currentDialogueIndex);
 
-            if (_npcAffinityModel.Affinity < data.NeedAffinity)
+            if (_npcAffinityModel.AffinityLevel < data.NeedAffinity)
             {
-                // 대화 종료 처리해야되면 추후 처리
-                Debug.Log("대화 종료");
                 return false;
             }
             else
@@ -172,17 +282,31 @@ namespace ProjectVS.Dialogue.DialogueManager
             }
         }
 
+        public bool CanShowShopEnterDialogue()
+        {
+            foreach (var data in _dialogueList)
+            {
+                if (data.OccurTiming != 1) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
+                if (data.IsPrinted) continue;
+
+                return true;
+            }
+
+            return false;
+        }
+
+
         [ContextMenu("Show Shop Enter Dialogue")]
         public void ShowShopEnterDialogue()
         {
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 1) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
 
                 ShowDialogue(data.ID, _shopEnterText);
-                //data.IsPrinted = true;
                 break;
             }
         }
@@ -194,12 +318,10 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 2) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
 
                 ShowDialogue(data.ID, _eventText);
-
-                //data.IsPrinted = true;
                 return;
             }
 
@@ -213,7 +335,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 2) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
 
                 return true;
@@ -231,7 +353,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (!data.IsRepeatable) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
 
                 repeatables.Add(data);
             }
@@ -259,6 +381,22 @@ namespace ProjectVS.Dialogue.DialogueManager
         }
 
 
+        public bool CanShowStageClearDialogue()
+        {
+            foreach (var data in _dialogueList)
+            {
+                if (data.OccurTiming != 4) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
+                if (data.IsPrinted) continue;
+                if (HasUnshownPreviousEventDialogue(data)) continue;
+
+                return true;
+            }
+
+            return false;
+        }
+
+
         // 스테이지 종료 시 호출할 메서드
         [ContextMenu("Show Stage Clear Dialogue")]
         public void ShowStageClearDialogue()
@@ -266,15 +404,37 @@ namespace ProjectVS.Dialogue.DialogueManager
             foreach (var data in _dialogueList)
             {
                 if (data.OccurTiming != 4) continue;
-                if (_npcAffinityModel.Affinity < data.NeedAffinity) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
                 if (data.IsPrinted) continue;
+                if (HasUnshownPreviousEventDialogue(data)) continue;
 
                 ShowDialogue(data.ID, _stageClearText);
-                //data.IsPrinted = true;
                 return;
             }
 
             Debug.Log("[DialogueManager] 스테이지 종료 후 출력할 대사 없음");
+        }
+
+
+        // 이전 이벤트 대사를 출력했는지 확인하는 메서드
+        private bool HasUnshownPreviousEventDialogue(DialogueDataClass stageClearData)
+        {
+            // 첫 대사라면 안 본 대사 체크가 무의미하기에 false 반환
+            if (stageClearData.ID == 100001) return false;
+
+            // 호감도 50미만이면 이전 이벤트 대사 체크 없이 true 반환
+            // TODO: 추후에 로직 바꿔야 될 수도
+            if (stageClearData.NeedAffinity < _passAffinity)
+            {
+                return false;
+            }
+
+            return _dialogueList.Exists(data =>
+                data.OccurTiming == 2 && // 이벤트 대사가 존재했는지 확인
+                data.NeedAffinity < stageClearData.NeedAffinity && // 현재 스테이지 클리어 호감도보다 낮은 호감도 조건인데
+                _npcAffinityModel.AffinityLevel >= data.NeedAffinity && // 현재 호감도로 볼 수 있는 대사가 존재하는지 확인
+                !data.IsPrinted // 아직 보지 않은 대사인지 확인
+            );
         }
 
         public void ShowCutsceneDialogue()
@@ -282,25 +442,102 @@ namespace ProjectVS.Dialogue.DialogueManager
             // TODO: 컷신 대사 출력 로직 구현
         }
 
+
+        public bool CanShowBeforeFinalStageDialogue()
+        {
+            foreach (var data in _dialogueList)
+            {
+                if (data.OccurTiming != 6) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
+                // if (_stageManager.CurrentStage != _stageManager.FinalStage - 1) continue; // 현재 스테이지 = 최종 스테이지 - 1 인지 확인
+
+                return true;
+            }
+
+            return false;
+        }
+
+        // TODO: 최종 스테이지 직전, 상점을 나가고 대사 나오게 구현
+        public void ShowBeforeFinalStageDialogue()
+        {
+            foreach (var data in _dialogueList)
+            {
+                if (data.OccurTiming != 6) continue;
+                if (_npcAffinityModel.AffinityLevel < data.NeedAffinity) continue;
+                // if (_stageManager.CurrentStage != _stageManager.FinalStage - 1) continue; // 현재 스테이지 = 최종 스테이지 - 1 인지 확인
+
+                ShowDialogue(data.ID, _stageClearText);
+                return;
+            }
+        }
+
         // 패널의 애니메이션으로 인한 활성화 지연 대기 코루틴
-        private IEnumerator IE_WaitForAnimation(TextTyperBase text, string content)
+        private IEnumerator IE_WaitForAnimation(TextTyperBase text, string name, string content)
         {
             yield return new WaitUntil(() => text.gameObject.activeInHierarchy);
             yield return null;
 
-            text.StartTyping(content);
+            text.StartNameTyping(name);
+            text.StartContentTyping(content);
         }
 
         public void OnToggleAutoMode()
         {
-            _isAuto = !_isAuto;
-            Debug.Log($"현재 AutoMode: {_isAuto}");
+            IsAutoMode.Value = !IsAutoMode.Value;
+            Debug.Log($"현재 AutoMode: {IsAutoMode.Value}");
+
+            // 이전 이벤트 제거
+            _currentText.OnTypingComplete -= HandleAutoAfterTyping;
+
+            if (IsAutoMode.Value)
+            {
+                if (_currentText != null)
+                {
+                    if (_currentText.IsTyping)
+                    {
+                        // 타이핑 중이면 끝날 때 자동 다음 진행
+                        _currentText.OnTypingComplete += HandleAutoAfterTyping;
+                    }
+                    else
+                    {
+                        // 타이핑 중이 아니면 바로 진행
+                        StartCoroutine(IE_AutoNextDelay());
+                    }
+                }
+            }
         }
 
+
+        // Auto 키가 켜져있을 때 _autoNextDelay 초 후 자동으로 next 호출
         private IEnumerator IE_AutoNextDelay()
         {
             yield return new WaitForSeconds(_autoNextDelay);
             Next();
+        }
+
+
+        // Auto가 켜져있을 때, 타이핑이 완료되면 자동으로 다음 대사로 넘어가게 하는 메서드
+        private void HandleAutoAfterTyping()
+        {
+            _currentText.OnTypingComplete -= HandleAutoAfterTyping; // 한 번만 실행되도록 구독 취소
+            StartCoroutine(IE_AutoNextDelay());
+        }
+
+
+        // 세이브할 때 읽은 대사 번호 List<int> 로 반환
+        // 내가 다시 필터링할 때 해당 List 참조하여 필터링
+
+        public HashSet<int> GetReadDialogueIDs() // 세이브 시 호출하여 반환
+        {
+            HashSet<int> readIDs = new();
+            foreach (var data in _dialogueList)
+            {
+                if (data.IsPrinted)
+                {
+                    readIDs.Add(data.ID);
+                }
+            }
+            return readIDs;
         }
     }
 }

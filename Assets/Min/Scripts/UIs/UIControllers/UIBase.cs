@@ -32,6 +32,7 @@ namespace ProjectVS.UIs.UIBase
 
             transform.DOScale(1f, 0.3f)
                 .SetEase(Ease.OutBack)
+                .SetUpdate(true)
                 .OnComplete(() => onComplete?.Invoke());
 
             Debug.Log($"[UIBase] {gameObject.name}의 AnimateShow 호출 됨");
@@ -41,6 +42,7 @@ namespace ProjectVS.UIs.UIBase
         {
             transform.DOScale(0f, 0.2f)
                 .SetEase(Ease.InBack)
+                .SetUpdate(true)
                 .OnComplete(() =>
                 {
                     gameObject.SetActive(false);
@@ -50,7 +52,9 @@ namespace ProjectVS.UIs.UIBase
 
         public virtual void FadeCanvasGroup(CanvasGroup group, float toAlpha, float duration, Action onComplete = null)
         {
-            group.DOFade(toAlpha, duration).OnComplete(() => onComplete?.Invoke());
+            group.DOFade(toAlpha, duration)
+                .SetUpdate(true)
+                .OnComplete(() => onComplete?.Invoke());
         }
 
         public virtual void PunchScale(float amount = 0.3f, float duration = 0.2f)
