@@ -50,7 +50,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
 
             RenewButtonColor();
 
-            PlayerDataManager.ForceInstance.SavePlayerData(); // 이건 어떻게 동작하는지 확인해봐야될 듯
+            // 캐릭터 팝업 띄어주기
         }
 
         public void OnClickLoadButton()
@@ -67,8 +67,6 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
             _isDeleteButtonToggled = false;
 
             RenewButtonColor();
-
-            PlayerDataManager.ForceInstance.LoadPlayerData(); // 이건 어떻게 동작하는지 확인해봐야될 듯
         }
 
         public void OnClickDeleteButton()
@@ -89,17 +87,17 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
 
         public void OnClickFile1Button()
         {
-            CheckWhatButtonToggled(1);
+            CheckWhatButtonToggled(0);
         }
 
         public void OnClickFile2Button()
         {
-            CheckWhatButtonToggled(2);
+            CheckWhatButtonToggled(1);
         }
 
         public void OnClickFile3Button()
         {
-            CheckWhatButtonToggled(3);
+            CheckWhatButtonToggled(2);
         }
 
         public void OnClickESCButton()
@@ -126,26 +124,30 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
         {
             if (_isNewButtonToggled)
             {
-                //if (인덱스에 파일이 있으면) return;
+                if (PlayerDataManager.ForceInstance.CheckPlayerData(index)) return;
 
                 // 새 파일 생성 - 인덱스로
+                PlayerDataManager.ForceInstance.SavePlayerData(index);
 
                 UIManager.Instance.Hide("Control File Panel");
                 UIManager.Instance.Show("Character Select Panel");
             }
             if (_isLoadButtonToggled)
             {
-                //if (인덱스에 파일이 없으면) return;
+                if (!PlayerDataManager.ForceInstance.CheckPlayerData(index)) return;
 
                 // 로드 파일 - 인덱스로
-
+                PlayerDataManager.ForceInstance.LoadPlayerData(index);
                 SceneLoader.Instance.LoadSceneAsync(SceneID.InGameScene);
+                Debug.Log("로드");
             }
             if (_isDeleteButtonToggled)
             {
-                //if (인덱스에 파일이 없으면) return;
+                if (!PlayerDataManager.ForceInstance.CheckPlayerData(index)) return;
 
                 // 삭제 파일 - 인덱스로
+                PlayerDataManager.ForceInstance.DeletePlayerData(index);
+                Debug.Log("삭제");
             }
         }
     }

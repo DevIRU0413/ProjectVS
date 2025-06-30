@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 
 using ProjectVS.Data;
 using ProjectVS.Interface;
@@ -45,7 +43,7 @@ namespace ProjectVS.Manager
         public HashSet<string> AcquiredCostumeName;
         public string WornCostumeName;
 
-        public void SavePlayerData()
+        public void SavePlayerData(int index)
         {
             PlayerData data = new PlayerData();
 
@@ -68,14 +66,14 @@ namespace ProjectVS.Manager
             data.WornCostumeName = WornCostumeName;
 
             // Save
-            SaveSystem.Save(data);
+            SaveFileSystem.Save(data, index);
             print("저장");
         }
 
-        public void LoadPlayerData()
+        public void LoadPlayerData(int index)
         {
             // Load
-            PlayerData data = SaveSystem.Load();
+            PlayerData data = SaveFileSystem.Load(index);
             if (data == null) return;
 
             inventoryItems = data.InventoryItems;
@@ -95,6 +93,16 @@ namespace ProjectVS.Manager
             WornCostumeName = data.WornCostumeName;
 
             print("불러오기");
+        }
+
+        public void DeletePlayerData(int index)
+        {
+            SaveFileSystem.Delete(index);
+        }
+
+        public bool CheckPlayerData(int index)
+        {
+            return SaveFileSystem.HasSaveData(index);
         }
 
         public void OnGamePlayTypeChanged(GamePlayType type)
