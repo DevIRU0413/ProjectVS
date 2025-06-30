@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
-using ProjectVS.Utils.UIManager;
-using DialogueManagerClass = ProjectVS.Dialogue.DialogueManager.DialogueManager;
+using ProjectVS.Dialogue.DialogueManager;
 
 public class AutoAndSkipButtonPainter : MonoBehaviour
 {
@@ -13,14 +12,13 @@ public class AutoAndSkipButtonPainter : MonoBehaviour
     [SerializeField] private Image _autoButtonImage;
 
     [SerializeField] private DialogueTextTyper _eventDialogueTextTyper;
-    [SerializeField] private DialogueManagerClass _dialogueManager;
 
     private Color _toggledColor = new Color(0.4f, 0.9f, 0.95f, 1f); // 하늘색 임의 지정
 
     private void OnEnable()
     {        
         _eventDialogueTextTyper.IsSkipToggled.Subscribe(CheckSkipToggled);
-        _dialogueManager.IsAutoMode.Subscribe(CheckAutoToggled);
+        DialogueManager.Instance.IsAutoMode.Subscribe(CheckAutoToggled);
     }
 
     private void Start()
@@ -35,9 +33,9 @@ public class AutoAndSkipButtonPainter : MonoBehaviour
         {
             _eventDialogueTextTyper.IsSkipToggled.Unsubscribe(CheckSkipToggled);
         }
-        if (_dialogueManager != null)
+        if (DialogueManager.Instance != null)
         {
-            _dialogueManager.IsAutoMode.Unsubscribe(CheckAutoToggled);
+            DialogueManager.Instance.IsAutoMode.Unsubscribe(CheckAutoToggled);
         }
     }
 
@@ -56,7 +54,7 @@ public class AutoAndSkipButtonPainter : MonoBehaviour
 
     private void CheckAutoToggled()
     {
-        if (_dialogueManager.IsAutoMode.Value)
+        if (DialogueManager.Instance.IsAutoMode.Value)
         {
             _autoButtonImage.color = _toggledColor;
         }

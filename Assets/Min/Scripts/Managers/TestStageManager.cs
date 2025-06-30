@@ -1,24 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
-using ProjectVS.Dialogue.DialogueManager;
-using ProjectVS.Utils.UIManager;
-
 using UnityEngine;
 
-using DialogueManagerClass = ProjectVS.Dialogue.DialogueManager.DialogueManager;
+using ProjectVS.Utils.UIManager;
+using ProjectVS.Dialogue.DialogueManager;
 
 namespace ProjectVS.Managers.TestStageManager
 {
     public class TestStageManager : MonoBehaviour
     {
-        [SerializeField] private DialogueManagerClass _dialogueManager;
-
-
         [ContextMenu("Test Stage Clear Event")]
         private void CheckAnyEventWhenStageClear()
         {
-            if (!_dialogueManager.CanShowStageClearDialogue())
+            if (!DialogueManager.Instance.CanShowStageClearDialogue())
             {
                 Debug.Log("[TestStageManager] 출력 가능한 스테이지 클리어 대사가 없습니다.");
                 return;
@@ -27,14 +21,14 @@ namespace ProjectVS.Managers.TestStageManager
             {
                 Debug.Log("[TestStageManager] 출력 가능한 스테이지 클리어 대사가 있습니다. 대사 출력 시작.");
                 UIManager.Instance.Show("Event Panel");
-                _dialogueManager.ShowStageClearDialogue();
+                DialogueManager.Instance.ShowStageClearDialogue();
             }
         }
 
         [ContextMenu("Test Shop Enter Event")]
         private void CheckAnyEventWhenEnterShop()
         {
-            if (!_dialogueManager.CanShowShopEnterDialogue())
+            if (!DialogueManager.Instance.CanShowShopEnterDialogue())
             {
                 Debug.Log("[TestStageManager] 출력 가능한 상점 입장 대사가 없습니다.");
                 return;
@@ -43,7 +37,7 @@ namespace ProjectVS.Managers.TestStageManager
             {
                 Debug.Log("[TestStageManager] 출력 가능한 상점 입장 대사가 있습니다. 대사 출력 시작.");
                 UIManager.Instance.Show("Event Panel");
-                _dialogueManager.ShowShopEnterDialogue();
+                DialogueManager.Instance.ShowShopEnterDialogue();
             }
         }
 
@@ -51,7 +45,7 @@ namespace ProjectVS.Managers.TestStageManager
         [ContextMenu("Test Before Final Stage Event")]
         private void CheckAnyEventWhenBeforeFinalStage()
         {
-            if (!_dialogueManager.CanShowBeforeFinalStageDialogue())
+            if (!DialogueManager.Instance.CanShowBeforeFinalStageDialogue())
             {
                 Debug.Log("[TestStageManager] 출력 가능한 최종 스테이지 전 대사가 없습니다.");
                 return;
@@ -60,7 +54,7 @@ namespace ProjectVS.Managers.TestStageManager
             {
                 Debug.Log("[TestStageManager] 출력 가능한 최종 스테이지 전 대사가 있습니다. 대사 출력 시작.");
                 UIManager.Instance.Show("Event Panel");
-                _dialogueManager.ShowBeforeFinalStageDialogue();
+                DialogueManager.Instance.ShowBeforeFinalStageDialogue();
             }
         }
     }

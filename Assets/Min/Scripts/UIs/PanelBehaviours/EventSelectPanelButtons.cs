@@ -4,14 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using ProjectVS.Utils.UIManager;
-using DialogueManagerClass = ProjectVS.Dialogue.DialogueManager.DialogueManager;
+using ProjectVS.Dialogue.DialogueManager;
 using ExclamationMarkIndicatorClass = ProjectVS.Shop.ExclamationMarkIndicator.ExclamationMarkIndicator;
 
 namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 {
     public class EventSelectPanelButtons : MonoBehaviour
     {
-        [SerializeField] private DialogueManagerClass _dialogueManager;
         [SerializeField] private Button _eventButton;
 
         [Header("느낌표 출력용")]
@@ -28,7 +27,7 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 
         private void OnEnable()
         {
-            _dialogueManager.ShowRepeatDialogue();
+            DialogueManager.Instance.ShowRepeatDialogue();
 
             CheckDisableButton();
 
@@ -47,13 +46,13 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 
         public void OnClickEventButton()
         {
-            if (!_dialogueManager.CanShowEventDialogue())
+            if (!DialogueManager.Instance.CanShowEventDialogue())
             {
                 Debug.Log("[EventSelectPanelButtons] 출력 가능한 이벤트 대사가 없습니다.");
                 return;
             }
 
-            _dialogueManager.ShowEventDialogue();
+            DialogueManager.Instance.ShowEventDialogue();
 
             UIManager.Instance.Hide("Event Select Panel");
             UIManager.Instance.Show("Event Panel");
@@ -76,7 +75,7 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 
         private void CheckDisableButton()
         {
-            if (!_dialogueManager.CanShowEventDialogue())
+            if (!DialogueManager.Instance.CanShowEventDialogue())
             {
                 _eventButton.interactable = false;
             }

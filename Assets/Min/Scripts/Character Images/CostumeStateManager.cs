@@ -6,7 +6,6 @@ using ProjectVS.Manager;
 using UnityEngine;
 
 using CostumeSOClass = ProjectVS.CharacterImages.CostumeSO.CostumeSO;
-using DialogueManagerClass = ProjectVS.Dialogue.DialogueManager.DialogueManager;
 using EventSpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
 
 
@@ -20,7 +19,6 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
 
         private CostumeSOClass _currentCostume = null;
 
-        [SerializeField] private DialogueManagerClass _dialogueManager;
         [SerializeField] private EventSpriteChangeManagerClass _eventSpriteChangeManager;
 
         public CostumeSOClass CurrentCostume => _currentCostume;
@@ -48,8 +46,8 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
                 // 착용 중이면 해제
                 costume.IsEquipped = false;
                 _currentCostume = null;
-                _eventSpriteChangeManager.ChangeRepeatImage(_dialogueManager.CurrentDialogueData.IllustPath);
-                _dialogueManager.ShowRepeatDialogue();
+                _eventSpriteChangeManager.ChangeRepeatImage(DialogueManager.Instance.CurrentDialogueData.IllustPath);
+                DialogueManager.Instance.ShowRepeatDialogue();
                 SaveWornCostume();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 미착용 상태로 전환");
             }
@@ -73,7 +71,7 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
             costume.IsEquipped = true;
             _currentCostume = costume;
 
-            _dialogueManager.ShowBuyDialogue(costume.CostumeDialogueID);
+            DialogueManager.Instance.ShowBuyDialogue(costume.CostumeDialogueID);
             _eventSpriteChangeManager.ChangeCostumeImage();
         }
 

@@ -17,13 +17,14 @@ using ProjectVS.Utils.ObservableProperty;
 using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.ChoiceDialogueManager;
 using SpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
 using ProjectVS.Manager;
+using ProjectVS.Util;
 
 
 namespace ProjectVS.Dialogue.DialogueManager
 {
     // TODO: 클래스에 책임이 너무 많은 것 같아서 분리해야 될 듯
 
-    public class DialogueManager : MonoBehaviour
+    public class DialogueManager : SimpleSingleton<DialogueManager>
     {
         [Header("NPC 호감도 데이터")]
         [SerializeField] private NPCAffinityModelClass _npcAffinityModel; // 싱글톤으로 바꿔서 접근해야될 듯
@@ -69,8 +70,10 @@ namespace ProjectVS.Dialogue.DialogueManager
 
         public ObservableProperty<bool> IsAutoMode = new(false);
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             LoadDialogueCSV();
             LoadChoiceCSV();
 

@@ -1,11 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
 using ProjectVS.Utils.UIManager;
-using DialogueManagerClass = ProjectVS.Dialogue.DialogueManager.DialogueManager;
 
 namespace ProjectVS.UIs.PanelBehaviours.EventPanelButtons
 {
