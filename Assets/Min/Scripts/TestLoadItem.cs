@@ -6,6 +6,7 @@ using ProjectVS.Utils.CsvReader;
 using ProjectVS.Utils.CsvTable;
 using ItemDataClass = ProjectVS.ItemData.ItemData.ItemData;
 using ItemDataParserClass = ProjectVS.ItemData.ItemDataParser.ItemDataParser;
+using ProjectVS.ItemData.ItemData;
 
 
 public class TestLoadItem : MonoBehaviour
@@ -15,7 +16,7 @@ public class TestLoadItem : MonoBehaviour
 
     private void Awake()
     {
-        _itemTable = new CsvTable("Assets/Min/Resources/CSV/Item.csv", '\t'); // CsvTable 객체 생성, 파일 경로와 구분자 지정, tsv로 받았습니다.
+        _itemTable = new CsvTable("Resources/CSV/Item.csv", '\t'); // CsvTable 객체 생성, 파일 경로와 구분자 지정, tsv로 받았습니다.
         CsvReader.Read(_itemTable); // CsvReader를 사용하여 테이블을 읽어옵니다.
 
         _itemDatas = ItemDataParserClass.Parse(_itemTable); // ItemDataParser를 사용하여 아이템 데이터를 파싱
@@ -32,7 +33,7 @@ public class TestLoadItem : MonoBehaviour
 
         foreach (var item in _itemDatas)
         {
-            if (item.ItemRank != "Unique") continue;
+            if (item.ItemRank != (ItemRank)1) continue;
             Debug.Log($"{item.ItemName}의 등급: {item.ItemRank}");
         }
     }
