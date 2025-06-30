@@ -14,7 +14,7 @@ namespace ProjectVS.CharacterImages.EventSpriteChangeManager
 
         [SerializeField] private Image _heroinEventImage;
         [SerializeField] private Image _shopNPCEvnetImage;
-        [SerializeField] private Image _cutSceneImage; // 대화 중 배경이 바뀔 때 사용되는 이미지, 아직 사용하지 않음
+        [SerializeField] private Image _cutSceneImage;
         [SerializeField] private Image _repeatImage;
 
         [SerializeField] private CostumeStateManagerClass _costumeStateManager;
@@ -46,15 +46,22 @@ namespace ProjectVS.CharacterImages.EventSpriteChangeManager
 
             if (characterID == 1) // 주인공
             {
+                _cutSceneImage.enabled = false;
                 _heroinEventImage.color = _enabledColor;
                 _heroinEventImage.sprite = sprite;
                 _shopNPCEvnetImage.color = _disabledColor;
             }
-            else // 상점 NPC or 기타 인물
+            else if (characterID == 2)// 상점 NPC
             {
+                _cutSceneImage.enabled = false;
                 _shopNPCEvnetImage.color = _enabledColor;
                 _shopNPCEvnetImage.sprite = sprite;
                 _heroinEventImage.color = _disabledColor;
+            }
+            else // 3번은 배경 이미지
+            {
+                _cutSceneImage.enabled = true;
+                _cutSceneImage.sprite = sprite;
             }
 
             Debug.Log($"[SpriteChangeManager] ChangeEventImage: 이미지 변경 완료. 경로: {path}");
