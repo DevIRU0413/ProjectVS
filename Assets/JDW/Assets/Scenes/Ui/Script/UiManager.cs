@@ -1,4 +1,6 @@
 ﻿using ProjectVS;
+using ProjectVS.Data;
+using ProjectVS.Manager;
 
 using TMPro;
 
@@ -50,7 +52,7 @@ public class UiManager : MonoBehaviour
         int currentLevel = Mathf.FloorToInt(player.Stats.Level);
         levelText.text = $"LEVEL : {currentLevel}";
         //플레이어 골드 텍스트
-        int currentGold = Mathf.FloorToInt(player.Stats.Gold);
+        int currentGold = Mathf.FloorToInt(PlayerDataManager.Instance.gold);
         goldText.text = $"{currentGold}";
         //플레이어 체력
         int currentHp = Mathf.FloorToInt(player.Stats.CurrentHp);

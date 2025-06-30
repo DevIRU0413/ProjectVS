@@ -305,21 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c920a0eeb513d54aa4ce5e43b6c8054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedClass: 1
-  Stats:
-    Level: 0
-    CurrentHp: 0
-    CurrentMaxHp: 0
-    CurrentAtk: 0
-    CurrentDfs: 0
-    CurrentSpd: 0
-    AtkSpd: 0
-    CurrentExp: 0
-    MaxExp: 0
-    Gold: 0
-    CharacterClass: 0
-  timer: {fileID: 7439314377194012607, guid: e751d69887daeff448c05c857ec5922e, type: 3}
-  scanner: {fileID: 0}
+  scanner: {fileID: 5786611776289020374}
   isDead: 0
   inventory: []
 --- !u!114 &5786611776289020374

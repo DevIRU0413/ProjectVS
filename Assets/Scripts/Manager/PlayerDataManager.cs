@@ -2,31 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 
+using ProjectVS.Data;
+using ProjectVS.Interface;
+using ProjectVS.Util;
+
 using UnityEngine;
 
 namespace ProjectVS.Manager
 {
-    [System.Serializable]
-    public class Item
-    {
-        public string itemName;
-        public int itemID;
-    }
-
-    [System.Serializable]
+    // 임시
+    [Serializable]
     public class NPC
     {
         public string npcName;
         public int npcID;
     }
 
-    [Serializable]
-    public class ItemUpgradeData
-    {
-        public string itemName;
-        public int upgradeLevel;
-    }
-
+    // 임시
     [Serializable]
     public class AffectionData
     {
@@ -34,6 +26,7 @@ namespace ProjectVS.Manager
         public int affectionLevel;
     }
 
+    // 임시
     [Serializable]
     public class NpcCostumeData
     {
@@ -41,16 +34,22 @@ namespace ProjectVS.Manager
         public string costumeId;
     }
 
-    public class PlayerDataManager : MonoBehaviour
+    /// <summary>
+    /// 저장된 정보들로 저장 데이터를 만듭니다.
+    /// </summary>
+    public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IGamePlayTypeListener
     {
+        [HideInInspector]
+        public GamePlayType GamePlayType;
+
+        [Header("Test Play Config")]
+        public CharacterClass TestCharacterClass;
+
         [Header("Player Status")]
-        public int playerLevel;
-        public int playerExp;
-        public int currentHP;
+        public PlayerStats stats;
 
         [Header("Inventory & Items")]
         public List<Item> inventoryItems = new List<Item>();
-        public Dictionary<Item, int> itemUpgradeLevels = new Dictionary<Item, int>();
 
         [Header("Progress Info")]
         public int currentStageFloor;
@@ -60,6 +59,7 @@ namespace ProjectVS.Manager
         public int gold;
         public int diamonds;
 
+        #region Help Me... R.I.P(수정하고 지워 주세요)
         [Header("Affection System")]
         public Dictionary<NPC, int> affectionLevels = new Dictionary<NPC, int>();
         public HashSet<string> affectionEventFlags = new HashSet<string>(); // 이벤트 ID
@@ -73,28 +73,23 @@ namespace ProjectVS.Manager
 
         [Header("Misc")]
         public bool isMoodShifted;
+        #endregion
 
         public void SavePlayerData()
         {
             PlayerData data = new PlayerData();
 
-            data.playerLevel = playerLevel;
-            data.playerExp = playerExp;
-            data.currentHP = currentHP;
-            data.inventoryItems = inventoryItems;
+            data.Stats = stats;
 
-            data.itemUpgrades = new List<ItemUpgradeData>();
-            foreach (var pair in itemUpgradeLevels)
-            {
-                data.itemUpgrades.Add(new ItemUpgradeData { itemName = pair.Key.itemName, upgradeLevel = pair.Value });
-            }
+            data.InventoryItems = inventoryItems;
 
-            data.currentStageFloor = currentStageFloor;
-            data.monstersDefeated = monstersDefeated;
+            data.CurrentStage = currentStageFloor;
+            data.MonstersDefeated = monstersDefeated;
 
-            data.gold = gold;
-            data.diamonds = diamonds;
+            data.Gold = gold;
+            data.Diamonds = diamonds;
 
+            // Help Me... R.I.P(수정하고 지워 주세요)
             data.affectionLevels = new List<AffectionData>();
             foreach (var pair in affectionLevels)
             {
@@ -113,32 +108,23 @@ namespace ProjectVS.Manager
 
             data.isMoodShifted = isMoodShifted;
 
+            // Save
             SaveSystem.Save(data);
         }
 
         public void LoadPlayerData()
         {
+            // Load
             PlayerData data = SaveSystem.Load();
             if (data == null) return;
 
-            playerLevel = data.playerLevel;
-            playerExp = data.playerExp;
-            currentHP = data.currentHP;
-            inventoryItems = data.inventoryItems;
+            inventoryItems = data.InventoryItems;
 
-            itemUpgradeLevels.Clear();
-            foreach (var upgrade in data.itemUpgrades)
-            {
-                var item = inventoryItems.Find(i => i.itemName == upgrade.itemName);
-                if (item != null)
-                    itemUpgradeLevels[item] = upgrade.upgradeLevel;
-            }
+            currentStageFloor = data.CurrentStage;
+            monstersDefeated = data.MonstersDefeated;
 
-            currentStageFloor = data.currentStageFloor;
-            monstersDefeated = data.monstersDefeated;
-
-            gold = data.gold;
-            diamonds = data.diamonds;
+            gold = data.Gold;
+            diamonds = data.Diamonds;
 
             affectionLevels.Clear();
             foreach (var aff in data.affectionLevels)
@@ -158,60 +144,18 @@ namespace ProjectVS.Manager
 
             isMoodShifted = data.isMoodShifted;
         }
-    }
 
-    public static class SaveSystem
-    {
-        private static readonly string savePath = Path.Combine(Application.persistentDataPath, "playerdata.json");
-
-        public static void Save(PlayerData data)
+        public void OnGamePlayTypeChanged(GamePlayType type)
         {
-            string json = JsonUtility.ToJson(data, true);
-            File.WriteAllText(savePath, json);
-            Debug.Log("Game Saved to: " + savePath);
-        }
+            GamePlayType = type;
+            if (type == GamePlayType.Build) return;
 
-        public static PlayerData Load()
-        {
-            if (File.Exists(savePath))
-            {
-                string json = File.ReadAllText(savePath);
-                return JsonUtility.FromJson<PlayerData>(json);
-            }
-            else
-            {
-                Debug.LogWarning("Save file not found");
-                return null;
-            }
+            if (TestCharacterClass == CharacterClass.None)
+                TestCharacterClass = CharacterClass.Sword;
+
+            stats = new PlayerStats();
+            stats = stats.TestStats(TestCharacterClass);
         }
     }
-
-    [Serializable]
-    public class PlayerData
-    {
-        public int playerLevel;
-        public int playerExp;
-        public int currentHP;
-
-        public List<Item> inventoryItems;
-        public List<ItemUpgradeData> itemUpgrades;
-
-        public int currentStageFloor;
-        public int monstersDefeated;
-
-        public int gold;
-        public int diamonds;
-
-        public List<AffectionData> affectionLevels;
-        public List<string> affectionEventFlags;
-
-        public List<string> dialogueProgressFlags;
-
-        public List<string> ownedCostumes;
-        public List<NpcCostumeData> npcCostumes;
-
-        public bool isMoodShifted;
-    }
-
 }
 

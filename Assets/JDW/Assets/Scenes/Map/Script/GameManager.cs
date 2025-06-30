@@ -121,6 +121,4 @@ public class GameManager : SimpleSingleton<GameManager>
                 r.isActive = true;
         }
     }
-
 }
-

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 
 using ProjectVS;
+using ProjectVS.Manager;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,12 +23,14 @@ public class AttackPosition : MonoBehaviour
 
     private Coroutine _currentRoutine;
     private PlayerConfig _playerScript;
+    private PlayerStats _playerStats;
 
     private void Awake()
     {
         if (Player != null)
         {
             _playerScript = Player.GetComponent<PlayerConfig>();
+            _playerStats = PlayerDataManager.ForceInstance.stats;
         }
     }
     private void Update()
@@ -78,7 +81,7 @@ public class AttackPosition : MonoBehaviour
             {
                 GameObject _axe = Instantiate(_axePerfab, _muzzlePos.position, Quaternion.identity);
                 _axe.transform.right = _direction;
-                float atk = _playerScript.Stats.CurrentAtk; // 플레이어의 공격력값을 가져옴
+                float atk = _playerStats.CurrentAtk; // 플레이어의 공격력값을 가져옴
                 Attack attackScript = _axe.GetComponent<Attack>();
                 if (attackScript != null)
                 {
@@ -106,7 +109,7 @@ public class AttackPosition : MonoBehaviour
             {
                 GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity);
                 _sword.transform.right = _direction;
-                float atk = _playerScript.Stats.CurrentAtk; // 플레이어의 공격력값을 가져옴
+                float atk = _playerStats.CurrentAtk; // 플레이어의 공격력값을 가져옴
                 Attack attackScript = _sword.GetComponent<Attack>();
                 if (attackScript != null)
                 {
@@ -134,7 +137,7 @@ public class AttackPosition : MonoBehaviour
             {
                 GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
                 _bullet.transform.right = _direction;
-                float atk = _playerScript.Stats.CurrentAtk; // 플레이어의 공격력값을 가져옴
+                float atk = _playerStats.CurrentAtk; // 플레이어의 공격력값을 가져옴
                 Attack attackScript = _bullet.GetComponent<Attack>();
                 if (attackScript != null)
                 {
@@ -148,7 +151,7 @@ public class AttackPosition : MonoBehaviour
     }
     private float GetAttackDelay()
     {
-        float atkSpeed = GameManager.Instance.Player.Stats.AtkSpd;
+        float atkSpeed = _playerStats.AtkSpd;
         if (atkSpeed <= 0.01f)
         {
             // 공격속도가 비정상이면 자동으로 5로 맞춤

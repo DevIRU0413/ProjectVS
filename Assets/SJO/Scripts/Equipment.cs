@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using ProjectVS.Manager;
+
 using UnityEngine;
 
 public class Equipment : MonoBehaviour
@@ -70,6 +73,6 @@ public class Equipment : MonoBehaviour
     private void SpeedUp()
     {
         float speed = 3f;
-        GameManager.Instance.Player.Stats.CurrentSpd = speed + speed * levelData;
+        PlayerDataManager.Instance.stats.SetIncreaseBaseStats(ProjectVS.UnitStaus.Spd, speed + speed * levelData);
     }
 }

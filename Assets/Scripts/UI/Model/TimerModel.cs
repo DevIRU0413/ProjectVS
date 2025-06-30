@@ -21,7 +21,7 @@
             if (IsRunning)
             {
                 CurrentTime += deltaTime;
-                if (MaxTime >= CurrentTime)
+                if (MaxTime <= CurrentTime)
                 {
                     CurrentTime = MaxTime;
                     IsRunning = false;

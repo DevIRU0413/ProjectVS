@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using ProjectVS;
+﻿using ProjectVS;
+using ProjectVS.Data;
+using ProjectVS.Manager;
 
 using UnityEngine;
 
@@ -21,7 +21,7 @@ public class Monster : MonoBehaviour
     {
         currentHp -= damage;
         Debug.Log($"몬스터 피격 : {damage}, 남은 체력 : {currentHp}");
-        if(currentHp <= 0)
+        if (currentHp <= 0)
         {
             Die();
         }
@@ -29,18 +29,18 @@ public class Monster : MonoBehaviour
     private void Die()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if(playerObj != null)
+        if (playerObj != null)
         {
             PlayerConfig player = playerObj.GetComponent<PlayerConfig>();
-            if(player != null)
+            if (player != null)
             {
                 player.ExpUp(_exp);
-                player.Stats.Gold += _gold;
-                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.Stats.Gold}");
+                PlayerDataManager.Instance.gold += _gold;
+                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {PlayerDataManager.Instance.gold}");
             }
         }
         Debug.Log("몬스터 사망");
-        
+
         Destroy(gameObject);
     }
 }

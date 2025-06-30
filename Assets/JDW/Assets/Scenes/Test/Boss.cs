@@ -11,7 +11,17 @@ public class Boss : MonoBehaviour
             PlayerConfig player = other.GetComponent<PlayerConfig>();
             if (player != null)
             {
-                player.TakeDamage(50);
+                Vector2 direction = (player.transform.position - transform.position).normalized;
+
+                DamageInfo damage = new DamageInfo(player.Stats.CurrentAtk, direction)
+                {
+                    IsCritical = Random.value < 0.2f,
+                    CriticalMultiplier = 1.5f,
+                    KnockbackForce = 0,
+                    IsPiercing = false
+                };
+
+                player.TakeDamage(damage);
             }
         }
     }
