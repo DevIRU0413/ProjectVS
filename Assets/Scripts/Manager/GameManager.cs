@@ -13,7 +13,7 @@ namespace ProjectVS.Manager
     {
         [field: SerializeField] public GamePlayType PlayType { get; private set; } = GamePlayType.Build;
         [field: SerializeField] public GameState CurrentState { get; private set; } = GameState.Play;
-        [field: SerializeField] public SceneID CurrentSceneID { get; private set; } = SceneID.Title;
+        [field: SerializeField] public SceneID CurrentSceneID { get; private set; } = SceneID.MainMenuScene;
 
         public event Action<GameState> OnStateChanged;
         public event Action<SceneID> OnSceneChanged;

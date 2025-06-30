@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using ProjectVS.Manager;
 using ProjectVS.Utils.UIManager;
 
 using UnityEngine;
@@ -14,6 +16,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
             //UIManager.Instance.Hide("Control File Panel");
             //UIManager.Instance.Show("File Select Panel");
 
+            PlayerDataManager.ForceInstance.SavePlayerData();
             Debug.Log($"[ControlFilePanelButtons] New Button 호출");
         }
 
@@ -22,6 +25,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
             //UIManager.Instance.Hide("Control File Panel");
             //UIManager.Instance.Show("File Select Panel");
 
+            PlayerDataManager.ForceInstance.LoadPlayerData();
             Debug.Log($"[ControlFilePanelButtons] Load Button 호출");
         }
 

@@ -39,7 +39,6 @@ namespace ProjectVS.Manager
     /// </summary>
     public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IGamePlayTypeListener
     {
-        [HideInInspector]
         public GamePlayType GamePlayType;
 
         [Header("Test Play Config")]
@@ -110,6 +109,7 @@ namespace ProjectVS.Manager
 
             // Save
             SaveSystem.Save(data);
+            print("저장");
         }
 
         public void LoadPlayerData()
@@ -143,6 +143,7 @@ namespace ProjectVS.Manager
             }
 
             isMoodShifted = data.isMoodShifted;
+            print("불러오기");
         }
 
         public void OnGamePlayTypeChanged(GamePlayType type)

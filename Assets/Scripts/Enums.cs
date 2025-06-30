@@ -16,10 +16,11 @@
     public enum SceneID
     {
         None = 0,
-        Title,
-        InGame,
-        Store,
-        Loading,
+        PrologScene,
+        MainMenuScene,
+        InGameScene,
+        StoreScene,
+        LoadingScene,
     }
 
     #endregion

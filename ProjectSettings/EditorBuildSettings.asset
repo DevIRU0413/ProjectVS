@@ -6,7 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TitleScene.unity
+    path: Assets/Scenes/PrologScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: c40e9d8a800b74648be94972715dface
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: a2b7b09595f0a3949a4bda785064f5f5, type: 3}
