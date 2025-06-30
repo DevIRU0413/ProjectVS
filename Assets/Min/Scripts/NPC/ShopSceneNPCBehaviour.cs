@@ -4,6 +4,7 @@ using UnityEngine;
 
 using CostumeStateManagerClass = ProjectVS.CharacterImages.CostumeStateManager.CostumeStateManager;
 using CostumeSOClass = ProjectVS.CharacterImages.CostumeSO.CostumeSO;
+using ProjectVS.UIs.UIBase.UIButtonAnimator;
 
 
 namespace ProjectVS.NPC.ShopSceneNPCBehaviour
@@ -11,25 +12,13 @@ namespace ProjectVS.NPC.ShopSceneNPCBehaviour
     public class ShopSceneNPCBehaviour : MonoBehaviour
     {
         [SerializeField] private CostumeStateManagerClass _costumeStateManager;
-
-        private Dictionary<string, Animator> _costumeAnimations;
-
+        [SerializeField] private Animator _animator;
 
         private void Awake()
         {
             if (_costumeStateManager == null)
             {
                 _costumeStateManager = FindObjectOfType<CostumeStateManagerClass>();
-            }
-
-            _costumeAnimations = new();
-
-            foreach (var anim in _costumeAnimations)
-            {
-                if (!_costumeAnimations.ContainsKey(anim.Key))
-                {
-                    _costumeAnimations.Add(anim.Key, anim.Value);
-                }
             }
         }
 
@@ -39,12 +28,38 @@ namespace ProjectVS.NPC.ShopSceneNPCBehaviour
         }
 
         // 옷을 입거나 벗었을 때에도 호출
-        private void RenewCostumeAnimation()
+        public void RenewCostumeAnimation()
         {
-            foreach (var costume in _costumeStateManager.CostumeSOs)
+            var currentCostume = _costumeStateManager.CurrentCostume;
+            if (currentCostume == null)
             {
-
+                _animator.SetTrigger("Default");
+                Debug.Log($"[ShopSceneNPCBehaviour] Default 호출됨");
             }
+            else
+            {
+                if (HasTrigger(currentCostume.CostumeName))
+                {
+                    _animator.SetTrigger(currentCostume.CostumeName);
+                    Debug.Log($"[ShopSceneNPCBehaviour] {currentCostume.CostumeName} SetTrigger됨");
+                }
+                else
+                {
+                    Debug.LogWarning($"[ShopSceneNPCBehaviour] Trigger {currentCostume.CostumeName}가 존재하지 않음");
+                }
+            }
+        }
+
+        private bool HasTrigger(string triggerName)
+        {
+            foreach (AnimatorControllerParameter param in _animator.parameters)
+            {
+                if (param.type == AnimatorControllerParameterType.Trigger && param.name == triggerName)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
