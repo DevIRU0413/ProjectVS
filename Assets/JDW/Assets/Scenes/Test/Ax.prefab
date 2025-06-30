@@ -174,7 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0960422e503d19344830eeabd7e735dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 6946014322182539346}
   _rigid: {fileID: 1266270028313418252}
   FirePower: 0
 --- !u!114 &398037287332112161

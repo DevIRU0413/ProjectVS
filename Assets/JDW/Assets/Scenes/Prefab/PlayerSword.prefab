@@ -277,7 +277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38afd9017f7565458e944c8818215cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSwitcer: {fileID: 7238456504662222757, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}
   MoveInput: {x: 0, y: 0}
   anim: {fileID: 8930400971873860480}
   fadeManager: {fileID: 1705760944804791855, guid: 933bb90b50166bf44911b92fa7f0ddda, type: 3}
@@ -601,13 +600,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 5327371813207693605}
-  Radius: 1.5
   _swordPrefab: {fileID: 1044545731354326905, guid: a7255bb8d3e804340a0be510b5dadd8d, type: 3}
   _axePrefab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
   _bulletPrefab: {fileID: 2418890576715569026, guid: c18e72a2d75595f459f7497f27fccc53, type: 3}
   _muzzlePos: {fileID: 846167591246401027}
-  _bulletTime: 2
-  _meleeAttack: 0.2
 --- !u!1001 &4960086530428258843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -619,6 +615,14 @@ PrefabInstance:
     - target: {fileID: 1687213935205963161, guid: 699256066dd06fb478cb0f48dfb16843, type: 3}
       propertyPath: m_Name
       value: HPbarZone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2249624639601909673, guid: 699256066dd06fb478cb0f48dfb16843, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2249624639601909673, guid: 699256066dd06fb478cb0f48dfb16843, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3849775940481999286, guid: 699256066dd06fb478cb0f48dfb16843, type: 3}
       propertyPath: m_Pivot.x

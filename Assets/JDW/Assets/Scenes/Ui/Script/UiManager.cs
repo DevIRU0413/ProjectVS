@@ -14,6 +14,11 @@ public class UiManager : MonoBehaviour
 
     public TextMeshProUGUI levelText; // 레벨 
     public TextMeshProUGUI goldText;//골드
+    private void Awake()
+    {
+        player = FindObjectOfType<PlayerConfig>();
+        boss = FindObjectOfType<Boss>();
+    }
     private void Start()
     {
         //초기에 플레이어가 없을 경우 대체값

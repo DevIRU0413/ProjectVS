@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8052504543623916493}
   - component: {fileID: 3725951337570423594}
-  - component: {fileID: 5195289558020823262}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,9 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDontDestroyOnLoad: 1
-  timer: {fileID: 2933088364726498677, guid: 5cd9412504e71e84b8708fae56cfc1db, type: 3}
-  mapSwitcer: {fileID: 5195289558020823262}
-  playerStats:
+  Player: {fileID: 0}
+  stats:
     CurrentHp: 0
     CurrentMaxHp: 0
     CurrentAtk: 0
@@ -60,31 +58,3 @@ MonoBehaviour:
     CurrentExp: 0
     MaxExp: 0
     Gold: 0
-  boss: {fileID: 0}
-  Player: {fileID: 0}
-  playerMove: {fileID: 3629046773934369504, guid: cf0556be2aac066449972bb8432d96e8, type: 3}
-  attackPosition: {fileID: 0}
-  playerPrefabs:
-  - {fileID: 1345928038722599383, guid: 37a1178b22ade0a469320520a2c4a760, type: 3}
-  - {fileID: 1345928038722599383, guid: d4f3bad766b95a94d9bf75d0286fc4e3, type: 3}
-  - {fileID: 1345928038722599383, guid: 1b0a21561f7a22b4c80333d3fa9efd10, type: 3}
-  playerSpawnPoint: {fileID: 8052504543623916493}
-  Tilemap: {fileID: 2805042289713139985, guid: 792b99f22b2f9ac479ba1ca1594534de, type: 3}
---- !u!114 &5195289558020823262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952401816865250898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51a57ce8b65b8124f84d64450802531d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  battleField: {fileID: 2805042289713139985, guid: 792b99f22b2f9ac479ba1ca1594534de, type: 3}
-  storeField: {fileID: 2520660307020247030, guid: c6c9c972092740c4d829589abbcffaf0, type: 3}
-  Tilemap1: {fileID: 8926644876398492587, guid: c367ddc8deefa464eb9129e0f211388d, type: 3}
-  Tilemap2: {fileID: 3252276263907707693, guid: 366b2a0fa9a0ab44f8de838795571d79, type: 3}
-  Tilemap3: {fileID: 1873252567547565552, guid: 5fd8b4152dfb3414ab1672b7efbdb1e7, type: 3}
-  Tilemap4: {fileID: 1815234424044527180, guid: 979994086266b8e4dae0a033f9ba19cc, type: 3}

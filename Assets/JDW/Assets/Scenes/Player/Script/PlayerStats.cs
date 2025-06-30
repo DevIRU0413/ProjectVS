@@ -15,6 +15,7 @@ public class PlayerStats : UnitStats
     public float MaxExp = 100f;             // 레벨업 까지 필요한 경험치
     public int Gold = 100;                  // 플레이어 재화
 
+
     public void GainReward(float exp, int gold)
     {
         Gold += gold;

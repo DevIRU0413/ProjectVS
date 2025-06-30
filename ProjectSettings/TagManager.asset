@@ -12,6 +12,7 @@ TagManager:
   - Store
   - Door
   - Monster
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX

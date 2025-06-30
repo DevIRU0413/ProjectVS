@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
@@ -104,5 +105,11 @@ namespace ProjectVS
                 UpdateHpBar();  // 레벨업 시 체력바 갱신
             }
         }
+        void OnDestroy()
+        {
+            if (GameManager.Instance != null)
+                GameManager.Instance.SavePlayerStats(Stats);
+        }
+       
     }
 }

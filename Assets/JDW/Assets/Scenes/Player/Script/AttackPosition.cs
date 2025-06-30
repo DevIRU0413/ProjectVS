@@ -11,9 +11,7 @@ public class AttackPosition : MonoBehaviour
     [SerializeField] private GameObject _swordPrefab;
     [SerializeField] private GameObject _axePrefab;
     [SerializeField] private GameObject _bulletPrefab;
-
     [SerializeField] private Transform _muzzlePos;
-    [SerializeField] private float _meleeAttack = 2; // 오브젝트의 잔존시간
 
     private Coroutine _currentRoutine;
     private PlayerConfig _playerScript;
@@ -213,7 +211,7 @@ public class AttackPosition : MonoBehaviour
     }
     private float GetAttackDelay()
     {
-        float atkSpeed = GameManager.Instance.Player.Stats.AtkSpd;
+        float atkSpeed = _playerScript.Stats.AtkSpd;
         if (atkSpeed <= 0.01f)
         {
             // 공격속도가 비정상이면 자동으로 5로 맞춤

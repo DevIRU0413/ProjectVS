@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using ProjectVS;
+
+using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
     public bool isActive = true;
     private PlayerMove _playerMove;
+    private PlayerConfig _player;
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -11,8 +14,20 @@ public class Reposition : MonoBehaviour
         // 벗어난 콜라이더가 "Area" 태그를 가지고 있지 않으면 아무 작업도 하지 않고 종료
         if (!collision.CompareTag("Area"))
             return;
+        if (_player == null)
+        {
+            GameObject go = GameObject.FindWithTag("Player"); 
+            if (go != null)
+                _player = go.GetComponent<PlayerConfig>();
+        }
+
+        if (_player == null)
+        {
+            Debug.LogWarning("Reposition: Player가 null입니다.");
+            return;
+        }
         // 플레이어의 현재 위치를 가져옴
-        Vector3 _playerPos = GameManager.Instance.Player.transform.position;
+        Vector3 _playerPos = _player.transform.position;
         // 현재 오브젝트의 위치
         Vector3 _myPos = transform.position;
         // 플레이어 위치와 오브젝트 위치의 x, y 거리 차이 계산
@@ -50,7 +65,11 @@ public class Reposition : MonoBehaviour
     private Vector3 GetPlayerMoveInput()
     {
         if (_playerMove == null)
-            _playerMove = GameManager.Instance.Player.GetComponent<PlayerMove>();
+        {
+            GameObject go = GameObject.FindWithTag("Player");
+            if (go != null)
+                _playerMove = go.GetComponent<PlayerMove>();
+        }
 
         return (_playerMove == null) ? Vector3.zero : _playerMove.MoveInput;
     }

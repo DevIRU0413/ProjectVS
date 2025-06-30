@@ -10,8 +10,9 @@ public class Timer : MonoBehaviour
     public float currentTime;
     public TextMeshProUGUI timerText; // TMP 사용
     public FadeManager fadeManager;
-
     private bool _paused = false;
+
+    public MapSwitcher mapSwitcer;
     private void Start()
     {
         currentTime = totalTime;
@@ -34,9 +35,9 @@ public class Timer : MonoBehaviour
         else
         {
             timerText.text = "00:00"; // 시간 종료시
-           
             // 시간 종료시 코루틴을 호출해 페이드 효과
             StartCoroutine(HandleFadeTransition());
+            // TODO : 신 매니저 추가해서 신이동 코드 추가 요망
         }
   
     }
@@ -54,8 +55,6 @@ public class Timer : MonoBehaviour
 
         yield return StartCoroutine(fadeManager.FadeOut()); // 패이드 아웃
         // 상점 온/ 배틀 오프
-        // TODO : 씬 변경일 경우 맵 스위처에서 씬이동으로 코드변경
-        GameManager.Instance.playerMove.PlayerPositionReset();
         yield return StartCoroutine(fadeManager.FadeIn());
         currentTime = totalTime; // 타이머 초기화
 
@@ -65,5 +64,4 @@ public class Timer : MonoBehaviour
         if (timerText != null)
             timerText.text = msg;
     }
-   
 }
