@@ -65,7 +65,7 @@ namespace ProjectVS.Dialogue.DialogueManager
         [SerializeField] private SpriteChangeManagerClass _spriteChangeManager;
 
         [Header("스테이지 이벤트 호감도 검사 통과 조건")]
-        [SerializeField] private int _passAffinity = 50;
+        [SerializeField] private int _passAffinity = 5;
 
         public ObservableProperty<bool> IsAutoMode = new(false);
 
