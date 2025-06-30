@@ -16,8 +16,7 @@ using ProjectVS.Utils.UIManager;
 using ProjectVS.Utils.ObservableProperty;
 using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.ChoiceDialogueManager;
 using SpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
-using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
-using UnityEngine.Rendering;
+using ProjectVS.Manager;
 
 
 namespace ProjectVS.Dialogue.DialogueManager
@@ -78,6 +77,14 @@ namespace ProjectVS.Dialogue.DialogueManager
             _currentText = _shopEnterText; // 임의 초기 텍스트 설정
         }
 
+        private void Start()
+        {
+            // 세이브 데이터에 따라 IsPrinted 값 변경
+            // 만약 이 매니저가 데이터 로드 전 부터 존재한다면 호출 순서 변경해야 됨
+
+            ChangeIsPrintedBySaveData();
+        }
+
         private void LoadDialogueCSV()
         {
             _dialogueTable = new CsvTable(_dialoguePath, '\t');
@@ -96,6 +103,9 @@ namespace ProjectVS.Dialogue.DialogueManager
 
 
         // 씬이 변경될 때 TMP_Text를 등록해주는 메서드
+        // 상점 진입 시, 인게임 씬 진입 시 호출해서 넣어줘야 됨
+        // 아니면 FindObjectOfType<T>()로 찾아서 넣어줘도 됨
+
         public void AssignTextWhenSceneChanged(
             DialogueTextTyperClass shopEnterText = null,
             DialogueTextTyperClass repeatText = null,
@@ -437,11 +447,6 @@ namespace ProjectVS.Dialogue.DialogueManager
             );
         }
 
-        public void ShowCutsceneDialogue()
-        {
-            // TODO: 컷신 대사 출력 로직 구현
-        }
-
 
         public bool CanShowBeforeFinalStageDialogue()
         {
@@ -538,6 +543,25 @@ namespace ProjectVS.Dialogue.DialogueManager
                 }
             }
             return readIDs;
+        }
+
+        private void ChangeIsPrintedBySaveData()
+        {
+            HashSet<int> savedIDs = PlayerDataManager.Instance.ReadDialogeIDs;
+
+            if (savedIDs == null || savedIDs.Count == 0)
+            {
+                Debug.Log("[DialogueManager] 저장된 대사 ID가 없습니다.");
+                return;
+            }
+
+            foreach (var data in _dialogueList)
+            {
+                if (savedIDs.Contains(data.ID))
+                {
+                    data.IsPrinted = true;
+                }
+            }
         }
     }
 }
