@@ -15,9 +15,6 @@ public class GameManager : SimpleSingleton<GameManager>
     [HideInInspector] public PlayerMove playerMove;
     [HideInInspector] public AttackPosition attackPosition;
 
-    public bool IsBossActive { get; set; } = false;
-    public bool IsStoreActive { get; set; } = false;
-
     public GameObject[] playerPrefabs; // 0 = 검, 1 = 도끼, 2 = 마법
     public Transform playerSpawnPoint;
     public int CurrentClassIndex { get; private set; }
@@ -92,28 +89,8 @@ public class GameManager : SimpleSingleton<GameManager>
         }
         CurrentClassIndex = index;
     }
-
-    private void Update()
-    {
-        // 타이머 기능 이전 > StageMaanger
-        /*TimeText();
-        StopTile();
-        StratrTile();*/
-        TimeText();
-    }
-    private void TimeText()
-    {
-        if (IsBossActive || IsStoreActive)
-        {
-            timer.timerText.text = IsBossActive ? "Boss!" : "$Store$";
-            timer.PauseTimer();
-        }
-        else
-        {
-            timer.ResumeTimer();
-        }
-    }
-    private void StopTile()
+   
+    private void StopTile() // 씬 전환으로 타일이 제대로 깔리면 필요없음
     {
 
         if (timer != null && timer.currentTime <= 1f) // 타이머가 널이 아니고 현재 시간이 1초가 되었을 때
@@ -124,7 +101,7 @@ public class GameManager : SimpleSingleton<GameManager>
     {
         if (mapSwitcer.IsStoreActive())
         {
-            foreach (var r in Tilemap.GetComponentsInChildren<Reposition>())
+            foreach (var r in Tilemap.GetComponentsInChildren<Reposition>()) // 스토어가 활성화 되었을 때 다시 스크립트 활성화
                 r.isActive = true;
         }
     }

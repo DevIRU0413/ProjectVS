@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    public float maxHp = 500;
+    private Timer _timer;
 
+    public float maxHp = 500;
     public float currentHp;
 
     [SerializeField] private int _exp = 90;
     [SerializeField] private int _gold = 500;
     [SerializeField] private GameObject _bossHpBar;
 
+    private void Awake()
+    {
+        _timer = FindObjectOfType<Timer>();
+    }
     private void Start()
     {
         currentHp = maxHp;
-        GameManager.Instance.IsBossActive = true;
+        _timer.PauseTimer();
+        _timer.SetMessage("BOSS!");
     }
     public void TakeDamage(float damage)
     {
@@ -37,7 +43,8 @@ public class Boss : MonoBehaviour
                 player.ExpUp(_exp);
                 player.Stats.Gold += _gold;
                 Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.Stats.Gold}");
-                GameManager.Instance.IsBossActive = false;
+                _timer.ResumeTimer();
+                _timer.SetMessage("");
             }
         }
         Debug.Log("보스 몬스터 사망");
