@@ -522,5 +522,22 @@ namespace ProjectVS.Dialogue.DialogueManager
             _currentText.OnTypingComplete -= HandleAutoAfterTyping; // 한 번만 실행되도록 구독 취소
             StartCoroutine(IE_AutoNextDelay());
         }
+
+
+        // 세이브할 때 읽은 대사 번호 List<int> 로 반환
+        // 내가 다시 필터링할 때 해당 List 참조하여 필터링
+
+        public HashSet<int> GetReadDialogueIDs() // 세이브 시 호출하여 반환
+        {
+            HashSet<int> readIDs = new();
+            foreach (var data in _dialogueList)
+            {
+                if (data.IsPrinted)
+                {
+                    readIDs.Add(data.ID);
+                }
+            }
+            return readIDs;
+        }
     }
 }
