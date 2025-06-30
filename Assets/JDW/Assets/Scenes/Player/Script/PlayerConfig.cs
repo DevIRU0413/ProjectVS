@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+
 using UnityEngine;
+
 
 namespace ProjectVS
 {
@@ -11,8 +14,9 @@ namespace ProjectVS
         public Timer timer;
         public Scanner scanner;
 
-        // public int gold = 100; // 기본 재화
         public bool isDead = false;
+
+        [SerializeField] private PixelUI.ValueBar _hpBar;
 
         private Animator anim;
 
@@ -26,6 +30,17 @@ namespace ProjectVS
         private void Start()
         {
             Debug.Log($"선택 클래스: {selectedClass}, 체력: {Stats.CurrentMaxHp}, 공격력: {Stats.CurrentAtk}, 방어력: {Stats.CurrentDfs}, 공격속도 : {Stats.AtkSpd}, 이동속도 : {Stats.CurrentSpd} 골드: {Stats.Gold}");
+            UpdateHpBar();
+        }
+        private void UpdateHpBar()
+        {
+            // 플레이어의 hpBar
+            if (_hpBar != null && Stats != null)
+            {
+                _hpBar.MaxValue = Stats.CurrentMaxHp;
+                _hpBar.CurrentValue = Stats.CurrentHp;
+                _hpBar.SendMessage("UpdateUI", SendMessageOptions.DontRequireReceiver);
+            }
         }
         public bool TryBuyItem(int price, int bonusHealth, int bonusAttack, int bonusDefense, float bonusAttackSpeed, float bonusMoveSpeed, string itemName)
         {
@@ -41,6 +56,7 @@ namespace ProjectVS
             Stats.AtkSpd += bonusAttackSpeed;
             Stats.CurrentSpd += bonusMoveSpeed;
             inventory.Add(itemName);
+            UpdateHpBar(); // 최대 체력이 오를 때 Hp바도 같이
 
             Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHealth}, 공격력 +{bonusAttack}, 방어력 +{bonusDefense},  공격속도 +{bonusAttackSpeed}, 이동속도 +{bonusMoveSpeed} 남은 골드: {Stats.Gold}");
             return true;
@@ -51,6 +67,7 @@ namespace ProjectVS
 
             Stats.CurrentHp -= damage;
             Debug.Log($"피해 : {damage}, 남은 체력 : {Stats.CurrentHp}");
+            UpdateHpBar();  // Hp바 연동
 
             if (Stats.CurrentHp <= 0)
             {
@@ -84,6 +101,7 @@ namespace ProjectVS
             if (LeveledUp)
             {
                 Debug.Log($"레벨 업 {Stats.Level}");
+                UpdateHpBar();  // 레벨업 시 체력바 갱신
             }
         }
     }

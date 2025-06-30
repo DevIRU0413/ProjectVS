@@ -8,17 +8,12 @@ using UnityEngine.InputSystem;
 public class AttackPosition : MonoBehaviour
 {
     public Transform Player;
-    public float Radius = 1.5f;
-    public Vector3 Direction => _direction;
-    [SerializeField] private GameObject _swordPerfab;
-    [SerializeField] private GameObject _axePerfab;
-    [SerializeField] private GameObject _bulletPerfab;
+    [SerializeField] private GameObject _swordPrefab;
+    [SerializeField] private GameObject _axePrefab;
+    [SerializeField] private GameObject _bulletPrefab;
 
     [SerializeField] private Transform _muzzlePos;
-    [SerializeField] private float _bulletTime = 3f;
     [SerializeField] private float _meleeAttack = 2; // 오브젝트의 잔존시간
-
-    private Vector3 _direction;
 
     private Coroutine _currentRoutine;
     private PlayerConfig _playerScript;
@@ -33,24 +28,6 @@ public class AttackPosition : MonoBehaviour
     private void Update()
     {
         if (Player == null) return;
-        CursorCoordinates();
-        Vector3 _ovjPos = Player.position + _direction * Radius;
-        transform.position = _ovjPos;
-        transform.right = _direction;
-
-
-    }
-    public void CursorCoordinates()
-    {
-        if (Mouse.current == null || Camera.main == null) return;
-        // 마우스 위치를 월드기준으로 전환
-        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        Vector3 _mouseWorldPos = Camera.main.ScreenToWorldPoint(
-        new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(Camera.main.transform.position.z))
-    );
-        _mouseWorldPos.z = 0f;
-        // 방향백터 계산
-        _direction = (_mouseWorldPos - Player.position).normalized;
     }
     public void SwitchCoroutine(IEnumerator newRoutine)
     {
@@ -62,31 +39,71 @@ public class AttackPosition : MonoBehaviour
         _currentRoutine = StartCoroutine(newRoutine);
     }
 
+    private IEnumerator FollowAndDestroy(GameObject obj, Transform target, float duration)
+    {
+        float time = 0f;
+
+        while (time < duration)
+        {
+            if (obj == null || target == null)
+                yield break;
+
+            obj.transform.position = target.position;
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(obj);
+    }
     public IEnumerator Axe()
     {
-        // 무한 반복
         while (true)
         {
-            // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
-            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
-            {
-                Debug.Log("공격 중단");//코루틴 중단
+            if (_playerScript != null && _playerScript.isDead)
                 yield break;
-            }
 
-            if (_axePerfab != null)
+            if (_axePrefab != null)
             {
-                GameObject _axe = Instantiate(_axePerfab, _muzzlePos.position, Quaternion.identity);
-                _axe.transform.right = _direction;
-                float atk = _playerScript.Stats.CurrentAtk; // 플레이어의 공격력값을 가져옴
-                Attack attackScript = _axe.GetComponent<Attack>();
+                // 마우스 방향 계산
+                Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(Camera.main.transform.position.z)));
+                mouseWorldPos.z = 0f;
+                Vector3 direction = (mouseWorldPos - Player.position).normalized;
+
+                
+                Vector3 spawnPos = Player.position + direction * 0.5f;
+
+                GameObject axe = Instantiate(_axePrefab, spawnPos, Quaternion.identity);
+                axe.transform.right = direction;
+
+                // 공격력 설정
+                float atk = _playerScript.Stats.CurrentAtk;
+                Attack attackScript = axe.GetComponent<Attack>();
                 if (attackScript != null)
                 {
-                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                    attackScript.SetDamage(atk);
                 }
-                Destroy(_axe, _meleeAttack);
+
+                // 지정한 시간동안 플레이어를 따라감
+                float duration = 0.4f;
+                float elapsed = 0f;
+                while (elapsed < duration)
+                {
+                    if (axe == null || Player == null)
+                        break;
+
+                    axe.transform.position = Player.position + direction * 1f; // 플레이어보다 앞쪽으로 지정한 단위 거리 위치에 생성
+                    axe.transform.right = direction;
+
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                Destroy(axe);
             }
 
+            // 공격속도가 높아질수록 딜레이가 짧아짐
             yield return new WaitForSeconds(GetAttackDelay());
         }
     }
@@ -95,26 +112,50 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
-            // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
-            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
-            {
-                Debug.Log("공격 중단");
+            if (_playerScript != null && _playerScript.isDead)
                 yield break;
-            }
 
-            if (_swordPerfab != null)
+            if (_swordPrefab != null)
             {
-                GameObject _sword = Instantiate(_swordPerfab, _muzzlePos.position, Quaternion.identity);
-                _sword.transform.right = _direction;
-                float atk = _playerScript.Stats.CurrentAtk; // 플레이어의 공격력값을 가져옴
-                Attack attackScript = _sword.GetComponent<Attack>();
+                // 마우스 방향 계산
+                Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(Camera.main.transform.position.z)));
+                mouseWorldPos.z = 0f;
+                Vector3 direction = (mouseWorldPos - Player.position).normalized;
+
+
+                Vector3 spawnPos = Player.position + direction * 0.5f;
+
+                GameObject sword = Instantiate(_swordPrefab, spawnPos, Quaternion.identity);
+                sword.transform.right = direction;
+
+                // 공격력 설정
+                float atk = _playerScript.Stats.CurrentAtk;
+                Attack attackScript = sword.GetComponent<Attack>();
                 if (attackScript != null)
                 {
-                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                    attackScript.SetDamage(atk);
                 }
-                Destroy(_sword, _meleeAttack);
+
+                // 지정한 시간동안 플레이어를 따라감
+                float duration = 0.2f;
+                float elapsed = 0f;
+                while (elapsed < duration)
+                {
+                    if (sword == null || Player == null)
+                        break;
+
+                    sword.transform.position = Player.position + direction * 0.5f; // 플레이어보다 앞쪽으로 지정한 단위 거리 위치에 생성
+                    sword.transform.right = direction;
+
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                Destroy(sword);
             }
 
+            // 공격속도가 높아질수록 딜레이가 짧아짐
             yield return new WaitForSeconds(GetAttackDelay());
         }
     }
@@ -123,26 +164,50 @@ public class AttackPosition : MonoBehaviour
         // 무한 반복
         while (true)
         {
-            // TODO : 상점 전환이 씬전환/온오프 인지 확인후에 자동공격 멈춤 로직 추가
-            if (_playerScript != null && _playerScript.isDead)// 플레이어가 사망하면 공격중단
-            {
-                Debug.Log("공격 중단");
+            if (_playerScript != null && _playerScript.isDead)
                 yield break;
-            }
 
-            if (_bulletPerfab != null)
+            if (_bulletPrefab != null)
             {
-                GameObject _bullet = Instantiate(_bulletPerfab, _muzzlePos.position, Quaternion.identity);
-                _bullet.transform.right = _direction;
-                float atk = _playerScript.Stats.CurrentAtk; // 플레이어의 공격력값을 가져옴
-                Attack attackScript = _bullet.GetComponent<Attack>();
+                // 마우스 방향 계산
+                Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(Camera.main.transform.position.z)));
+                mouseWorldPos.z = 0f;
+                Vector3 direction = (mouseWorldPos - Player.position).normalized;
+
+
+                Vector3 spawnPos = Player.position + direction * 0.5f;
+
+                GameObject bulle = Instantiate(_bulletPrefab, spawnPos, Quaternion.identity);
+                bulle.transform.right = direction;
+
+                // 공격력 설정
+                float atk = _playerScript.Stats.CurrentAtk;
+                Attack attackScript = bulle.GetComponent<Attack>();
                 if (attackScript != null)
                 {
-                    attackScript.SetDamage(atk); // 공격력값을 생성된 오브젝트로 이동
+                    attackScript.SetDamage(atk);
                 }
-                Destroy(_bullet, _bulletTime);
+
+                // 지정한 시간동안 플레이어를 따라감
+                float duration = 0.7f;
+                float elapsed = 0f;
+                while (elapsed < duration)
+                {
+                    if (bulle == null || Player == null)
+                        break;
+
+                    bulle.transform.position = Player.position + direction * 0.5f; // 플레이어보다 앞쪽으로 지정한 단위 거리 위치에 생성
+                    bulle.transform.right = direction;
+
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                Destroy(bulle);
             }
 
+            // 공격속도가 높아질수록 딜레이가 짧아짐
             yield return new WaitForSeconds(GetAttackDelay());
         }
     }

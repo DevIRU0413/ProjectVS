@@ -10,12 +10,13 @@ public class GameManager : SimpleSingleton<GameManager>
     public MapSwitcer mapSwitcer;
     public PlayerStats playerStats;
 
+    [HideInInspector] public Boss boss;
     [HideInInspector] public PlayerConfig Player;
     [HideInInspector] public PlayerMove playerMove;
     [HideInInspector] public AttackPosition attackPosition;
 
-    private string _bossTag = "Boss";
-    private string _storeTag = "Store";
+    public bool IsBossActive { get; set; } = false;
+    public bool IsStoreActive { get; set; } = false;
 
     public GameObject[] playerPrefabs; // 0 = 검, 1 = 도끼, 2 = 마법
     public Transform playerSpawnPoint;
@@ -24,8 +25,6 @@ public class GameManager : SimpleSingleton<GameManager>
     private PlayerAction inputActions;
     private GameObject currentPlayerInstance;
 
-    [SerializeField] GameObject Boss;
-    [SerializeField] GameObject Store;
     [SerializeField] GameObject Tilemap;
 
     protected override void Awake()
@@ -64,7 +63,10 @@ public class GameManager : SimpleSingleton<GameManager>
 
         UiManager ui = FindObjectOfType<UiManager>();
         if (ui != null)
+        {
             ui.player = Player; // 생성된 플레이어를 ui매니저한테 줌
+            ui.boss = boss; // 생성된 보스를 ui매니저한테 줌
+        }
 
 
 
@@ -97,14 +99,19 @@ public class GameManager : SimpleSingleton<GameManager>
         /*TimeText();
         StopTile();
         StratrTile();*/
+        TimeText();
     }
     private void TimeText()
     {
-        GameObject boss = GameObject.FindWithTag(_bossTag);// 보스 태그를 확인
-        if (boss != null) { timer.timerText.text = "Boss!"; timer.PauseTimer(); return; }//시간을 멈추고 그 태그로 표기
-        GameObject store = GameObject.FindWithTag(_storeTag);// 상점 태그를 확인
-        if (store != null) { timer.timerText.text = "$Sore$"; timer.PauseTimer(); return; }//시간을 멈추고 그 태그로 표기
-        timer.ResumeTimer();
+        if (IsBossActive || IsStoreActive)
+        {
+            timer.timerText.text = IsBossActive ? "Boss!" : "$Store$";
+            timer.PauseTimer();
+        }
+        else
+        {
+            timer.ResumeTimer();
+        }
     }
     private void StopTile()
     {
