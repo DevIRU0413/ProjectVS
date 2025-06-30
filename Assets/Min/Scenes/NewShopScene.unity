@@ -652,7 +652,7 @@ MonoBehaviour:
   _dialogueLogManager: {fileID: 1160425770}
   _choiceDialogueManager: {fileID: 999307520}
   _spriteChangeManager: {fileID: 1869576868}
-  _passAffinity: 50
+  _passAffinity: 5
 --- !u!1 &139188310
 GameObject:
   m_ObjectHideFlags: 0
@@ -4219,7 +4219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &975466942
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4237,7 +4237,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 540, y: 1064}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975466943
 MonoBehaviour:
@@ -4259,7 +4259,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d33d6a369320b894b9b14700b22c1239, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 01c30a7528c0ece4f8c54ed2b61b2b6a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13427,7 +13427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _heroinEventImage: {fileID: 152294592}
   _shopNPCEvnetImage: {fileID: 1255011523}
-  _cutSceneImage: {fileID: 0}
+  _cutSceneImage: {fileID: 975466943}
   _repeatImage: {fileID: 1566176958}
   _costumeStateManager: {fileID: 35585568}
 --- !u!1 &1875542566
