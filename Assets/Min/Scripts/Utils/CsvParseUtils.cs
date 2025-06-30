@@ -16,5 +16,10 @@ namespace ProjectVS.Utils.CsvParseUtils
         {
             return int.TryParse(raw, out int result) ? result : -1;
         }
+
+        public static float TryParseFloat(string raw)
+        {
+            return float.TryParse(raw, out float result) ? result : -1f;
+        }
     }
 }
