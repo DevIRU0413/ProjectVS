@@ -1,4 +1,5 @@
 ﻿using ProjectVS;
+using ProjectVS.Data;
 
 using TMPro;
 
@@ -11,6 +12,7 @@ public class UiManager : MonoBehaviour
     public PixelUI.ValueBar BossHpBar;//보스 체력바를 채울 이미지
     public PlayerConfig player;
     public Boss boss;
+    public PlayerData playerData;
 
     public TextMeshProUGUI levelText; // 레벨 
     public TextMeshProUGUI goldText;//골드
@@ -54,6 +56,6 @@ public class UiManager : MonoBehaviour
         }
         // 플레이어 레벨, 골드 텍스트
         levelText.text = $"{Mathf.FloorToInt(player.Stats.Level)}";
-        goldText.text = $"{Mathf.FloorToInt(player.Stats.Gold)}";
+        goldText.text = $"{Mathf.FloorToInt(playerData.Gold)}";
     }
 }

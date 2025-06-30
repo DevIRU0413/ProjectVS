@@ -277,9 +277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38afd9017f7565458e944c8818215cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSwitcer: {fileID: 7238456504662222757, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}
   MoveInput: {x: 0, y: 0}
   anim: {fileID: 8930400971873860480}
+  mapSwitcher: {fileID: 0}
   fadeManager: {fileID: 1705760944804791855, guid: 933bb90b50166bf44911b92fa7f0ddda, type: 3}
   timer: {fileID: 7439314377194012607, guid: e751d69887daeff448c05c857ec5922e, type: 3}
 --- !u!114 &8915004436936648237
@@ -306,21 +306,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c920a0eeb513d54aa4ce5e43b6c8054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedClass: 2
+  selectedClass: 3
   Stats:
-    CurrentHp: 0
-    CurrentMaxHp: 0
-    CurrentAtk: 0
-    CurrentDfs: 0
-    CurrentSpd: 0
-    AtkSpd: 0
+    _hp: 0
+    _baseMaxHp: 0
+    _baseAtk: 0
+    _baseDfs: 0
+    _baseSpd: 0
+    _baseAtkSpd: 0
     Level: 0
-    CharacterClass: 2
+    CharacterClass: 3
     CurrentExp: 0
     MaxExp: 0
-    Gold: 0
   timer: {fileID: 7439314377194012607, guid: e751d69887daeff448c05c857ec5922e, type: 3}
   scanner: {fileID: 0}
+  playerData:
+    Stats:
+      _hp: 0
+      _baseMaxHp: 0
+      _baseAtk: 0
+      _baseDfs: 0
+      _baseSpd: 0
+      _baseAtkSpd: 0
+      Level: 1
+      CharacterClass: 0
+      CurrentExp: 0
+      MaxExp: 100
+    InventoryItems: []
+    CurrentStage: 0
+    MonstersDefeated: 0
+    Gold: 0
+    Diamonds: 0
+    CurrentAffinityExp: 0
+    CurrentAffinityLevel: 0
+    WornCostumeName: 
   isDead: 0
   _hpBar: {fileID: 2827814678606631806}
   inventory: []
@@ -601,13 +620,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 5327371813207693605}
-  Radius: 1.5
   _swordPrefab: {fileID: 1044545731354326905, guid: a7255bb8d3e804340a0be510b5dadd8d, type: 3}
   _axePrefab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
   _bulletPrefab: {fileID: 2418890576715569026, guid: c18e72a2d75595f459f7497f27fccc53, type: 3}
   _muzzlePos: {fileID: 846167591246401027}
-  _bulletTime: 2
-  _meleeAttack: 0.2
 --- !u!1001 &4960086530428258843
 PrefabInstance:
   m_ObjectHideFlags: 0

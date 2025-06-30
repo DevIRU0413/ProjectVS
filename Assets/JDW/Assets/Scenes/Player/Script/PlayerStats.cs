@@ -74,7 +74,7 @@ public class PlayerStats : UnitStats
     /// </summary>
     /// <param name="classType"></param>
     /// <returns></returns>
-    public PlayerStats TestStats(CharacterClass classType)
+    public static PlayerStats TestStats(CharacterClass classType)
     {
         switch (classType)
         {

@@ -41,8 +41,8 @@ public class Boss : MonoBehaviour
             if (player != null)
             {
                 player.ExpUp(_exp);
-                player.Stats.Gold += _gold;
-                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.Stats.Gold}");
+                player.playerData.Gold += _gold;
+                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.playerData.Gold}");
                 _timer.ResumeTimer();
                 _timer.SetMessage("");
             }

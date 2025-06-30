@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Data;
+using ProjectVS.Unit;
+
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 using UnityEngine;
@@ -14,6 +17,7 @@ namespace ProjectVS
         public PlayerStats Stats;
         public Timer timer;
         public Scanner scanner;
+        public PlayerData playerData;
 
         public bool isDead = false;
 
@@ -26,11 +30,12 @@ namespace ProjectVS
         {
             anim = GetComponent<Animator>();
             scanner = GetComponent<Scanner>();
-            Stats = PlayerClassData.DefaultStats[selectedClass].Clone();
+            Stats = PlayerStats.TestStats(selectedClass);
         }
         private void Start()
         {
-            Debug.Log($"선택 클래스: {selectedClass}, 체력: {Stats.CurrentMaxHp}, 공격력: {Stats.CurrentAtk}, 방어력: {Stats.CurrentDfs}, 공격속도 : {Stats.AtkSpd}, 이동속도 : {Stats.CurrentSpd} 골드: {Stats.Gold}");
+
+            Debug.Log($"선택 클래스: {selectedClass}, 체력: {Stats.CurrentMaxHp}, 공격력: {Stats.CurrentAtk}, 방어력: {Stats.CurrentDfs}, 공격속도 : {Stats.AtkSpd}, 이동속도 : {Stats.CurrentSpd} 골드: {playerData.Gold}");
             UpdateHpBar();
         }
         private void UpdateHpBar()
@@ -43,23 +48,26 @@ namespace ProjectVS
                 _hpBar.SendMessage("UpdateUI", SendMessageOptions.DontRequireReceiver);
             }
         }
-        public bool TryBuyItem(int price, int bonusHealth, int bonusAttack, int bonusDefense, float bonusAttackSpeed, float bonusMoveSpeed, string itemName)
+        public bool TryBuyItem(int price, int bonusHp, int bonusAtk, int bonusDfs, float bonusAtkSpd, float bonusSpd, string itemName)
         {
-            if (Stats.Gold < price)
+            if (playerData.Gold < price)
             {
                 Debug.Log("골드 부족");
                 return false;
             }
-            Stats.Gold -= price;
-            Stats.CurrentHp = Mathf.Min(Stats.CurrentHp + bonusHealth, Stats.CurrentMaxHp); // 회복이 최대체력을 넘기 못하게
-            Stats.CurrentAtk += bonusAttack;
-            Stats.CurrentDfs += bonusDefense;
-            Stats.AtkSpd += bonusAttackSpeed;
-            Stats.CurrentSpd += bonusMoveSpeed;
+            playerData.Gold -= price;
+           
+            Stats.SetIncreaseBaseStats(UnitStaus.MaxHp, bonusHp);
+            Stats.SetIncreaseBaseStats(UnitStaus.Atk, bonusAtk);
+            Stats.SetIncreaseBaseStats(UnitStaus.Dfs, bonusDfs);
+            Stats.SetIncreaseBaseStats(UnitStaus.AtkSpd, bonusAtkSpd);
+            Stats.SetIncreaseBaseStats(UnitStaus.Spd, bonusSpd);
+   
+            Stats.CurrentHp = Mathf.Min(Stats.CurrentHp + bonusHp, Stats.CurrentMaxHp);
             inventory.Add(itemName);
             UpdateHpBar(); // 최대 체력이 오를 때 Hp바도 같이
 
-            Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHealth}, 공격력 +{bonusAttack}, 방어력 +{bonusDefense},  공격속도 +{bonusAttackSpeed}, 이동속도 +{bonusMoveSpeed} 남은 골드: {Stats.Gold}");
+            Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHp}, 공격력 +{bonusAtk}, 방어력 +{bonusDfs},  공격속도 +{bonusAtkSpd}, 이동속도 +{bonusSpd} 남은 골드: {playerData.Gold}");
             return true;
         }
         public void TakeDamage(float damage)

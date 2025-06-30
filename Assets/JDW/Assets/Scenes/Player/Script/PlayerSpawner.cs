@@ -5,7 +5,7 @@ using ProjectVS;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerSpawner : MonoBehaviour // 이것도 싱글톤으로 처리?
+public class PlayerSpawner : MonoBehaviour 
 {
     [HideInInspector] public PlayerConfig Player;
     [HideInInspector] public PlayerMove playerMove;

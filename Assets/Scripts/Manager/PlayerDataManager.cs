@@ -5,6 +5,7 @@ using ProjectVS.Interface;
 using ProjectVS.Util;
 
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace ProjectVS.Manager
 {
@@ -113,8 +114,9 @@ namespace ProjectVS.Manager
             if (TestCharacterClass == CharacterClass.None)
                 TestCharacterClass = CharacterClass.Sword;
 
-            stats = new PlayerStats();
-            stats = stats.TestStats(TestCharacterClass);
+            // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
+            // stats = stats.TestStats(TestCharacterClass);
+            stats = PlayerStats.TestStats(TestCharacterClass);
         }
     }
 }
