@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using ProjectVS.Utils.UIManager;
 using DialogueManagerClass = ProjectVS.Dialogue.DialogueManager.DialogueManager;
-using UnityEngine.UI;
-
+using ExclamationMarkIndicatorClass = ProjectVS.Shop.ExclamationMarkIndicator.ExclamationMarkIndicator;
 
 namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 {
@@ -13,6 +13,9 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
     {
         [SerializeField] private DialogueManagerClass _dialogueManager;
         [SerializeField] private Button _eventButton;
+
+        [Header("느낌표 출력용")]
+        [SerializeField] private ExclamationMarkIndicatorClass _markIndicator;
 
         private ColorBlock _eventButtonColors;
         private Color _clickableNormalColor;
@@ -30,6 +33,11 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
             CheckDisableButton();
 
             Debug.Log("[EventSelectPanelButtons] 이벤트 선택 패널 버튼 활성화됨.");
+        }
+
+        private void OnDisable()
+        {
+            _markIndicator.CheckCanShowMark();
         }
 
         public void OnClickESCButton()
