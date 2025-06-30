@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using ProjectVS.Dialogue.DialogueManager;
+using ProjectVS.Manager;
+
 using UnityEngine;
 
 using CostumeSOClass = ProjectVS.CharacterImages.CostumeSO.CostumeSO;
@@ -26,7 +28,9 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
 
         private void Awake()
         {
-            InitCostume();
+            LoadAcquiredCostumes();
+            LoadWornCostume();
+            //InitCostume();
         }
 
         // TODO: 돈이 있는지 확인하고 구매 결정해야되는 로직 추후 추가 예정
@@ -36,6 +40,7 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
             {
                 // 안샀으면 구매처리
                 costume.IsUnlocked = true;
+                SaveAcquiredCostumes();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 구매 완료");
             }
             else if (costume.IsEquipped)
@@ -45,12 +50,14 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
                 _currentCostume = null;
                 _eventSpriteChangeManager.ChangeRepeatImage(_dialogueManager.CurrentDialogueData.IllustPath);
                 _dialogueManager.ShowRepeatDialogue();
+                SaveWornCostume();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 미착용 상태로 전환");
             }
             else
             {
                 // 착용
                 EquipCostume(costume);
+                SaveWornCostume();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 착용 완료");
             }
         }
@@ -74,12 +81,84 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
         // MEMO: 현재는 Awake에서 ScriptableObject 초기화 하고 있음
         // 다른 씬을 왕복할 시 초기화 되는 구조
         // TODO: 추후 씬 전환 시 CostumeStateManager를 유지하도록 InitCostume 호출하지 않도록 변경
-        private void InitCostume()
+        //private void InitCostume()
+        //{
+        //    foreach (var costume in _costumeSOs)
+        //    {
+        //        costume.IsEquipped = false;
+        //        costume.IsUnlocked = false;
+        //    }
+        //}
+
+        public void SaveAcquiredCostumes()
+        {
+            HashSet<string> acquiredCostumes = new();
+            foreach (var costume in _costumeSOs)
+            {
+                if (costume.IsUnlocked)
+                {
+                    acquiredCostumes.Add(costume.name);
+                }
+            }
+
+            PlayerDataManager.Instance.AcquiredCostumeName = acquiredCostumes;
+        }
+
+        public void SaveWornCostume()
         {
             foreach (var costume in _costumeSOs)
             {
-                costume.IsEquipped = false;
-                costume.IsUnlocked = false;
+                if (costume.IsEquipped)
+                {
+                    PlayerDataManager.Instance.WornCostumeName = costume.name;
+                }
+            }
+        }
+
+        private void LoadAcquiredCostumes()
+        {
+            HashSet<string> acquiredCostumes = PlayerDataManager.Instance.AcquiredCostumeName;
+
+            if (acquiredCostumes == null || acquiredCostumes.Count == 0)
+            {
+                Debug.Log("[CostumeStateManager] 획득한 코스튬이 없습니다.");
+                return;
+            }
+
+            foreach (var costume in _costumeSOs)
+            {
+                if (acquiredCostumes.Contains(costume.name))
+                {
+                    costume.IsUnlocked = true;
+                }
+                else
+                {
+                    costume.IsUnlocked = false;
+                }
+            }
+        }
+
+        private void LoadWornCostume()
+        {
+            if (string.IsNullOrEmpty(PlayerDataManager.Instance.WornCostumeName))
+            {
+                Debug.Log("[CostumeStateManager] 착용 중인 코스튬이 없습니다.");
+                return;
+            }
+
+            foreach (var costume in _costumeSOs)
+            {
+                if (costume.name == PlayerDataManager.Instance.WornCostumeName)
+                {
+                    costume.IsEquipped = true;
+                    _currentCostume = costume;
+                    _eventSpriteChangeManager.ChangeCostumeImage();
+                    return;
+                }
+                else
+                {
+                    costume.IsEquipped = false;
+                }
             }
         }
     }
