@@ -53,7 +53,7 @@ namespace ProjectVS.CutSceneEffectors.StartSpriteEffector
 
         private void LoadScene()
         {
-            SceneLoader.Instance.LoadSceneAsync(SceneID.MainMenuScene);
+            ProjectVS.Manager.GameManager.Instance.SetSceneID(SceneID.MainMenuScene);
         }
     }
 }

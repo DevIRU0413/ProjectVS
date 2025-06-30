@@ -2,6 +2,8 @@
 
 using ProjectVS.Util;
 
+using Scripts.Scene;
+
 using UnityEngine;
 
 namespace ProjectVS.Manager
@@ -13,7 +15,7 @@ namespace ProjectVS.Manager
     {
         [field: SerializeField] public GamePlayType PlayType { get; private set; } = GamePlayType.Build;
         [field: SerializeField] public GameState CurrentState { get; private set; } = GameState.Play;
-        [field: SerializeField] public SceneID CurrentSceneID { get; private set; } = SceneID.MainMenuScene;
+        [field: SerializeField] public SceneID CurrentSceneID { get; private set; } = SceneID.None;
 
         public event Action<GameState> OnStateChanged;
         public event Action<SceneID> OnSceneChanged;
@@ -21,6 +23,11 @@ namespace ProjectVS.Manager
         protected override void Awake()
         {
             CurrentState = GameState.Play;
+
+            var sceneBase = GameObject.FindGameObjectWithTag("SceneBase");
+            var sceneBaseCmp = sceneBase.GetComponent<SceneBase>();
+            if (sceneBaseCmp != null)
+                CurrentSceneID = sceneBaseCmp.SceneID;
 
             // 강제 생성 진행 해야될듯
 
@@ -51,10 +58,10 @@ namespace ProjectVS.Manager
         {
             if (CurrentSceneID == sceneID) return;
             if (SceneID.None == sceneID) return;
-
+            SceneID old = CurrentSceneID;
             CurrentSceneID = sceneID;
 
-            Debug.Log($"[GameManager] 씬 전환: {CurrentSceneID}");
+            Debug.Log($"[GameManager] 씬 전환: {old} > {CurrentSceneID}");
             OnSceneChanged?.Invoke(CurrentSceneID);
 
             SceneLoader.Instance.LoadSceneAsync(CurrentSceneID);
