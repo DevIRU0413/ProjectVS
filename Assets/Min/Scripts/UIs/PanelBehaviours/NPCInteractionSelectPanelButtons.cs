@@ -5,7 +5,7 @@ using ProjectVS.Utils.UIManager;
 
 using UnityEngine;
 
-using NPCBehaviourClass = ProjectVS.NPC.NPCBehaviour.NPCBehaviour;
+using NPCBehaviourClass = ProjectVS.NPC.NPCBehaviour.FieldNPCBehaviour;
 
 namespace ProjectVS.UIs.PanelBehaviours.NPCInteractionSelectPanelButtons
 {
