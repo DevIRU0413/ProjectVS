@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace ProjectVS.NPC.NPCBehaviour
 {
-    public class NPCBehaviour : MonoBehaviour
+    public class FieldNPCBehaviour : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
