@@ -10,30 +10,6 @@ using UnityEngine;
 
 namespace ProjectVS.Manager
 {
-    // 임시
-    [Serializable]
-    public class NPC
-    {
-        public string npcName;
-        public int npcID;
-    }
-
-    // 임시
-    [Serializable]
-    public class AffectionData
-    {
-        public string npcName;
-        public int affectionLevel;
-    }
-
-    // 임시
-    [Serializable]
-    public class NpcCostumeData
-    {
-        public string npcName;
-        public string costumeId;
-    }
-
     /// <summary>
     /// 저장된 정보들로 저장 데이터를 만듭니다.
     /// </summary>
@@ -58,21 +34,16 @@ namespace ProjectVS.Manager
         public int gold;
         public int diamonds;
 
-        #region Help Me... R.I.P(수정하고 지워 주세요)
-        [Header("Affection System")]
-        public Dictionary<NPC, int> affectionLevels = new Dictionary<NPC, int>();
-        public HashSet<string> affectionEventFlags = new HashSet<string>(); // 이벤트 ID
+        [Header("Dialogue")]
+        public HashSet<int> ReadDialogeIDs;
 
-        [Header("Dialogue Tracking")]
-        public HashSet<string> dialogueProgressFlags = new HashSet<string>(); // 대사 ID
+        [Header("Affinity")]
+        public int CurrentAffinityExp;
+        public int CurrentAffinityLevel;
 
-        [Header("Costumes")]
-        public HashSet<string> ownedCostumes = new HashSet<string>(); // 코스튬 ID
-        public Dictionary<NPC, string> npcCostumeMap = new Dictionary<NPC, string>(); // NPC -> 착용 코스튬
-
-        [Header("Misc")]
-        public bool isMoodShifted;
-        #endregion
+        [Header("NPC Costume")]
+        public HashSet<string> AcquiredCostumeName;
+        public string WornCostumeName;
 
         public void SavePlayerData()
         {
@@ -88,24 +59,13 @@ namespace ProjectVS.Manager
             data.Gold = gold;
             data.Diamonds = diamonds;
 
-            // Help Me... R.I.P(수정하고 지워 주세요)
-            data.affectionLevels = new List<AffectionData>();
-            foreach (var pair in affectionLevels)
-            {
-                data.affectionLevels.Add(new AffectionData { npcName = pair.Key.npcName, affectionLevel = pair.Value });
-            }
+            data.ReadDialogeIDs = ReadDialogeIDs;
 
-            data.affectionEventFlags = new List<string>(affectionEventFlags);
-            data.dialogueProgressFlags = new List<string>(dialogueProgressFlags);
-            data.ownedCostumes = new List<string>(ownedCostumes);
+            data.CurrentAffinityExp = CurrentAffinityExp;
+            data.CurrentAffinityLevel = CurrentAffinityLevel;
 
-            data.npcCostumes = new List<NpcCostumeData>();
-            foreach (var pair in npcCostumeMap)
-            {
-                data.npcCostumes.Add(new NpcCostumeData { npcName = pair.Key.npcName, costumeId = pair.Value });
-            }
-
-            data.isMoodShifted = isMoodShifted;
+            data.AcquiredCostumeName = AcquiredCostumeName;
+            data.WornCostumeName = WornCostumeName;
 
             // Save
             SaveSystem.Save(data);
@@ -126,23 +86,14 @@ namespace ProjectVS.Manager
             gold = data.Gold;
             diamonds = data.Diamonds;
 
-            affectionLevels.Clear();
-            foreach (var aff in data.affectionLevels)
-            {
-                affectionLevels[new NPC { npcName = aff.npcName }] = aff.affectionLevel;
-            }
+            ReadDialogeIDs = data.ReadDialogeIDs;
 
-            affectionEventFlags = new HashSet<string>(data.affectionEventFlags);
-            dialogueProgressFlags = new HashSet<string>(data.dialogueProgressFlags);
-            ownedCostumes = new HashSet<string>(data.ownedCostumes);
+            CurrentAffinityExp = data.CurrentAffinityExp;
+            CurrentAffinityLevel = data.CurrentAffinityLevel;
 
-            npcCostumeMap.Clear();
-            foreach (var npcCostume in data.npcCostumes)
-            {
-                npcCostumeMap[new NPC { npcName = npcCostume.npcName }] = npcCostume.costumeId;
-            }
+            AcquiredCostumeName = data.AcquiredCostumeName;
+            WornCostumeName = data.WornCostumeName;
 
-            isMoodShifted = data.isMoodShifted;
             print("불러오기");
         }
 
