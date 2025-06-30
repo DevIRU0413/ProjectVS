@@ -8,7 +8,6 @@ public class MeleeWeapon : MonoBehaviour
     public float damage;
     public int penetratingPower;
 
-    // 총알 쪽. 나중에는 나눠야됨
     private Rigidbody2D _rigid;
 
     private void Awake()

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: "\uD68C\uC804 \uBB34\uAE30"
   m_EditorClassIdentifier: 
   ItemName: "\uD68C\uC804 \uBB34\uAE30"
-  Icon: {fileID: 21300000, guid: 05806b63f014ac3449ddae915b77a961, type: 3}
-  Prefab: {fileID: 3211449961886624269, guid: e6ba33eaeb6776c458d2f1ab5697f1cb, type: 3}
+  Icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  Prefab: {fileID: 4853173426568586476, guid: 1949dd0b77033f049b52a3ac5c4d3d12, type: 3}

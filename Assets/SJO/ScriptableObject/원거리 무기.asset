@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ab45d314674d644aa8ccebfed52dee, type: 3}
   m_Name: "\uC6D0\uAC70\uB9AC \uBB34\uAE30"
   m_EditorClassIdentifier: 
-  ItemName: 
-  Icon: {fileID: 0}
-  Prefab: {fileID: 0}
+  ItemName: "\uCFE0\uB098\uC774"
+  Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  Prefab: {fileID: 3211449961886624269, guid: e6ba33eaeb6776c458d2f1ab5697f1cb, type: 3}

@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour
     public int count;
     public float speed;
 
-    private float _timer;
+    public float timer;
     public PlayerController player;
 
     private void Awake()
@@ -53,7 +53,7 @@ public class Weapon : MonoBehaviour
                 WeaponPosition();
                 break;
 
-            default:
+            case 1:
                 // 일단 총알 연사 속도
                 speed = 0.3f;
                 break;
@@ -72,12 +72,12 @@ public class Weapon : MonoBehaviour
                 transform.Rotate(Vector3.forward * speed * Time.deltaTime);
                 break;
 
-            default:
-                _timer += Time.deltaTime;
+            case 1:
+                timer += Time.deltaTime;
 
-                if (_timer > speed)
+                if (timer > speed)
                 {
-                    _timer = 0f;
+                    timer = 0f;
                     Fire();
                 }
                 break;
@@ -140,6 +140,7 @@ public class Weapon : MonoBehaviour
     private void Fire()
     {
         // 플레이어 근처에 적이 없다면 반환
+        Debug.Log(player.scanner.nearestTarget);
         if (!player.scanner.nearestTarget) return;
         
         Vector3 targetPos = player.scanner.nearestTarget.position;
@@ -156,6 +157,6 @@ public class Weapon : MonoBehaviour
         // 지정한 축을 중심으로 목표를 향해 회전(z축)
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
     
-        bullet.GetComponent<MeleeWeapon>().Init(damage, count, dir);
+        bullet.GetComponent<RangeWeapon>().Init(damage, count, dir);
     }
 }
