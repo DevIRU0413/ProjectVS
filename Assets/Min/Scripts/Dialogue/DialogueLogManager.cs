@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using TMPro;
-
 using UnityEngine;
+
+
+using LogBoxClass = ProjectVS.Dialogue.LogBox.LogBox;
 
 
 namespace ProjectVS.Dialogue.DialogueLogManager
@@ -11,27 +12,26 @@ namespace ProjectVS.Dialogue.DialogueLogManager
     public class DialogueLogManager : MonoBehaviour
     {
         [SerializeField] private Transform _logContentTransform;
-        [SerializeField] private GameObject _logBoxPrefab;
+        [SerializeField] private LogBoxClass _logBoxPrefab;
 
-        private List<GameObject> _logBoxes = new();
+        private List<LogBoxClass> _logBoxes = new();
 
         // TODO: 오브젝트 풀링 등 해야될 듯
-        // TODO: GetComponent도 안할 방법 찾아야 될 듯
-        public void AddLogBox(string content)
+        public void AddLogBox(string name, string content)
         {
-            GameObject box = Instantiate(_logBoxPrefab, _logContentTransform);
-            TMP_Text text = box.GetComponentInChildren<TMP_Text>();
-            text.text = content;
+            LogBoxClass box = Instantiate(_logBoxPrefab, _logContentTransform);
+            box.NameText.text = name;
+            box.ContentText.text = content;
 
             _logBoxes.Add(box);
         }
 
-        // MEMO: 순회 중 Destroy 됐던가??
-        public void ClearLog()
+
+        public void ClearLogBox()
         {
-            foreach (GameObject box in _logBoxes)
+            foreach (LogBoxClass box in _logBoxes)
             {
-                Destroy(box);
+                Destroy(box.gameObject);
             }
 
             _logBoxes.Clear();

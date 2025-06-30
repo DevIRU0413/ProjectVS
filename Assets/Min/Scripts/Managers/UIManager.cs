@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 using ProjectVS.Utils.PriorityQueue;
 using ProjectVS.Utils.Singleton;
@@ -19,6 +20,8 @@ namespace ProjectVS.Utils.UIManager
         private bool _isAnimating = false;
 
 
+        public int PanelCount => _uiPanels.Count;
+
         private void Awake()
         {
             SingletonInit();
@@ -28,16 +31,27 @@ namespace ProjectVS.Utils.UIManager
         {
             if (_isAnimating) return;
 
-            // TODO: New Input System 패키지 설치 후 주석 해제 및 수정
+            // TODO: 플레이어 컨트롤러로 이관해야될 수도
 
-            //if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
-            //{
-            //    CloseTopPanel();
-            //}
-
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
             {
-                CloseTopPanel();
+                if (_uiStack.Count == 0)
+                {
+                    Show("Pause Buttons Panel");
+                    return;
+                }
+
+                if (_uiStack.Count == 1)
+                {
+                    GameObject topPanel = _uiStack.Peek();
+                    if (topPanel.name == "Main Menu Panel")
+                    {
+                        return;
+                    }
+                }
+
+                Debug.Log($"[UIManager] Escape 키 입력으로 최상위 패널 닫음: {_uiStack.Peek().name}");
+                ForceCloseTopPanel();
             }
         }
 

@@ -26,7 +26,7 @@ namespace ProjectVS.UIs.UIBase.UIButtonOnPanel
             gameObject.SetActive(true);
             _panelController?.AnimateIn(onComplete);
 
-            Debug.Log($"[UIBase] {gameObject.name}의 AnimateShow 호출 됨");
+            Debug.Log($"[UIButtonOnPanel] {gameObject.name}의 AnimateShow 호출 됨");
         }
 
         public override void ShowImmediately()
