@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 
 using ProjectVS.Data;
+using ProjectVS.Manager;
 using ProjectVS.Unit;
 
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 using UnityEngine;
+
+using CharacterSelectionDataClass = ProjectVS.CharacterSelectionData.CharacterSelectionData.CharacterSelectionData;
+
 
 
 namespace ProjectVS
@@ -17,26 +21,33 @@ namespace ProjectVS
         public PlayerStats Stats;
         public Timer timer;
         public Scanner scanner;
-        public PlayerData playerData;
+        public PlayerDataManager playerDataManager;
 
         public bool isDead = false;
 
         [SerializeField] private PixelUI.ValueBar _hpBar;
 
         private Animator anim;
-
         public List<string> inventory = new List<string>(); // 아이템 이름 저장용
         private void Awake()
         {
             anim = GetComponent<Animator>();
             scanner = GetComponent<Scanner>();
-            Stats = PlayerStats.TestStats(selectedClass);
+          //  Stats = PlayerStats.TestStats(selectedClass); // playerStats에서 클래스 데이터를 사용 할 경우 이걸사용
         }
         private void Start()
         {
 
-            Debug.Log($"선택 클래스: {selectedClass}, 체력: {Stats.CurrentMaxHp}, 공격력: {Stats.CurrentAtk}, 방어력: {Stats.CurrentDfs}, 공격속도 : {Stats.AtkSpd}, 이동속도 : {Stats.CurrentSpd} 골드: {playerData.Gold}");
+            UpdateHpBar(); // 초기 체력바 표시
+        }
+
+        public void ApplyStatsFromData(CharacterSelectionDataClass data)
+        {
+            // TSV 데이터 기반으로 Stats 초기화
+            Stats = new PlayerStats(1, selectedClass, data.HP, data.Attack, data.Defense, data.MoveSpeed, data.AttackSpeed);
+            Stats.CurrentHp = data.HP;
             UpdateHpBar();
+            Debug.Log($"[TSV 적용됨] ATK: {Stats.BaseAtk}, DEF: {Stats.BaseDfs}, HP: {Stats.CurrentHp}, SPD: {Stats.BaseSpd}");
         }
         private void UpdateHpBar()
         {
@@ -50,24 +61,18 @@ namespace ProjectVS
         }
         public bool TryBuyItem(int price, int bonusHp, int bonusAtk, int bonusDfs, float bonusAtkSpd, float bonusSpd, string itemName)
         {
-            if (playerData.Gold < price)
+            if (playerDataManager.gold < price)
             {
                 Debug.Log("골드 부족");
                 return false;
             }
-            playerData.Gold -= price;
-           
-            Stats.SetIncreaseBaseStats(UnitStaus.MaxHp, bonusHp);
-            Stats.SetIncreaseBaseStats(UnitStaus.Atk, bonusAtk);
-            Stats.SetIncreaseBaseStats(UnitStaus.Dfs, bonusDfs);
-            Stats.SetIncreaseBaseStats(UnitStaus.AtkSpd, bonusAtkSpd);
-            Stats.SetIncreaseBaseStats(UnitStaus.Spd, bonusSpd);
+            playerDataManager.gold -= price;  
    
             Stats.CurrentHp = Mathf.Min(Stats.CurrentHp + bonusHp, Stats.CurrentMaxHp);
             inventory.Add(itemName);
             UpdateHpBar(); // 최대 체력이 오를 때 Hp바도 같이
 
-            Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHp}, 공격력 +{bonusAtk}, 방어력 +{bonusDfs},  공격속도 +{bonusAtkSpd}, 이동속도 +{bonusSpd} 남은 골드: {playerData.Gold}");
+            Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHp}, 공격력 +{bonusAtk}, 방어력 +{bonusDfs},  공격속도 +{bonusAtkSpd}, 이동속도 +{bonusSpd} 남은 골드: {playerDataManager.gold}");
             return true;
         }
         public void TakeDamage(float damage)
@@ -79,9 +84,8 @@ namespace ProjectVS
             UpdateHpBar();  // Hp바 연동
 
             if (Stats.CurrentHp <= 0)
-            {
-                Die();
-            }
+                  Die();
+         
         }
         private void Die()
         {

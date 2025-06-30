@@ -4,7 +4,9 @@ using ProjectVS;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using ProjectVS.CharacterSelectionData.CharacterSelectionDataParser;
+using CharacterSelectionDataClass = ProjectVS.CharacterSelectionData.CharacterSelectionData.CharacterSelectionData;
+using ProjectVS.Utils.CsvTable;
 public class PlayerSpawner : MonoBehaviour 
 {
     [HideInInspector] public PlayerConfig Player;
@@ -17,9 +19,14 @@ public class PlayerSpawner : MonoBehaviour
 
     private PlayerAction inputActions;
     private GameObject currentPlayerInstance;
+    private List<CharacterSelectionDataClass> characterDataList;
 
     private void Awake()
     {
+        //TSV 데이터 불러옴
+        CsvTable table = new CsvTable("Min/Resources/CharacterSelectionData.tsv", '\t');
+        characterDataList = CharacterSelectionDataParser.Parse(table);
+
         inputActions = new PlayerAction();
         inputActions.CharacterSelect.Enable();
         inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
@@ -59,20 +66,23 @@ public class PlayerSpawner : MonoBehaviour
             Debug.LogError("AttackPosition 컴포넌트가 프리팹에 없음!");
             return;
         }
+        if (index < characterDataList.Count)
+        {
+            Player.ApplyStatsFromData(characterDataList[index]);
+        }
+        else
+        {
+            Debug.LogWarning("TSV 데이터에 해당 인덱스 정보가 없습니다.");
+        }
 
         // 번호에 따라 공격 코루틴 자동 실행
         switch (index)
         {
-            case 0:
-                attackPosition.SwitchCoroutine(attackPosition.Axe());
-                break;
-            case 1:
-                attackPosition.SwitchCoroutine(attackPosition.Sword());
-                break;
-            case 2:
-                attackPosition.SwitchCoroutine(attackPosition.Fire());
-                break;
+            case 0: attackPosition.SwitchCoroutine(attackPosition.Axe()); break;
+            case 1: attackPosition.SwitchCoroutine(attackPosition.Sword()); break;
+            case 2: attackPosition.SwitchCoroutine(attackPosition.Fire()); break;
         }
+    
         CurrentClassIndex = index;
     }
 }

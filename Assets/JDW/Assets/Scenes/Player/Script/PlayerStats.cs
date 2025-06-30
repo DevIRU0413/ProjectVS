@@ -14,6 +14,11 @@ public class PlayerStats : UnitStats
 
     // 골드 데이터는 PlayerData 클래스로 이전됩니다.
     // public int Gold = 0;                    
+    public float BaseAtk;
+    public float BaseDfs;
+    public float BaseMaxHp;
+    public float BaseAtkSpd;
+    public float BaseSpd;
 
     public bool AddExp(float amount)
     {
@@ -115,4 +120,5 @@ public class PlayerStats : UnitStats
         Level = level;
         CharacterClass = charClass;
     }
+
 }
