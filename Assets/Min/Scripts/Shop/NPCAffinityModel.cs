@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Util;
+
 using UnityEngine;
 
 
 namespace ProjectVS.Shop.NPCAffinityModel
 {
-    public class NPCAffinityModel : MonoBehaviour
+    public class NPCAffinityModel : SimpleSingleton<NPCAffinityModel>
     {
         private int _affinityCurrentExp = 0;
         private int _affinityLevel = 1;
