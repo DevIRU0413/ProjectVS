@@ -2398,7 +2398,7 @@ PrefabInstance:
     - target: {fileID: 7866467489833683709, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}
       propertyPath: timer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 579281399}
     - target: {fileID: 7866467489833683709, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}
       propertyPath: Tilemap
       value: 
