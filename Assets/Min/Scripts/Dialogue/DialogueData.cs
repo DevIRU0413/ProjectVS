@@ -30,6 +30,8 @@ namespace ProjectVS.Dialogue.DialogueData
                         return "주인공";
                     case 2:
                         return "상점 주인";
+                    case 3:
+                        return "상점 주인";
                     default:
                         return "N/A";
                 }
