@@ -1,4 +1,5 @@
 ﻿using ProjectVS;
+using ProjectVS.Manager;
 
 using UnityEngine;
 
@@ -41,8 +42,8 @@ public class Boss : MonoBehaviour
             if (player != null)
             {
                 player.ExpUp(_exp);
-                player.playerData.Gold += _gold;
-                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.playerData.Gold}");
+                PlayerDataManager.Instance.gold += _gold;
+                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.PlayerDataManager.gold}");
                 _timer.ResumeTimer();
                 _timer.SetMessage("");
             }

@@ -118,9 +118,9 @@ public class Weapon : MonoBehaviour
 
     private void Fire()
     {
-        if (!player.scanner.nearestTarget) return;
+        if (!player.Scanner.nearestTarget) return;
 
-        Vector3 targetPos = player.scanner.nearestTarget.position;
+        Vector3 targetPos = player.Scanner.nearestTarget.position;
         Vector3 dir = (targetPos - transform.position).normalized;
 
         GameObject obj = _poolManager.Spawn(poolKey, transform.position, Quaternion.identity);

@@ -102,7 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0960422e503d19344830eeabd7e735dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 0}
   _rigid: {fileID: 3990077426810671669}
   FirePower: 10
 --- !u!50 &3990077426810671669

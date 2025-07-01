@@ -1,61 +1,98 @@
 ﻿using ProjectVS;
 using ProjectVS.Data;
+using ProjectVS.Manager;
 
 using TMPro;
 
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+
 using UnityEngine;
 using UnityEngine.UI;
-// 추후 Ui관련 팀원분과 조율해서 합칠예정
-public class UiManager : MonoBehaviour
+namespace ProjectVS.Utils.UIManager
 {
-    public PixelUI.ValueBar ExpBar;//경험치바를 채울 이미지
-    public PixelUI.ValueBar BossHpBar;//보스 체력바를 채울 이미지
-    public PlayerConfig player;
-    public Boss boss;
-    public PlayerData playerData;
-
-    public TextMeshProUGUI levelText; // 레벨 
-    public TextMeshProUGUI goldText;//골드
-    private void Awake()
+    // 추후 Ui관련 팀원분과 조율 예정
+    public class UiManager : MonoBehaviour
     {
-        player = FindObjectOfType<PlayerConfig>();
-        boss = FindObjectOfType<Boss>();
-    }
-    private void Start()
-    {
-        //초기에 플레이어가 없을 경우 대체값
-        if (ExpBar != null)
-        {
-            ExpBar.CurrentValue = 0f;
-            ExpBar.MaxValue = 1f; // 비율 기반이라서 0~1
-        }
-    }
+        public PixelUI.ValueBar ExpBar;//경험치바를 채울 이미지
+        public PixelUI.ValueBar BossHpBar;//보스 체력바를 채울 이미지
+        public PlayerConfig Player;
+        public Boss Boss;
+        public PlayerDataManager PlayerDataManager;
 
-    private void Update()
-    {
-        if (player == null)
-            player = FindObjectOfType<PlayerConfig>(); // 자동으로 플레이어 찾음       
-        if (boss == null)
-            boss = FindObjectOfType<Boss>(); // 자동으로 보스를 찾음       
+        public TextMeshProUGUI LevelText; // 레벨 
+        public TextMeshProUGUI GoldText;//골드
 
-        // 플레이어나 스탯이 없으면 실행x
-        if (player == null || player.Stats == null) return;
-        // 경험치 비율 
-        float expRatio = player.Stats.CurrentExp / player.Stats.MaxExp;
-        if (ExpBar != null)
+        [SerializeField] private Sprite[] _hpPortraits;
+        [SerializeField] private Image _portraitImage;
+        private void Awake()
         {
-            ExpBar.MaxValue = player.Stats.MaxExp;
-            ExpBar.CurrentValue = player.Stats.CurrentExp;
+            Player = FindObjectOfType<PlayerConfig>();
+            Boss = FindObjectOfType<Boss>();
         }
-        // 보스 체력 비율
-        if (boss != null && BossHpBar != null)
+        private void Start()
         {
-            float bossHpRatio = boss.currentHp / boss.maxHp;
-            BossHpBar.MaxValue = boss.maxHp;
-            BossHpBar.CurrentValue = boss.currentHp;
+            //초기에 플레이어가 없을 경우 대체값
+            if (ExpBar != null)
+            {
+                ExpBar.CurrentValue = 0f;
+                ExpBar.MaxValue = 1f; // 비율 기반이라서 0~1
+            }
         }
-        // 플레이어 레벨, 골드 텍스트
-        levelText.text = $"{Mathf.FloorToInt(player.Stats.Level)}";
-        goldText.text = $"{Mathf.FloorToInt(playerData.Gold)}";
+
+        private void Update()
+        {
+            if (Player == null)
+                Player = FindObjectOfType<PlayerConfig>(); // 자동으로 플레이어 찾음       
+            if (Boss == null)
+                Boss = FindObjectOfType<Boss>(); // 자동으로 보스를 찾음
+
+
+            UpdateExpBar();
+            UpdateBossHpBar();
+            UpdateTexts();
+        }
+        public void UpdatePortrait(float hpRatio)
+        {
+
+            hpRatio = Mathf.Clamp01(hpRatio);
+
+            if (hpRatio > 0.8f)
+                _portraitImage.sprite = _hpPortraits[4];
+            else if (hpRatio > 0.6f)
+                _portraitImage.sprite = _hpPortraits[3];
+            else if (hpRatio > 0.4f)
+                _portraitImage.sprite = _hpPortraits[2];
+            else if (hpRatio > 0.2f)
+                _portraitImage.sprite = _hpPortraits[1];
+            else
+                _portraitImage.sprite = _hpPortraits[0];
+        }
+
+        private void UpdateExpBar()
+        {
+            if (ExpBar == null || Player == null || Player.Stats == null)
+                return;
+
+            ExpBar.MaxValue = Player.Stats.MaxExp;
+            ExpBar.CurrentValue = Player.Stats.CurrentExp;
+        }
+
+        private void UpdateBossHpBar()
+        {
+            if (Boss == null || BossHpBar == null)
+                return;
+
+            BossHpBar.MaxValue = Boss.maxHp;
+            BossHpBar.CurrentValue = Boss.currentHp;
+        }
+
+        private void UpdateTexts()
+        {
+            if (LevelText != null)
+                LevelText.text = $"{Mathf.FloorToInt(Player.Stats.Level)}";
+
+            if (GoldText != null && PlayerDataManager != null)
+                GoldText.text = $"{Mathf.FloorToInt(PlayerDataManager.gold)}";
+        }
     }
 }
