@@ -44,6 +44,9 @@ namespace ProjectVS.Manager
         public HashSet<string> AcquiredCostumeName;
         public string WornCostumeName;
 
+        [Header("MonsterScore")]
+        public int totalKills; // 몬스터 총 처치 수
+
         public void SavePlayerData(int index)
         {
             PlayerData data = new PlayerData();
@@ -65,6 +68,8 @@ namespace ProjectVS.Manager
 
             data.AcquiredCostumeName = AcquiredCostumeName;
             data.WornCostumeName = WornCostumeName;
+
+            data.TotalKills = totalKills; 
 
             // Save
             SaveFileSystem.Save(data, index);
@@ -92,6 +97,8 @@ namespace ProjectVS.Manager
 
             AcquiredCostumeName = data.AcquiredCostumeName;
             WornCostumeName = data.WornCostumeName;
+
+            totalKills = data.TotalKills;
 
             print("불러오기");
         }

@@ -46,6 +46,8 @@ public class Boss : MonoBehaviour
                 Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {PlayerDataManager.Instance.gold}");
                 Timer.ResumeTimer();
                 Timer.SetMessage("");
+                PlayerDataManager.Instance.totalKills++;
+                Debug.Log($"총 처치수: {PlayerDataManager.Instance.totalKills}");
             }
         }
         Debug.Log("보스 몬스터 사망");
