@@ -26,7 +26,7 @@ namespace ProjectVS.Manager
         [field: SerializeField] public StageResult StageResult { get; private set; } = StageResult.None;
 
         [Header("UI")]                                              
-        [SerializeField] private TimerView _timerView;  // timer  HUD
+        [SerializeField] private TimerView _timerView;  // Timer  HUD
         [SerializeField] private TimerView _pausedView; // paused pupup
         // [SerializeField] private TimerView _resultView; // result pupup
 

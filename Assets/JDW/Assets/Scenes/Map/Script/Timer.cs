@@ -6,36 +6,37 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public float totalTime = 900f; //15분
-    public float currentTime;
-    public TextMeshProUGUI timerText; // TMP 사용
-    public FadeManager fadeManager;
+    public float TotalTime = 900f; //15분
+    public float CurrentTime;
+
+    public TextMeshProUGUI TimerText; // TMP 사용
+    public FadeManager FadeManager;
+    public MapSwitcher MapSwitcer;
+
     private bool _paused = false;
 
-    public MapSwitcher mapSwitcer;
     private void Start()
     {
-        currentTime = totalTime;
+        CurrentTime = TotalTime;
     }
     private void Update()
     {
         if (_paused) return;
 
-        if (currentTime > 0f)
+        if (CurrentTime > 0f)
         {
             // 현재 남은 시간에서 실시간 감소
-            currentTime -= Time.deltaTime;
+            CurrentTime -= Time.deltaTime;
 
 
-            int minutes = Mathf.FloorToInt(currentTime / 60f);
-            int seconds = Mathf.FloorToInt(currentTime % 60f);
+            int minutes = Mathf.FloorToInt(CurrentTime / 60f);
+            int seconds = Mathf.FloorToInt(CurrentTime % 60f);
 
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
         else
         {
-            timerText.text = "00:00"; // 시간 종료시
-            // 시간 종료시 코루틴을 호출해 페이드 효과
+            TimerText.text = "00:00";
             StartCoroutine(HandleFadeTransition());
             // TODO : 신 매니저 추가해서 신이동 코드 추가 요망
         }
@@ -53,15 +54,16 @@ public class Timer : MonoBehaviour
     private IEnumerator HandleFadeTransition()
     {
 
-        yield return StartCoroutine(fadeManager.FadeOut()); // 패이드 아웃
-        // 상점 온/ 배틀 오프
-        yield return StartCoroutine(fadeManager.FadeIn());
-        currentTime = totalTime; // 타이머 초기화
+        yield return StartCoroutine(FadeManager.FadeOut());
+        yield return StartCoroutine(FadeManager.FadeIn());
+        CurrentTime = TotalTime; // 타이머 초기화
 
     }
     public void SetMessage(string msg)
     {
-        if (timerText != null)
-            timerText.text = msg;
+        if (TimerText != null)
+        {
+            TimerText.text = msg;
+        }
     }
 }

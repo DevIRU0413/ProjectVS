@@ -2,59 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using ProjectVS;
 
 public class PlayerMove : MonoBehaviour
 {
 
-    private Rigidbody2D rigid;
-    public Vector2 MoveInput;
-    public Animator anim;
-    public MapSwitcher mapSwitcher;
-
-    private PlayerAction inputActions;
-
-    public FadeManager fadeManager;
-    public Timer timer;
-
+    private Rigidbody2D _rigid;
+    private Animator _anim;
     private PlayerConfig _player;
+    private PlayerAction _inputActions;
+
+    public Vector2 MoveInput { get; private set; }
+        
+    public MapSwitcher MapSwitcher;
+    public FadeManager Fade;
   
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        _rigid = GetComponent<Rigidbody2D>();
+        _anim = GetComponent<Animator>();
         _player = GetComponent<PlayerConfig>();
 
-        inputActions = new PlayerAction();
-        inputActions.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
-        inputActions.Player.Move.canceled += ctx => MoveInput = Vector2.zero;
+        _inputActions = new PlayerAction();
+        _inputActions.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
+        _inputActions.Player.Move.canceled += ctx => MoveInput = Vector2.zero;
     }
+
     void Start()
     {
-        if (mapSwitcher == null)
-            mapSwitcher = FindObjectOfType<MapSwitcher>();
+        if (MapSwitcher == null)// 맵스위처 자동 할당
+            MapSwitcher = FindObjectOfType<MapSwitcher>();
     }
     private void OnEnable()
     {
-        inputActions.Enable();
+        _inputActions.Enable();
     }
     private void OnDisable()
     {
-        inputActions.Disable();
+        _inputActions.Disable();
     }
     private void FixedUpdate()
     {
-        playerMove();
+        MovePlayer();
     }
-    public void playerMove()
+    public void MovePlayer()
     {
-        // rigidbody를 통해 이동 , 게임 매니저를 통해 player의 move값을 가져옴
-        rigid.velocity = MoveInput.normalized * _player.Stats.CurrentSpd;
-        // 이동 애니메이션, 이동시 IsWalking을 ture로 바꿈
-        bool IsWalking = MoveInput != Vector2.zero;
-        anim.SetBool("IsWalking", IsWalking);
+        // rigidbody를 통해 이동
+        _rigid.velocity = MoveInput.normalized * _player.Stats.CurrentSpd;
+
+        // 이동 애니메이션 상태 설정
+        bool isWalking = MoveInput != Vector2.zero;
+        _anim.SetBool("IsWalking", isWalking);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -62,15 +61,14 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.Log("상점을 나감");
             StartCoroutine(HandleFadeTransition());
-            // TODO : 씬전환으로 진행할경우 코드추가
+            // TODO : 씬 전환 필요 시 처리 추가
         }
     }
     private IEnumerator HandleFadeTransition()
     {
-        yield return StartCoroutine(fadeManager.FadeOut()); // 페이드 아웃
-        mapSwitcher.OnBattleField();  
-        
-        yield return StartCoroutine(fadeManager.FadeIn());
+        yield return StartCoroutine(Fade.FadeOut()); // 페이드 아웃
+        MapSwitcher.OnBattleField();  
+        yield return StartCoroutine(Fade.FadeIn());
         
     }
    

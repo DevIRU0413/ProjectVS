@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorDirectionController : MonoBehaviour
 {
-    [SerializeField] private Transform player;       // ÇÃ·¹ÀÌ¾î Transform
-    [SerializeField] private float distance = 2f;    // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸®
+    [SerializeField] private Transform _player;       // í”Œë ˆì´ì–´ Transform
+    [SerializeField] private float _distance = 2f;    // í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬
 
     private void Update()
     {
@@ -17,14 +17,14 @@ public class CursorDirectionController : MonoBehaviour
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
 
-        // 1. ¹æÇâ º¤ÅÍ °è»ê
-        Vector3 dir = (mouseWorldPos - player.position).normalized;
+        // 1. ë°©í–¥ ë²¡í„° ê³„ì‚°
+        Vector3 dir = (mouseWorldPos - _player.position).normalized;
 
-        // 2. ÇÃ·¹ÀÌ¾î ±âÁØ À§Ä¡ ÀÌµ¿
-        transform.position = player.position + dir * distance;
+        // 2. í”Œë ˆì´ì–´ ê¸°ì¤€ ìœ„ì¹˜ ì´ë™
+        transform.position = _player.position + dir * _distance;
 
-        // 3. È¸Àü: »ï°¢ÇüÀÌ ¸¶¿ì½º¸¦ ¹Ù¶óº¸µµ·Ï
+        // 3. íšŒì „: ì‚¼ê°í˜•ì´ ë§ˆìš°ìŠ¤ë¥¼ ë°”ë¼ë³´ë„ë¡
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); // ½ºÇÁ¶óÀÌÆ®°¡ À§¸¦ ¹Ù¶óº¸°í ÀÖ¾î¼­ º¸Á¤ -90µµ
+        transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f); // ìŠ¤í”„ë¼ì´íŠ¸ê°€ ìœ„ë¥¼ ë°”ë¼ë³´ê³  ìˆì–´ì„œ ë³´ì • -90ë„
     }
 }
