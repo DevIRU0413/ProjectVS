@@ -22,6 +22,7 @@ namespace ProjectVS
         public Timer timer;
         public Scanner scanner;
         public PlayerDataManager playerDataManager;
+        public AttackPosition attackPosition;
 
         public bool isDead = false;
 
@@ -122,6 +123,24 @@ namespace ProjectVS
             if (GameManager.Instance != null)
                 GameManager.Instance.SavePlayerStats(Stats);
         }
-       
+        public void ApplyStatsFromData(CharacterSelectionDataClass data, int classIndex)
+        {
+            Stats = new PlayerStats(1, selectedClass, data.HP, data.Attack, data.Defense, data.MoveSpeed, data.AttackSpeed);
+            Stats.CurrentHp = data.HP;
+            UpdateHpBar();
+
+            // 공격 위치 설정
+            attackPosition = GetComponentInChildren<AttackPosition>();
+            if (attackPosition != null)
+            {
+                switch (classIndex)
+                {
+                    case 0: attackPosition.SwitchCoroutine(attackPosition.Axe()); break;
+                    case 1: attackPosition.SwitchCoroutine(attackPosition.Sword()); break;
+                    case 2: attackPosition.SwitchCoroutine(attackPosition.Fire()); break;
+                }
+            }
+        }
+
     }
 }

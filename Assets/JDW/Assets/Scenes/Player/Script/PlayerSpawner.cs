@@ -11,7 +11,6 @@ public class PlayerSpawner : MonoBehaviour
 {
     [HideInInspector] public PlayerConfig Player;
     [HideInInspector] public PlayerMove playerMove;
-    [HideInInspector] public AttackPosition attackPosition;
 
     public GameObject[] playerPrefabs; // 0 = 검, 1 = 도끼, 2 = 마법
     public Transform playerSpawnPoint;
@@ -19,7 +18,7 @@ public class PlayerSpawner : MonoBehaviour
 
     private PlayerAction inputActions;
     private GameObject currentPlayerInstance;
-    private List<CharacterSelectionDataClass> characterDataList;
+    private List<CharacterSelectionDataClass> characterDataList;// TSV에서 파싱된 캐릭터 정보
 
     private void Awake()
     {
@@ -27,14 +26,14 @@ public class PlayerSpawner : MonoBehaviour
         CsvTable table = new CsvTable("Min/Resources/CharacterSelectionData.tsv", '\t');
         characterDataList = CharacterSelectionDataParser.Parse(table);
 
-        inputActions = new PlayerAction();
+        inputActions = new PlayerAction(); // 인풋액션 등록
         inputActions.CharacterSelect.Enable();
         inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
      
     }
     private void OnDestroy()
     {
-        inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect;
+        inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect; // 한번 입력후 이벤트 해제
     }
     private void OnClassSelect(InputAction.CallbackContext ctx)
     {
@@ -56,33 +55,15 @@ public class PlayerSpawner : MonoBehaviour
     }
     private void SpawnPlayer(int index)
     {
-        currentPlayerInstance = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
-        Player = currentPlayerInstance.GetComponent<PlayerConfig>();
-        playerMove = currentPlayerInstance.GetComponent<PlayerMove>();
-
-        attackPosition = currentPlayerInstance.GetComponentInChildren<AttackPosition>();
-        if (attackPosition == null)
+        // 프리팹 생성
+        GameObject newPlayer = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
+        // playerConfig 컴포넌트 가져옴
+        PlayerConfig config = newPlayer.GetComponent<PlayerConfig>();
+        if (config != null && index < characterDataList.Count)
         {
-            Debug.LogError("AttackPosition 컴포넌트가 프리팹에 없음!");
-            return;
+            config.ApplyStatsFromData(characterDataList[index], index);// TSV와 클래스 정보 공격방식을 적용
         }
-        if (index < characterDataList.Count)
-        {
-            Player.ApplyStatsFromData(characterDataList[index]);
-        }
-        else
-        {
-            Debug.LogWarning("TSV 데이터에 해당 인덱스 정보가 없습니다.");
-        }
-
-        // 번호에 따라 공격 코루틴 자동 실행
-        switch (index)
-        {
-            case 0: attackPosition.SwitchCoroutine(attackPosition.Axe()); break;
-            case 1: attackPosition.SwitchCoroutine(attackPosition.Sword()); break;
-            case 2: attackPosition.SwitchCoroutine(attackPosition.Fire()); break;
-        }
-    
+        // 현재 클래스 인덱스 저장
         CurrentClassIndex = index;
     }
 }

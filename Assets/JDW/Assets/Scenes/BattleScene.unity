@@ -337,6 +337,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2528856368926004839, guid: 5cd9412504e71e84b8708fae56cfc1db, type: 3}
+      propertyPath: playerDataManager
+      value: 
+      objectReference: {fileID: 489905112}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -614,6 +618,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd9bd665ddfedeb4f8a81202b6495a24, type: 3}
+--- !u!1 &489905108 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4279960742447084805, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}
+  m_PrefabInstance: {fileID: 8615201728655479911}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &489905112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489905108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f9733576881494c8358ca2407296f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isDontDestroyOnLoad: 1
+  GamePlayType: 0
+  TestCharacterClass: 0
+  stats:
+    _hp: 0
+    _baseMaxHp: 0
+    _baseAtk: 0
+    _baseDfs: 0
+    _baseSpd: 0
+    _baseAtkSpd: 0
+    Level: 1
+    CharacterClass: 0
+    CurrentExp: 0
+    MaxExp: 100
+    BaseAtk: 0
+    BaseDfs: 0
+    BaseMaxHp: 0
+    BaseAtkSpd: 0
+    BaseSpd: 0
+  inventoryItems: []
+  currentStageFloor: 0
+  monstersDefeated: 0
+  gold: 0
+  diamonds: 0
+  CurrentAffinityExp: 0
+  CurrentAffinityLevel: 0
+  WornCostumeName: 
 --- !u!1001 &578895056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -969,6 +1017,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1673134169377035974, guid: 9a01c57ead4472c4f9a55904a36f7e39, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7576493993212972030, guid: 9a01c57ead4472c4f9a55904a36f7e39, type: 3}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7587761201080512381, guid: 9a01c57ead4472c4f9a55904a36f7e39, type: 3}
@@ -1889,7 +1941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1891085507804937879, guid: 60f400a14c0971140b0e6e0c5bfc87af, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[0].second.m_AnimationSpeed
-      value: 5
+      value: 5.0000005
       objectReference: {fileID: 0}
     - target: {fileID: 2923542588156197068, guid: 60f400a14c0971140b0e6e0c5bfc87af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1969,7 +2021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5739192214936398795, guid: 60f400a14c0971140b0e6e0c5bfc87af, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[7].second.m_AnimationSpeed
-      value: 5.0000005
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5739192214936398795, guid: 60f400a14c0971140b0e6e0c5bfc87af, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[8].second.m_AnimationSpeed
@@ -2238,7 +2290,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4279960742447084805, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 489905112}
   m_SourcePrefab: {fileID: 100100000, guid: 08a1e40f6f045dd49ac3fece0a502b13, type: 3}
 --- !u!1001 &9029448214279045747
 PrefabInstance:
