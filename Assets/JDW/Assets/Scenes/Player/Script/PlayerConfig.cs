@@ -141,7 +141,16 @@ namespace ProjectVS
             GetComponent<Rigidbody2D>().velocity = Vector2.zero; // 사망시 플레이어 스탑
 
             // TODO : 플레이어 사망시 UI출력 또는 씬 이동 로직 추가
+            if (Timer != null)
+            {
+                int battleCount = PlayerDataManager.Instance.battleSceneCount; // 현재 카운트된 전투 씬
+                float survivedTime = 900f - Timer.CurrentTime; // 이번 전투씬 생존 시간
+                float totalPlayTime = (battleCount - 1) * 900f + survivedTime; // 씬 포함 모든 전투 플레이 시간
 
+                PlayerDataManager.Instance.totalPlayTime = totalPlayTime;
+
+                Debug.Log($"[플레이타임 계산] 전투씬 수: {battleCount}, 생존시간: {survivedTime}초, 총 플레이타임: {totalPlayTime}초");
+            }
             Debug.Log("플레이어 사망");
         }
         public void ExpUp(float amount)
