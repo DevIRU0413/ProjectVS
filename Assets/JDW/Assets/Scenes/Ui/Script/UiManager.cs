@@ -54,9 +54,9 @@ namespace ProjectVS.Utils.UIManager
         public void UpdatePortrait(float hpRatio)
         {
 
-            hpRatio = Mathf.Clamp01(hpRatio);
+            hpRatio = Mathf.Clamp01(hpRatio); 
 
-            if (hpRatio > 0.8f)
+            if (hpRatio > 0.8f) // 체력 비율에 맞춰 이미지 변화
                 _portraitImage.sprite = _hpPortraits[4];
             else if (hpRatio > 0.6f)
                 _portraitImage.sprite = _hpPortraits[3];
@@ -91,8 +91,8 @@ namespace ProjectVS.Utils.UIManager
             if (LevelText != null)
                 LevelText.text = $"{Mathf.FloorToInt(Player.Stats.Level)}";
 
-            if (GoldText != null && PlayerDataManager != null)
-                GoldText.text = $"{Mathf.FloorToInt(PlayerDataManager.gold)}";
+            if (GoldText != null && PlayerDataManager.Instance != null)
+                GoldText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.gold)}";
         }
     }
 }

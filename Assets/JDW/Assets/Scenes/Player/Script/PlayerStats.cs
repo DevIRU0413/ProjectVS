@@ -36,29 +36,43 @@ public class PlayerStats : UnitStats
         Level++;
         MaxExp *= 1.2f;
 
+        float addedHp = 0;
+
         // base 계열 증가 → Current 계열 자동 반영
         switch (CharacterClass)
         {
             case CharacterClass.Axe:
                 AddBaseStats(10, 8, 2, 0, 0);
+                addedHp = 10;
                 break;
             case CharacterClass.Sword:
                 AddBaseStats(7, 5, 8, 0, 0);
+                addedHp = 7;
                 break;
             case CharacterClass.Magic:
                 AddBaseStats(5, 7, 8, 0, 0);
+                addedHp = 5;
                 break;
         }
 
+        // 추가된 최대 체력만큼 회복
+        CurrentHp = Mathf.Min(CurrentHp + addedHp, CurrentMaxHp);
+        Debug.Log($"[LEVEL UP] Lv.{Level} -> ATK: {BaseAtk} | DFS: {BaseDfs} | HP: {CurrentHp}/{CurrentMaxHp}");
         Debug.Log($"레벨 업, 현재 레벨 : {Level}, 남은 경험치 : {CurrentExp}, 다음 레벨까지 : {MaxExp}");
     }
-    private void AddBaseStats(float hp, float atk, float dfs, float spd, float atkSpd)
+    public void AddBaseStats(float hp, float atk, float dfs, float spd, float atkSpd)
     {
         SetIncreaseBaseStats(UnitStaus.MaxHp, hp);
         SetIncreaseBaseStats(UnitStaus.Atk, atk);
         SetIncreaseBaseStats(UnitStaus.Dfs, dfs);
         SetIncreaseBaseStats(UnitStaus.Spd, spd);
         SetIncreaseBaseStats(UnitStaus.AtkSpd, atkSpd);
+
+        BaseMaxHp += hp;
+        BaseAtk += atk;
+        BaseDfs += dfs;
+        BaseSpd += spd;
+        BaseAtkSpd += atkSpd;
     }
 
     #region 생성자
