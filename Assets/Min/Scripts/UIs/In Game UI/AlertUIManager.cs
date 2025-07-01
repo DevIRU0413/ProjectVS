@@ -18,7 +18,7 @@ namespace ProjectVS.UIs.InGameUI.AlertUIManager
         [SerializeField] private Transform _poolParent;
         [SerializeField] private RectTransform _canvasRect;
         [SerializeField] private Camera _playerCamera;
-        //[SerializeField] private Transform _testTarget; // 테스트용
+        [SerializeField] private Transform _testTarget; // 테스트용
 
         private ObjectPool<AlertArrowUIClass> _arrowPool;
 
@@ -27,13 +27,13 @@ namespace ProjectVS.UIs.InGameUI.AlertUIManager
             _arrowPool = new ObjectPool<AlertArrowUIClass>(_poolParent, _alertPrefab, 5);
         }
 
-        //private void Update()
-        //{
-        //    if (Keyboard.current.zKey.wasPressedThisFrame)
-        //    {
-        //        SpawnAlertArrow(_testTarget.position); // 테스트용
-        //    }
-        //}
+        private void Update()
+        {
+            if (Keyboard.current.zKey.wasPressedThisFrame)
+            {
+                SpawnAlertArrow(_testTarget.position); // 테스트용
+            }
+        }
 
         /// <summary>
         /// 위험 경고 UI를 스폰하는 메서드입니다.
