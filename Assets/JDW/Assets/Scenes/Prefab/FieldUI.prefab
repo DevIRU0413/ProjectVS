@@ -902,7 +902,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6295276564672106592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,6 +939,7 @@ MonoBehaviour:
   PlayerDataManager: {fileID: 0}
   LevelText: {fileID: 5275293650697498067}
   GoldText: {fileID: 5636428093490417621}
+  DiamondsText: {fileID: 4817032945506896323}
   ScoreUi: {fileID: 6513240185319412276}
   MonsterScore: {fileID: 4224228000922690047}
   PlayerTime: {fileID: 8447216760830654971}

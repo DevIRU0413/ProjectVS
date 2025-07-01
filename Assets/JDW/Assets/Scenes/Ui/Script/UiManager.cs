@@ -14,22 +14,23 @@ namespace ProjectVS.Utils.UIManager
     public class UiManager : MonoBehaviour
     {
         [Header("Bar Ui")]
-        public PixelUI.ValueBar ExpBar;//경험치바를 채울 이미지
-        public PixelUI.ValueBar BossHpBar;//보스 체력바를 채울 이미지
+        public PixelUI.ValueBar ExpBar;    //경험치바를 채울 이미지
+        public PixelUI.ValueBar BossHpBar; //보스 체력바를 채울 이미지
 
        [HideInInspector] public PlayerConfig Player;
        [HideInInspector] public Boss Boss;
        [HideInInspector] public PlayerDataManager PlayerDataManager;
 
         [Header("References")]
-        public TextMeshProUGUI LevelText; // 레벨 
-        public TextMeshProUGUI GoldText;//골드
+        public TextMeshProUGUI LevelText;   // 레벨 
+        public TextMeshProUGUI GoldText;    // 골드
+        public TextMeshProUGUI DiamondsText;// 다이아
 
         [Header("Score UI")]
         public GameObject ScoreUi;
         public TextMeshProUGUI MonsterScore; // 몬스터 처치 수
-        public TextMeshProUGUI PlayerTime; // 총 플레이 타임
-        public TextMeshProUGUI Stage; // 총 스테이지
+        public TextMeshProUGUI PlayerTime;   // 총 플레이 타임
+        public TextMeshProUGUI Stage;        // 총 스테이지
 
         [Header("Player Portirait")]
         [SerializeField] private Sprite[] _hpPortraits;
@@ -103,6 +104,8 @@ namespace ProjectVS.Utils.UIManager
 
             if (GoldText != null && PlayerDataManager.Instance != null)
                 GoldText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.gold)}";
+            if (DiamondsText != null && PlayerDataManager.Instance != null)
+                DiamondsText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.diamonds)}";
         }
         public void ShowDeathResult()
         {
