@@ -98,8 +98,7 @@ namespace ProjectVS.UIs.InGameUI.AlertArrowUI
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
             // 화면 밖일 경우 방향 회전 적용, 아니면 그대로
-            // 일단 안쓸 수도 있어서 주석처리
-            // _arrowRect.rotation = isOffScreen ? Quaternion.Euler(0, 0, angle - 90f) : Quaternion.identity;
+            _arrowRect.rotation = isOffScreen ? Quaternion.Euler(0, 0, angle - 90f) : Quaternion.identity;
 
             // 화면 좌표를 캔버스 로컬 좌표로 변환
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
