@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using ProjectVS.Dialogue.DialogueManager;
-using ProjectVS.Manager;
-
 using UnityEngine;
 
+using ProjectVS.Dialogue.DialogueManager;
+using ProjectVS.Manager;
 using CostumeSOClass = ProjectVS.CharacterImages.CostumeSO.CostumeSO;
 using EventSpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
+using ShopSceneNPCBehaviourClass = ProjectVS.NPC.ShopSceneNPCBehaviour.ShopSceneNPCBehaviour;
+using ProjectVS.NPC.ShopSceneNPCBehaviour;
 
 
 namespace ProjectVS.CharacterImages.CostumeStateManager
 {
+    // TODO: PlayerData 연동 후 세이브 관련 주석 해제
     public class CostumeStateManager : MonoBehaviour
     {
         [SerializeField] private List<CostumeSOClass> _costumeSOs;
@@ -20,15 +22,16 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
         private CostumeSOClass _currentCostume = null;
 
         [SerializeField] private EventSpriteChangeManagerClass _eventSpriteChangeManager;
+        [SerializeField] private ShopSceneNPCBehaviourClass _shopSceneNPCBehaviour;
+
 
         public CostumeSOClass CurrentCostume => _currentCostume;
         public bool IsEquipped(CostumeSOClass costume) => costume.IsEquipped;
 
         private void Awake()
         {
-            LoadAcquiredCostumes();
-            LoadWornCostume();
-            //InitCostume();
+            //LoadAcquiredCostumes();
+            //LoadWornCostume();
         }
 
         // TODO: 돈이 있는지 확인하고 구매 결정해야되는 로직 추후 추가 예정
@@ -38,7 +41,7 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
             {
                 // 안샀으면 구매처리
                 costume.IsUnlocked = true;
-                SaveAcquiredCostumes();
+                //SaveAcquiredCostumes();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 구매 완료");
             }
             else if (costume.IsEquipped)
@@ -48,14 +51,16 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
                 _currentCostume = null;
                 _eventSpriteChangeManager.ChangeRepeatImage(DialogueManager.Instance.CurrentDialogueData.IllustPath);
                 DialogueManager.Instance.ShowRepeatDialogue();
-                SaveWornCostume();
+                //SaveWornCostume();
+                _shopSceneNPCBehaviour.RenewCostumeAnimation();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 미착용 상태로 전환");
             }
             else
             {
                 // 착용
                 EquipCostume(costume);
-                SaveWornCostume();
+                //SaveWornCostume();
+                _shopSceneNPCBehaviour.RenewCostumeAnimation();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 착용 완료");
             }
         }
@@ -75,18 +80,6 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
             _eventSpriteChangeManager.ChangeCostumeImage();
         }
 
-
-        // MEMO: 현재는 Awake에서 ScriptableObject 초기화 하고 있음
-        // 다른 씬을 왕복할 시 초기화 되는 구조
-        // TODO: 추후 씬 전환 시 CostumeStateManager를 유지하도록 InitCostume 호출하지 않도록 변경
-        //private void InitCostume()
-        //{
-        //    foreach (var costume in _costumeSOs)
-        //    {
-        //        costume.IsEquipped = false;
-        //        costume.IsUnlocked = false;
-        //    }
-        //}
 
         public void SaveAcquiredCostumes()
         {

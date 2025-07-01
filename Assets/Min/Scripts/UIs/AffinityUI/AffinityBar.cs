@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-using NPCAffinityModelClass = ProjectVS.Shop.NPCAffinityModel.NPCAffinityModel;
+using ProjectVS.Shop.NPCAffinityModel;
 
 
 namespace ProjectVS.UIs.AffinityBar
@@ -17,8 +17,6 @@ namespace ProjectVS.UIs.AffinityBar
         [SerializeField] Image _affinityFillImage;
         [SerializeField] TMP_Text _affinityValueText;
 
-        [Header("호감도 모델 참조")]
-        [SerializeField] NPCAffinityModelClass _affinityModel;
 
         private void OnEnable()
         {
@@ -28,9 +26,9 @@ namespace ProjectVS.UIs.AffinityBar
 
         private void RenewAffinity()
         {
-            _affinityValueText.text = _affinityModel.AffinityLevelString; // 레벨만 표시
+            _affinityValueText.text = NPCAffinityModel.Instance.AffinityLevelString; // 레벨만 표시
 
-            float fillAmount = (float)_affinityModel.AffinityCurrentExp / _affinityModel.AffinityExpMax;
+            float fillAmount = (float)NPCAffinityModel.Instance.AffinityCurrentExp / NPCAffinityModel.Instance.AffinityExpMax;
             _affinityFillImage.fillAmount = fillAmount;
         }
     }

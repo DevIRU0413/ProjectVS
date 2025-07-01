@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Util;
+
 using UnityEngine;
 
 
 namespace ProjectVS.Shop.NPCAffinityModel
 {
-    public class NPCAffinityModel : MonoBehaviour
+    public class NPCAffinityModel : SimpleSingleton<NPCAffinityModel>
     {
         private int _affinityCurrentExp = 0;
         private int _affinityLevel = 1;
@@ -47,6 +49,21 @@ namespace ProjectVS.Shop.NPCAffinityModel
             }
         }
 
+        public void DecreaseAffinity(int amount)
+        {
+            _affinityCurrentExp -= amount;
+
+            while (_affinityCurrentExp < AFFINITY_EXP_MIN && _affinityLevel > AFFINITY_LEVEL_MIN)
+            {
+                _affinityLevel--;
+                _affinityCurrentExp += AFFINITY_EXP_MAX;
+            }
+
+            _affinityCurrentExp = Mathf.Clamp(_affinityCurrentExp, AFFINITY_EXP_MIN, AFFINITY_EXP_MAX);
+            _affinityLevel = Mathf.Clamp(_affinityLevel, AFFINITY_LEVEL_MIN, AFFINITY_LEVEL_MAX);
+        }
+
+        #region Test Method
         [ContextMenu("Test Up Affinity")]
         public void TestUpAffinity()
         {
@@ -71,5 +88,14 @@ namespace ProjectVS.Shop.NPCAffinityModel
 
             Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
         }
+
+
+        [ContextMenu("Test Down Affinity")]
+        public void TestDownAffinity()
+        {
+            DecreaseAffinity(50);
+            Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
+        }
+        #endregion
     }
 }

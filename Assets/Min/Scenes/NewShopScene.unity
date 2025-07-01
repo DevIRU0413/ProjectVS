@@ -525,6 +525,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd5846ba12911814ca65ec309c2c99da, type: 2}
   - {fileID: 11400000, guid: d122035b98c16844ea7a61cb8df47b4e, type: 2}
   _eventSpriteChangeManager: {fileID: 1869576868}
+  _shopSceneNPCBehaviour: {fileID: 1489142646}
 --- !u!1 &42475339
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,7 +642,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDontDestroyOnLoad: 1
-  _npcAffinityModel: {fileID: 1489142645}
   _shopEnterText: {fileID: 167999433}
   _repeatText: {fileID: 1704752840}
   _eventText: {fileID: 167999433}
@@ -1911,6 +1911,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437764373}
   m_CullTransparentMesh: 1
+--- !u!1 &517770077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 517770079}
+  - component: {fileID: 517770078}
+  m_Layer: 0
+  m_Name: NPC Affinity Model (When combine scene, This will be unnecessary)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &517770078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517770077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5835c511b670b84cb93f74fef2a6904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isDontDestroyOnLoad: 1
+--- !u!4 &517770079
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517770077}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.0799468, y: -2.316288, z: -0.008546569}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &545549148
 GameObject:
   m_ObjectHideFlags: 0
@@ -3096,7 +3141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   _spriteRenderer: {fileID: 870306414}
   _eventSelectPanel: {fileID: 0}
 --- !u!212 &870306414
@@ -10911,7 +10956,7 @@ Transform:
   m_GameObject: {fileID: 1308585515}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.98, y: -0.09, z: 0}
+  m_LocalPosition: {x: 1.27, y: 1.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10981,7 +11026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96080051fe8dc94b942840914e92945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
+  _spriteRenderer: {fileID: 1308585517}
 --- !u!1 &1359519804
 GameObject:
   m_ObjectHideFlags: 0
@@ -11525,7 +11570,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -11679,50 +11724,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1489142644}
   - component: {fileID: 1489142643}
-  - component: {fileID: 1489142642}
   - component: {fileID: 1489142645}
+  - component: {fileID: 1489142646}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: NPC (In Shop Scene)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!70 &1489142642
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489142641}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
 --- !u!212 &1489142643
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11764,8 +11774,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.4009434, g: 0.56851685, b: 1, a: 1}
+  m_Sprite: {fileID: 50810368, guid: aa40b7bb40d43e842857bdffd4ed65a7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -11793,7 +11803,28 @@ Transform:
   - {fileID: 1464916235}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1489142645
+--- !u!95 &1489142645
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489142641}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9a4ed0b5e5155346823745d871399fd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1489142646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11802,9 +11833,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1489142641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5835c511b670b84cb93f74fef2a6904, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b68cde9177774148802518e133859e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _costumeStateManager: {fileID: 35585568}
+  _animator: {fileID: 1489142645}
 --- !u!1 &1532259800
 GameObject:
   m_ObjectHideFlags: 0
@@ -12348,7 +12381,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _affinityFillImage: {fileID: 285197329}
   _affinityValueText: {fileID: 2042253614}
-  _affinityModel: {fileID: 1489142645}
 --- !u!1 &1599115915
 GameObject:
   m_ObjectHideFlags: 0
@@ -14558,7 +14590,7 @@ GameObject:
   - component: {fileID: 2059575501}
   - component: {fileID: 2059575499}
   - component: {fileID: 2059575498}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15116,3 +15148,4 @@ SceneRoots:
   - {fileID: 1489142644}
   - {fileID: 2059575503}
   - {fileID: 1290985204}
+  - {fileID: 517770079}
