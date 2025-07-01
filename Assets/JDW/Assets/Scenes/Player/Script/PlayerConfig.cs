@@ -134,13 +134,14 @@ namespace ProjectVS
             GetComponent<PlayerFlipbyMouse>().enabled = false;
             GetComponent<PlayerMove>().enabled = false;
             Timer.PauseTimer(); // 플레어 사망시 시간 멈춤
-            Timer.SendMessage("Die");
+            Timer.SendMessage("Die"); // 사망시 텍스트에 DIe 표기
+            _uiManager.ShowDeathResult();
+
             AttackPosition attack = GetComponentInChildren<AttackPosition>(); // 사망시 플레이어 공격 멈춤
             if (attack != null)
                 attack.enabled = false;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero; // 사망시 플레이어 스탑
 
-            // TODO : 플레이어 사망시 UI출력 또는 씬 이동 로직 추가
             if (Timer != null)
             {
                 int battleCount = PlayerDataManager.Instance.battleSceneCount; // 현재 카운트된 전투 씬
