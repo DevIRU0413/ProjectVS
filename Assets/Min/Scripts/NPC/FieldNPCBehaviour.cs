@@ -20,8 +20,9 @@ namespace ProjectVS.NPC.NPCBehaviour
         [SerializeField] private GameObject HeartEmoji;
         [SerializeField] private GameObject CryEmoji;
 
-        [Header("호감도 증가 설정")]
-        [SerializeField] private int _affinityIncrease = 15;
+        [Header("호감도 증감 설정")]
+        [SerializeField] private int _affinityIncrease = 20;
+        [SerializeField] private int _affinityDecrease = 30;
 
         [Header("다이아몬드 강탈 확률 설정")]
         [SerializeField, Range(0, 100)] private int _robChance = 10;
@@ -68,6 +69,7 @@ namespace ProjectVS.NPC.NPCBehaviour
         public void Rob()
         {
             CryEmoji.SetActive(true);
+            NPCAffinityModel.Instance.DecreaseAffinity(_affinityDecrease);
             RandomlyGetDiamond();
         }
 
