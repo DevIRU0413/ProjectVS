@@ -84,7 +84,7 @@ namespace ProjectVS.UIs.InGameUI.TargetArrowUI
             // 중앙 → 원래 스크린 위치 방향으로 회전 각 계산
             Vector3 dir = (screenPos - screenCenter).normalized;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            _arrowTransform.rotation = Quaternion.Euler(0, 0, angle - 90f); // 위쪽 기준 보정
+            _arrowTransform.rotation = Quaternion.Euler(0, 0, angle);
 
             _image.enabled = true;
 
