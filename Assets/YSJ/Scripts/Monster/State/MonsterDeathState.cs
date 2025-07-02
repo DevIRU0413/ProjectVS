@@ -15,6 +15,7 @@ namespace ProjectVS.Monster.State
         {
             base.Init();
             _aniHashState = Animator.StringToHash("State");
+
         }
 
         public override void Enter()
@@ -23,8 +24,11 @@ namespace ProjectVS.Monster.State
             animator.SetInteger(_aniHashState, STATE_VALUE);
         }
 
+        public override void Update()
+        {
+        }
+
         public override void Exit() { }
 
-        public override void Update() { }
     }
 }

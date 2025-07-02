@@ -1,11 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using ProjectVS.Manager;
-
-using Scripts.Scene;
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 namespace ProjectVS.CutSceneEffectors.StartSpriteEffector
@@ -53,7 +48,7 @@ namespace ProjectVS.CutSceneEffectors.StartSpriteEffector
 
         private void LoadScene()
         {
-            ProjectVS.Manager.GameManager.Instance.SetSceneID(SceneID.MainMenuScene);
+            ProjectVS.Manager.GameManager.Instance.SetScene(SceneID.MainMenuScene);
         }
     }
 }

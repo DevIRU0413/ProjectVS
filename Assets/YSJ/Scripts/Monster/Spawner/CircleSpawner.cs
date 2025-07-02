@@ -1,16 +1,20 @@
-﻿using ProjectVS.Interface;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ProjectVS.Monster.Spawner
 {
-    public class CircleSpawner : Spawner
+    public class CircleSpawner : SpawnerBase
     {
-        public float radius = 5f;
+        public float radius = 5.0f;
 
-        public override void SpawnUnits(Vector3 spawnPoint, int unitCount)
+        /// <summary>
+        /// 타겟을 기준으로 원으로 생성됩니다.
+        /// </summary>
+        /// <param name="target">생성 기준이 될 오브젝트</param>
+        /// <param name="point">반지름을 구하기 위한 위치</param>
+        /// <param name="unitCount">생성 유닛 수</param>
+        public override void SpawnUnits(GameObject target, Vector3 point, int unitCount)
         {
-            Vector3 center = spawnPoint;
+            Vector3 center = target.transform.position;
 
             GameObject spanwUnit = GetSpawnUnit();
             if (spanwUnit == null) return;
@@ -19,8 +23,10 @@ namespace ProjectVS.Monster.Spawner
             {
                 float angle = (360f / unitCount) * i * Mathf.Deg2Rad;
                 Vector3 pos = center + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
-                GameObject go = Instantiate(spanwUnit, pos, Quaternion.identity);
-                spawned.Add(go);
+                // GameObject go = GameObject.Instantiate(spanwUnit, pos, Quaternion.identity);
+                // spawned.Add(go);
+
+                GameObject go = ProjectVS.Util.PoolManager.ForceInstance.Spawn(spanwUnit.name, pos, Quaternion.identity);
             }
         }
 

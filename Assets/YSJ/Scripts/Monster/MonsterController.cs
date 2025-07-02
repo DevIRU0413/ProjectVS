@@ -6,6 +6,7 @@ using ProjectVS.Manager;
 using ProjectVS.Monster.Data;
 using ProjectVS.Monster.State;
 using ProjectVS.Phase;
+using ProjectVS.Stage;
 using ProjectVS.Util;
 
 using UnityEngine;
@@ -28,22 +29,26 @@ namespace ProjectVS.Monster
         [SerializeField] private float _stopMoveRange = 0.1f;
         private bool _isMovementDelegated = false;
 
-        public bool IsStateLock { get; private set; } = false;
+        [Header("Death State")]
+        [SerializeField, Min(0)] private float _despawnDelay = 1.0f;
+        public float DespawnDelay => _despawnDelay;
 
+        public bool IsStateLock { get; private set; } = false;
 
         public bool IsDeath => CurrentStateType == MonsterStateType.Death;
         public bool IsMove => Target != null && MoveDirection != Vector3.zero && MoveDirection.magnitude > _stopMoveRange;
-        public bool IsWin => StageManager.Instance.StageResult == StageResult.Lose;
+        public bool IsWin => false;
 
         // 대상
         [field: SerializeField, Header("Target")]
-        public PlayerConfig Target { get; private set; }
+        public GameObject Target { get; private set; }
         public Vector3 MoveDirection { get; private set; }
 
         // 몬스터 정보
         [field: SerializeField]
         public MonsterStats Stats { get; private set; }
 
+        // 외부
         public Action OnHit;
         public Action OnDeath;
 
@@ -89,9 +94,6 @@ namespace ProjectVS.Monster
             _states.Add(MonsterStateType.Win, new MonsterWinState(this, _animator));
             _states.Add(MonsterStateType.Death, new MonsterDeathState(this, _animator));
 
-            // 타겟 세팅
-            Target = GameManager.ForceInstance.Player;
-
             // 초기 상태 세팅
             if (_config == null)
                 ChangeState(MonsterStateType.Death, true);
@@ -101,6 +103,8 @@ namespace ProjectVS.Monster
             // 상태 락 관련 세팅
             IsStateLock = false;
         }
+
+        private void SetTarget(GameObject target) { Target = target; }
 
         public void ChangeState(MonsterStateType stateType, bool isForceChange = false)
         {

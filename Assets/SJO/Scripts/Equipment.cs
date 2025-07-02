@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using ProjectVS.Manager;
+using ProjectVS.Unit.Player;
 
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class Equipment : MonoBehaviour
     {
         // Basic Set
         name = "Equipment" + data.itemId;
-        transform.parent = GameManager.Instance.Player.transform;
+        transform.parent = PlayerSpawner.Instance.CurrentPlayer.transform;
         transform.localPosition = Vector3.zero;
         
         // Property Set

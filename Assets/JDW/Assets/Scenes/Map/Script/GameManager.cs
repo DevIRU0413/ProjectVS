@@ -1,14 +1,14 @@
-﻿using ProjectVS;
-using ProjectVS.Util;
+﻿using ProjectVS.Util;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
-public class GameManager : SimpleSingleton<GameManager>
+namespace ProjectVS.JDW
 {
-    [HideInInspector] public PlayerConfig Player;
-    public int CurrentClassIndex { get; private set; }
-    private GameObject _currentPlayerInstance;
+    public class GameManager : SimpleSingleton<GameManager>
+    {
+        [HideInInspector] public PlayerConfig Player;
+        public int CurrentClassIndex { get; private set; }
+        private GameObject _currentPlayerInstance;
+    }
 }
 

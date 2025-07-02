@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using ProjectVS.Data;
+using ProjectVS.Data.Player;
 using ProjectVS.Interface;
 using ProjectVS.Util;
 
@@ -12,18 +13,18 @@ namespace ProjectVS.Manager
     /// <summary>
     /// 저장된 정보들로 저장 데이터를 만듭니다.
     /// </summary>
-    public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IGamePlayTypeListener
+    public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IManager
     {
-        public GamePlayType GamePlayType;
+        public GamePlayType gamePlayType;
 
         [Header("Test Play Config")]
-        public CharacterClass TestCharacterClass;
+        public CharacterClass testCharacterClass;
 
         [Header("Player Status")]
         public PlayerStats stats;
 
         [Header("Inventory & Items")]
-        public List<Item> inventoryItems = new List<Item>();
+        public List<ItemDataSO> inventoryItems = new List<ItemDataSO>();
 
         [Header("Progress Info")]
         public int currentStageFloor;
@@ -44,6 +45,25 @@ namespace ProjectVS.Manager
         public HashSet<string> AcquiredCostumeName;
         public string WornCostumeName;
 
+        [Header("Misc")]
+        public bool isMoodShifted;
+
+        // IManager
+        public int Priority => (int)ManagerPriority.PlayerDataManager;
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
+        public GameObject GetGameObject() => this.gameObject;
+        public void Cleanup() { }
+        public void Initialize()
+        {
+            gamePlayType = GameManager.Instance.GamePlayType;
+            if (gamePlayType == GamePlayType.Test)
+            {
+                stats = new();
+                stats = stats.TestStats(CharacterClass.Axe);
+            }
+        }
+
+        // Manager Func
         public void SavePlayerData(int index)
         {
             PlayerData data = new PlayerData();
@@ -70,7 +90,6 @@ namespace ProjectVS.Manager
             SaveFileSystem.Save(data, index);
             print("저장");
         }
-
         public void LoadPlayerData(int index)
         {
             // Load
@@ -95,28 +114,13 @@ namespace ProjectVS.Manager
 
             print("불러오기");
         }
-
         public void DeletePlayerData(int index)
         {
             SaveFileSystem.Delete(index);
         }
-
         public bool CheckPlayerData(int index)
         {
             return SaveFileSystem.HasSaveData(index);
-        }
-
-        public void OnGamePlayTypeChanged(GamePlayType type)
-        {
-            GamePlayType = type;
-            if (type == GamePlayType.Build) return;
-
-            if (TestCharacterClass == CharacterClass.None)
-                TestCharacterClass = CharacterClass.Sword;
-
-            // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
-            // stats = stats.TestStats(TestCharacterClass);
-            stats = PlayerStats.TestStats(TestCharacterClass);
         }
     }
 }

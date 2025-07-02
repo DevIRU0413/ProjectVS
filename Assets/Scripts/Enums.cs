@@ -1,5 +1,21 @@
 ﻿namespace ProjectVS
 {
+    // 게임 상태용
+    public enum ManagerPriority
+    {
+        None,                   // Error
+
+        GameManager,
+
+        ResourceManager,        // Default Manager
+        SceneManagerEx,
+        AudioManager,
+        UIManager,
+
+        PlayerDataManager,      // Data Manager 
+        StageManager,
+    }
+
     #region GameManager Enums
 
     public enum GamePlayType
@@ -31,7 +47,7 @@
         None = 0,
         Enter,      // 인게임 진입
         Play,       // 정상적인 플레이
-        Paused,     // 일시 정지
+        Pause,     // 일시 정지
         Exit,       // 인게임 종료
     }
 
@@ -54,6 +70,17 @@
         Spd,
         AtkSpd,
     }
+
+    public enum SpawnGroupType
+    {
+        None = 0,
+        Radius,     // 반지름 거리에 소환
+        Line,       // 일짜로 쭉 소환
+        Circle,     // 원으로 쭉 소환
+        Grid,       // 격자
+        PureBoid,   // 무리 지어 소환
+    }
+
 
     #region Player Enums
     public enum PlayerStateType

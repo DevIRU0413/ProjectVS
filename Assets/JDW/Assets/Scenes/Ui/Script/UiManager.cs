@@ -1,14 +1,11 @@
-﻿using ProjectVS;
-using ProjectVS.Data;
-using ProjectVS.Manager;
+﻿using ProjectVS.Manager;
 
 using TMPro;
 
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-
 using UnityEngine;
 using UnityEngine.UI;
-namespace ProjectVS.Utils.UIManager
+
+namespace ProjectVS.JDW
 {
     // 추후 Ui관련 팀원분과 조율 예정
     public class UiManager : MonoBehaviour

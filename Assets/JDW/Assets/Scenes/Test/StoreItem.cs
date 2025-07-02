@@ -2,31 +2,31 @@
 
 using UnityEngine;
 
-public class StoreItem : MonoBehaviour
+namespace ProjectVS.JDW
 {
-
-    public string itemName = "임시 아이템";
-    public int price;
-    public int recovery;
-    public int bonusAttack;
-    public int bonusDefense;
-    public float bonusAttackSpeed;
-    public float bonusMoveSpeed;
-    private void OnTriggerEnter2D(Collider2D other)
+    public class StoreItem : MonoBehaviour
     {
-        if (other.CompareTag("Player")) // 플레이어 태그가 붙어있는 대상과 충돌
+        public string itemName = "임시 아이템";
+        public int price;
+        public int recovery;
+        public int bonusAttack;
+        public int bonusDefense;
+        public float bonusAttackSpeed;
+        public float bonusMoveSpeed;
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            PlayerConfig player = other.GetComponent<PlayerConfig>();
-            if (player != null)
+            if (other.CompareTag("Player")) // 플레이어 태그가 붙어있는 대상과 충돌
             {
-                bool bought = player.TryBuyItem(price, recovery, bonusAttack, bonusDefense, bonusAttackSpeed, bonusMoveSpeed, itemName);
-                if (bought)
+                PlayerConfig player = other.GetComponent<PlayerConfig>();
+                if (player != null)
                 {
-                    Destroy(gameObject); // 아이템 제거
+                    bool bought = player.TryBuyItem(price, recovery, bonusAttack, bonusDefense, bonusAttackSpeed, bonusMoveSpeed, itemName);
+                    if (bought)
+                    {
+                        Destroy(gameObject); // 아이템 제거
+                    }
                 }
             }
         }
-
     }
-
 }

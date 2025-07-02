@@ -1,5 +1,4 @@
-﻿using ProjectVS;
-using static ProjectVS.Util.PoolManager;
+﻿using ProjectVS.Unit.Player;
 
 using UnityEngine;
 
@@ -18,7 +17,7 @@ public class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        player = GameManager.Instance.Player;
+        player = PlayerSpawner.Instance.CurrentPlayer.GetComponent<PlayerConfig>();
         _poolManager = ProjectVS.Util.PoolManager.ForceInstance;
     }
 
@@ -118,9 +117,9 @@ public class Weapon : MonoBehaviour
 
     private void Fire()
     {
-        if (!player.Scanner.nearestTarget) return;
+        if (!player.Scanner.NearestTarget) return;
 
-        Vector3 targetPos = player.Scanner.nearestTarget.position;
+        Vector3 targetPos = player.Scanner.NearestTarget.position;
         Vector3 dir = (targetPos - transform.position).normalized;
 
         GameObject obj = _poolManager.Spawn(poolKey, transform.position, Quaternion.identity);

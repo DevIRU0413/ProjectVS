@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using ProjectVS.Interface;
+﻿using ProjectVS.Monster.Spawner;
+using ProjectVS.Unit.Player;
 
 using UnityEngine;
 
@@ -8,66 +7,79 @@ namespace ProjectVS.Monster
 {
     public class MonsterSpawnController : MonoBehaviour
     {
-        /// <summary>
-        /// 몬스터 스폰 제어를 담당하는 컨트롤러.
-        /// 다양한 유형의 스포너(IUnitSpawner 인터페이스 기반)를 지원하며,
-        /// 그룹 별로 설정된 조건에 따라 주기적으로 몬스터를 생성
-        /// </summary>
-        [System.Serializable]
-        public class SpawnEntry
+        // 초기화 여부
+        private bool _instantiated = false;
+
+        // 소환기
+        [SerializeField] private RadiusSpawner      _radiusSpawner;
+        [SerializeField] private LineSpawner        _lineSpawner;
+        [SerializeField] private CircleSpawner      _circleSpawner;
+        [SerializeField] private GridSpawner        _gridSpawner;
+        [SerializeField] private PureBoidSpawner    _pureBoidSpawner;
+
+        // 필수 데이터
+        private GameObject _target;
+        private Vector3 _targetLastPoint;
+
+        private int _currentSpawnCount = 0;
+        private int _maxSpawnCount = 0;
+        [SerializeField] private MonsterSpawnControllerConfigSO _config;
+
+        // 초기화
+        public void Init(GameObject target, int maxCount, MonsterSpawnControllerConfigSO config)
         {
-            public string groupName; // 그룹 식별용 이름 (디버깅용)
-            public MonoBehaviour spawnerBehaviour; // 실제 IUnitSpawner를 구현한 스포너 컴포넌트
-            public int unitCount = 10; // 한 번 생성 시 생성할 개체 수
-            public float interval = 10f; // 스폰 주기 (초)
-            public bool useTarget; // 타겟 기준 거리 검사 및 방향 지정 여부
-            public GameObject target; // 타겟 객체 (예: 플레이어, 목표물 지정)
-            public bool autoStart = true; // Start 시 자동 생성 여부
-            public int maxSpawnedUnits = 100; // 누적 최대 생성 수 (초과 시 생성 중단)
-            public float stopAfterTime = -1f; // 생성 중지 시간 제한 (-1이면 무제한)
+            _target = target;
+            _maxSpawnCount = maxCount;
+            _config = config;
 
-            // 내부 상태 변수
-            [HideInInspector] public float timer; // 스폰 타이머 누적값
-            [HideInInspector] public int spawnedCount; // 누적 생성 개수
-            [HideInInspector] public float activeTime; // 스폰 활성 시간
+            if (_target == null || _config == null || _config.spawnEntries == null || _config.spawnEntries.Count <= 0)
+                return;
 
-            // 스포너 인터페이스 접근용
-            public IUnitSpawner Spawner => spawnerBehaviour as IUnitSpawner;
+            Enter();
+            _instantiated = true;
         }
 
-        [Header("Spawn Groups")]
-        public List<SpawnEntry> spawnEntries = new(); // 전체 스폰 그룹 목록
-
-        private void Start()
+        // 초기 진입
+        private void Enter()
         {
-            // 초기화 및 autoStart 그룹 즉시 스폰
-            foreach (var entry in spawnEntries)
-            {
-                entry.timer = 0f;
-                entry.spawnedCount = 0;
-                entry.activeTime = 0f;
-                entry.target = GameManager.ForceInstance.Player.gameObject;
+            _radiusSpawner = new();
+            _lineSpawner = new();
+            _circleSpawner = new();
+            _gridSpawner = new();
+            _pureBoidSpawner = new();
 
-                if (entry.autoStart && CanSpawn(entry))
-                {
-                    Spawn(entry);
-                }
+            foreach (var entry in _config.spawnEntries)
+                InitSpawnEntry(entry);
+        }
+
+        // 외부 업데이트
+        public void Update()
+        {
+            if (!_instantiated) return;
+
+            // 타겟 미싱 시, 예외 처리
+            if (_target == null)
+            {
+                _target = PlayerSpawner.Instance?.CurrentPlayer;
+                _targetLastPoint = _target.transform.position;
             }
-        }
-
-        private void Update()
-        {
-            foreach (var entry in spawnEntries)
+            else
             {
+                _targetLastPoint = _target.transform.position;
+            }
+
+            foreach (var entry in _config.spawnEntries)
+            {
+                if (entry.SpawnGroupType == SpawnGroupType.None)
+                    continue;
+
                 entry.timer += Time.deltaTime;
                 entry.activeTime += Time.deltaTime;
 
-                // 스폰 제한 시간 초과 시 skip
-                if (entry.stopAfterTime > 0 && entry.activeTime >= entry.stopAfterTime)
+                if (entry.StopAfterTime > 0 && entry.activeTime >= entry.StopAfterTime)
                     continue;
 
-                // 주기적 스폰 타이밍 도달 && 조건 만족 시 스폰
-                if (entry.timer >= entry.interval && CanSpawn(entry))
+                if (entry.timer >= entry.Interval && CanSpawn(entry))
                 {
                     Spawn(entry);
                     entry.timer = 0f;
@@ -75,41 +87,107 @@ namespace ProjectVS.Monster
             }
         }
 
-        /// <summary>
-        /// 실제 스폰 실행 (스포너 객체를 통해 유닛 생성 및 초기화)
-        /// </summary>
         private void Spawn(SpawnEntry entry)
         {
-            if (entry.Spawner == null)
+            SpawnerBase spanwer = null;
+            Vector3 point = _target.transform.position;
+            int count = entry.GroupUnitSpawnCount;
+
+            switch (entry.SpawnGroupType)
             {
-                Debug.LogWarning($"[SpawnController] Spawner is not valid in group: {entry.groupName}");
-                return;
+                case SpawnGroupType.Radius:
+                    _radiusSpawner.radius = _config.radius;
+                    spanwer = _radiusSpawner;
+                    break;
+
+                case SpawnGroupType.Line:
+                    _lineSpawner.isReverseLine = _config.isReverseLine;
+                    _lineSpawner.offset = _config.offset;
+                    _lineSpawner.distance = _config.distance;
+                    _lineSpawner.directionList = _config.directionList;
+                    spanwer = _lineSpawner;
+                    break;
+
+                case SpawnGroupType.Circle:
+                    _circleSpawner.radius = _config.circleRadius;
+                    spanwer = _circleSpawner;
+                    break;
+
+                case SpawnGroupType.Grid:
+                    _gridSpawner.GridSize = _config.gridSize;
+                    _gridSpawner.Spacing = _config.gridSpacing;
+                    spanwer = _gridSpawner;
+                    break;
+
+                case SpawnGroupType.PureBoid:
+                    _pureBoidSpawner.moveSpeed = _config.moveSpeed;
+                    _pureBoidSpawner.neighborRadius = _config.neighborRadius;
+                    _pureBoidSpawner.separationDistance = _config.separationDistance;
+                    _pureBoidSpawner.weightFixed = _config.weightFixed;
+                    _pureBoidSpawner.weightSeparation = _config.weightSeparation;
+                    _pureBoidSpawner.weightAlignment = _config.weightAlignment;
+                    _pureBoidSpawner.weightCohesion = _config.weightCohesion;
+                    _pureBoidSpawner.spawnRange = _config.spawnRange;
+                    _pureBoidSpawner.spawnDistance = _config.spawnDistance;
+                    _pureBoidSpawner._isRandomSpawnDirection = _config.isRandomSpawnDirection;
+                    _pureBoidSpawner.spawnAngleList = _config.spawnAngleList;
+                    spanwer = _pureBoidSpawner;
+                    break;
+
+                default:
+                    Debug.LogError($"No spawner exists for type [{entry.SpawnGroupType}]");
+                    return;
             }
 
-            // 유닛 생성
-            entry.Spawner.SpawnUnits(
-                GameManager.Instance.Player.transform.position,
-                entry.unitCount);
-
-            // 유닛 초기화 (예: 타겟 방향 설정)
-            entry.Spawner.InitUnits(entry.useTarget ? entry.target : null);
-
-            // 누적 카운트 업데이트
-            entry.spawnedCount += entry.unitCount;
+            spanwer.SpawnUnits(_target, point, count);
         }
 
-        /// <summary>
-        /// 스폰 가능 여부 체크: 거리, 누적 수, 스포너 존재 유무 검사
-        /// </summary>
         private bool CanSpawn(SpawnEntry entry)
         {
-            if (entry.Spawner == null) return false;
+            if (entry == null) return false;
 
-            // 최대 생성 수 초과 시 스폰 금지
-            if (entry.spawnedCount >= entry.maxSpawnedUnits)
-                return false;
+            int afterSpawnedCount = entry.GroupUnitSpawnCount + _currentSpawnCount + 1;
+            return _currentSpawnCount < _maxSpawnCount && afterSpawnedCount <= _maxSpawnCount;
+        }
 
-            return true;
+        private void InitSpawnEntry(SpawnEntry entry)
+        {
+            entry.timer = 0f;
+            entry.activeTime = 0f;
+            SpawnerBase spanwer = null;
+            switch (entry.SpawnGroupType)
+            {
+                case SpawnGroupType.Radius:
+                    spanwer = _radiusSpawner;
+                    break;
+
+                case SpawnGroupType.Line:
+                    spanwer = _lineSpawner;
+                    break;
+
+                case SpawnGroupType.Circle:
+                    spanwer = _circleSpawner;
+                    break;
+
+                case SpawnGroupType.Grid:
+                    spanwer = _gridSpawner;
+                    break;
+
+                case SpawnGroupType.PureBoid:
+                    spanwer = _pureBoidSpawner;
+                    break;
+
+                default:
+                    Debug.LogError($"No spawner exists for type [{entry.SpawnGroupType}]");
+                    return;
+            }
+
+            spanwer.SetSpawnableObjectList(entry.SpawnableObjects);
+            foreach (var monster in entry.SpawnableObjects)
+                ProjectVS.Util.PoolManager.ForceInstance.CreatePool(monster.name, monster, _maxSpawnCount / 2);
+
+            if (entry.AutoStart && CanSpawn(entry))
+                Spawn(entry);
         }
     }
 }
