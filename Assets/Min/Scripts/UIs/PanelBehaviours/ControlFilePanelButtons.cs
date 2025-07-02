@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using ProjectVS.Manager;
@@ -10,6 +11,7 @@ using UnityEngine.UI;
 
 namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
 {
+    // TODO: PlayerDataManager 관련 주석 해제
     public class ControlFilePanelButtons : MonoBehaviour
     {
         [Header("선택 버튼")]
@@ -25,6 +27,8 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
         private bool _isLoadButtonToggled = false;
         private bool _isDeleteButtonToggled = false;
 
+        private int _currentFileIndex = -1;
+
 
         private void OnEnable()
         {
@@ -32,6 +36,8 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
             _isLoadButtonToggled = false;
             _isDeleteButtonToggled = false;
             RenewButtonColor();
+
+            _currentFileIndex = -1;
         }
 
         public void OnClickNewButton()
@@ -87,17 +93,22 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
 
         public void OnClickFile1Button()
         {
-            CheckWhatButtonToggled(0);
+            CheckWhatButtonToggled();
+            _currentFileIndex = 1;
         }
 
         public void OnClickFile2Button()
         {
-            CheckWhatButtonToggled(1);
+            CheckWhatButtonToggled();
+
+            _currentFileIndex = 2;
         }
 
         public void OnClickFile3Button()
         {
-            CheckWhatButtonToggled(2);
+            CheckWhatButtonToggled();
+
+            _currentFileIndex = 3;
         }
 
         public void OnClickESCButton()
@@ -120,35 +131,62 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
 
 
         // 선택된 버튼에 따라 파일을 확인하고 작업 수행
-        private void CheckWhatButtonToggled(int index)
+        private void CheckWhatButtonToggled()
         {
             if (_isNewButtonToggled)
             {
-                if (PlayerDataManager.ForceInstance.CheckPlayerData(index)) return;
+                //if (PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
 
                 // 새 파일 생성 - 인덱스로
-                PlayerDataManager.ForceInstance.SavePlayerData(index);
+                PlayerDataManager.ForceInstance.SavePlayerData(_currentFileIndex);
 
                 UIManager.Instance.Hide("Control File Panel");
                 UIManager.Instance.Show("Character Select Panel");
             }
             if (_isLoadButtonToggled)
             {
-                if (!PlayerDataManager.ForceInstance.CheckPlayerData(index)) return;
+                //if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
 
                 // 로드 파일 - 인덱스로
-                PlayerDataManager.ForceInstance.LoadPlayerData(index);
+                PlayerDataManager.ForceInstance.LoadPlayerData(_currentFileIndex);
                 SceneLoader.Instance.LoadSceneAsync(SceneID.InGameScene);
                 Debug.Log("로드");
             }
             if (_isDeleteButtonToggled)
             {
-                if (!PlayerDataManager.ForceInstance.CheckPlayerData(index)) return;
+                //if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
+
+
+                UIManager.Instance.Show("Delete Check Panel");
+
+                Debug.Log($"[ControlFilePanelButtons] _isDeleteButtonToggled");
 
                 // 삭제 파일 - 인덱스로
-                PlayerDataManager.ForceInstance.DeletePlayerData(index);
+                PlayerDataManager.ForceInstance.DeletePlayerData(_currentFileIndex);
                 Debug.Log("삭제");
             }
+        }
+
+        public void OnClickYesButton()
+        {
+            //if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
+
+            UIManager.Instance.Hide("Delete Check Panel");
+
+            _currentFileIndex = -1;
+        }
+
+        public void OnClickNoButton()
+        {
+            UIManager.Instance.Hide("Delete Check Panel");
+
+            _isNewButtonToggled = false;
+            _isLoadButtonToggled = false;
+            _isDeleteButtonToggled = false;
+
+            RenewButtonColor();
+
+            _currentFileIndex = -1;
         }
     }
 }
