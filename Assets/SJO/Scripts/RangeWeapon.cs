@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeWeapon : MonoBehaviour
+public class RangeWeapon : MonoBehaviour
 {
     // 데미지, 관통력
     public float damage;
@@ -24,7 +24,7 @@ public class MeleeWeapon : MonoBehaviour
         // 관통력이 무한보다(-1) 크다면 속도가 있음
         if (penetratingPower > -1)
         {
-            _rigid.velocity = dir * 15f;
+            _rigid.velocity = dir * 8f;
         }
     }
 

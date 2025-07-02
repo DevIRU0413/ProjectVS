@@ -1,23 +1,23 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Recipe", menuName = "Recipe/RecipeData")]
 public class Recipe : ScriptableObject
 {
-    // Á¶ÇÕ¿¡ ÇÊ¿äÇÑ Àç·á ¸®½ºÆ®
+    // ì¡°í•©ì— í•„ìš”í•œ ì¬ë£Œ ë¦¬ìŠ¤íŠ¸
     public List<Ingredient> ingredients;
 
-    // Á¶ÇÕ °á°ú
-    public Item result;
+    // ì¡°í•© ê²°ê³¼
+    public GameObject result;
 
-    // Á¶ÇÕ °á°ú ¾ÆÀÌÅÛ Sprite
+    // ì¡°í•© ê²°ê³¼ ì•„ì´í…œ Sprite
     public Sprite resultIcon;
 
     [System.Serializable]
     public class Ingredient
     {
-        // ¹°°Ç ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®¿Í Àç·áÀÇ ¾çÀ» Á¤ÇÒ ¼ö ÀÖµµ·Ï ÇÏ´Â °ª
+        // ë¬¼ê±´ ìŠ¤í¬ë¦½í„°ë¸” ì˜¤ë¸Œì íŠ¸ì™€ ì¬ë£Œì˜ ì–‘ì„ ì •í•  ìˆ˜ ìˆë„ë¡ í•˜ëŠ” ê°’
         public Stuff Stuff;
         public float amount;
     }

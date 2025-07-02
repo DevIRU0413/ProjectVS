@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - MeleeWeapon
+  - Monster
   - Ground
   - Area
   - Rocks
@@ -11,7 +13,6 @@ TagManager:
   - Boss
   - Store
   - Door
-  - Monster
   - PlayerSpawn
   layers:
   - Default
