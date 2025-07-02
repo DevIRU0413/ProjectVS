@@ -7,11 +7,13 @@ using UnityEngine.InputSystem;
 using ProjectVS.Utils.PriorityQueue;
 using ProjectVS.Utils.Singleton;
 using ProjectVS.UIs.UIBase;
+using ProjectVS.Util;
+using ProjectVS.Interface;
 
 
 namespace ProjectVS.Utils.UIManager
 {
-    public class UIManager : Singleton<UIManager>
+    public class UIManager : SimpleSingleton<UIManager>, IManager
     {
         private Dictionary<string, GameObject> _uiPanels = new();
         private Stack<GameObject> _uiStack = new();
@@ -19,13 +21,9 @@ namespace ProjectVS.Utils.UIManager
         private PriorityQueue<Action> _animationQueue = new();
         private bool _isAnimating = false;
 
-
         public int PanelCount => _uiPanels.Count;
-
-        private void Awake()
-        {
-            SingletonInit();
-        }
+        public int Priority => (int)ManagerPriority.UIManager;
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
 
         private void Update()
         {
@@ -244,6 +242,21 @@ namespace ProjectVS.Utils.UIManager
             _uiStack.Clear();
             _animationQueue.Clear();
             _isAnimating = false;
+        }
+
+        public void Initialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Cleanup()
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameObject GetGameObject()
+        {
+            throw new NotImplementedException();
         }
     }
 }
