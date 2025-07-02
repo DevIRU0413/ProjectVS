@@ -1,78 +1,75 @@
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Crafting : MonoBehaviour
 {
-    // ·¹½ÃÇÇ(Á¶ÇÕ ¹ı) µî·Ï
+    // ë ˆì‹œí”¼(ì¡°í•© ë²•) ë“±ë¡
     [Header("All Recipe")]
-    [SerializeField] private List<Recipe> recipes;
+    [SerializeField] private List<Recipe> _recipes;
 
-    // Á¶ÇÕ Àç·á¸¦ ÀúÀåÇÏ±â À§ÇÑ List
-    [SerializeField] public List<Stuff> craftStuff;
+    // ì¡°í•© ì¬ë£Œë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ List
+    public List<Stuff> CraftStuff { get; private set; }
 
-    //private void Init()
-    //{
-    //    craftStuff = new List<Stuff>();
-    //}
+    public Action OnCraft;
 
-    //private void Awake() => Init();
+    private void Awake() => Init();
+
+    private void Init()
+    {
+        CraftStuff = new List<Stuff>();
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PossibleCraft();
-        }
+        PossibleCraft();
     }
 
-    // Á¶ÇÕ °¡´ÉÇÑ ·¹½ÃÇÇÀÎÁö?
+    // ì¡°í•© ê°€ëŠ¥í•œ ë ˆì‹œí”¼ì¸ì§€?
     public Recipe PossibleCraft()
     {
-        // ·¹½ÃÇÇ ¸®½ºÆ® ÀüÃ¼¸¦ µ¹¸é¼­
-        foreach (var recipe in recipes)
+        // ë ˆì‹œí”¼ ë¦¬ìŠ¤íŠ¸ ì „ì²´ë¥¼ ëŒë©´ì„œ
+        foreach (var recipe in _recipes)
         {
             int count = 0;
 
-            // Á¶ÇÕÀÌ °¡´ÉÇÑ ·¹½ÃÇÇ°¡ ¸Â´ÂÁö µ¹¸é¼­
+            // ì¡°í•©ì´ ê°€ëŠ¥í•œ ë ˆì‹œí”¼ê°€ ë§ëŠ”ì§€ ëŒë©´ì„œ
             foreach (var ingredient in recipe.ingredients)
             {
-                // ¸¸¾à Á¶ÇÕ °¡´ÉÇÑ ·¹½ÃÇÇ¶ó¸é
-                if (craftStuff.Contains(ingredient.Stuff))
+                // ë§Œì•½ ì¡°í•© ê°€ëŠ¥í•œ ë ˆì‹œí”¼ë¼ë©´
+                if (CraftStuff.Contains(ingredient.Stuff))
                 {
                     count++;
-                    Debug.Log("Á¶ÇÕ °¡´É");
+                    Debug.Log("ì¡°í•© ê°€ëŠ¥");
+                    OnCraft?.Invoke();
                 }
             }
 
-            // Á¶ÇÕ °¡´ÉÇÑ Àç·á°¡ 2°³¸é
+            // ì¡°í•© ê°€ëŠ¥í•œ ì¬ë£Œê°€ 2ê°œë©´
             if (count == 2)
             {
-                // ·¹½ÃÇÇ ¹İÈ¯
+                // ë ˆì‹œí”¼ ë°˜í™˜
                 return recipe;
             }
         }
 
-        // ·¹½ÃÇÇ ¾øÀ¸¸é null ¹İÈ¯
+        // ë ˆì‹œí”¼ ì—†ìœ¼ë©´ null ë°˜í™˜
         return null;
     }
 
-    // ±âÁ¸ ¾ÆÀÌÅÛ Á¦°Å ¹× ·¹½ÃÇÇ °á°ú ¾ÆÀÌÅÛ ¹İÈ¯
-    public Item Craft(Recipe recipe)
+    // ê¸°ì¡´ ì•„ì´í…œ ì œê±° ë° ë ˆì‹œí”¼ ê²°ê³¼ ì•„ì´í…œ ë°˜í™˜
+    public GameObject Craft(Recipe recipe)
     {
         foreach (var ingredient in recipe.ingredients)
         {
-            craftStuff.Remove(ingredient.Stuff);
+            CraftStuff.Remove(ingredient.Stuff);
         }
         return recipe.result;
     }
 
-    /// <summary>
-    /// List<Recipe>¿¡ ¾ÆÀÌÅÛµé ³Ö¾î³õ±â À§ÇÑ ÇÔ¼ö
-    /// </summary>
-    public void AddItem()
+    public void AddItem(Stuff item)
     {
-        //craftStuff.Add()
+        CraftStuff.Add(item);
     }
-
 }

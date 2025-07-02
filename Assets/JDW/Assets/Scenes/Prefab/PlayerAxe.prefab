@@ -304,7 +304,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c920a0eeb513d54aa4ce5e43b6c8054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedClass: 0
+  SelectedClass: 2
+  Timer: {fileID: 0}
+  Scanner: {fileID: 0}
+  PlayerDataManager: {fileID: 0}
+  AttackPosition: {fileID: 0}
+  IsDead: 0
   Stats:
     _hp: 0
     _baseMaxHp: 0
@@ -321,11 +326,6 @@ MonoBehaviour:
     BaseMaxHp: 0
     BaseAtkSpd: 0
     BaseSpd: 0
-  Timer: {fileID: 0}
-  Scanner: {fileID: 0}
-  PlayerDataManager: {fileID: 0}
-  AttackPosition: {fileID: 0}
-  IsDead: 0
   _hpBar: {fileID: 2827814678606631806}
   Inventory: []
 --- !u!114 &5786611776289020374

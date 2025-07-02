@@ -17,6 +17,6 @@ MonoBehaviour:
   CostumeSprite: {fileID: 21300000, guid: 52a8b1607c767d54abf193bdda659da6, type: 3}
   FullScene: {fileID: 21300000, guid: 386693ddc4c23aa4bbda46dc54827169, type: 3}
   IconSprite: {fileID: 21300000, guid: 49763e4938a032a42b07ba4bbceec699, type: 3}
-  IsUnlocked: 1
+  IsUnlocked: 0
   IsEquipped: 1
   CostumeDialogueID: 200001

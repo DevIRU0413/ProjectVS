@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 
 using ProjectVS.Data;
-using ProjectVS.Data.Player;
 using ProjectVS.Interface;
 using ProjectVS.Util;
 
@@ -13,18 +12,18 @@ namespace ProjectVS.Manager
     /// <summary>
     /// 저장된 정보들로 저장 데이터를 만듭니다.
     /// </summary>
-    public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IManager
+    public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IGamePlayTypeListener
     {
-        public GamePlayType gamePlayType;
+        public GamePlayType GamePlayType;
 
         [Header("Test Play Config")]
-        public CharacterClass testCharacterClass;
+        public CharacterClass TestCharacterClass;
 
         [Header("Player Status")]
         public PlayerStats stats;
 
         [Header("Inventory & Items")]
-        public List<ItemDataSO> inventoryItems = new List<ItemDataSO>();
+        public List<Item> inventoryItems = new List<Item>();
 
         [Header("Progress Info")]
         public int currentStageFloor;
@@ -45,25 +44,13 @@ namespace ProjectVS.Manager
         public HashSet<string> AcquiredCostumeName;
         public string WornCostumeName;
 
-        [Header("Misc")]
-        public bool isMoodShifted;
+        [Header("MonsterScore")]
+        public int totalKills; // 몬스터 총 처치 수
 
-        // IManager
-        public int Priority => (int)ManagerPriority.PlayerDataManager;
-        public bool IsDontDestroy => IsDontDestroyOnLoad;
-        public GameObject GetGameObject() => this.gameObject;
-        public void Cleanup() { }
-        public void Initialize()
-        {
-            gamePlayType = GameManager.Instance.GamePlayType;
-            if (gamePlayType == GamePlayType.Test)
-            {
-                stats = new();
-                stats = stats.TestStats(CharacterClass.Axe);
-            }
-        }
+        [Header("Playtime Info")]
+        public float totalPlayTime; // 총 플레이 시간 (초 단위)
+        public int battleSceneCount; // 전투씬 진입 횟수
 
-        // Manager Func
         public void SavePlayerData(int index)
         {
             PlayerData data = new PlayerData();
@@ -86,10 +73,16 @@ namespace ProjectVS.Manager
             data.AcquiredCostumeName = AcquiredCostumeName;
             data.WornCostumeName = WornCostumeName;
 
+            data.TotalKills = totalKills;
+
+            data.TotalPlayTime = totalPlayTime;
+            data.BattleSceneCount = battleSceneCount;
+
             // Save
             SaveFileSystem.Save(data, index);
             print("저장");
         }
+
         public void LoadPlayerData(int index)
         {
             // Load
@@ -112,15 +105,35 @@ namespace ProjectVS.Manager
             AcquiredCostumeName = data.AcquiredCostumeName;
             WornCostumeName = data.WornCostumeName;
 
+            totalKills = data.TotalKills;
+
+            totalPlayTime = data.TotalPlayTime;
+            battleSceneCount = data.BattleSceneCount;
+
             print("불러오기");
         }
+
         public void DeletePlayerData(int index)
         {
             SaveFileSystem.Delete(index);
         }
+
         public bool CheckPlayerData(int index)
         {
             return SaveFileSystem.HasSaveData(index);
+        }
+
+        public void OnGamePlayTypeChanged(GamePlayType type)
+        {
+            GamePlayType = type;
+            if (type == GamePlayType.Build) return;
+
+            if (TestCharacterClass == CharacterClass.None)
+                TestCharacterClass = CharacterClass.Sword;
+
+            // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
+            // stats = stats.TestStats(TestCharacterClass);
+            stats = PlayerStats.TestStats(TestCharacterClass);
         }
     }
 }

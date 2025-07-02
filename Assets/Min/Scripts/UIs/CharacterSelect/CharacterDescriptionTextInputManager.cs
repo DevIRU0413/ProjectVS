@@ -19,8 +19,10 @@ namespace ProjectVS.UIs.CharacterSelect.CharacterDescriptionTextInputManager
         private CsvTable _characterSelectionDataTable;
 
         [Header("캐릭터 별 텍스트, 왼쪽부터 등록")]
-        [SerializeField] private List<TMP_Text> _characterTextsList; // left - center - right 순서로 넣으면 됨
-
+        //[SerializeField] private List<TMP_Text> _characterTextsList; // left - center - right 순서로 넣으면 됨
+        [SerializeField] private List<TMP_Text> _nameTextList;
+        [SerializeField] private List<TMP_Text> _descTextList;
+        [SerializeField] private List<TMP_Text> _uniqueWeaponsTextList;
 
         private StringBuilder _sb = new();
         private List<CharacterSelectionDataClass> _characterSelectionList;
@@ -42,20 +44,44 @@ namespace ProjectVS.UIs.CharacterSelect.CharacterDescriptionTextInputManager
 
         private void SetCharacterDescriptionText()
         {
-            for (int i = 0; i < _characterTextsList.Count; i++)
+            //for (int i = 0; i < _characterTextsList.Count; i++)
+            //{
+            //    _sb.Clear();
+
+            //    _sb.AppendLine($"캐릭터 이름: {_characterSelectionList[i].Name}");
+            //    _sb.AppendLine($"고유 아이템: {_characterSelectionList[i].ItemName}");
+            //    _sb.AppendLine($"공격력: {_characterSelectionList[i].Attack}");
+            //    _sb.AppendLine($"방어력: {_characterSelectionList[i].Defense}");
+            //    _sb.AppendLine($"체력: {_characterSelectionList[i].HP}");
+            //    _sb.AppendLine($"공격 속도: {_characterSelectionList[i].AttackSpeed}");
+            //    _sb.AppendLine($"이동 속도: {_characterSelectionList[i].MoveSpeed}");
+            //    _sb.AppendLine($"설명: {_characterSelectionList[i].FlavorText}");
+
+            //    _characterTextsList[i].text = _sb.ToString();
+            //}
+
+            for (int i = 0; i < _nameTextList.Count; i++)
             {
                 _sb.Clear();
+                _sb.Append(_characterSelectionList[i].Name);
 
-                _sb.AppendLine($"캐릭터 이름: {_characterSelectionList[i].Name}");
-                _sb.AppendLine($"고유 아이템: {_characterSelectionList[i].ItemName}");
-                _sb.AppendLine($"공격력: {_characterSelectionList[i].Attack}");
-                _sb.AppendLine($"방어력: {_characterSelectionList[i].Defense}");
-                _sb.AppendLine($"체력: {_characterSelectionList[i].HP}");
-                _sb.AppendLine($"공격 속도: {_characterSelectionList[i].AttackSpeed}");
-                _sb.AppendLine($"이동 속도: {_characterSelectionList[i].MoveSpeed}");
-                _sb.AppendLine($"설명: {_characterSelectionList[i].FlavorText}");
+                _nameTextList[i].text = _sb.ToString();
+            }
 
-                _characterTextsList[i].text = _sb.ToString();
+            for (int i = 0; i < _descTextList.Count; i++)
+            {
+                _sb.Clear();
+                _sb.Append(_characterSelectionList[i].FlavorText);
+
+                _descTextList[i].text = _sb.ToString();
+            }
+
+            for (int i = 0; i < _uniqueWeaponsTextList.Count; i++)
+            {
+                _sb.Clear();
+                _sb.Append(_characterSelectionList[i].ItemName);
+
+                _uniqueWeaponsTextList[i].text = _sb.ToString();
             }
         }
     }
