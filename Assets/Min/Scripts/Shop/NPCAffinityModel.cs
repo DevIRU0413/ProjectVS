@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Interface;
 using ProjectVS.Util;
 
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace ProjectVS.Shop.NPCAffinityModel
 {
-    public class NPCAffinityModel : SimpleSingleton<NPCAffinityModel>
+    public class NPCAffinityModel : SimpleSingleton<NPCAffinityModel>, IManager
     {
         private int _affinityCurrentExp = 0;
         private int _affinityLevel = 1;
@@ -35,6 +36,8 @@ namespace ProjectVS.Shop.NPCAffinityModel
         public int AffinityCurrentExp => _affinityCurrentExp;
         public int AffinityExpMax => AFFINITY_EXP_MAX;
 
+        public int Priority => (int)ManagerPriority.NPCAffinityModel;
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
 
         public void IncreaseAffinity(int amount)
         {
@@ -95,6 +98,21 @@ namespace ProjectVS.Shop.NPCAffinityModel
         {
             DecreaseAffinity(50);
             Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
+        }
+
+        public void Initialize()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Cleanup()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public GameObject GetGameObject()
+        {
+            throw new System.NotImplementedException();
         }
         #endregion
     }
