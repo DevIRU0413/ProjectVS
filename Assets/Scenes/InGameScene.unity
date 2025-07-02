@@ -1243,8 +1243,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDontDestroyOnLoad: 1
-  gamePlayType: 0
-  testCharacterClass: 0
+  GamePlayType: 0
+  TestCharacterClass: 0
   stats:
     _hp: 0
     _baseMaxHp: 0
@@ -1264,7 +1264,9 @@ MonoBehaviour:
   CurrentAffinityExp: 0
   CurrentAffinityLevel: 0
   WornCostumeName: 
-  isMoodShifted: 0
+  totalKills: 0
+  totalPlayTime: 0
+  battleSceneCount: 0
 --- !u!4 &1585703498
 Transform:
   m_ObjectHideFlags: 0

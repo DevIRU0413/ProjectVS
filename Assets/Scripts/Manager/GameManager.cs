@@ -23,7 +23,6 @@ namespace ProjectVS.Manager
 
         public event Action<GameState> OnStateChanged;
         public event Action<SceneID> OnSceneChanged;
-        public event Action<GamePlayType> OnPlayTypeChanged;
 
         public void Initialize()
         {
@@ -56,18 +55,6 @@ namespace ProjectVS.Manager
             CurrentState = newState;
             Debug.Log($"[GameManager] 상태 전환: {newState}");
             OnStateChanged?.Invoke(newState);
-        }
-
-        /// <summary>
-        /// 플레이 타입을 설정합니다.
-        /// </summary>
-        public void SetPlayType(GamePlayType newType)
-        {
-            if (GamePlayType == newType) return;
-
-            GamePlayType = newType;
-            Debug.Log($"[GameManager] 플레이 타입 변경: {newType}");
-            OnPlayTypeChanged?.Invoke(newType);
         }
 
         /// <summary>

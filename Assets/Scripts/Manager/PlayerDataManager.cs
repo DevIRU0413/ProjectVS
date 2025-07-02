@@ -12,7 +12,7 @@ namespace ProjectVS.Manager
     /// <summary>
     /// 저장된 정보들로 저장 데이터를 만듭니다.
     /// </summary>
-    public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IGamePlayTypeListener
+    public class PlayerDataManager : SimpleSingleton<PlayerDataManager>, IManager
     {
         public GamePlayType GamePlayType;
 
@@ -50,6 +50,27 @@ namespace ProjectVS.Manager
         [Header("Playtime Info")]
         public float totalPlayTime; // 총 플레이 시간 (초 단위)
         public int battleSceneCount; // 전투씬 진입 횟수
+
+        public int Priority => (int)ManagerPriority.PlayerDataManager;
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
+        public GameObject GetGameObject() => this.gameObject;
+     
+        public void Initialize()
+        {
+            GamePlayType = GameManager.Instance.GamePlayType;
+            if (GamePlayType == GamePlayType.Build) return;
+
+            if (TestCharacterClass == CharacterClass.None)
+                TestCharacterClass = CharacterClass.Sword;
+
+            // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
+            // stats = stats.TestStats(TestCharacterClass);
+
+            stats = new Unit.Player.PlayerStats();
+            stats = stats.TestStats(TestCharacterClass);
+        }
+        public void Cleanup() { }
+
 
         public void SavePlayerData(int index)
         {
@@ -121,21 +142,6 @@ namespace ProjectVS.Manager
         public bool CheckPlayerData(int index)
         {
             return SaveFileSystem.HasSaveData(index);
-        }
-
-        public void OnGamePlayTypeChanged(GamePlayType type)
-        {
-            GamePlayType = type;
-            if (type == GamePlayType.Build) return;
-
-            if (TestCharacterClass == CharacterClass.None)
-                TestCharacterClass = CharacterClass.Sword;
-
-            // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
-            // stats = stats.TestStats(TestCharacterClass);
-
-            /*stats = new Unit.Player.PlayerStats();
-            stats = stats.TestStats(TestCharacterClass);*/
         }
     }
 }
