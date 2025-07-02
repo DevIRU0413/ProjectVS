@@ -321,11 +321,6 @@ MonoBehaviour:
     CharacterClass: 1
     CurrentExp: 0
     MaxExp: 0
-    BaseAtk: 0
-    BaseDfs: 0
-    BaseMaxHp: 0
-    BaseAtkSpd: 0
-    BaseSpd: 0
   _hpBar: {fileID: 2827814678606631806}
   Inventory: []
 --- !u!114 &5786611776289020374
@@ -415,7 +410,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

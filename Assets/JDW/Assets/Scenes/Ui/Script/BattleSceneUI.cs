@@ -75,16 +75,11 @@ namespace ProjectVS.JDW
 
             hpRatio = Mathf.Clamp01(hpRatio); 
 
-            if (hpRatio > 0.8f) // 체력 비율에 맞춰 이미지 변화
-                _portraitImage.sprite = _hpPortraits[4];
-            else if (hpRatio > 0.6f)
-                _portraitImage.sprite = _hpPortraits[3];
-            else if (hpRatio > 0.4f)
-                _portraitImage.sprite = _hpPortraits[2];
-            else if (hpRatio > 0.2f)
-                _portraitImage.sprite = _hpPortraits[1];
-            else
+            if (hpRatio > 0.25f) // 체력 비율에 맞춰 이미지 변화
                 _portraitImage.sprite = _hpPortraits[0];
+            else
+                _portraitImage.sprite = _hpPortraits[1];
+            
         }
 
         private void UpdateExpBar()

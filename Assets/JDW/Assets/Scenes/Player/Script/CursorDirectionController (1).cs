@@ -1,12 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using ProjectVS.JDW;
+
 using UnityEngine;
 
 public class CursorDirectionController : MonoBehaviour
 {
     [SerializeField] private Transform _player;       // 플레이어 Transform
     [SerializeField] private float _distance = 2f;    // 플레이어와의 거리
+    public PlayerConfig Player;
 
+    public void SetPlayer(Transform player)
+    {
+        _player = player;
+    }
+    private void Start()
+    {
+        if (_player == null)
+        {
+            PlayerConfig Player = FindObjectOfType<PlayerConfig>();
+            if (Player != null)
+            {
+                _player = Player.transform;
+            }
+            else
+            {
+                Debug.LogWarning("CursorDirectionController: PlayerConfig를 찾지 못했습니다.");
+            }
+        }
+    }
     private void Update()
     {
         RotateToMousePos();
@@ -14,6 +37,8 @@ public class CursorDirectionController : MonoBehaviour
 
     private void RotateToMousePos()
     {
+        if (Camera.main == null || _player == null) return;
+
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f;
 

@@ -63,7 +63,7 @@ namespace ProjectVS.JDW
                 PlayerConfig player = other.GetComponent<PlayerConfig>();
                 if (player != null)
                 {
-                    player.TakeDamage(5);
+                    player.TakeDamage(1);
                 }
             }
         }

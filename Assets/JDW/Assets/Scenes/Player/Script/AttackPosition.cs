@@ -43,12 +43,12 @@ namespace ProjectVS.JDW
 
         public IEnumerator Axe()
         {
-            return AttackRoutine(_axePrefab, 0.4f, 1f);
+            return AttackRoutine(_axePrefab, 0.7f, 1f);
         }
 
         public IEnumerator Sword()
         {
-            return AttackRoutine(_swordPrefab, 0.2f, 1f);
+            return AttackRoutine(_swordPrefab, 0.4f, 1f);
         }
 
         public IEnumerator Fire()

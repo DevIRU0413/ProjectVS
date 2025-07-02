@@ -52,7 +52,6 @@ namespace ProjectVS.JDW
         {
             _uiManager = FindObjectOfType<BattleSceneUI>();
             UpdateHpBar(); // 초기 체력바 표시
-           
         }
 
         public void ApplyStatsFromData(CharacterSelectionDataClass data, int classIndex)
@@ -112,7 +111,7 @@ namespace ProjectVS.JDW
         public void TakeDamage(float damage)
         {
             if (IsDead) return;
-
+            FindObjectOfType<CameraFollow>()?.ShakeCamera(0.3f, 0.5f);
             Stats.CurrentHp -= damage;
             Debug.Log($"피해 : {damage}, 남은 체력 : {Stats.CurrentHp}");
             UpdateHpBar();  // Hp바 연동
