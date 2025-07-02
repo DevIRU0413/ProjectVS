@@ -1,70 +1,89 @@
 ﻿using System;
 
+using ProjectVS.Scene;
 using ProjectVS.Util;
 
-using Scripts.Scene;
+using ProjectVS.Interface;
 
 using UnityEngine;
 
 namespace ProjectVS.Manager
 {
-    // 담당 기능
-    // 1. 상태 관리
-    // 2. 씬 전환
-    public class GameManager : SimpleSingleton<GameManager>
+    /// <summary>
+    /// 게임의 전역 상태와 씬 관리만을 담당하는 싱글톤
+    /// </summary>
+    public class GameManager : SimpleSingleton<GameManager>, IManager
     {
-        [field: SerializeField] public GamePlayType PlayType { get; private set; } = GamePlayType.Build;
+        [field: SerializeField] public GamePlayType GamePlayType { get; private set; } = GamePlayType.Build;
         [field: SerializeField] public GameState CurrentState { get; private set; } = GameState.Play;
         [field: SerializeField] public SceneID CurrentSceneID { get; private set; } = SceneID.None;
 
+        public int Priority => (int)ManagerPriority.GameManager;
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
+
         public event Action<GameState> OnStateChanged;
         public event Action<SceneID> OnSceneChanged;
+        public event Action<GamePlayType> OnPlayTypeChanged;
 
-        protected override void Awake()
+        public void Initialize()
         {
-            CurrentState = GameState.Play;
+            InitCurrentSceneID();
+        }
+        public void Cleanup()
+        {
+        }
+        public GameObject GetGameObject() => this.gameObject;
 
-            var sceneBase = GameObject.FindGameObjectWithTag("SceneBase");
-            var sceneBaseCmp = sceneBase.GetComponent<SceneBase>();
-            if (sceneBaseCmp != null)
-                CurrentSceneID = sceneBaseCmp.SceneID;
+        /// <summary>
+        /// 씬 ID를 초기화합니다 (SceneBase에서 추출)
+        /// </summary>
+        private void InitCurrentSceneID()
+        {
+            if (CurrentSceneID != SceneID.None) return;
 
-            // 강제 생성 진행 해야될듯
-
-            // 플레이어 데이터 매니저
-            var playerData = PlayerDataManager.ForceInstance;
-
-            // UI 매니저
-
-            // Audio 매니저
-            var audio = AudioManager.ForceInstance;
-
-            // Scene Loader
-            var sceneLoader = SceneLoader.ForceInstance;
+            GameObject sceneBase = GameObject.FindGameObjectWithTag("SceneBase");
+            if (sceneBase != null && sceneBase.TryGetComponent(out SceneBase cmp))
+                CurrentSceneID = cmp.SceneID;
         }
 
-        // 상테 전환
+        /// <summary>
+        /// 게임 상태를 설정합니다.
+        /// </summary>
         public void SetState(GameState newState)
         {
             if (CurrentState == newState) return;
-            CurrentState = newState;
 
+            CurrentState = newState;
             Debug.Log($"[GameManager] 상태 전환: {newState}");
             OnStateChanged?.Invoke(newState);
         }
 
-        // 씬 전환
-        public void SetSceneID(SceneID sceneID)
+        /// <summary>
+        /// 플레이 타입을 설정합니다.
+        /// </summary>
+        public void SetPlayType(GamePlayType newType)
         {
-            if (CurrentSceneID == sceneID) return;
-            if (SceneID.None == sceneID) return;
-            SceneID old = CurrentSceneID;
-            CurrentSceneID = sceneID;
+            if (GamePlayType == newType) return;
 
-            Debug.Log($"[GameManager] 씬 전환: {old} > {CurrentSceneID}");
-            OnSceneChanged?.Invoke(CurrentSceneID);
+            GamePlayType = newType;
+            Debug.Log($"[GameManager] 플레이 타입 변경: {newType}");
+            OnPlayTypeChanged?.Invoke(newType);
+        }
 
-            SceneLoader.Instance.LoadSceneAsync(CurrentSceneID);
+        /// <summary>
+        /// 씬을 전환합니다.
+        /// </summary>
+        public void SetScene(SceneID newSceneID)
+        {
+            if (CurrentSceneID == newSceneID || newSceneID == SceneID.None) return;
+
+            var old = CurrentSceneID;
+            CurrentSceneID = newSceneID;
+
+            Debug.Log($"[GameManager] 씬 전환: {old} > {newSceneID}");
+            OnSceneChanged?.Invoke(newSceneID);
+
+            SceneLoader.Instance.LoadSceneAsync(newSceneID);
         }
     }
 }

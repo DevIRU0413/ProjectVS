@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8788030906210665127}
   - component: {fileID: 3411071853679817117}
   - component: {fileID: 7931160649789243784}
+  - component: {fileID: 9193621145105087103}
   m_Layer: 0
   m_Name: Cursed Tentacle
   m_TagString: Untagged
@@ -36,6 +37,7 @@ Transform:
   m_Children:
   - {fileID: 2007485376869557602}
   - {fileID: 8056810323065294649}
+  - {fileID: 7996226657855793685}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &3247934171952996879
@@ -79,9 +81,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Hp>k__BackingField: 1
   <ATK>k__BackingField: 1
+  <DFS>k__BackingField: 0
   <SPD>k__BackingField: 1
-  <AtkRange>k__BackingField: 1
-  <ExpPoint>k__BackingField: 1
+  <ATKSPD>k__BackingField: 0
 --- !u!114 &8788030906210665127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +118,7 @@ MonoBehaviour:
   _animator: {fileID: 7963743305875139600}
   <CurrentStateType>k__BackingField: 0
   _stopMoveRange: 3
+  _despawnDelay: 1
   <Target>k__BackingField: {fileID: 0}
 --- !u!114 &7931160649789243784
 MonoBehaviour:
@@ -152,6 +155,29 @@ MonoBehaviour:
   - 45
   - 45
   - 45
+--- !u!114 &9193621145105087103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707399079469239205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf949ad760e5fb408de8d8ce2d72774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitCollider: {fileID: 1814751947380924364}
+  _hitLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  _hitCount: 1
+  baseDamage: 10
+  canCrit: 1
+  critChance: 0.2
+  critMultiplier: 2
+  knockbackForce: 0
+  _hitClip: {fileID: 0}
 --- !u!1 &1769103901112316874
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +190,6 @@ GameObject:
   - component: {fileID: 2058276524780001059}
   - component: {fileID: 7963743305875139600}
   - component: {fileID: 5919610751903828853}
-  - component: {fileID: 4769437373972984831}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -268,7 +293,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769103901112316874}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 2d59e5f50a68cab458f1da44990093f0, type: 2}
   m_Animations: []
@@ -276,13 +301,46 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!58 &4769437373972984831
-CircleCollider2D:
+--- !u!1 &2423578400853613418
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769103901112316874}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7996226657855793685}
+  - component: {fileID: 4516156038226996297}
+  - component: {fileID: 1511952608957401131}
+  m_Layer: 18
+  m_Name: DamageableCollider
+  m_TagString: Monster
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7996226657855793685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2423578400853613418}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.505, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5963012921712630901}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &4516156038226996297
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2423578400853613418}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -308,9 +366,22 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
+  m_Offset: {x: 0, y: 0.5}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
+--- !u!114 &1511952608957401131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2423578400853613418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e379a4521d153804abc3ec9cf6754357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 707399079469239205}
 --- !u!1 &4725599686742183044
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +477,7 @@ GameObject:
   - component: {fileID: 8056810323065294649}
   - component: {fileID: 1814751947380924364}
   m_Layer: 0
-  m_Name: NormalAttackRange
+  m_Name: NormalAttackRangeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -456,7 +527,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

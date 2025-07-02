@@ -3,76 +3,79 @@ using ProjectVS.Manager;
 
 using UnityEngine;
 
-public class Boss : MonoBehaviour
+namespace ProjectVS.JDW
 {
-    public Timer Timer;
-
-    public float maxHp = 500;
-    public float currentHp;
-
-    [SerializeField] private int _exp = 90;
-    [SerializeField] private int _gold = 500;
-    [SerializeField] private GameObject _bossHpBar;
-
-    private void Awake()
+    public class Boss : MonoBehaviour
     {
-        Timer = FindObjectOfType<Timer>();
-    }
-    private void Start()
-    {
-        currentHp = maxHp;
-        Timer.PauseTimer();
-        Timer.SetMessage("BOSS!");
-    }
-    public void TakeDamage(float damage)
-    {
-        currentHp -= damage;
-        Debug.Log($"보스 몬스터 피격 : {damage}, 남은 체력 : {currentHp}");
-        if (currentHp <= 0)
+        public Timer Timer;
+
+        public float maxHp = 500;
+        public float currentHp;
+
+        [SerializeField] private int _exp = 90;
+        [SerializeField] private int _gold = 500;
+        [SerializeField] private GameObject _bossHpBar;
+
+        private void Awake()
         {
-            Die();
+            Timer = FindObjectOfType<Timer>();
         }
-    }
-    private void Die()
-    {
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
+        private void Start()
         {
-            PlayerConfig player = playerObj.GetComponent<PlayerConfig>();
-            if (player != null)
+            currentHp = maxHp;
+            Timer.PauseTimer();
+            Timer.SetMessage("BOSS!");
+        }
+        public void TakeDamage(float damage)
+        {
+            currentHp -= damage;
+            Debug.Log($"보스 몬스터 피격 : {damage}, 남은 체력 : {currentHp}");
+            if (currentHp <= 0)
             {
-                player.ExpUp(_exp);
-                PlayerDataManager.Instance.gold += _gold;
-                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {PlayerDataManager.Instance.gold}");
-                Timer.ResumeTimer();
-                Timer.SetMessage("");
-                PlayerDataManager.Instance.totalKills++;
-                Debug.Log($"총 처치수: {PlayerDataManager.Instance.totalKills}");
+                Die();
             }
         }
-        Debug.Log("보스 몬스터 사망");
-
-        Destroy(gameObject);
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        private void Die()
         {
-            PlayerConfig player = other.GetComponent<PlayerConfig>();
-            if (player != null)
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
             {
-                player.TakeDamage(5);
+                PlayerConfig player = playerObj.GetComponent<PlayerConfig>();
+                if (player != null)
+                {
+                    player.ExpUp(_exp);
+                    PlayerDataManager.Instance.gold += _gold;
+                    Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {PlayerDataManager.Instance.gold}");
+                    Timer.ResumeTimer();
+                    Timer.SetMessage("");
+                    PlayerDataManager.Instance.totalKills++;
+                    Debug.Log($"총 처치수: {PlayerDataManager.Instance.totalKills}");
+                }
+            }
+            Debug.Log("보스 몬스터 사망");
+
+            Destroy(gameObject);
+        }
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                PlayerConfig player = other.GetComponent<PlayerConfig>();
+                if (player != null)
+                {
+                    player.TakeDamage(5);
+                }
             }
         }
-    }
-    private void OnEnable()
-    {
-        if (_bossHpBar != null)
-            _bossHpBar.SetActive(true);
-    }
-    private void OnDisable()
-    {
-        if (_bossHpBar != null)
-            _bossHpBar.SetActive(false);
+        private void OnEnable()
+        {
+            if (_bossHpBar != null)
+                _bossHpBar.SetActive(true);
+        }
+        private void OnDisable()
+        {
+            if (_bossHpBar != null)
+                _bossHpBar.SetActive(false);
+        }
     }
 }

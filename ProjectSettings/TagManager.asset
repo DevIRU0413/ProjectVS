@@ -14,6 +14,9 @@ TagManager:
   - Store
   - Door
   - PlayerSpawn
+  - PlayerSpawnPoint
+  - SceneBase
+  - Manager
   layers:
   - Default
   - TransparentFX

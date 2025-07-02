@@ -14,7 +14,7 @@ using CharacterSelectionDataClass = ProjectVS.CharacterSelectionData.CharacterSe
 
 
 
-namespace ProjectVS
+namespace ProjectVS.JDW
 {
     public class PlayerConfig : MonoBehaviour
     {

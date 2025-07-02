@@ -17,7 +17,10 @@ namespace ProjectVS.Util
                 return;
             }
 
-            pools[key] = new Pool(prefab, initialSize, this.transform);
+            if (!pools.ContainsKey(key))
+                pools[key] = new Pool(prefab, initialSize, this.transform);
+            else
+                pools[key].CreatePool(prefab, initialSize);
         }
 
         public GameObject Spawn(string key, Vector3 position, Quaternion rotation)

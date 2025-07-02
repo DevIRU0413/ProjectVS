@@ -12,7 +12,7 @@ namespace ProjectVS
 
         private void Awake()
         {
-            var cmp = target.GetComponent<IDamageable>();
+            var cmp = target.GetComponentInParent<IDamageable>();
             damageable = cmp;
         }
 

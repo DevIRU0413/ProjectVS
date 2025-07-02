@@ -6,28 +6,28 @@ namespace ProjectVS.Util
 {
     public class Pool
     {
-        private readonly GameObject prefab;
-        private readonly Transform parent;
-        private readonly Stack<GameObject> poolStack = new Stack<GameObject>();
+        private readonly GameObject _prefab;
+        private readonly Transform _parent;
+        private readonly Stack<GameObject> _poolStack = new Stack<GameObject>();
+
+        private GameObject _group;
 
         public Pool(GameObject prefab, int initialSize, Transform parent = null)
         {
-            this.prefab = prefab;
-            this.parent = parent;
+            _prefab = prefab;
+            _parent = parent;
 
-            for (int i = 0; i < initialSize; i++)
-            {
-                GameObject obj = GameObject.Instantiate(prefab, parent);
-                obj.SetActive(false);
-                poolStack.Push(obj);
-            }
+            _group = new GameObject($"Group [{prefab.name}]");
+            _group.transform.parent = parent;
+
+            CreatePool(prefab, initialSize);
         }
 
         public GameObject Get()
         {
-            GameObject obj = poolStack.Count > 0
-                ? poolStack.Pop()
-                : GameObject.Instantiate(prefab, parent);
+            GameObject obj = _poolStack.Count > 0
+                ? _poolStack.Pop()
+                : GameObject.Instantiate(_prefab, _parent);
 
             obj.SetActive(true);
             foreach (var comp in obj.GetComponents<IPoolable>())
@@ -42,7 +42,19 @@ namespace ProjectVS.Util
                 comp.OnDespawned();
 
             obj.SetActive(false);
-            poolStack.Push(obj);
+            _poolStack.Push(obj);
+        }
+
+        public void CreatePool(GameObject prefab, int initialSize)
+        {
+            int index = (_poolStack.Count - 1 <= 0) ? 0 : _poolStack.Count - 1;
+
+            for (int i = index; i < initialSize; i++)
+            {
+                GameObject obj = GameObject.Instantiate(prefab, _group.transform);
+                obj.SetActive(false);
+                _poolStack.Push(obj);
+            }
         }
     }
 }

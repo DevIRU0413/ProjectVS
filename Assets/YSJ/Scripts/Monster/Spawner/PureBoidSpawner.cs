@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ProjectVS.Monster.Spawner
 {
-    public class PureBoidSpawner : Spawner
+    public class PureBoidSpawner : SpawnerBase
     {
         public float moveSpeed = 5f;
         public float neighborRadius = 3f;
@@ -28,7 +28,7 @@ namespace ProjectVS.Monster.Spawner
         private PureBoid leaderBoid;
         private List<PureBoid> boids = new();
 
-        public override void SpawnUnits(Vector3 spawnPoint, int unitCount)
+        public override void SpawnUnits(GameObject target, Vector3 spawnPoint, int unitCount)
         {
             GameObject spanwUnit = GetSpawnUnit();
             if (spanwUnit == null) return;
@@ -59,7 +59,7 @@ namespace ProjectVS.Monster.Spawner
                     Random.Range(-spawnRange.y, spawnRange.y),
                     0);
 
-                GameObject unit = Instantiate(spanwUnit, spawnPos, Quaternion.identity);
+                GameObject unit = GameObject.Instantiate(spanwUnit, spawnPos, Quaternion.identity);
                 var boid = unit.GetOrAddComponent<PureBoid>();
                 spawned.Add(unit);
                 boids.Add(boid);

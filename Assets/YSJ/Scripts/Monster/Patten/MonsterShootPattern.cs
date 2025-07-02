@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using ProjectVS.Phase;
+using ProjectVS.Unit.Player;
 
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace ProjectVS.Monster.Pattern
         public override void Init(MonsterPhaseController phaseController)
         {
             base.Init(phaseController);
-            _target = GameManager.ForceInstance.Player;
+            _target = PlayerSpawner.ForceInstance.CurrentPlayer.GetComponent<PlayerConfig>();
         }
 
         public override bool Condition()

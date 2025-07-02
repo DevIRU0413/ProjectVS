@@ -39,16 +39,18 @@ namespace ProjectVS.ItemData.ItemData
         Throw = 11,
         Fiveway = 12,
         Bomb = 13,
-        Dobule = 14
+        Double = 14,
+        Eightway = 15
     }
 
     public enum ItemSetEffect
     {
-        TheftSet = 0,
-        MagicianSet = 1,
-        RobinSet = 2,
-        NinjaSet = 3,
-        KnightSet = 4
+        None = 0,
+        TheftSet = 1,
+        MagicianSet = 2,
+        RobinSet = 3,
+        NinjaSet = 4,
+        KnightSet = 5,
     }
 
     [System.Serializable]

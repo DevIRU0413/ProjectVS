@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78aa7c90a68c7814a99adf4ec12c740c, type: 3}
+  m_Name: Monster_Simple_SpawnSetting
+  m_EditorClassIdentifier: 
+  spawnEntries:
+  - GroupName: Wave_Radius
+    SpawnGroupType: 1
+    SpawnableObjects:
+    - {fileID: 707399079469239205, guid: 1562958484c249347baaf6f66b96f783, type: 3}
+    - {fileID: 2924864599327088652, guid: 60de3a48a582f8447abb4eb194d85030, type: 3}
+    - {fileID: 1525442468859836848, guid: 8f4254cfe7ea3ca41957de0c49fadf1d, type: 3}
+    - {fileID: 2924864599327088652, guid: 071bd723312eb41478efba1ba43ee430, type: 3}
+    - {fileID: 2924864599327088652, guid: d85f0253abd7bb6428ac1b4e94e6fae2, type: 3}
+    - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+    GroupUnitSpawnCount: 2
+    Interval: 4
+    AutoStart: 1
+    StopAfterTime: 900
+    timer: 3.4101036
+    activeTime: 15.430331
+  - GroupName: Wave_Line
+    SpawnGroupType: 2
+    SpawnableObjects:
+    - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+    GroupUnitSpawnCount: 20
+    Interval: 30
+    AutoStart: 1
+    StopAfterTime: 900
+    timer: 15.430331
+    activeTime: 15.430331
+  - GroupName: Wave_Circle
+    SpawnGroupType: 3
+    SpawnableObjects:
+    - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+    GroupUnitSpawnCount: 30
+    Interval: 180
+    AutoStart: 1
+    StopAfterTime: 900
+    timer: 15.430331
+    activeTime: 15.430331
+  radius: 15
+  isReverseLine: 1
+  offset: 2
+  distance: 10
+  directionList:
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
+  - {x: 1, y: 1}
+  - {x: -1, y: -1}
+  circleRadius: 15
+  gridSize: {x: 3, y: 3}
+  gridSpacing: 2
+  moveSpeed: 5
+  neighborRadius: 3
+  separationDistance: 1
+  weightFixed: 1.6
+  weightSeparation: 1.5
+  weightAlignment: 1
+  weightCohesion: 1
+  spawnRange: {x: 5, y: 5}
+  spawnDistance: 10
+  isRandomSpawnDirection: 1
+  spawnAngleList: []

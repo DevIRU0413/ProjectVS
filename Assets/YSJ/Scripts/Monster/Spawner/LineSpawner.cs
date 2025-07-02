@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace ProjectVS.Monster.Spawner
 {
-    public class LineSpawner : Spawner
+    public class LineSpawner : SpawnerBase
     {
         public bool isReverseLine = false;
         public float offset = 1.5f;
         public float distance = 10.0f;
         public List<Vector2> directionList = new();
 
-        public override void SpawnUnits(Vector3 spawnPoint, int unitCount)
+        public override void SpawnUnits(GameObject target, Vector3 spawnPoint, int unitCount)
         {
             if (directionList.Count <= 0) return;
 
@@ -57,9 +57,11 @@ namespace ProjectVS.Monster.Spawner
                 Vector3 sideDir = (i % 2 == 0) ? leftDir : rightDir;
                 Vector3 spawnPos = spawnPoint + sideDir * offsetDistance;
 
-                GameObject go = Instantiate(spanwUnit, spawnPos, Quaternion.identity);
-                spawned.Add(go);
+                // GameObject go = GameObject.Instantiate(spanwUnit, spawnPos, Quaternion.identity);
+                // spawned.Add(go);
+                GameObject go = ProjectVS.Util.PoolManager.ForceInstance.Spawn(spanwUnit.name, spawnPos, Quaternion.identity);
 
+                // 이동 위임
                 var monUnit = go.GetOrAddComponent<MonsterController>();
                 monUnit.DelegateMovementAuthority();
                 monUnit.SetMoveDirection(moveDir, true);
