@@ -1,16 +1,13 @@
 ﻿using ProjectVS.Data.Player;
 using ProjectVS.ItemData.ItemData;
-using ProjectVS.Unit.Player;
-
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 using UnityEngine;
 
-namespace ProjectVS.Item
+namespace ProjectVS.ItemYSJ
 {
     public class ItemEffectHandler
     {
-        public static void ApplyEffect(PlayerStats stats, ItemDataSO item)
+        public static void ApplyEffect(Unit.Player.PlayerStats stats, ItemDataSO item)
         {
             if (item == null || stats == null) return;
 

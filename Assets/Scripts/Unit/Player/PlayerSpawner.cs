@@ -13,7 +13,7 @@ namespace ProjectVS.Unit.Player
 
         public GameObject CurrentPlayer { get; private set; }
 
-        public GameObject SpawnPlayer(Vector3 position, CharacterClass classType, PlayerStats stats)
+        public GameObject SpawnPlayer(Vector3 position, CharacterClass classType, Unit.Player.PlayerStats stats)
         {
             if (CurrentPlayer != null)
             {

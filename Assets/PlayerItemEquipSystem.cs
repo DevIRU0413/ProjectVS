@@ -1,5 +1,5 @@
 ﻿using ProjectVS.Data.Player;
-using ProjectVS.Item;
+using ProjectVS.ItemYSJ;
 using ProjectVS.ItemData.ItemData;
 
 using UnityEngine;

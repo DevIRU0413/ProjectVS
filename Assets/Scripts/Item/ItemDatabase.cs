@@ -5,7 +5,7 @@ using ProjectVS.Util;
 
 using UnityEngine;
 
-namespace ProjectVS.Item
+namespace ProjectVS.ItemYSJ
 {
     public class ItemDatabase : SimpleSingleton<ItemDatabase>
     {

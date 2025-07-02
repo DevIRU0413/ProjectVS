@@ -6,7 +6,7 @@ using ProjectVS.ItemData.ItemData;
 
 using UnityEngine;
 
-namespace ProjectVS.Item
+namespace ProjectVS.ItemYSJ
 {
     public class ItemSetEvaluator
     {

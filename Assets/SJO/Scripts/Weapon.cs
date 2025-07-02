@@ -1,5 +1,4 @@
-﻿using ProjectVS;
-using static ProjectVS.Util.PoolManager;
+﻿using ProjectVS.JDW;
 
 using UnityEngine;
 
@@ -10,14 +9,16 @@ public class Weapon : MonoBehaviour
     public float damage;
     public int count;
     public float speed;
-    
+
     public float timer;
     public PlayerController player;
 
+    private ProjectVS.Util.PoolManager _poolManager;
 
     private void Awake()
     {
-        player = GameManager.Instance.Player;
+        var config = GameManager.Instance.Player;
+        player = config.GetComponent<PlayerController>();
         _poolManager = ProjectVS.Util.PoolManager.ForceInstance;
     }
 
@@ -76,7 +77,7 @@ public class Weapon : MonoBehaviour
             case 0:
                 transform.Rotate(Vector3.forward * speed * Time.deltaTime);
                 break;
-                
+
             case 1:
                 timer += Time.deltaTime;
 
@@ -122,21 +123,20 @@ public class Weapon : MonoBehaviour
         // 플레이어 근처에 적이 없다면 반환
         Debug.Log(player.scanner.nearestTarget);
         if (!player.scanner.nearestTarget) return;
-        
+
         Vector3 targetPos = player.scanner.nearestTarget.position;
-    
+
         // 크기 포함 방향 : 목표 위치 - 자신 위치
         Vector3 dir = targetPos - transform.position;
-        
+
         // 정규화
         dir = dir.normalized;
-    
-        Transform bullet = GameManager.instance.poolManager.ReturnObject(prefabId).transform;
-        bullet.position = transform.position;
-    
+
+        Transform bullet = _poolManager.Spawn(poolKey, transform.position, Quaternion.identity).transform;
+
         // 지정한 축을 중심으로 목표를 향해 회전(z축)
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-    
+
         bullet.GetComponent<RangeWeapon>().Init(damage, count, dir);
     }
 }

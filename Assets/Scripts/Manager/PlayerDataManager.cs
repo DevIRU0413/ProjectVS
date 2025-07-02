@@ -20,7 +20,7 @@ namespace ProjectVS.Manager
         public CharacterClass TestCharacterClass;
 
         [Header("Player Status")]
-        public PlayerStats stats;
+        public Unit.Player.PlayerStats stats;
 
         [Header("Inventory & Items")]
         public List<Item> inventoryItems = new List<Item>();
@@ -133,7 +133,9 @@ namespace ProjectVS.Manager
 
             // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
             // stats = stats.TestStats(TestCharacterClass);
-            stats = PlayerStats.TestStats(TestCharacterClass);
+
+            /*stats = new Unit.Player.PlayerStats();
+            stats = stats.TestStats(TestCharacterClass);*/
         }
     }
 }

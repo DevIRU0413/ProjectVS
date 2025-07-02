@@ -4,7 +4,7 @@ using ProjectVS.Data.Player;
 
 using UnityEngine;
 
-namespace ProjectVS.Item
+namespace ProjectVS.ItemYSJ
 {
     public class ItemCombinator
     {
