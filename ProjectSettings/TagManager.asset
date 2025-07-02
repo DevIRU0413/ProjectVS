@@ -6,26 +6,34 @@ TagManager:
   tags:
   - MeleeWeapon
   - Monster
+  - Ground
+  - Area
+  - Rocks
+  - Obstacle
+  - Boss
+  - Store
+  - Door
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
+  - HpDown
+  - HpUp
+  - SpeedUp
+  - PowerUp
+  - MagicAttackSpeed
+  - DefenseUp
+  - AxAttackSpeed
+  - SwordAttackSpeed
+  - Aera
+  - Door
+  - Obstacle
+  - Ground
   - Monster
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 
