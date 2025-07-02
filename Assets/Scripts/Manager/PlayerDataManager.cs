@@ -44,6 +44,13 @@ namespace ProjectVS.Manager
         public HashSet<string> AcquiredCostumeName;
         public string WornCostumeName;
 
+        [Header("MonsterScore")]
+        public int totalKills; // 몬스터 총 처치 수
+
+        [Header("Playtime Info")]
+        public float totalPlayTime; // 총 플레이 시간 (초 단위)
+        public int battleSceneCount; // 전투씬 진입 횟수
+
         public void SavePlayerData(int index)
         {
             PlayerData data = new PlayerData();
@@ -65,6 +72,11 @@ namespace ProjectVS.Manager
 
             data.AcquiredCostumeName = AcquiredCostumeName;
             data.WornCostumeName = WornCostumeName;
+
+            data.TotalKills = totalKills;
+
+            data.TotalPlayTime = totalPlayTime;
+            data.BattleSceneCount = battleSceneCount;
 
             // Save
             SaveFileSystem.Save(data, index);
@@ -92,6 +104,11 @@ namespace ProjectVS.Manager
 
             AcquiredCostumeName = data.AcquiredCostumeName;
             WornCostumeName = data.WornCostumeName;
+
+            totalKills = data.TotalKills;
+
+            totalPlayTime = data.TotalPlayTime;
+            battleSceneCount = data.BattleSceneCount;
 
             print("불러오기");
         }

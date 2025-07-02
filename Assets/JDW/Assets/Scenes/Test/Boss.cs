@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    private Timer _timer;
+    public Timer Timer;
 
     public float maxHp = 500;
     public float currentHp;
@@ -16,13 +16,13 @@ public class Boss : MonoBehaviour
 
     private void Awake()
     {
-        _timer = FindObjectOfType<Timer>();
+        Timer = FindObjectOfType<Timer>();
     }
     private void Start()
     {
         currentHp = maxHp;
-        _timer.PauseTimer();
-        _timer.SetMessage("BOSS!");
+        Timer.PauseTimer();
+        Timer.SetMessage("BOSS!");
     }
     public void TakeDamage(float damage)
     {
@@ -43,9 +43,11 @@ public class Boss : MonoBehaviour
             {
                 player.ExpUp(_exp);
                 PlayerDataManager.Instance.gold += _gold;
-                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {player.PlayerDataManager.gold}");
-                _timer.ResumeTimer();
-                _timer.SetMessage("");
+                Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {PlayerDataManager.Instance.gold}");
+                Timer.ResumeTimer();
+                Timer.SetMessage("");
+                PlayerDataManager.Instance.totalKills++;
+                Debug.Log($"총 처치수: {PlayerDataManager.Instance.totalKills}");
             }
         }
         Debug.Log("보스 몬스터 사망");

@@ -24,5 +24,10 @@ namespace ProjectVS.Data
 
         public HashSet<string>                AcquiredCostumeName;       // 플레이어가 획득한 코스튬 이름
         public string                         WornCostumeName;           // NPC가 현재 착용 중인 코스튬 이름
+
+        public int TotalKills;                                           // 몬스터 처치 횟수
+
+        public float TotalPlayTime;                                      // 총 플레이 타임
+        public int BattleSceneCount;                                     // 누적 배틀씬 카운트
     }
 }
