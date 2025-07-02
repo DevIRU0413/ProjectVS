@@ -27,6 +27,8 @@ namespace ProjectVS.UIs.CharacterSelect.SelectionEffect
         [Header("애니메이션 설정")]
         [SerializeField] private float _moveDuration = 0.5f;
         [SerializeField] private float _curveHeight = 50f;
+        [SerializeField] private float _mainCharacterScale = 3f;
+        [SerializeField] private float _subCharacterScale = 2f;
 
         [Header("캐릭터 설명창, 왼쪽부터 등록")]
         [SerializeField] private List<GameObject> _characterDescriptionList;
@@ -42,6 +44,7 @@ namespace ProjectVS.UIs.CharacterSelect.SelectionEffect
         private void OnEnable()
         {
             _characterIndicator.SetActive(true);
+            _characterIndicator.ChangeIndex(currentIndex);
         }
 
         private void OnDisable()
@@ -100,13 +103,13 @@ namespace ProjectVS.UIs.CharacterSelect.SelectionEffect
                 if (offset == 0)
                 {
                     target = _centerSlot.anchoredPosition;
-                    scale = 1f;
+                    scale = _mainCharacterScale;
                     color = Color.white;
                 }
                 else if (offset == 1 || offset == _characterImages.Count - 1)
                 {
                     target = offset == 1 ? _rightSlot.anchoredPosition : _leftSlot.anchoredPosition;
-                    scale = 0.8f;
+                    scale = _subCharacterScale;
                     color = new Color(1f, 1f, 1f, 0.5f);
                 }
                 else

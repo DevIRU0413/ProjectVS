@@ -32,6 +32,8 @@ namespace ProjectVS.NPC.NPCBehaviour
         [SerializeField, Range(0f, 10f)] private float _waitBeforeVanishTime = 2f;
         [SerializeField, Range(0f, 10f)] float _moveDistance = 3f;
 
+        private bool _isInteracted = false;
+
         private void Awake()
         {
             if (_spriteRenderer == null)
@@ -48,6 +50,8 @@ namespace ProjectVS.NPC.NPCBehaviour
 
             HeartEmoji.SetActive(false);
             CryEmoji.SetActive(false);
+
+            _isInteracted = false;
         }
 
 
@@ -55,6 +59,9 @@ namespace ProjectVS.NPC.NPCBehaviour
         {
             if (((1 << collision.gameObject.layer) & _playerLayer) != 0)
             {
+                if (_isInteracted) return;
+
+                _isInteracted = true;
                 UIManager.Instance.Show("NPC Interaction Select Panel");
                 Vanish();
             }
