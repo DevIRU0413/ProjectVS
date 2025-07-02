@@ -14,18 +14,16 @@ public class Crafting : MonoBehaviour
 
     public Action OnCraft;
 
-    //private void Awake() => Init();
+    private void Awake() => Init();
 
-    //private void Init()
-    //{
-    //    craftStuff = new List<Stuff>();
-    //}
+    private void Init()
+    {
+        CraftStuff = new List<Stuff>();
+    }
 
     private void Update()
     {
-        {
-            PossibleCraft();
-        }
+        PossibleCraft();
     }
 
     // 조합 가능한 레시피인지?
@@ -70,11 +68,8 @@ public class Crafting : MonoBehaviour
         return recipe.result;
     }
 
-    /// <summary>
-    /// List<Recipe>에 아이템들 넣어놓기 위한 함수
-    /// </summary>
-    public void AddItem()
+    public void AddItem(Stuff item)
     {
-        //_recipes.Add();
+        CraftStuff.Add(item);
     }
 }

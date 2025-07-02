@@ -10,7 +10,7 @@ public class CraftResult : MonoBehaviour
     private Sprite _resultSprite;
 
     // PossibleCraft 가져오고
-    private Crafting _crafting;
+    [SerializeField] private Crafting _crafting;
 
     // 조합 결과 레시피 가져오고
     private Recipe _resultRecipe;
