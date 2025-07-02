@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace ProjectVS.Utils.UIManager
 {
     // 추후 Ui관련 팀원분과 조율 예정
-    public class UiManager : MonoBehaviour
+    public class BattleSceneUI : MonoBehaviour
     {
         [Header("Bar Ui")]
         public PixelUI.ValueBar ExpBar;    //경험치바를 채울 이미지
@@ -42,25 +42,33 @@ namespace ProjectVS.Utils.UIManager
         }
         private void Start()
         {
-            //초기에 플레이어가 없을 경우 대체값
+            //초기에 플레이어가 없을 경우 대체용
             if (ExpBar != null)
             {
                 ExpBar.CurrentValue = 0f;
-                ExpBar.MaxValue = 1f; // 비율 기반이라서 0~1
+                ExpBar.MaxValue = 1f;
             }
         }
 
         private void Update()
         {
-            if (Player == null)
-                Player = FindObjectOfType<PlayerConfig>(); // 자동으로 플레이어 찾음       
-            if (Boss == null)
-                Boss = FindObjectOfType<Boss>(); // 자동으로 보스를 찾음
-
+           if(Player == null || Boss == null) // 플레이어와 보스가 없을 경우 
+            {
+                TryFindReferences();
+            }
+            if (Player == null || Player.Stats == null)
+                return;
 
             UpdateExpBar();
             UpdateBossHpBar();
             UpdateTexts();
+        }
+        private void TryFindReferences()
+        {
+            if (Player == null)
+                Player = FindObjectOfType<PlayerConfig>(); // 자동으로 플레이어 찾음       
+            if (Boss == null)
+                Boss = FindObjectOfType<Boss>(); // 자동으로 보스를 찾음
         }
         public void UpdatePortrait(float hpRatio)
         {
@@ -99,13 +107,19 @@ namespace ProjectVS.Utils.UIManager
 
         private void UpdateTexts()
         {
+            if (Player == null || Player.Stats == null) 
+                return;
+
             if (LevelText != null)
                 LevelText.text = $"{Mathf.FloorToInt(Player.Stats.Level)}";
 
-            if (GoldText != null && PlayerDataManager.Instance != null)
-                GoldText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.gold)}";
-            if (DiamondsText != null && PlayerDataManager.Instance != null)
-                DiamondsText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.diamonds)}";
+            if (PlayerDataManager.Instance != null)
+            {
+                if (GoldText != null && PlayerDataManager.Instance != null)
+                    GoldText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.gold)}";
+                if (DiamondsText != null && PlayerDataManager.Instance != null)
+                    DiamondsText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.diamonds)}";
+            }
         }
         public void ShowDeathResult()
         {

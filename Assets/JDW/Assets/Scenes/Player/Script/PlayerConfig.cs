@@ -25,7 +25,7 @@ namespace ProjectVS
         public AttackPosition AttackPosition;
 
         public bool IsDead = false;
-        private UiManager _uiManager;
+        private BattleSceneUI _uiManager;
         private bool _statsApplied = false;
         [SerializeField] public PlayerStats Stats;
         [SerializeField] private PixelUI.ValueBar _hpBar;
@@ -49,7 +49,7 @@ namespace ProjectVS
         }
         private void Start()
         {
-            _uiManager = FindObjectOfType<UiManager>();
+            _uiManager = FindObjectOfType<BattleSceneUI>();
             UpdateHpBar(); // 초기 체력바 표시
            
         }
