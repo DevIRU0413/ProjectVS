@@ -18,13 +18,14 @@ using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.Choi
 using SpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
 using ProjectVS.Manager;
 using ProjectVS.Util;
+using ProjectVS.Interface;
 
 
 namespace ProjectVS.Dialogue.DialogueManager
 {
     // TODO: 클래스에 책임이 너무 많은 것 같아서 분리해야 될 듯
 
-    public class DialogueManager : SimpleSingleton<DialogueManager>
+    public class DialogueManager : SimpleSingleton<DialogueManager>, IManager
     {
         [Header("각 분기별 텍스트")]
         [SerializeField] private DialogueTextTyperClass _shopEnterText;
@@ -44,6 +45,10 @@ namespace ProjectVS.Dialogue.DialogueManager
         private DialogueDataClass _currentDialogueData;
 
         public DialogueDataClass CurrentDialogueData => _currentDialogueData; // 코스튬 상점에서 접근하기 위해 열어둠
+
+        public int Priority => (int)ManagerPriority.DialogueManager;
+
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
 
         private List<DialogueDataClass> _dialogueList = new();
         private List<ChoiceDataClass> _choiceList = new();
@@ -562,6 +567,21 @@ namespace ProjectVS.Dialogue.DialogueManager
                     data.IsPrinted = true;
                 }
             }
+        }
+
+        public void Initialize()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Cleanup()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public GameObject GetGameObject()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
