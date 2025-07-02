@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 
-using ProjectVS.Data.Player;
+using ProjectVS.Data;
 using ProjectVS.Util;
 
 using UnityEngine;
 
-namespace ProjectVS.ItemYSJ
+namespace ProjectVS.Item
 {
     public class ItemDatabase : SimpleSingleton<ItemDatabase>
     {
-        [SerializeField] private List<ItemDataSO> itemDataList = new();
-        private Dictionary<int, ItemDataSO> _itemDict = new();
+        [SerializeField] private List<ItemData> itemDataList = new();
+        private Dictionary<int, ItemData> _itemDict = new();
 
         protected override void Awake()
         {
@@ -34,7 +34,7 @@ namespace ProjectVS.ItemYSJ
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ItemDataSO GetItem(int id)
+        public ItemData GetItem(int id)
         {
             _itemDict.TryGetValue(id, out var item);
             return item;
@@ -44,6 +44,6 @@ namespace ProjectVS.ItemYSJ
         /// 아이템 리스트 전체 확인용
         /// </summary>
         /// <returns></returns>
-        public List<ItemDataSO> GetAllItems() => itemDataList;
+        public List<ItemData> GetAllItems() => itemDataList;
     }
 }

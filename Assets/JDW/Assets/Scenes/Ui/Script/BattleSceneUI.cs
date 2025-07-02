@@ -116,21 +116,21 @@ namespace ProjectVS.JDW
             if (PlayerDataManager.Instance != null)
             {
                 if (GoldText != null && PlayerDataManager.Instance != null)
-                    GoldText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.gold)}";
+                    GoldText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.Gold)}";
                 if (DiamondsText != null && PlayerDataManager.Instance != null)
-                    DiamondsText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.diamonds)}";
+                    DiamondsText.text = $"{Mathf.FloorToInt(PlayerDataManager.Instance.Diamonds)}";
             }
         }
         public void ShowDeathResult()
         {
             var data = PlayerDataManager.Instance;
 
-            int min = (int)(data.totalPlayTime / 60f);
-            int sec = (int)(data.totalPlayTime % 60f);
+            int min = (int)(data.TotalPlayTime / 60f);
+            int sec = (int)(data.TotalPlayTime % 60f);
 
-            MonsterScore.text = $"MonsterScore : {data.totalKills}";
+            MonsterScore.text = $"MonsterScore : {data.TotalKills}";
             PlayerTime.text = $"PlayerTime: {min:D2}:{sec:D2}";
-            Stage.text = $"Total Stage: {data.battleSceneCount}";
+            Stage.text = $"Total Stage: {data.BattleSceneCount}";
 
             ScoreUi.SetActive(true);
         }

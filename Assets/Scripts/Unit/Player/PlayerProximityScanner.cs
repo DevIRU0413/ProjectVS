@@ -9,7 +9,7 @@ namespace ProjectVS.Unit.Player
         protected override void Awake()
         {
             base.Awake();
-            // AddCondition(MonsterCheckCondition);
+            // AddCondition(MonsterCheckCondition); // Test 떄문에 주석
         }
 
         private bool MonsterCheckCondition(GameObject go)

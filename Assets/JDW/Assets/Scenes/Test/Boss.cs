@@ -44,12 +44,12 @@ namespace ProjectVS.JDW
                 if (player != null)
                 {
                     player.ExpUp(_exp);
-                    PlayerDataManager.Instance.gold += _gold;
-                    Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {PlayerDataManager.Instance.gold}");
+                    PlayerDataManager.Instance.Gold += _gold;
+                    Debug.Log($"골드 흭득 : {_gold}, 현재 골드 : {PlayerDataManager.Instance.Gold}");
                     Timer.ResumeTimer();
                     Timer.SetMessage("");
-                    PlayerDataManager.Instance.totalKills++;
-                    Debug.Log($"총 처치수: {PlayerDataManager.Instance.totalKills}");
+                    PlayerDataManager.Instance.TotalKills++;
+                    Debug.Log($"총 처치수: {PlayerDataManager.Instance.TotalKills}");
                 }
             }
             Debug.Log("보스 몬스터 사망");

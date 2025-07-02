@@ -11,7 +11,7 @@ public class MapSwitcher : MonoBehaviour
 {
     void Awake()
     {
-        PlayerDataManager.Instance.battleSceneCount++;
+        PlayerDataManager.Instance.BattleSceneCount++;
     }
     public void OnBattleField()
    {
@@ -28,7 +28,7 @@ public class MapSwitcher : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "BattleScene")
         {
-            PlayerDataManager.Instance.battleSceneCount++;
+            PlayerDataManager.Instance.BattleSceneCount++;
         }
     }
 }

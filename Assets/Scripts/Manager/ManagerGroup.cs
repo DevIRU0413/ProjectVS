@@ -11,12 +11,12 @@ namespace ProjectVS.Managers
     public class ManagerGroup : MonoBehaviour
     {
         #region Singleton
-        private static ManagerGroup m_instance;
+        private static ManagerGroup _instance;
         public static ManagerGroup Instance
         {
             get
             {
-                if (m_instance == null)
+                if (_instance == null)
                 {
                     string groupName = $"@{typeof(ManagerGroup).Name}";
                     GameObject go = GameObject.Find(groupName);
@@ -26,46 +26,46 @@ namespace ProjectVS.Managers
                         DontDestroyOnLoad(go);
                     }
 
-                    m_instance = go.GetOrAddComponent<ManagerGroup>();
+                    _instance = go.GetOrAddComponent<ManagerGroup>();
                 }
 
-                return m_instance;
+                return _instance;
             }
         }
         #endregion
 
         #region PrivateVariables
-        private List<IManager> m_unregisteredManagers  = new(); // 미등록
-        private List<IManager> m_registeredManagers = new(); // 등록됨
+        private List<IManager> _unregisteredManagers  = new(); // 미등록
+        private List<IManager> _registeredManagers = new(); // 등록됨
 
-        private bool m_isManagersInitialized = false; // 초기화 중간 확인 및 매니저들 사용 여부 확인용
+        private bool _isManagersInitialized = false; // 초기화 중간 확인 및 매니저들 사용 여부 확인용
         #endregion
 
         #region PublicMethod
 
         public bool IsUseAble()
         {
-            return m_isManagersInitialized;
+            return _isManagersInitialized;
         }
 
         public void RegisterManager(IManager manager)
         {
-            if (manager == null || m_registeredManagers.Contains(manager) || m_unregisteredManagers.Contains(manager))
+            if (manager == null || _registeredManagers.Contains(manager) || _unregisteredManagers.Contains(manager))
                 return;
 
-            foreach (var m in m_registeredManagers)
+            foreach (var m in _registeredManagers)
             {
                 if (m.Equals(manager))
                     return;
             }
 
-            foreach (var m in m_unregisteredManagers)
+            foreach (var m in _unregisteredManagers)
             {
                 if (m.Equals(manager))
                     return;
             }
 
-            m_unregisteredManagers.Add(manager);
+            _unregisteredManagers.Add(manager);
         }
 
         public void RegisterManager(GameObject managerObject)
@@ -85,10 +85,10 @@ namespace ProjectVS.Managers
 
         public void InitializeManagers()
         {
-            m_isManagersInitialized = false;
-            SortManagersByPriorityAscending(m_unregisteredManagers);
+            _isManagersInitialized = false;
+            SortManagersByPriorityAscending(_unregisteredManagers);
 
-            foreach (var manager in m_unregisteredManagers)
+            foreach (var manager in _unregisteredManagers)
             {
                 manager.Initialize();
                 GameObject goM = manager.GetGameObject();
@@ -99,12 +99,12 @@ namespace ProjectVS.Managers
                 }
 
                 Debug.Log($"[Init] {goM.name}");
-                m_registeredManagers.Add(manager);
+                _registeredManagers.Add(manager);
                 goM.transform.parent = transform;
             }
 
-            m_unregisteredManagers.Clear();
-            m_isManagersInitialized = true;
+            _unregisteredManagers.Clear();
+            _isManagersInitialized = true;
         }
 
         /// <summary>
@@ -112,14 +112,14 @@ namespace ProjectVS.Managers
         /// </summary>
         public void CleanupManagers()
         {
-            for (int i = 0; i < m_registeredManagers.Count; i++)
+            for (int i = 0; i < _registeredManagers.Count; i++)
             {
-                IManager manager = m_registeredManagers[i];
+                IManager manager = _registeredManagers[i];
                 GameObject go = manager.GetGameObject();
 
                 if (go == null)
                 {
-                    m_registeredManagers.Remove(manager);
+                    _registeredManagers.Remove(manager);
                     continue;
                 }
 
@@ -134,16 +134,16 @@ namespace ProjectVS.Managers
         /// <param name="forceClear">강제 정리 여부</param>
         public void ClearManagers(bool forceClear = false)
         {
-            for (int i = 0; i < m_registeredManagers.Count; i++)
+            for (int i = 0; i < _registeredManagers.Count; i++)
             {
-                IManager manager = m_registeredManagers[i];
+                IManager manager = _registeredManagers[i];
                 if (!manager.IsDontDestroy || forceClear)
                 {
                     GameObject go = manager.GetGameObject();
 
                     if (go == null)
                     {
-                        m_registeredManagers.Remove(manager);
+                        _registeredManagers.Remove(manager);
                         continue;
                     }
 

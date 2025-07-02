@@ -2,6 +2,7 @@
 
 using ProjectVS.Data;
 using ProjectVS.Interface;
+using ProjectVS.Unit.Player;
 using ProjectVS.Util;
 
 using UnityEngine;
@@ -20,18 +21,18 @@ namespace ProjectVS.Manager
         public CharacterClass TestCharacterClass;
 
         [Header("Player Status")]
-        public Unit.Player.PlayerStats stats;
+        public PlayerStats Stats;
 
         [Header("Inventory & Items")]
-        public List<Item> inventoryItems = new List<Item>();
+        public List<ItemData> InventoryItems = new List<ItemData>();
 
         [Header("Progress Info")]
-        public int currentStageFloor;
-        public int monstersDefeated;
+        public int CurrentStageFloor;
+        public int MonstersDefeated;
 
         [Header("Currency")]
-        public int gold;
-        public int diamonds;
+        public int Gold;
+        public int Diamonds;
 
         [Header("Dialogue")]
         public HashSet<int> ReadDialogeIDs;
@@ -45,11 +46,11 @@ namespace ProjectVS.Manager
         public string WornCostumeName;
 
         [Header("MonsterScore")]
-        public int totalKills; // 몬스터 총 처치 수
+        public int TotalKills; // 몬스터 총 처치 수
 
         [Header("Playtime Info")]
-        public float totalPlayTime; // 총 플레이 시간 (초 단위)
-        public int battleSceneCount; // 전투씬 진입 횟수
+        public float TotalPlayTime; // 총 플레이 시간 (초 단위)
+        public int BattleSceneCount; // 전투씬 진입 횟수
 
         public int Priority => (int)ManagerPriority.PlayerDataManager;
         public bool IsDontDestroy => IsDontDestroyOnLoad;
@@ -66,8 +67,8 @@ namespace ProjectVS.Manager
             // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
             // stats = stats.TestStats(TestCharacterClass);
 
-            stats = new Unit.Player.PlayerStats();
-            stats = stats.TestStats(TestCharacterClass);
+            Stats = new Unit.Player.PlayerStats();
+            Stats = Stats.TestStats(TestCharacterClass);
         }
         public void Cleanup() { }
 
@@ -76,15 +77,15 @@ namespace ProjectVS.Manager
         {
             PlayerData data = new PlayerData();
 
-            data.Stats = stats;
+            data.Stats = Stats;
 
-            data.InventoryItems = inventoryItems;
+            data.InventoryItems = InventoryItems;
 
-            data.CurrentStage = currentStageFloor;
-            data.MonstersDefeated = monstersDefeated;
+            data.CurrentStage = CurrentStageFloor;
+            data.MonstersDefeated = MonstersDefeated;
 
-            data.Gold = gold;
-            data.Diamonds = diamonds;
+            data.Gold = Gold;
+            data.Diamonds = Diamonds;
 
             data.ReadDialogeIDs = ReadDialogeIDs;
 
@@ -94,10 +95,10 @@ namespace ProjectVS.Manager
             data.AcquiredCostumeName = AcquiredCostumeName;
             data.WornCostumeName = WornCostumeName;
 
-            data.TotalKills = totalKills;
+            data.TotalKills = TotalKills;
 
-            data.TotalPlayTime = totalPlayTime;
-            data.BattleSceneCount = battleSceneCount;
+            data.TotalPlayTime = TotalPlayTime;
+            data.BattleSceneCount = BattleSceneCount;
 
             // Save
             SaveFileSystem.Save(data, index);
@@ -110,13 +111,13 @@ namespace ProjectVS.Manager
             PlayerData data = SaveFileSystem.Load(index);
             if (data == null) return;
 
-            inventoryItems = data.InventoryItems;
+            InventoryItems = data.InventoryItems;
 
-            currentStageFloor = data.CurrentStage;
-            monstersDefeated = data.MonstersDefeated;
+            CurrentStageFloor = data.CurrentStage;
+            MonstersDefeated = data.MonstersDefeated;
 
-            gold = data.Gold;
-            diamonds = data.Diamonds;
+            Gold = data.Gold;
+            Diamonds = data.Diamonds;
 
             ReadDialogeIDs = data.ReadDialogeIDs;
 
@@ -126,10 +127,10 @@ namespace ProjectVS.Manager
             AcquiredCostumeName = data.AcquiredCostumeName;
             WornCostumeName = data.WornCostumeName;
 
-            totalKills = data.TotalKills;
+            TotalKills = data.TotalKills;
 
-            totalPlayTime = data.TotalPlayTime;
-            battleSceneCount = data.BattleSceneCount;
+            TotalPlayTime = data.TotalPlayTime;
+            BattleSceneCount = data.BattleSceneCount;
 
             print("불러오기");
         }

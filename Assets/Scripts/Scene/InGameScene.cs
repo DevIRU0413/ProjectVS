@@ -28,7 +28,7 @@ namespace ProjectVS.Scene
             else
                 spawnPos = SpawnPoint.transform.position;
 
-            var stats = PlayerDataManager.ForceInstance.stats;
+            var stats = PlayerDataManager.ForceInstance.Stats;
             var classType = stats.CharacterClass;
 
             Unit.Player.PlayerSpawner.ForceInstance.SpawnPlayer(spawnPos, classType, stats);

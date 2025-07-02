@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ProjectVS.Data;
 using ProjectVS.Manager;
 using ProjectVS.Unit;
+using ProjectVS.Unit.Player;
 using ProjectVS.Utils.UIManager;
 
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -74,7 +75,7 @@ namespace ProjectVS.JDW
                     case 2: AttackPosition.SwitchCoroutine(AttackPosition.Fire()); break;
                 }
             }
-            Debug.Log($"[TSV 적용됨] ATK: {Stats.BaseAtk}, DEF: {Stats.BaseDfs}, HP: {Stats.CurrentHp}, SPD: {Stats.BaseSpd}");
+            Debug.Log($"[TSV 적용됨] ATK: {Stats.CurrentAtk}, DEF: {Stats.CurrentDfs}, HP: {Stats.CurrentHp}, SPD: {Stats.CurrentSpd}");
         }
         private void UpdateHpBar()
         {
@@ -90,12 +91,12 @@ namespace ProjectVS.JDW
         }
         public bool TryBuyItem(int price, int bonusHp, int bonusAtk, int bonusDfs, float bonusAtkSpd, float bonusSpd, string itemName)
         {
-            if (PlayerDataManager.Instance.gold < price)
+            if (PlayerDataManager.Instance.Gold < price)
             {
                 Debug.Log("골드 부족");
                 return false;
             }
-            PlayerDataManager.Instance.gold -= price;
+            PlayerDataManager.Instance.Gold -= price;
 
             // 기존 시스템을 활용해서 스탯 증가
             Stats.AddBaseStats(bonusHp, bonusAtk, bonusDfs, bonusSpd, bonusAtkSpd);
@@ -105,7 +106,7 @@ namespace ProjectVS.JDW
             Inventory.Add(itemName);
             UpdateHpBar(); // 최대 체력이 오를 때 Hp바도 같이
 
-            Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHp}, 공격력 +{bonusAtk}, 방어력 +{bonusDfs},  공격속도 +{bonusAtkSpd}, 이동속도 +{bonusSpd} 남은 골드: {PlayerDataManager.Instance.gold}");
+            Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHp}, 공격력 +{bonusAtk}, 방어력 +{bonusDfs},  공격속도 +{bonusAtkSpd}, 이동속도 +{bonusSpd} 남은 골드: {PlayerDataManager.Instance.Gold}");
             return true;
         }
         public void TakeDamage(float damage)
@@ -144,11 +145,11 @@ namespace ProjectVS.JDW
 
             if (Timer != null)
             {
-                int battleCount = PlayerDataManager.Instance.battleSceneCount; // 현재 카운트된 전투 씬
+                int battleCount = PlayerDataManager.Instance.BattleSceneCount; // 현재 카운트된 전투 씬
                 float survivedTime = 900f - Timer.CurrentTime; // 이번 전투씬 생존 시간
                 float totalPlayTime = (battleCount - 1) * 900f + survivedTime; // 씬 포함 모든 전투 플레이 시간
 
-                PlayerDataManager.Instance.totalPlayTime = totalPlayTime;
+                PlayerDataManager.Instance.TotalPlayTime = totalPlayTime;
 
                 Debug.Log($"[플레이타임 계산] 전투씬 수: {battleCount}, 생존시간: {survivedTime}초, 총 플레이타임: {totalPlayTime}초");
             }

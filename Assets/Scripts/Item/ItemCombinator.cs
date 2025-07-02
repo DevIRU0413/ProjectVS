@@ -1,21 +1,19 @@
 ﻿using System.Collections.Generic;
 
-using ProjectVS.Data.Player;
+using ProjectVS.Data;
 
-using UnityEngine;
-
-namespace ProjectVS.ItemYSJ
+namespace ProjectVS.Item
 {
     public class ItemCombinator
     {
-        private readonly Dictionary<(int, int), ItemDataSO> _combineDict = new();
+        private readonly Dictionary<(int, int), ItemData> _combineDict = new();
 
-        public ItemCombinator(List<ItemDataSO> allItems)
+        public ItemCombinator(List<ItemData> allItems)
         {
             BuildCombinationMap(allItems);
         }
 
-        private void BuildCombinationMap(List<ItemDataSO> items)
+        private void BuildCombinationMap(List<ItemData> items)
         {
             foreach (var item in items)
             {
@@ -40,7 +38,7 @@ namespace ProjectVS.ItemYSJ
         /// <summary>
         /// 두 아이템 ID로 조합 가능한 아이템 반환
         /// </summary>
-        public bool TryCombine(int id1, int id2, out ItemDataSO result)
+        public bool TryCombine(int id1, int id2, out ItemData result)
         {
             return _combineDict.TryGetValue(CreateKey(id1, id2), out result);
         }

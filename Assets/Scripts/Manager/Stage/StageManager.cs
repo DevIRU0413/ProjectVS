@@ -31,7 +31,6 @@ namespace ProjectVS.Stage
                 _stageDataSo = Resources.Load<StageDataSO>(TEST_STAGE_SIMPLE_DATA);
 
             _context = StageInitializer.BuildContext(this.gameObject, _stageDataSo);
-
             if (_context == null)
             {
                 Debug.LogError("[StageManager] StageContext 생성 실패");

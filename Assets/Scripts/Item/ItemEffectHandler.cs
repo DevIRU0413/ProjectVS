@@ -1,13 +1,14 @@
-﻿using ProjectVS.Data.Player;
-using ProjectVS.ItemData.ItemData;
+﻿using ProjectVS.Data;
 
 using UnityEngine;
 
-namespace ProjectVS.ItemYSJ
+namespace ProjectVS.Item
 {
     public class ItemEffectHandler
     {
-        public static void ApplyEffect(Unit.Player.PlayerStats stats, ItemDataSO item)
+        // 단순 힐 같이 단발성 아이템도 존재하기에 따로 뺴서 관리
+        // 인벤에 귀속 기능 x
+        public static void ApplyEffect(Unit.Player.PlayerStats stats, ItemData item)
         {
             if (item == null || stats == null) return;
 

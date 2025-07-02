@@ -43,7 +43,7 @@ namespace ProjectVS.Unit.Player
 
             Debug.Log($"레벨 업, 현재 레벨 : {Level}, 남은 경험치 : {CurrentExp}, 다음 레벨까지 : {MaxExp}");
         }
-        private void AddBaseStats(float hp, float atk, float dfs, float spd, float atkSpd)
+        public void AddBaseStats(float hp, float atk, float dfs, float spd, float atkSpd)
         {
             SetIncreaseBaseStats(UnitStaus.MaxHp, hp);
             SetIncreaseBaseStats(UnitStaus.Atk, atk);

@@ -1,40 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using ProjectVS.Data;
+using ProjectVS.Utils.CsvParseUtils;
+using ProjectVS.Utils.CsvReader;
+using ProjectVS.Utils.CsvTable;
+
 using UnityEngine;
 
-using ProjectVS.Utils.CsvReader;
-using ItemDataClass = ProjectVS.ItemData.ItemData.ItemData;
-using ProjectVS.Utils.CsvTable;
-using ProjectVS.Utils.CsvParseUtils;
-using ProjectVS.ItemData.ItemData;
-
-
-namespace ProjectVS.ItemData.ItemDataParser
+namespace ProjectVS.Item
 {
     public class ItemDataParser : MonoBehaviour
     {
-        public static List<ItemDataClass> Parse(CsvTable table)
+        public static List<ItemData> Parse(CsvTable table)
         {
             CsvReader.Read(table);
-            List<ItemDataClass> list = new();
+            List<ItemData> list = new();
 
             int rowCount = table.Table.GetLength(0);
 
             for (int r = 3; r < rowCount; r++)
             {
-                ItemDataClass data = new()
+                ItemData data = new()
                 {
-                    ID = CsvParseUtils.TryParseInt(table.GetData(r, 1)),
+                    ItemID = CsvParseUtils.TryParseInt(table.GetData(r, 1)),
                     ItemRank = (ItemRank)CsvParseUtils.TryParseInt(table.GetData(r, 2)),
                     ItemName = CsvParseUtils.TryParseString(table.GetData(r, 3)),
                     ItemType = (ItemType)CsvParseUtils.TryParseInt(table.GetData(r, 4)),
                     AttackSpeed = CsvParseUtils.TryParseFloat(table.GetData(r, 5)),
-                    Effect = (ItemEffect)CsvParseUtils.TryParseInt(table.GetData(r, 6)),
-                    EffectValue = CsvParseUtils.TryParseFloat(table.GetData(r, 7)),
-                    CombineItem1 = CsvParseUtils.TryParseInt(table.GetData(r, 8)),
-                    CombineItem2 = CsvParseUtils.TryParseInt(table.GetData(r, 9)),
+                    ItemEffect = (ItemEffect)CsvParseUtils.TryParseInt(table.GetData(r, 6)),
+                    ItemEffectValue = CsvParseUtils.TryParseFloat(table.GetData(r, 7)),
+                    CombineItemID1 = CsvParseUtils.TryParseInt(table.GetData(r, 8)),
+                    CombineItemID2 = CsvParseUtils.TryParseInt(table.GetData(r, 9)),
                     SetEffect = (ItemSetEffect)CsvParseUtils.TryParseInt(table.GetData(r, 10)),
-                    SetItemCount = CsvParseUtils.TryParseInt(table.GetData(r, 11)),
+                    SetEffectRequiredCount = CsvParseUtils.TryParseInt(table.GetData(r, 11)),
                     MaxLevel = CsvParseUtils.TryParseInt(table.GetData(r, 12)),
                     Price = CsvParseUtils.TryParseInt(table.GetData(r, 13)),
                     Range = CsvParseUtils.TryParseFloat(table.GetData(r, 14)),

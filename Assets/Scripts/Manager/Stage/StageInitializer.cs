@@ -17,7 +17,7 @@ namespace ProjectVS.Manager.Stage
             ctx.StageData = stageData;
 
             // 1. PlayerStats 가져오기
-            var stats = PlayerDataManager.ForceInstance.stats;
+            var stats = PlayerDataManager.ForceInstance.Stats;
             var classType = stats.CharacterClass;
 
             // 2. 스폰 위치 찾기
