@@ -28,25 +28,14 @@ namespace ProjectVS.JDW
             // TSV 데이터 불러옴
             CsvTable table = new CsvTable("Min/Resources/CharacterSelectionData.tsv", '\t');
             _characterDataList = CharacterSelectionDataParser.Parse(table);
-
+        }
+        private void Start()
+        {
             if (InputManager.Instance == null)
             {
                 Debug.LogError("InputManager.Instance is null! 확인 필요");
                 return;
             }
-
-            _inputActions = InputManager.Instance.inputActions;
-
-            if (_inputActions == null)
-            {
-                Debug.LogError("inputActions is null! InputManager 초기화 확인");
-                return;
-            }
-
-            _inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
-        }
-        private void Start()
-        {
             _inputActions = InputManager.Instance.inputActions;
             _inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
             _inputActions.CharacterSelect.Enable();
