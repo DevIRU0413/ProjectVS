@@ -38,7 +38,7 @@ namespace ProjectVS.JDW
         {
             _anim = GetComponent<Animator>();
             Scanner = GetComponent<Scanner>();
-            //  Stats = PlayerStats.TestStats(SelectedClass); // playerStats에서 클래스 데이터를 사용 할 경우 이걸사용
+
             // 타이머 자동 할당
             if (Timer == null)
             {
@@ -60,8 +60,6 @@ namespace ProjectVS.JDW
         {
             if (_statsApplied) return; // TSV 데이터로 이미 적용했으면 그 다음부터는 무시
             // TSV 데이터 기반으로 Stats 초기화
-           // Stats = new PlayerStats(1, SelectedClass, data.HP, data.Attack, data.Defense, data.MoveSpeed, data.AttackSpeed);
-          //  Stats.CurrentHp = data.HP;
             var stats = PlayerDataManager.Instance.Stats;
 
             stats.Level = 1;                                           //////////
@@ -82,17 +80,6 @@ namespace ProjectVS.JDW
             UpdateHpBar();
             _statsApplied = true;
 
-            // 공격 위치 설정
-         //  AttackPosition = GetComponentInChildren<AttackPosition>();
-         //  if (AttackPosition != null)
-         //  {
-         //     // switch (classIndex)
-         //     // {
-         //     //     case 0: AttackPosition.SwitchCoroutine(AttackPosition.Axe()); break;
-         //     //     case 1: AttackPosition.SwitchCoroutine(AttackPosition.Sword()); break;
-         //     //     case 2: AttackPosition.SwitchCoroutine(AttackPosition.Fire()); break;
-         //     // }
-         //  }
             Debug.Log($"[TSV 적용됨] ATK: {Stats.CurrentAtk}, DEF: {Stats.CurrentDfs}, HP: {Stats.CurrentHp}, SPD: {Stats.CurrentSpd}");
         }
         private void UpdateHpBar()
@@ -132,6 +119,8 @@ namespace ProjectVS.JDW
             if (IsDead) return;
             FindObjectOfType<CameraFollow>()?.ShakeCamera(0.3f, 0.5f);
             Stats.CurrentHp -= damage;
+
+            GetComponent<PlayerHiteEffect>()?.PlayerHitEffect(); // 플레이어가 데미지 입을 때 붉어지는 이펙트
             Debug.Log($"피해 : {damage}, 남은 체력 : {Stats.CurrentHp}");
             UpdateHpBar();  // Hp바 연동
 
