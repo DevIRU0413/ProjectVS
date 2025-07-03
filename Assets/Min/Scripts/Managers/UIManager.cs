@@ -246,17 +246,14 @@ namespace ProjectVS.Utils.UIManager
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            ClearAll();
         }
 
-        public void Cleanup()
-        {
-            throw new NotImplementedException();
-        }
+        public void Cleanup() { }
 
         public GameObject GetGameObject()
         {
-            throw new NotImplementedException();
+            return gameObject;
         }
     }
 }

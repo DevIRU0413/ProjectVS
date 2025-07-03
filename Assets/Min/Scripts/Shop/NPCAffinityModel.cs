@@ -99,21 +99,15 @@ namespace ProjectVS.Shop.NPCAffinityModel
             DecreaseAffinity(50);
             Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
         }
+        #endregion
 
-        public void Initialize()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void Initialize() { }
 
-        public void Cleanup()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void Cleanup() { }
 
         public GameObject GetGameObject()
         {
-            throw new System.NotImplementedException();
+            return gameObject;
         }
-        #endregion
     }
 }
