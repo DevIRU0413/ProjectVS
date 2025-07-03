@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using ProjectVS;
-using ProjectVS.Data;
 using ProjectVS.Item;
 using ProjectVS.Utils.CsvReader;
 using ProjectVS.Utils.CsvTable;
@@ -26,8 +24,8 @@ public class TestLoadItem : MonoBehaviour
     // 사용 방법 예시
     private void HowToUse()
     {
-        ItemData Data = _itemDatas.Find(d => d.MaxLevel >= 3);
-        Debug.Log($"{Data.ItemID}의 MaxLevel: {Data.MaxLevel}");
+        ItemData Data = _itemDatas.Find(d => d.ItemMaxLevel >= 3);
+        Debug.Log($"{Data.ItemID}의 MaxLevel: {Data.ItemMaxLevel}");
 
         foreach (var item in _itemDatas)
         {
