@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerHiteEffect : MonoBehaviour
 {
+    [SerializeField] private Color _hitColor = new Color(1f, 0.5f, 0.5f);
+    [SerializeField] private float _flashDuration = 0.1f;
+
     private SpriteRenderer _spriteRenderer;
     private Color _color;
     private Coroutine _hitRoutine;
@@ -13,17 +16,19 @@ public class PlayerHiteEffect : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _color = _spriteRenderer.color;
     }
-    private void PlayerHitEffect()
+    public void PlayerHitEffect()
     {
         if (_hitRoutine != null)
         {
-            HitFlasRoutine();
+            StopCoroutine(_hitRoutine);
         }
+        _hitRoutine = StartCoroutine(HitFlashRoutine());
     }
-    private IEnumerator HitFlasRoutine()
+    public IEnumerator HitFlashRoutine()
     {
-        _spriteRenderer.color = new Color(1, 0.5f, 0.5f);
-        yield return new WaitForSeconds(0.1f);
+        _spriteRenderer.color = _hitColor;
+        yield return new WaitForSeconds(_flashDuration);
         _spriteRenderer.color = _color;
+        _hitRoutine = null;
     }
 }

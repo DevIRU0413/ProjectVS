@@ -40,7 +40,7 @@ namespace ProjectVS.Unit.Player
                     AddBaseStats(5, 7, 8, 0, 0);
                     break;
             }
-
+            CurrentHp = CurrentMaxHp;
             Debug.Log($"레벨 업, 현재 레벨 : {Level}, 남은 경험치 : {CurrentExp}, 다음 레벨까지 : {MaxExp}");
         }
         public void AddBaseStats(float hp, float atk, float dfs, float spd, float atkSpd)
@@ -110,6 +110,24 @@ namespace ProjectVS.Unit.Player
         {
             Level = level;
             CharacterClass = charClass;
+        }
+        public void ApplyFrom(PlayerStats other) // 불로온 데이터로 덮어쓰기
+        {
+            this.Level = other.Level;
+            this.CharacterClass = other.CharacterClass;
+
+            this.CurrentExp = other.CurrentExp;
+            this.MaxExp = other.MaxExp;
+
+            // base stats 복사
+            SetBaseStat(UnitStaus.MaxHp, other.GetBaseStat(UnitStaus.MaxHp));
+            SetBaseStat(UnitStaus.Atk, other.GetBaseStat(UnitStaus.Atk));
+            SetBaseStat(UnitStaus.Dfs, other.GetBaseStat(UnitStaus.Dfs));
+            SetBaseStat(UnitStaus.Spd, other.GetBaseStat(UnitStaus.Spd));
+            SetBaseStat(UnitStaus.AtkSpd, other.GetBaseStat(UnitStaus.AtkSpd));
+
+            // current stats 초기화 
+            this.CurrentHp = other.CurrentHp; 
         }
 
     }

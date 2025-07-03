@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 using ProjectVS.CharacterSelectionData.CharacterSelectionDataParser;
 using CharacterSelectionDataClass = ProjectVS.CharacterSelectionData.CharacterSelectionData.CharacterSelectionData;
 using ProjectVS.Utils.CsvTable;
+using ProjectVS.Manager;
+using ProjectVS.Unit.Player;
 
 namespace ProjectVS.JDW
 {
@@ -26,15 +28,37 @@ namespace ProjectVS.JDW
             // TSV 데이터 불러옴
             CsvTable table = new CsvTable("Min/Resources/CharacterSelectionData.tsv", '\t');
             _characterDataList = CharacterSelectionDataParser.Parse(table);
-
-            _inputActions = new PlayerAction(); // 인풋액션 등록
-            _inputActions.CharacterSelect.Enable();
+        }
+        private void Start()
+        {
+            if (InputManager.Instance == null)
+            {
+                Debug.LogError("InputManager.Instance is null! 확인 필요");
+                return;
+            }
+            _inputActions = InputManager.Instance.inputActions;
             _inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
+            _inputActions.CharacterSelect.Enable();
+        }
+        private void OnEnable()
+        {
+            _inputActions?.CharacterSelect.Enable();
+        }
 
+        private void OnDisable()
+        {
+            if (_inputActions != null)
+            {
+                _inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect;
+                _inputActions.CharacterSelect.Disable();
+            }
         }
         private void OnDestroy()
         {
-            _inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect; // 한번 입력후 이벤트 해제
+            if (_inputActions != null)
+            {
+                _inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect;
+            }
         }
         private void OnClassSelect(InputAction.CallbackContext ctx)
         {
@@ -64,9 +88,26 @@ namespace ProjectVS.JDW
             GameObject newPlayer = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
             // playerConfig 컴포넌트 가져옴
             PlayerConfig config = newPlayer.GetComponent<PlayerConfig>();
-            if (config != null && index < _characterDataList.Count)
+
+            if (config == null) return;
+
+            config.PlayerDataManager = PlayerDataManager.Instance;
+
+            var loadedStats = PlayerDataManager.Instance.Stats;
+
+            // 저장된 값이 있으면 TSV 초기화 생략
+            if (loadedStats != null && loadedStats.Level > 1)
             {
-                config.ApplyStatsFromData(_characterDataList[index], index);// TSV와 클래스 정보 공격방식을 적용
+                // 불러온 값 적용
+                Debug.Log("[Stats 불러오기] 저장된 스탯을 적용합니다.");
+            }
+            else
+            {
+                // TSV 초기값 적용
+                if (index < _characterDataList.Count)
+                {
+                    config.ApplyStatsFromData(_characterDataList[index], index);
+                }
             }
             // 현재 클래스 인덱스 저장
             CurrentClassIndex = index;
