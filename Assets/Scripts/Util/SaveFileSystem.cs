@@ -15,6 +15,7 @@ namespace ProjectVS.Util
         {
             string path = GetSavePath(index);
             string json = JsonUtility.ToJson(data, true);
+            Debug.Log($"[디버그 저장 JSON]: {json}");
             File.WriteAllText(path, json);
 
             Debug.Log($"[SaveFileSystem] 저장 파일 저장됨: {path}");

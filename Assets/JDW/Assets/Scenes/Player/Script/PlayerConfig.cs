@@ -19,10 +19,11 @@ namespace ProjectVS.JDW
 {
     public class PlayerConfig : MonoBehaviour
     {
+        [HideInInspector]public PlayerDataManager PlayerDataManager;
+
         public CharacterClass SelectedClass;
         public Timer Timer;
         public Scanner Scanner;
-        public PlayerDataManager PlayerDataManager;
         public AttackPosition AttackPosition;
 
         public bool IsDead = false;
@@ -47,6 +48,7 @@ namespace ProjectVS.JDW
                     Debug.LogWarning("Timer를 씬에서 찾을 수 없습니다.");
                 }
             }
+            Stats = PlayerDataManager.Instance.Stats;
         }
         private void Start()
         {
@@ -58,10 +60,27 @@ namespace ProjectVS.JDW
         {
             if (_statsApplied) return; // TSV 데이터로 이미 적용했으면 그 다음부터는 무시
             // TSV 데이터 기반으로 Stats 초기화
-            Stats = new PlayerStats(1, SelectedClass, data.HP, data.Attack, data.Defense, data.MoveSpeed, data.AttackSpeed);
-            Stats.CurrentHp = data.HP;
+           // Stats = new PlayerStats(1, SelectedClass, data.HP, data.Attack, data.Defense, data.MoveSpeed, data.AttackSpeed);
+          //  Stats.CurrentHp = data.HP;
+            var stats = PlayerDataManager.Instance.Stats;
+
+            stats.Level = 1;                                           //////////
+            stats.CharacterClass = SelectedClass;                      //
+                                                                       //
+            stats.SetBaseStat(UnitStaus.MaxHp, data.HP);               //
+            stats.SetBaseStat(UnitStaus.Atk, data.Attack);             //
+            stats.SetBaseStat(UnitStaus.Dfs, data.Defense);            //     데이터 매니저와 연결
+            stats.SetBaseStat(UnitStaus.Spd, data.MoveSpeed);          //
+            stats.SetBaseStat(UnitStaus.AtkSpd, data.AttackSpeed);     //
+                                                                       //
+            stats.CurrentHp = data.HP;                                 //
+            stats.CurrentExp = 0;                                      //
+            stats.MaxExp = 100;                                        //////////////
+
+            Stats = stats;
 
             UpdateHpBar();
+            _statsApplied = true;
 
             // 공격 위치 설정
             AttackPosition = GetComponentInChildren<AttackPosition>();

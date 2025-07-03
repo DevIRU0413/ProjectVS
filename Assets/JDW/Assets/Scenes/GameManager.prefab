@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8605384738218336565}
-  - component: {fileID: 7866467489833683709}
-  - component: {fileID: 7238456504662222757}
+  - component: {fileID: 8335105744408683840}
+  - component: {fileID: 963765794381881786}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7866467489833683709
+--- !u!114 &8335105744408683840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,24 +42,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4279960742447084805}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40efd59cc3c8283479d4f86157a1181f, type: 3}
+  m_Script: {fileID: 11500000, guid: 718c2ee4cb689fb4e832f5f4056ee53d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8042441434584137574, guid: cf0556be2aac066449972bb8432d96e8, type: 3}
-  playerMove: {fileID: 3629046773934369504, guid: cf0556be2aac066449972bb8432d96e8, type: 3}
-  timer: {fileID: 7439314377194012607, guid: e751d69887daeff448c05c857ec5922e, type: 3}
-  mapSwitcer: {fileID: 7238456504662222757}
-  attackPosition: {fileID: 0}
-  bullet: {fileID: 0}
-  playerPrefabs:
-  - {fileID: 1345928038722599383, guid: 37a1178b22ade0a469320520a2c4a760, type: 3}
-  - {fileID: 1345928038722599383, guid: cf0556be2aac066449972bb8432d96e8, type: 3}
-  - {fileID: 1345928038722599383, guid: 79dcad826de5c0d4ba005984f52d5a28, type: 3}
-  playerSpawnPoint: {fileID: 8605384738218336565}
-  Boss: {fileID: 1673134169377035974, guid: 9a01c57ead4472c4f9a55904a36f7e39, type: 3}
-  Store: {fileID: 6334962763312544992, guid: 0b106adf611f274479a32f663ce94a87, type: 3}
-  Tilemap: {fileID: 5875567109277795886, guid: 60f400a14c0971140b0e6e0c5bfc87af, type: 3}
---- !u!114 &7238456504662222757
+--- !u!114 &963765794381881786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,12 +54,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 4279960742447084805}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51a57ce8b65b8124f84d64450802531d, type: 3}
+  m_Script: {fileID: 11500000, guid: 49f9733576881494c8358ca2407296f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleField: {fileID: 5875567109277795886, guid: 60f400a14c0971140b0e6e0c5bfc87af, type: 3}
-  storeField: {fileID: 6334962763312544992, guid: 0b106adf611f274479a32f663ce94a87, type: 3}
-  Tilemap1: {fileID: 4443843402143162662, guid: 122d7ad1842c9984f9336ee1e2f139c4, type: 3}
-  Tilemap2: {fileID: 1249669689813817610, guid: eb66372219508d044b94d5a819ab73f4, type: 3}
-  Tilemap3: {fileID: 7422254959832891000, guid: 156e70558b9ca394fa25fb2ad2b1b755, type: 3}
-  Tilemap4: {fileID: 6669463965671084115, guid: 7740f6f77bb3aec479c8525793d215dd, type: 3}
+  m_isDontDestroyOnLoad: 1
+  GamePlayType: 0
+  TestCharacterClass: 0
+  Stats:
+    _hp: 0
+    _baseMaxHp: 0
+    _baseAtk: 0
+    _baseDfs: 0
+    _baseSpd: 0
+    _baseAtkSpd: 0
+    Level: 1
+    CharacterClass: 0
+    CurrentExp: 0
+    MaxExp: 100
+  InventoryItems: []
+  CurrentStageFloor: 0
+  MonstersDefeated: 0
+  Gold: 0
+  Diamonds: 0
+  CurrentAffinityExp: 0
+  CurrentAffinityLevel: 0
+  WornCostumeName: 
+  TotalKills: 0
+  TotalPlayTime: 0
+  BattleSceneCount: 0
