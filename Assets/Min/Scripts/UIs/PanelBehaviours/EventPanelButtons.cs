@@ -11,6 +11,7 @@ namespace ProjectVS.UIs.PanelBehaviours.EventPanelButtons
     {
         private void OnEnable()
         {
+            DialogueManager.Instance.IsClosed = false;
             Time.timeScale = 0f;
         }
 

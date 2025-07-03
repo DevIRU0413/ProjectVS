@@ -57,6 +57,7 @@ namespace ProjectVS.Dialogue.DialogueManager
 
         private int _currentDialogueIndex = 100001;
 
+
         [Header("자동 진행 설정")]
         [SerializeField] private float _autoNextDelay = 1f;
 
@@ -73,6 +74,8 @@ namespace ProjectVS.Dialogue.DialogueManager
         [SerializeField] private int _passAffinity = 5;
 
         public ObservableProperty<bool> IsAutoMode = new(false);
+        public bool IsClosed = false;
+
 
         protected override void Awake()
         {
@@ -224,7 +227,13 @@ namespace ProjectVS.Dialogue.DialogueManager
             if (nextData == null)
             {
                 Debug.LogWarning($"[DialogueManager] 다음 대사(ID {nextID})가 존재하지 않음");
-                UIManager.Instance.ForceCloseTopPanel();
+
+                if (!IsClosed)
+                {
+                    UIManager.Instance.ForceCloseTopPanel();
+                    IsClosed = true;
+                }
+
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 return;
@@ -233,7 +242,13 @@ namespace ProjectVS.Dialogue.DialogueManager
             if (_currentDialogueIndex >= _dialogueList.Count + 100000) // csv가 100000 부터 시작하여 (Count + 100000) 하드코딩 됨
             {
                 Debug.Log("[DialogueManager] 더 이상 대사가 없습니다");
-                UIManager.Instance.ForceCloseTopPanel();
+
+                if (!IsClosed)
+                {
+                    UIManager.Instance.ForceCloseTopPanel();
+                    IsClosed = true;
+                }
+
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 _currentDialogueIndex--;
@@ -245,7 +260,13 @@ namespace ProjectVS.Dialogue.DialogueManager
                 Debug.Log($"현재 데이터 {_currentDialogueData.OccurTiming}, 다음 {nextData.OccurTiming}");
                 Debug.Log($"현재 {_currentDialogueData.ID}, 다음 {nextData.ID}");
                 Debug.Log("[DialogueManager] 다음 대사의 OccurTiming이 달라서 대화를 중단합니다.");
-                UIManager.Instance.ForceCloseTopPanel();
+
+                if (!IsClosed)
+                {
+                    UIManager.Instance.ForceCloseTopPanel();
+                    IsClosed = true;
+                }
+
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 return;
@@ -254,7 +275,13 @@ namespace ProjectVS.Dialogue.DialogueManager
             if (!CheckAffinity())
             {
                 Debug.Log($"[DialogueManager] 다음 대사는 접근할 수 없는 호감도 대화입니다");
-                UIManager.Instance.ForceCloseTopPanel();
+
+                if (!IsClosed)
+                {
+                    UIManager.Instance.ForceCloseTopPanel();
+                    IsClosed = true;
+                }
+
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 _currentDialogueIndex--;
