@@ -162,7 +162,6 @@ GameObject:
   - component: {fileID: 1595064588322703561}
   - component: {fileID: 5198718876284040431}
   - component: {fileID: 2617710943436193720}
-  - component: {fileID: 4040085952111886181}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -227,7 +226,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31b17986fa5b13f4f9b7403589287a19, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -248,7 +247,7 @@ Animator:
   m_GameObject: {fileID: 2766689452698661969}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 9658b5ec1426ef844ac8cc09215b3c0d, type: 2}
+  m_Controller: {fileID: 22100000, guid: 106ee56feaced35419d87f061c188708, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -259,21 +258,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!111 &4040085952111886181
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2766689452698661969}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 2d59e5f50a68cab458f1da44990093f0, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &2924864599327088652
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +273,7 @@ GameObject:
   - component: {fileID: 257882931130782202}
   - component: {fileID: 2321390148805907380}
   m_Layer: 0
-  m_Name: Mushroom
+  m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,7 +294,7 @@ Transform:
   m_Children:
   - {fileID: 1595064588322703561}
   - {fileID: 4842759914165352858}
-  - {fileID: 1694160184038925130}
+  - {fileID: 7182356023034619361}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8755618264959023760
@@ -339,7 +323,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!114 &2295030452133988641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,11 +336,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75c4a0767410754783640c778641651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 0
   <Hp>k__BackingField: 1
   <ATK>k__BackingField: 1
   <DFS>k__BackingField: 0
   <SPD>k__BackingField: 1
-  <ATKSPD>k__BackingField: 0
+  <ATKSPD>k__BackingField: 1
 --- !u!114 &607968483408253690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,11 +373,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be66aae763dd6d64d88d7b6756066bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 2617710943436193720}
+  <MonsterID>k__BackingField: 0
   <CurrentStateType>k__BackingField: 0
-  _stopMoveRange: 0.7
-  _despawnDelay: 1
+  <IsStateLock>k__BackingField: 0
   <Target>k__BackingField: {fileID: 0}
+  _stopMoveRange: 0.7
+  <DespawnDelay>k__BackingField: 1
 --- !u!114 &2321390148805907380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,12 +397,12 @@ MonoBehaviour:
     m_Bits: 8
   _hitCount: 1
   baseDamage: 10
-  canCrit: 1
-  critChance: 0.2
-  critMultiplier: 2
+  canCrit: 0
+  critChance: 0
+  critMultiplier: 0
   knockbackForce: 0
   _hitClip: {fileID: 0}
---- !u!1 &4959976448543182046
+--- !u!1 &5195692760197841264
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -424,23 +410,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1694160184038925130}
-  - component: {fileID: 3679307979885029445}
-  - component: {fileID: 8464796180895859594}
+  - component: {fileID: 7182356023034619361}
+  - component: {fileID: 6170310840518717441}
+  - component: {fileID: 1126034904811091071}
   m_Layer: 18
   m_Name: DamageableCollider
-  m_TagString: Monster
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1694160184038925130
+--- !u!4 &7182356023034619361
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4959976448543182046}
+  m_GameObject: {fileID: 5195692760197841264}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.505, z: 0}
@@ -449,13 +435,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5120001472748250191}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &3679307979885029445
+--- !u!114 &6170310840518717441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5195692760197841264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e379a4521d153804abc3ec9cf6754357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2924864599327088652}
+--- !u!70 &1126034904811091071
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4959976448543182046}
+  m_GameObject: {fileID: 5195692760197841264}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -478,22 +477,9 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.5}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
---- !u!114 &8464796180895859594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4959976448543182046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e379a4521d153804abc3ec9cf6754357, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 2924864599327088652}

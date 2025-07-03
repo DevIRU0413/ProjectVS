@@ -18,15 +18,27 @@ namespace ProjectVS.Monster
 
             _colliderAction.OnTriggerStayAction -= HitTriggerStay;
             _colliderAction.OnTriggerStayAction += HitTriggerStay;
+
+            _colliderAction.OnCollisionStayAction -= HitCollisionStay;
+            _colliderAction.OnCollisionStayAction += HitCollisionStay;
         }
-        public virtual void HitTriggerStay(Collider2D collider)
+
+        public virtual void HitTriggerStay(Collider2D coll)
         {
             if (_unitStats == null) return;
             if (_hitTime + _unitStats.AtkSpd > Time.time) return;
-            Hit(collider);
+            Hit(coll.gameObject);
+        }
+
+        public virtual void HitCollisionStay(Collision2D coll)
+        {
+            if (_unitStats == null) return;
+            if (_hitTime + _unitStats.AtkSpd > Time.time) return;
+            Hit(coll.gameObject);
         }
         private void HitTimeCheck()
         {
+            Debug.Log("Hit");
             _hitTime = Time.time;
         }
     }
