@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using ProjectVS.Monster;
-using ProjectVS.Monster.Pattern;
-using ProjectVS;
 
-namespace ProjectVS.Phase
+using ProjectVS.Monster;
+using ProjectVS.Unit.Monster.Pattern;
+
+using UnityEngine;
+
+namespace ProjectVS.Unit.Monster.Phase
 {
     public class MonsterPhaseController : MonoBehaviour
     {
@@ -17,6 +19,9 @@ namespace ProjectVS.Phase
         private int _currentPhaseIndex = -1;
         private List<MonsterPhasePart> _activePhaseParts = new();
         private MonsterPattern _activePattern = null;
+
+        public Action<MonsterPattern> OnPatternEnter;   // 외부에서 현재 진행 패턴 확인용
+        public Action<MonsterPattern> OnPatternExit;    // 외부에서 현재 진행 끝난 패턴 확인용
 
         private void Start()
         {
@@ -31,12 +36,17 @@ namespace ProjectVS.Phase
             if (_activePattern == null)
             {
                 _activePattern = SelectWeightedPattern();
-                _activePattern?.Enter();
-                _activePattern?.Action();
+                if (_activePattern == null) return;
+
+                OnPatternEnter?.Invoke(_activePattern);
+                _activePattern.Enter();
+                _activePattern.Action();
             }
             else if (_activePattern.PatternState == MonsterPatternState.Done)
             {
                 _activePattern.Exit();
+                OnPatternEnter?.Invoke(_activePattern);
+
                 _activePattern = null;
             }
         }
@@ -133,7 +143,7 @@ namespace ProjectVS.Phase
             else if (_activePhaseParts.Count == 1)
                 return _activePhaseParts[0].monsterPattern;
 
-            float rand = Random.Range(0f, totalWeight);
+            float rand = UnityEngine.Random.Range(0f, totalWeight);
             float cumulative = 0f;
             foreach (var part in _activePhaseParts)
             {
@@ -143,7 +153,6 @@ namespace ProjectVS.Phase
                 if (rand <= cumulative)
                     return part.monsterPattern;
             }
-
             return null;
         }
 

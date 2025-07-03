@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-using ProjectVS.Phase;
+using ProjectVS.Unit.Monster.Phase;
 using ProjectVS.Unit.Player;
 
 using UnityEngine;
 
-namespace ProjectVS.Monster.Pattern
+namespace ProjectVS.Unit.Monster.Pattern
 {
     public class MonsterShootPattern : MonsterPattern
     {

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using ProjectVS.Interface;
 using ProjectVS.Monster.Data;
 using ProjectVS.Monster.State;
-using ProjectVS.Phase;
 using ProjectVS.Unit;
 using ProjectVS.Unit.Monster;
+using ProjectVS.Unit.Monster.Phase;
 using ProjectVS.Util;
 
 using UnityEngine;

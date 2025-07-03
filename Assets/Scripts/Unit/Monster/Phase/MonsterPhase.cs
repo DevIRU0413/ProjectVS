@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace ProjectVS.Phase
+namespace ProjectVS.Unit.Monster.Phase
 {
     [Serializable]
     public class MonsterPhase

@@ -1,10 +1,10 @@
 ﻿using System;
 
-using ProjectVS.Monster.Pattern;
+using ProjectVS.Unit.Monster.Pattern;
 
 using UnityEngine;
 
-namespace ProjectVS.Phase
+namespace ProjectVS.Unit.Monster.Phase
 {
     [Serializable]
     public class MonsterPhasePart

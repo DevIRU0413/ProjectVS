@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 
-using ProjectVS.Phase;
+using ProjectVS.Unit.Monster.Phase;
 using ProjectVS.Unit.Player;
 
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Playables;
 
-namespace ProjectVS.Monster.Pattern
+namespace ProjectVS.Unit.Monster.Pattern
 {
     public class MonsterDashPattern : MonsterPattern
     {
@@ -50,7 +48,6 @@ namespace ProjectVS.Monster.Pattern
                 phaseController.OnwerController.Anim.PlayClip(patternActionClips, true);
             }
 
-
             if (_target != null)
             {
                 Vector3 dashDir = (_target.transform.position - transform.position).normalized;
@@ -87,14 +84,6 @@ namespace ProjectVS.Monster.Pattern
             }
 
             PatternState = MonsterPatternState.Done;
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (!Application.isPlaying) return;
-
-            Gizmos.color = Color.red;
-            // Gizmos.DrawWireSphere(transform.position, _dashRange);
         }
     }
 }

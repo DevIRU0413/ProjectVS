@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 
 using ProjectVS.Interface;
-using ProjectVS.Phase;
+using ProjectVS.Unit.Monster.Phase;
 
 using UnityEngine;
 
-namespace ProjectVS.Monster.Pattern
+namespace ProjectVS.Unit.Monster.Pattern
 {
     public abstract class MonsterPattern : MonoBehaviour, IPatternLifecycle
     {
