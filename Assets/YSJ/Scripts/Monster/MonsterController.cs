@@ -17,11 +17,14 @@ namespace ProjectVS.Monster
     [RequireComponent(typeof(MonsterPhaseController))]
     public class MonsterController : MonoBehaviour, IDamageable, IPoolable
     {
+        [SerializeField] private GameObject _body;
+        private Vector3 _bodyScale;
+
         // FSM 상태 관리
         private Dictionary<MonsterStateType, MonsterState> _states = new();
         private MonsterState _currentState;
 
-        [field: SerializeField] public int MonsterID { get; private set; }
+        public int MonsterID { get; private set; }
 
         [field: SerializeField] public MonsterStateType CurrentStateType { get; private set; } = MonsterStateType.None;
         [field: SerializeField] public bool IsStateLock { get; private set; } = false;
@@ -86,14 +89,17 @@ namespace ProjectVS.Monster
             rig.gravityScale = 0.0f;
             rig.freezeRotation = true;
 
+            if (_body != null)
+                _bodyScale = _body.transform.localScale;
+
             // 애니메이션 플레이어
             var anim = GetComponentInChildren<Animator>();
             Anim = new MonsterAnimationPlayer(anim, this);
 
             // 상태 추가
-            _states.Add(MonsterStateType.Idle, new MonsterIdleState(this, Anim.Animator));
-            _states.Add(MonsterStateType.Move, new MonsterMoveState(this, Anim.Animator));
-            _states.Add(MonsterStateType.Win, new MonsterWinState(this, Anim.Animator));
+            _states.Add(MonsterStateType.Idle,  new MonsterIdleState(this, Anim.Animator));
+            _states.Add(MonsterStateType.Move,  new MonsterMoveState(this, Anim.Animator));
+            _states.Add(MonsterStateType.Win,   new MonsterWinState(this, Anim.Animator));
             _states.Add(MonsterStateType.Death, new MonsterDeathState(this, Anim.Animator));
         }
         public void SetTarget(GameObject target) => Target = target;
@@ -135,6 +141,17 @@ namespace ProjectVS.Monster
         public void SetMoveDirection(Vector3 movePoint, bool onlySetMovePoint = false)
         {
             MoveDirection = (onlySetMovePoint) ? movePoint : (movePoint - transform.position);
+
+            if (MoveDirection.x > 0.01f)
+            {
+                _body.transform.localScale = _bodyScale;
+            }
+            else if (MoveDirection.x < -0.01f)
+            {
+                Vector3 flipped = _bodyScale;
+                flipped.x *= -1; // 좌우 반전
+                _body.transform.localScale = flipped;
+            }
         }
 
         // IDamageable
@@ -145,6 +162,7 @@ namespace ProjectVS.Monster
             OnHit.Invoke();
         }
 
+        // IPoolable
         public void OnSpawned()
         {
             var config = GetComponent<UnitStatsConfig>();
@@ -166,5 +184,7 @@ namespace ProjectVS.Monster
             }
         }
         public void OnDespawned() { }
+
+        
     }
 }
