@@ -9,57 +9,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78aa7c90a68c7814a99adf4ec12c740c, type: 3}
+  m_Script: {fileID: 11500000, guid: eaef01abd13f8144db5a1a0f26bd77c9, type: 3}
   m_Name: Monster_Simple_SpawnSetting
   m_EditorClassIdentifier: 
   spawnEntries:
-  - GroupName: Wave_Radius
+  - GroupName: Radius
     SpawnGroupType: 1
     SpawnableObjects:
-    - {fileID: 707399079469239205, guid: 1562958484c249347baaf6f66b96f783, type: 3}
-    - {fileID: 2924864599327088652, guid: 60de3a48a582f8447abb4eb194d85030, type: 3}
-    - {fileID: 1525442468859836848, guid: 8f4254cfe7ea3ca41957de0c49fadf1d, type: 3}
-    - {fileID: 2924864599327088652, guid: 071bd723312eb41478efba1ba43ee430, type: 3}
-    - {fileID: 2924864599327088652, guid: d85f0253abd7bb6428ac1b4e94e6fae2, type: 3}
+    - {fileID: 6150469384424873328, guid: 333638d2b878cd842b4a8373fde59ff8, type: 3}
+    - {fileID: 2459041630460869292, guid: e5af0e5fee5dacc449a86d4598107b89, type: 3}
+    - {fileID: 7388677132878714472, guid: 2983511bfcb77f84c9b4b25eec409c37, type: 3}
+    - {fileID: 6773870201672131864, guid: e12a49b4c9116cb44b24f5c30191dac2, type: 3}
+    - {fileID: 1352360658915763524, guid: fe9332272d5b4cf449d2d1f1d57f6b85, type: 3}
     - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
     GroupUnitSpawnCount: 2
     Interval: 4
-    AutoStart: 1
+    AutoStart: 0
     StopAfterTime: 900
-    timer: 3.4101036
-    activeTime: 15.430331
-  - GroupName: Wave_Line
+    timer: 0.46370387
+    activeTime: 20.475155
+  - GroupName: Line
     SpawnGroupType: 2
     SpawnableObjects:
-    - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
-    GroupUnitSpawnCount: 20
-    Interval: 30
+    - {fileID: 6773870201672131864, guid: e12a49b4c9116cb44b24f5c30191dac2, type: 3}
+    GroupUnitSpawnCount: 30
+    Interval: 240
     AutoStart: 1
     StopAfterTime: 900
-    timer: 15.430331
-    activeTime: 15.430331
-  - GroupName: Wave_Circle
+    timer: 20.475155
+    activeTime: 20.475155
+  - GroupName: Circle
     SpawnGroupType: 3
     SpawnableObjects:
-    - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+    - {fileID: 6773870201672131864, guid: e12a49b4c9116cb44b24f5c30191dac2, type: 3}
     GroupUnitSpawnCount: 30
     Interval: 180
     AutoStart: 1
     StopAfterTime: 900
-    timer: 15.430331
-    activeTime: 15.430331
-  radius: 15
+    timer: 20.475155
+    activeTime: 20.475155
+  radius: 16
   isReverseLine: 1
   offset: 2
-  distance: 10
+  distance: 18
   directionList:
   - {x: 1, y: 0}
-  - {x: -1, y: 0}
   - {x: 0, y: 1}
-  - {x: 0, y: -1}
   - {x: 1, y: 1}
-  - {x: -1, y: -1}
-  circleRadius: 15
+  - {x: -1, y: 1}
+  lineSpawnLifeCycle: 10
+  circleRadius: 16
+  circleSpawnLifeCycle: 10
   gridSize: {x: 3, y: 3}
   gridSpacing: 2
   moveSpeed: 5

@@ -72,7 +72,7 @@
         public void TakeDamage(DamageInfo info)
         {
             _stats.CurrentHp -= info.Amount;
-            OnHit.Invoke();
+            OnHit?.Invoke();
         }
     }
 

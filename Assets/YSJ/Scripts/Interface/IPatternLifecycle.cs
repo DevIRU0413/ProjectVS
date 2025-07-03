@@ -1,6 +1,6 @@
 ﻿namespace ProjectVS.Interface
 {
-    public interface IStateLifecycle
+    public interface IPatternLifecycle
     {
         void Enter();
         void Action();

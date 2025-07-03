@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace ProjectVS.Monster.Data
+namespace ProjectVS.Unit
 {
     public class UnitStatsConfig : MonoBehaviour
     {
