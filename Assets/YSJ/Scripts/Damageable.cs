@@ -1,11 +1,13 @@
-﻿using ProjectVS.Interface;
+﻿using System;
+
+using ProjectVS.Interface;
 
 using UnityEngine;
 
 namespace ProjectVS
 {
     // 데미지 받을 수 있음.
-    public class Damagable : MonoBehaviour
+    public class Damageable : MonoBehaviour
     {
         [SerializeField] private GameObject target;
         private IDamageable damageable;

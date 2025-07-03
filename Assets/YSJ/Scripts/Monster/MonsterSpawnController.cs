@@ -1,4 +1,5 @@
-﻿using ProjectVS.Monster.Spawner;
+﻿using ProjectVS.Data;
+using ProjectVS.Monster.Spawner;
 using ProjectVS.Unit.Player;
 
 using UnityEngine;
@@ -23,10 +24,10 @@ namespace ProjectVS.Monster
 
         private int _currentSpawnCount = 0;
         private int _maxSpawnCount = 0;
-        [SerializeField] private MonsterSpawnControllerConfigSO _config;
+        [SerializeField] private MonsterSpawnConfigSO _config;
 
         // 초기화
-        public void Init(GameObject target, int maxCount, MonsterSpawnControllerConfigSO config)
+        public void Init(GameObject target, int maxCount, MonsterSpawnConfigSO config)
         {
             _target = target;
             _maxSpawnCount = maxCount;
@@ -105,11 +106,13 @@ namespace ProjectVS.Monster
                     _lineSpawner.offset = _config.offset;
                     _lineSpawner.distance = _config.distance;
                     _lineSpawner.directionList = _config.directionList;
+                    _lineSpawner.spawnLifeCycle = _config.lineSpawnLifeCycle;
                     spanwer = _lineSpawner;
                     break;
 
                 case SpawnGroupType.Circle:
                     _circleSpawner.radius = _config.circleRadius;
+                    _circleSpawner.spawnLifeCycle = _config.circleSpawnLifeCycle;
                     spanwer = _circleSpawner;
                     break;
 

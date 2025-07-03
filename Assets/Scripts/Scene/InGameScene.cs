@@ -1,5 +1,5 @@
-﻿using ProjectVS;
-using ProjectVS.Manager;
+﻿using ProjectVS.Manager;
+using ProjectVS.Unit.Player;
 
 using UnityEngine;
 
@@ -18,6 +18,8 @@ namespace ProjectVS.Scene
 
         private void SpawnPlayer()
         {
+            if (PlayerSpawner.ForceInstance.CurrentPlayer != null) return;
+
             Vector3 spawnPos = Vector3.zero;
             if (SpawnPoint == null)
             {
@@ -31,7 +33,7 @@ namespace ProjectVS.Scene
             var stats = PlayerDataManager.ForceInstance.Stats;
             var classType = stats.CharacterClass;
 
-            Unit.Player.PlayerSpawner.ForceInstance.SpawnPlayer(spawnPos, classType, stats);
+            PlayerSpawner.ForceInstance.SpawnPlayer(spawnPos, classType, stats);
         }
     }
 }

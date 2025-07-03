@@ -1,5 +1,7 @@
 ﻿using ProjectVS.Interface;
 
+using UnityEngine;
+
 namespace ProjectVS.Manager.Stage
 {
     public class PlayState : IStageState
@@ -13,8 +15,11 @@ namespace ProjectVS.Manager.Stage
             _ctx = ctx;
         }
 
-        public void Enter() => UnityEngine.Debug.Log("[Stage] Play 시작");
+        public void Enter()
+        {
+            Debug.Log("[Stage] Play 시작");
 
+        }
         public void Update()
         {
             if (_ctx.Player.Stats.CurrentHp <= 0)
