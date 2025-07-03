@@ -787,6 +787,7 @@ MonoBehaviour:
   _choiceDialogueManager: {fileID: 999307520}
   _spriteChangeManager: {fileID: 1869576868}
   _passAffinity: 5
+  IsClosed: 0
 --- !u!1 &139188310
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +953,7 @@ MonoBehaviour:
   _contentText: {fileID: 1201755281}
   _normalTypingSpeed: 0.05
   _skippedTypingSpeed: 0.01
+  _cursorBlinkingInterval: 0.5
 --- !u!1 &179539447
 GameObject:
   m_ObjectHideFlags: 0
@@ -5349,9 +5351,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0, g: 1, b: 0.105447054, a: 1}
+    m_PressedColor: {r: 0, g: 1, b: 0.10588236, a: 1}
+    m_SelectedColor: {r: 0, g: 1, b: 0.10588236, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -14214,9 +14216,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0, g: 1, b: 0.105447054, a: 1}
+    m_PressedColor: {r: 0, g: 1, b: 0.10588236, a: 1}
+    m_SelectedColor: {r: 0, g: 1, b: 0.10588236, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -14343,6 +14345,7 @@ MonoBehaviour:
   _contentText: {fileID: 2113649100}
   _normalTypingSpeed: 0.05
   _skippedTypingSpeed: 0.01
+  _cursorBlinkingInterval: 0.5
 --- !u!1 &1753316818
 GameObject:
   m_ObjectHideFlags: 0
