@@ -83,16 +83,16 @@ namespace ProjectVS.JDW
             _statsApplied = true;
 
             // 공격 위치 설정
-            AttackPosition = GetComponentInChildren<AttackPosition>();
-            if (AttackPosition != null)
-            {
-                switch (classIndex)
-                {
-                    case 0: AttackPosition.SwitchCoroutine(AttackPosition.Axe()); break;
-                    case 1: AttackPosition.SwitchCoroutine(AttackPosition.Sword()); break;
-                    case 2: AttackPosition.SwitchCoroutine(AttackPosition.Fire()); break;
-                }
-            }
+         //  AttackPosition = GetComponentInChildren<AttackPosition>();
+         //  if (AttackPosition != null)
+         //  {
+         //     // switch (classIndex)
+         //     // {
+         //     //     case 0: AttackPosition.SwitchCoroutine(AttackPosition.Axe()); break;
+         //     //     case 1: AttackPosition.SwitchCoroutine(AttackPosition.Sword()); break;
+         //     //     case 2: AttackPosition.SwitchCoroutine(AttackPosition.Fire()); break;
+         //     // }
+         //  }
             Debug.Log($"[TSV 적용됨] ATK: {Stats.CurrentAtk}, DEF: {Stats.CurrentDfs}, HP: {Stats.CurrentHp}, SPD: {Stats.CurrentSpd}");
         }
         private void UpdateHpBar()

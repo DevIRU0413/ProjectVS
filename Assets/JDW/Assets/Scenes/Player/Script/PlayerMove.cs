@@ -61,7 +61,7 @@ namespace ProjectVS.JDW
             {
                 Debug.Log("상점을 나감");
             //    StartCoroutine(HandleFadeTransition());
-               // MapSwitcher.OnBattleField();
+               MapSwitcher.OnBattleField();
             }
         }
         private IEnumerator HandleFadeTransition()
