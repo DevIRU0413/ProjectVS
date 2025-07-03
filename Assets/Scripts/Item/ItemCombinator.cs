@@ -17,12 +17,12 @@ namespace ProjectVS.Item
         {
             foreach (var item in items)
             {
-                if (item.CombineItemID1 <= 0 || item.CombineItemID2 <= 0)
+                if (item.ItemAddID1 <= 0 || item.ItemAddID2 <= 0)
                     continue;
 
                 // 두 ID를 정렬해서 키 생성 (순서 무관)
-                int a = item.CombineItemID1;
-                int b = item.CombineItemID2;
+                int a = item.ItemAddID1;
+                int b = item.ItemAddID2;
                 var key = CreateKey(a, b);
 
                 if (!_combineDict.ContainsKey(key))

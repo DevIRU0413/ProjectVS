@@ -71,13 +71,13 @@ namespace ProjectVS.Item
             // 세트가 있는 아이템만 그룹핑
             foreach (var item in equippedItems)
             {
-                if (item == null || item.SetEffect == ItemSetEffect.None)
+                if (item == null || item.ItemSetEffect == ItemSetEffect.None)
                     continue;
 
-                if (!setGroups.ContainsKey(item.SetEffect))
-                    setGroups[item.SetEffect] = new List<ItemData>();
+                if (!setGroups.ContainsKey(item.ItemSetEffect))
+                    setGroups[item.ItemSetEffect] = new List<ItemData>();
 
-                setGroups[item.SetEffect].Add(item);
+                setGroups[item.ItemSetEffect].Add(item);
             }
 
             // 조건을 만족하는 세트만 추출
@@ -88,11 +88,11 @@ namespace ProjectVS.Item
                 var items = kvp.Value;
 
                 // 어떤 아이템이든 조건 만족하는 값만 있으면 발동
-                int required = items[0].SetEffectRequiredCount;
+              /*  int required = items[0].SetEffectRequiredCount;
                 if (items.Count >= required)
                 {
                     activatedSets.Add(setEffect);
-                }
+                }*/
             }
 
             return activatedSets;
