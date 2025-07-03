@@ -61,6 +61,7 @@ namespace ProjectVS.Monster.Spawner
 
                 GameObject unit = GameObject.Instantiate(spanwUnit, spawnPos, Quaternion.identity);
                 var boid = unit.GetOrAddComponent<PureBoid>();
+
                 spawned.Add(unit);
                 boids.Add(boid);
             }

@@ -27,6 +27,8 @@ namespace ProjectVS.Monster.Spawner
                 // spawned.Add(go);
 
                 GameObject go = ProjectVS.Util.PoolManager.ForceInstance.Spawn(spanwUnit.name, pos, Quaternion.identity);
+                var ctrl = go.GetComponent<MonsterController>();
+                ctrl.SetTarget(target);
             }
         }
 

@@ -25,13 +25,13 @@ namespace ProjectVS.Monster.Spawner
 
             // 정방향
             Vector3 forwardSpawnPoint = spawnPoint + (randmonDir.normalized * distance);
-            lineSpawn(spanwUnit, spawnPoint, forwardSpawnPoint, unitCount);
+            lineSpawn(spanwUnit, target, spawnPoint, forwardSpawnPoint, unitCount);
             SpawnPositionList.Add(forwardSpawnPoint);
 
             // 역방향
             if (!isReverseLine) return;
             Vector3 reverseSpawnPoint = spawnPoint + (-randmonDir.normalized * distance);
-            lineSpawn(spanwUnit, spawnPoint, reverseSpawnPoint, unitCount);
+            lineSpawn(spanwUnit, target, spawnPoint, reverseSpawnPoint, unitCount);
             SpawnPositionList.Add(reverseSpawnPoint);
         }
 
@@ -41,7 +41,7 @@ namespace ProjectVS.Monster.Spawner
 
         }
 
-        private void lineSpawn(GameObject spanwUnit, Vector3 originPoint, Vector3 spawnPoint, int spawnCount)
+        private void lineSpawn(GameObject spanwUnit, GameObject target, Vector3 originPoint, Vector3 spawnPoint, int spawnCount)
         {
             Vector3 moveDir = (originPoint - spawnPoint).normalized;
 
@@ -63,6 +63,8 @@ namespace ProjectVS.Monster.Spawner
 
                 // 이동 위임
                 var monUnit = go.GetOrAddComponent<MonsterController>();
+                monUnit.SetTarget(target);
+
                 monUnit.DelegateMovementAuthority();
                 monUnit.SetMoveDirection(moveDir, true);
             }

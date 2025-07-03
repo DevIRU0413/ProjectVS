@@ -1,9 +1,4 @@
-﻿using ProjectVS;
-
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-using static UnityEngine.RuleTile.TilingRuleOutput;
+﻿using UnityEngine;
 
 namespace ProjectVS.Monster.State
 {
@@ -31,7 +26,10 @@ namespace ProjectVS.Monster.State
         public override void Update()
         {
             if (controller.IsMove)
+            {
                 controller.transform.Translate(_moveSpeed * Time.deltaTime * controller.MoveDirection.normalized);
+
+            }
             else
                 controller.ChangeState(MonsterStateType.Idle);
         }

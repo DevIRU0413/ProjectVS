@@ -23,6 +23,9 @@ namespace ProjectVS.Monster.Spawner
                 float angle = Random.Range(0, 360.0f) * Mathf.Deg2Rad; // 라디언 구함
                 Vector3 pos = center + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
                 GameObject go = ProjectVS.Util.PoolManager.ForceInstance.Spawn(spanwUnit.name, pos, Quaternion.identity);
+
+                var ctrl = go.GetComponent<MonsterController>();
+                ctrl.SetTarget(target);
             }
         }
 
