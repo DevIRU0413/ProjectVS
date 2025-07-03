@@ -1,11 +1,15 @@
 ﻿namespace ProjectVS.Unit.Player
 {
+    using System;
+
+    using ProjectVS.Interface;
+
     using UnityEngine;
 
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PlayerInputHandler))]
     [RequireComponent(typeof(PlayerConfig))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageable
     {
         private Rigidbody2D _rigid;
         private PlayerInputHandler _input;
@@ -16,6 +20,7 @@
         [SerializeField] private Transform _rotateTarget; // 무기 피벗 또는 본체
 
         public Vector2 MoveDirection => _input.MoveDirection;
+        public Action OnHit { get; set; }
 
         private void Awake()
         {
@@ -36,13 +41,9 @@
             }
         }
 
-        private void FixedUpdate()
-        {
-            Move();
-        }
-
         private void Update()
         {
+            Move();
             Rotate();
         }
 
@@ -53,7 +54,7 @@
             Vector2 dir = _input.MoveDirection;
             float speed = _stats.CurrentSpd;
 
-            _rigid.velocity = dir * speed;
+            transform.Translate(Time.deltaTime * speed * dir);
         }
 
         private void Rotate()
@@ -65,6 +66,13 @@
                 _rotateTarget.localScale = new Vector3(1, 1, 1);
             else if (lookDir.x > 0)
                 _rotateTarget.localScale = new Vector3(-1, 1, 1);
+        }
+
+        // IDamageable
+        public void TakeDamage(DamageInfo info)
+        {
+            _stats.CurrentHp -= info.Amount;
+            OnHit.Invoke();
         }
     }
 
