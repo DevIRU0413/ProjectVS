@@ -171,14 +171,14 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
         {
             //if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
 
-            UIManager.Instance.Hide("Delete Check Panel");
+            UIManager.Instance.CloseTopPanel();
 
             _currentFileIndex = -1;
         }
 
         public void OnClickNoButton()
         {
-            UIManager.Instance.Hide("Delete Check Panel");
+            UIManager.Instance.CloseTopPanel();
 
             _isNewButtonToggled = false;
             _isLoadButtonToggled = false;
