@@ -23,7 +23,8 @@ namespace ProjectVS.JDW
             _anim = GetComponent<Animator>();
             _player = GetComponent<PlayerConfig>();
 
-            _inputActions = new PlayerAction();
+            _inputActions = InputManager.Instance.inputActions;
+
             _inputActions.Player.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
             _inputActions.Player.Move.canceled += ctx => MoveInput = Vector2.zero;
         }
@@ -59,16 +60,13 @@ namespace ProjectVS.JDW
             if (other.CompareTag("Door")) // 문과 충돌 했을시
             {
                 Debug.Log("상점을 나감");
-                StartCoroutine(HandleFadeTransition());
-                // TODO : 씬 전환 필요 시 처리 추가
+            //    StartCoroutine(HandleFadeTransition());
+             //  MapSwitcher.OnBattleField();
             }
         }
         private IEnumerator HandleFadeTransition()
         {
-            yield return StartCoroutine(Fade.FadeOut()); // 페이드 아웃
-            MapSwitcher.OnBattleField();
-            yield return StartCoroutine(Fade.FadeIn());
-
+            yield return StartCoroutine(Fade.FadeOut()); // 페이드 아웃       
         }
     }
 }

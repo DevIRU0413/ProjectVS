@@ -30,5 +30,6 @@ namespace ProjectVS.Data
 
         public float                TotalPlayTime;              // 총 플레이 타임
         public int                  BattleSceneCount;           // 누적 배틀씬 카운트
+
     }
 }

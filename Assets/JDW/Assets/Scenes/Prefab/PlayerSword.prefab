@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 8915004436936648237}
   - component: {fileID: 8042441434584137574}
   - component: {fileID: 5786611776289020374}
+  - component: {fileID: 7679004939418474902}
   m_Layer: 3
   m_Name: PlayerSword
   m_TagString: Player
@@ -304,10 +305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c920a0eeb513d54aa4ce5e43b6c8054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerDataManager: {fileID: 0}
   SelectedClass: 1
   Timer: {fileID: 0}
   Scanner: {fileID: 0}
-  PlayerDataManager: {fileID: 0}
   AttackPosition: {fileID: 0}
   IsDead: 0
   Stats:
@@ -340,6 +341,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 262144
   nearestTarget: {fileID: 0}
+--- !u!114 &7679004939418474902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345928038722599383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1a9d2f469c4b948ae475fee3bd8125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitColor: {r: 1, g: 0.5, b: 0.5, a: 1}
+  _flashDuration: 0.1
 --- !u!1 &5919637639147977788
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +368,7 @@ GameObject:
   - component: {fileID: 4070831228580403746}
   - component: {fileID: 1017195456091207114}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: PlayerCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -497,11 +512,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0191ed0ce2009a4a94dbe538fc637f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 5327371813207693605}
-  _swordPrefab: {fileID: 1044545731354326905, guid: a7255bb8d3e804340a0be510b5dadd8d, type: 3}
-  _axePrefab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
-  _bulletPrefab: {fileID: 2418890576715569026, guid: c18e72a2d75595f459f7497f27fccc53, type: 3}
   _muzzlePos: {fileID: 846167591246401027}
+  _attackPrefab: {fileID: 1044545731354326905, guid: a7255bb8d3e804340a0be510b5dadd8d, type: 3}
+  _attackDuration: 0.5
+  _attackOffset: 1
 --- !u!1001 &478753959921192902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -587,6 +601,10 @@ PrefabInstance:
     - target: {fileID: 901076791029191848, guid: 3bfb968b6127b8543bb3968686946480, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2072823575781997275, guid: 3bfb968b6127b8543bb3968686946480, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1514110913
       objectReference: {fileID: 0}
     - target: {fileID: 6089325739926213722, guid: 3bfb968b6127b8543bb3968686946480, type: 3}
       propertyPath: m_Pivot.x
