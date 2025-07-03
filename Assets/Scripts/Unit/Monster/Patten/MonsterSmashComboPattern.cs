@@ -60,7 +60,7 @@ namespace ProjectVS.Unit.Monster.Pattern
         private void PlayAnimation(AnimationClip clip)
         {
             if (clip != null)
-                phaseController.OnwerController.Anim.PlayClip(clip);
+                phaseController.OwnerController.Anim.PlayClip(clip);
         }
     }
 }

@@ -6,7 +6,6 @@ using ProjectVS.Unit.Player;
 using ProjectVS.Util;
 
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace ProjectVS.Manager
 {
@@ -67,7 +66,7 @@ namespace ProjectVS.Manager
             // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
             // stats = stats.TestStats(TestCharacterClass);
 
-            Stats = new Unit.Player.PlayerStats();
+            Stats = new PlayerStats();
             Stats = Stats.TestStats(TestCharacterClass);
         }
         public void Cleanup() { }
