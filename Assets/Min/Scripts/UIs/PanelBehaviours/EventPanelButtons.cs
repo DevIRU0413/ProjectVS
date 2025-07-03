@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using ProjectVS.Utils.UIManager;
+using ProjectVS.Dialogue.DialogueManager;
 
 namespace ProjectVS.UIs.PanelBehaviours.EventPanelButtons
 {
@@ -26,6 +27,8 @@ namespace ProjectVS.UIs.PanelBehaviours.EventPanelButtons
 
         public void OnClickLogButton()
         {
+            DialogueManager.Instance.IsAutoMode.Value = false;
+
             UIManager.Instance.Hide("Event Panel");
             UIManager.Instance.Show("Log Panel");
         }
