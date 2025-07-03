@@ -28,12 +28,12 @@ namespace ProjectVS.Monster.Pattern
 
         [SerializeField] private List<float> stepBaseAngleList = new(); // 사용 시, 랜덤한 
 
-        protected PlayerConfig _target;
+        protected GameObject _target;
 
         public override void Init(MonsterPhaseController phaseController)
         {
             base.Init(phaseController);
-            _target = PlayerSpawner.ForceInstance.CurrentPlayer.GetComponent<PlayerConfig>();
+            _target = PlayerSpawner.ForceInstance.CurrentPlayer;
         }
 
         public override bool Condition()
