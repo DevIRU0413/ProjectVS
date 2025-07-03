@@ -9,6 +9,8 @@ namespace ProjectVS.Monster.State
         protected MonsterController controller;
         protected Animator animator;
 
+        public bool UseFixedUpdate = false;
+
         public MonsterState(MonsterController controller, Animator animator)
         {
             this.controller = controller;

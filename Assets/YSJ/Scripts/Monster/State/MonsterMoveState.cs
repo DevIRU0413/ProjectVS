@@ -28,7 +28,6 @@ namespace ProjectVS.Monster.State
             if (controller.IsMove)
             {
                 controller.transform.Translate(_moveSpeed * Time.deltaTime * controller.MoveDirection.normalized);
-
             }
             else
                 controller.ChangeState(MonsterStateType.Idle);

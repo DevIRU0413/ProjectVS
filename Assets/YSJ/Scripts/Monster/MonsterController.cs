@@ -5,6 +5,7 @@ using ProjectVS.Interface;
 using ProjectVS.Monster.Data;
 using ProjectVS.Monster.State;
 using ProjectVS.Phase;
+using ProjectVS.Unit;
 using ProjectVS.Unit.Monster;
 using ProjectVS.Util;
 
@@ -38,7 +39,7 @@ namespace ProjectVS.Monster
 
         public MonsterAnimationPlayer Anim { get; private set; }
         public MonsterStats Stats { get; private set; }
-        public Vector3 MoveDirection { get; private set; }
+        public Vector3 MoveDirection { get; private set; } = Vector3.zero;
 
         public Action OnHit { get; set; }
         public Action OnDeath;
@@ -52,7 +53,7 @@ namespace ProjectVS.Monster
         // 사망 관련
         [field: Header("Death State")]
         [field: SerializeField, Min(0)] public float DespawnDelay { get; private set; } = 1.0f;
-        
+
 
         private void Awake() => Init();
         private void Update()
@@ -68,8 +69,16 @@ namespace ProjectVS.Monster
             if (!_isMovementDelegated && Target != null)
                 SetMoveDirection(Target.transform.position);
 
-            _currentState?.Update();
+            if (!_currentState.UseFixedUpdate)
+                _currentState?.Update();
         }
+
+        private void FixedUpdate()
+        {
+            if (_currentState.UseFixedUpdate)
+                _currentState?.Update();
+        }
+
         private void OnDrawGizmos()
         {
             if (!Application.isPlaying) return;
@@ -97,9 +106,9 @@ namespace ProjectVS.Monster
             Anim = new MonsterAnimationPlayer(anim, this);
 
             // 상태 추가
-            _states.Add(MonsterStateType.Idle,  new MonsterIdleState(this, Anim.Animator));
-            _states.Add(MonsterStateType.Move,  new MonsterMoveState(this, Anim.Animator));
-            _states.Add(MonsterStateType.Win,   new MonsterWinState(this, Anim.Animator));
+            _states.Add(MonsterStateType.Idle, new MonsterIdleState(this, Anim.Animator));
+            _states.Add(MonsterStateType.Move, new MonsterMoveState(this, Anim.Animator));
+            _states.Add(MonsterStateType.Win, new MonsterWinState(this, Anim.Animator));
             _states.Add(MonsterStateType.Death, new MonsterDeathState(this, Anim.Animator));
         }
         public void SetTarget(GameObject target) => Target = target;
@@ -185,6 +194,6 @@ namespace ProjectVS.Monster
         }
         public void OnDespawned() { }
 
-        
+
     }
 }

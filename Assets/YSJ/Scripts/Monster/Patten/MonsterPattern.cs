@@ -6,7 +6,7 @@ using ProjectVS;
 
 namespace ProjectVS.Monster.Pattern
 {
-    public abstract class MonsterPattern : MonoBehaviour, IStateLifecycle
+    public abstract class MonsterPattern : MonoBehaviour, IPatternLifecycle
     {
         [field: Header("MonsterPattern Information")]
         [field: SerializeField, Min(0.0f)]
