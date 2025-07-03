@@ -23,6 +23,7 @@ namespace ProjectVS.Unit.Monster
         public MonsterAnimationPlayer(Animator animator, MonoBehaviour runner)
         {
             Animator = animator;
+            _runner = runner;
         }
 
 
@@ -30,6 +31,11 @@ namespace ProjectVS.Unit.Monster
         {
             if (clip == null || Animator == null) return;
             if (_isPlayingOverride) return;
+
+            if(!_graph.Equals(default))
+            {
+                _graph = default;
+            }
 
             _isPlayingOverride = true;
             _loop = loop;
@@ -88,8 +94,8 @@ namespace ProjectVS.Unit.Monster
                 _coroutine = null;
             }
 
-            if (_graph.IsValid())
-                _graph.Destroy();
+            _graph.Destroy();
+            _graph = default;
         }
     }
 }

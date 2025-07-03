@@ -14,20 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnEntries:
   - GroupName: Radius
-    SpawnGroupType: 1
-    SpawnableObjects:
-    - {fileID: 6150469384424873328, guid: 333638d2b878cd842b4a8373fde59ff8, type: 3}
-    - {fileID: 2459041630460869292, guid: e5af0e5fee5dacc449a86d4598107b89, type: 3}
-    - {fileID: 7388677132878714472, guid: 2983511bfcb77f84c9b4b25eec409c37, type: 3}
-    - {fileID: 6773870201672131864, guid: e12a49b4c9116cb44b24f5c30191dac2, type: 3}
-    - {fileID: 1352360658915763524, guid: fe9332272d5b4cf449d2d1f1d57f6b85, type: 3}
-    - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+    SpawnGroupType: 0
+    SpawnableObjects: []
     GroupUnitSpawnCount: 2
     Interval: 4
-    AutoStart: 0
+    AutoStart: 1
     StopAfterTime: 900
-    timer: 0.46370387
-    activeTime: 20.475155
+    timer: 0
+    activeTime: 0
   - GroupName: Line
     SpawnGroupType: 2
     SpawnableObjects:
@@ -36,8 +30,8 @@ MonoBehaviour:
     Interval: 240
     AutoStart: 1
     StopAfterTime: 900
-    timer: 20.475155
-    activeTime: 20.475155
+    timer: 21.365818
+    activeTime: 21.365818
   - GroupName: Circle
     SpawnGroupType: 3
     SpawnableObjects:
@@ -46,8 +40,18 @@ MonoBehaviour:
     Interval: 180
     AutoStart: 1
     StopAfterTime: 900
-    timer: 20.475155
-    activeTime: 20.475155
+    timer: 21.365818
+    activeTime: 21.365818
+  - GroupName: Boss
+    SpawnGroupType: 1
+    SpawnableObjects:
+    - {fileID: 2503613428698559689, guid: 0e5e4f5f22c040a45b7507964ae54beb, type: 3}
+    GroupUnitSpawnCount: 1
+    Interval: 450
+    AutoStart: 1
+    StopAfterTime: 900
+    timer: 21.365818
+    activeTime: 21.365818
   radius: 16
   isReverseLine: 1
   offset: 2

@@ -35,23 +35,26 @@ namespace ProjectVS.Monster.Pattern
 
         public override void Enter()
         {
-            _phaseController.OnwerController.ChangeState(MonsterStateType.Idle, true);
-            _phaseController.OnwerController.LockChangeState();
+            phaseController.OnwerController.ChangeState(MonsterStateType.Idle, true);
+            phaseController.OnwerController.LockChangeState();
             base.Enter();
         }
 
         protected override IEnumerator IE_PlayAction()
         {
-            if (CastDelay > 0f)
-                yield return new WaitForSeconds(CastDelay);
+            if (castDelay > 0f)
+            {
+                phaseController.OnwerController.Anim.PlayClip(patternCastClips, true);
+                yield return new WaitForSeconds(castDelay);
+                phaseController.OnwerController.Anim.Stop();
+                phaseController.OnwerController.Anim.PlayClip(patternActionClips, true);
+            }
+
 
             if (_target != null)
             {
                 Vector3 dashDir = (_target.transform.position - transform.position).normalized;
                 Vector3 targetPos = transform.position + dashDir * _dashDistance;
-
-                // Optional: 회전
-                transform.rotation = Quaternion.LookRotation(Vector3.forward, dashDir);
 
                 float dashTime = _dashDistance / _dashSpeed;
                 float elapsed = 0f;
@@ -75,8 +78,13 @@ namespace ProjectVS.Monster.Pattern
                     AudioSource.PlayClipAtPoint(_dashImpactClip, transform.position);
             }
 
-            if (RecoveryTime > 0f)
-                yield return new WaitForSeconds(RecoveryTime);
+            if (recoveryTime > 0f)
+            {
+                phaseController.OnwerController.Anim.Stop();
+                phaseController.OnwerController.Anim.PlayClip(patternRecoveryClips, true);
+                yield return new WaitForSeconds(recoveryTime);
+                phaseController.OnwerController.Anim.Stop();
+            }
 
             PatternState = MonsterPatternState.Done;
         }

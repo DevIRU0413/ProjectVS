@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[0].monsterPattern
+      value: 
+      objectReference: {fileID: 2133665760329920176}
     - target: {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_Name
-      value: Zombie Variant
+      value: CursedTentacle
       objectReference: {fileID: 0}
     - target: {fileID: 5120001472748250191, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -77,10 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e65d3c41b504b44ba1fd8291f2639c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CastDelay>k__BackingField: 0
-  <RecoveryTime>k__BackingField: 1
-  _cooldown: 2
-  <PatternState>k__BackingField: 0
+  <CastDelay>k__BackingField: 2
+  <RecoveryTime>k__BackingField: 2
+  _cooldown: 10
   _shootableRange: 20
   _projectilePrefab: {fileID: 3942935392967977735, guid: 4d6f7cb295e82004d9cd3d31fd204f89, type: 3}
   _attackClip: {fileID: 0}

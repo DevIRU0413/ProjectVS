@@ -43,14 +43,14 @@ namespace ProjectVS.Monster.Pattern
 
         public override void Enter()
         {
-            _phaseController.OnwerController.ChangeState(MonsterStateType.Idle, true);
+            phaseController.OnwerController.ChangeState(MonsterStateType.Idle, true);
             base.Enter();
         }
 
         protected override IEnumerator IE_PlayAction()
         {
-            if (CastDelay > 0f)
-                yield return new WaitForSeconds(CastDelay);
+            if (castDelay > 0f)
+                yield return new WaitForSeconds(castDelay);
 
             if (_target != null && _projectilePrefab != null)
             {
@@ -68,8 +68,8 @@ namespace ProjectVS.Monster.Pattern
                 );
             }
 
-            if (RecoveryTime > 0f)
-                yield return new WaitForSeconds(RecoveryTime);
+            if (recoveryTime > 0f)
+                yield return new WaitForSeconds(recoveryTime);
 
             PatternState = MonsterPatternState.Done;
         }
