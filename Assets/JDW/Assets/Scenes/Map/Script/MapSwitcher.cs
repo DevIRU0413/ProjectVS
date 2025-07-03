@@ -27,7 +27,7 @@ public class MapSwitcher : MonoBehaviour
         // StartCoroutine(HandleFadeTransition());
         PlayerDataManager.Instance.SavePlayerData(0);
         Debug.Log("상점맵으로 씬 전환");
-       SceneManager.LoadScene("StoreScene");
+       SceneManager.LoadScene("ShopScene");
    }
     private IEnumerator HandleFadeTransition()
     {

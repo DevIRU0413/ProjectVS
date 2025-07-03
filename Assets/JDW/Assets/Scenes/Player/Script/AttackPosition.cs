@@ -4,6 +4,7 @@ using ProjectVS;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -20,7 +21,7 @@ namespace ProjectVS.JDW
 
         private void Start()
         {
-            Debug.Log($"[AttackPosition] Start 호출됨 on {gameObject.name}");
+            if (SceneManager.GetActiveScene().name != "BattleScene") return;
 
             _player = GetComponentInParent<PlayerConfig>();
             if (_player == null || _attackPrefab == null)
@@ -29,7 +30,6 @@ namespace ProjectVS.JDW
                 return;
             }
 
-            Debug.Log("AttackRoutine 시작");
             StartCoroutine(AttackRoutine(_attackPrefab, _attackDuration, _attackOffset)); // 생성 프리팹 / 사라지는 속도 / 플레이어와의 거리
         }
         private IEnumerator AttackRoutine(GameObject prefab, float duration, float offset)
