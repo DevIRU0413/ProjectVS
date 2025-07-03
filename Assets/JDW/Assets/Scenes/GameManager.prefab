@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8605384738218336565}
   - component: {fileID: 8335105744408683840}
   - component: {fileID: 963765794381881786}
+  - component: {fileID: 1394029915749264849}
+  - component: {fileID: 1338126269231681217}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -82,3 +84,28 @@ MonoBehaviour:
   TotalKills: 0
   TotalPlayTime: 0
   BattleSceneCount: 0
+--- !u!114 &1394029915749264849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4279960742447084805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a57ce8b65b8124f84d64450802531d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiManager: {fileID: 1338126269231681217}
+--- !u!114 &1338126269231681217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4279960742447084805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72dcf3e8e21188f4d8a07ab316e23790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -826,7 +826,7 @@ GameObject:
   - component: {fileID: 2528856368926004839}
   - component: {fileID: 2933088364726498677}
   m_Layer: 5
-  m_Name: FieldUI
+  m_Name: Battle Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

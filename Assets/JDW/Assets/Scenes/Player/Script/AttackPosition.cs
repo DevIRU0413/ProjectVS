@@ -14,8 +14,8 @@ namespace ProjectVS.JDW
     {
         [SerializeField] private Transform _muzzlePos;
         [SerializeField] private GameObject _attackPrefab;
-        [SerializeField] private float _attackDuration = 0f;
-        [SerializeField] private float _attackOffset = 0f;
+        [SerializeField] private float _attackDuration = 0f;// 오브젝트의 지속시간
+        [SerializeField] private float _attackOffset = 0f; // 플레이어와 오브젝트의 거리
 
         private PlayerConfig _player;
 
