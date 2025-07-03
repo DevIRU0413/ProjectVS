@@ -140,52 +140,33 @@ namespace ProjectVS.Item
 
         public void Swing(Transform transform, float damage, float radius = 1.5f, float angle = 90f)
         {
+            Vector2 origin = transform.position;
             Vector2 swingDir = GetMouseDirection2D(transform);
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius, _targetLayer);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(origin, radius, _targetLayer);
+
             foreach (Collider2D hit in hits)
             {
-                Vector2 Target = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
-                float dot = Vector2.Dot(swingDir, Target);
+                Vector2 target = (Vector2)hit.transform.position - origin;
 
-                float angleBetween = Mathf.Acos(dot) * Mathf.Rad2Deg;
-                if (angleBetween <= angle / 2f)
+                if (target.magnitude > radius)
+                    continue;
+
+                float attackAngle = Vector2.Angle(swingDir, target);
+
+                if (attackAngle <= angle * 0.5f)
                 {
-                    /* hit.GetComponent<IDamageable>()?.TakeDamage(_damage); */
-                    Debug.Log($" 대상 : {hit.name} / 데미지 : {damage}");
+                    hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
+                    Debug.Log($"[Swing] Hit: {hit.name}");
                 }
-
-                Debug.Log("Test : SWING");
-                DebugSwing(transform.position, swingDir, radius, angle, Color.red, 0.5f);
             }
         }
-
-        #region Swing 기즈모 확인
-        static void DebugSwing(Vector2 origin, Vector2 direction, float radius, float angle, Color color, float duration)
-        {
-            float halfAngle = angle / 2f;
-            Vector2 leftDir = Quaternion.Euler(0, 0, -halfAngle) * direction;
-            Vector2 rightDir = Quaternion.Euler(0, 0, halfAngle) * direction;
-
-            Debug.DrawLine(origin, origin + leftDir * radius, color, duration);
-            Debug.DrawLine(origin, origin + rightDir * radius, color, duration);
-
-            int segments = 8;
-            for (int i = 0; i <= segments; i++)
-            {
-                float t = i / (float)segments;
-                float currentAngle = Mathf.Lerp(-halfAngle, halfAngle, t);
-                Vector2 dir = Quaternion.Euler(0, 0, currentAngle) * direction;
-                Debug.DrawLine(origin, origin + dir * radius, color, duration);
-            }
-        }
-        #endregion
+       
 
         public void Shot(Transform user, float damage)
         {
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
 
-            // 방향 설정이 필요 시, 다음 dir 방향으로 세팅
             Vector2 dir = GetMouseDirection2D(user);
             intance.GetComponent<Test_Projectile>().Init(dir, damage, 5f);
 
@@ -219,9 +200,9 @@ namespace ProjectVS.Item
 
             for (int i = 0; i < 3; i++)
             {
+                //TODO : 3점사 시간차 추가
                 GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
-
-                // 방향 설정이 필요 시, 다음 dir 방향으로 세팅
+                intance.GetComponent<Test_Projectile>().Init(dir, damage, 5f);
             }
 
             Debug.Log("Test : THREE SHOT");
@@ -229,7 +210,7 @@ namespace ProjectVS.Item
 
         public void Tornado(int damage)
         {
-
+            //TODO : RaycastAll  또는 LineCast로 지지기 구현
         }
 
         public void Throw(Transform user, int damage, float range = 3f, float radius = 1.5f)
@@ -238,7 +219,6 @@ namespace ProjectVS.Item
             Vector2 spawnPosition = (Vector2)user.position + randomOffset;
 
             GameObject instance = Instantiate(_throwPrfab, spawnPosition, Quaternion.identity);
-
             //TODO : 몇 초후 떨어지는 등, 생성 지점 표시 등 구현 
         }
 
@@ -266,9 +246,9 @@ namespace ProjectVS.Item
         {
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
 
-            // 방향 설정이 필요 시, 다음 dir 방향으로 세팅
             Vector2 dir = GetMouseDirection2D(user);
 
+            // 데미지 2번 적용 Projectile 클래스쪽에서 적용할지 or 이쪽에서 구현할지
             Debug.Log("Test : SHOT");
         }
 

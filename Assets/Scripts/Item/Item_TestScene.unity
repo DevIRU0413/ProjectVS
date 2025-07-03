@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 1715912952}
   - component: {fileID: 1715912951}
   - component: {fileID: 1715912950}
+  - component: {fileID: 1715912954}
   m_Layer: 18
   m_Name: Monster
   m_TagString: Monster
@@ -362,6 +363,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1715912954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715912948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e14608e008f134ba3c8d552d88ff59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  currentHp: 0
 --- !u!1 &1851130647
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +410,7 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 691407e3bc575324d9db03793aecf964, type: 2}
   _targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 262144
   _projectilePrefab: {fileID: 6002493864229361507, guid: cb7b3601fdbcfe84d8a1efbc5dd33a9d, type: 3}
   _throwPrfab: {fileID: 6002493864229361507, guid: cb7b3601fdbcfe84d8a1efbc5dd33a9d, type: 3}
   _playerStats:
