@@ -46,6 +46,18 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
             IsSkipToggled.Value = false;
         }
 
+        protected virtual void OnDisable()
+        {
+            // 비활성화되는 시점에 텍스트가 짤리지 않게 풀 텍스트 강제 대입
+            if (_typingCo != null)
+            {
+                StopCoroutine(_typingCo);
+                _contentText.text = _currentContent;
+                _typingCo = null;
+                OnTypingComplete?.Invoke();
+            }
+        }
+
         public virtual void StartContentTyping(string content)
         {
             if (_typingCo != null)
