@@ -13,6 +13,8 @@ namespace ProjectVS.Monster.Spawner
         public float distance = 10.0f;
         public List<Vector2> directionList = new();
 
+        public float spawnLifeCycle = 0;
+
         public override void SpawnUnits(GameObject target, Vector3 spawnPoint, int unitCount)
         {
             if (directionList.Count <= 0) return;
@@ -67,6 +69,13 @@ namespace ProjectVS.Monster.Spawner
 
                 monUnit.DelegateMovementAuthority();
                 monUnit.SetMoveDirection(moveDir, true);
+
+                var ctrl = go.GetComponent<MonsterController>();
+                if (ctrl && spawnLifeCycle > 0)
+                {
+                    var lifeCmp = go.GetOrAddComponent<SpawnObjectLifeCycle>();
+                    lifeCmp.SetLifeTime(spawnLifeCycle);
+                }
             }
         }
     }

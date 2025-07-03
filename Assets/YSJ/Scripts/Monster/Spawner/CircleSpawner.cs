@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+
+using ProjectVS.Util;
+
+using UnityEngine;
 
 namespace ProjectVS.Monster.Spawner
 {
     public class CircleSpawner : SpawnerBase
     {
         public float radius = 5.0f;
+        public float spawnLifeCycle = 5.0f;
 
         /// <summary>
         /// 타겟을 기준으로 원으로 생성됩니다.
@@ -26,9 +31,13 @@ namespace ProjectVS.Monster.Spawner
                 // GameObject go = GameObject.Instantiate(spanwUnit, pos, Quaternion.identity);
                 // spawned.Add(go);
 
-                GameObject go = ProjectVS.Util.PoolManager.ForceInstance.Spawn(spanwUnit.name, pos, Quaternion.identity);
+                GameObject go = PoolManager.ForceInstance.Spawn(spanwUnit.name, pos, Quaternion.identity);
                 var ctrl = go.GetComponent<MonsterController>();
-                ctrl.SetTarget(target);
+                if(ctrl && spawnLifeCycle > 0)
+                {
+                    var lifeCmp = go.GetOrAddComponent<SpawnObjectLifeCycle>();
+                    lifeCmp.SetLifeTime(spawnLifeCycle);
+                }
             }
         }
 
