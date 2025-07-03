@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Maid Costume SO
   m_EditorClassIdentifier: 
   CostumeName: Maid
-  CostumeDescription: Maid Description
-  CostumeSprite: {fileID: 21300000, guid: 3b5e94cefde1c334a80909d6636da581, type: 3}
-  FullScene: {fileID: 21300000, guid: a64bf993ba3f0554680541671a52c352, type: 3}
-  IconSprite: {fileID: 21300000, guid: 49763e4938a032a42b07ba4bbceec699, type: 3}
-  IsUnlocked: 1
+  CostumeDescription: "\uCDE8\uD5A5 \uCC38... \uBCC0\uD0DC."
+  CostumeSprite: {fileID: 21300000, guid: 584017f99db746a4ca8f96af738c1400, type: 3}
+  FullScene: {fileID: 21300000, guid: 7054cfdfdf586674394b653fa9723303, type: 3}
+  IconSprite: {fileID: 21300000, guid: f007a0c27fd71ec4e838e077fdaf98fe, type: 3}
+  IsUnlocked: 0
   IsEquipped: 0
   CostumeDialogueID: 200002
+  Price: 3000
