@@ -20,6 +20,7 @@ public class ScannerHitable : MonoBehaviour
     [SerializeField, Min(1)] private int hitCount = 1;
     [SerializeField] private AudioClip hitClip;
 
+    private Collider2D[] buffer;
     private UnitStats _unitStats;
     public Action OnHitStart;
     public Action OnHitEnd;
@@ -32,16 +33,18 @@ public class ScannerHitable : MonoBehaviour
         var hitSet = new HashSet<GameObject>();
         foreach (var scannerComponent in scannerComponents)
         {
-            if (!(scannerComponent is IHitScanner scanner))
+            if (!(scannerComponent is HitScanner scanner))
             {
                 Debug.LogWarning($"{scannerComponent.name} does not implement IHitScanner.");
                 continue;
             }
 
             // 충돌 것들 추가
-            var targets = scanner.Scan();
-            foreach (var target in targets)
-                hitSet.Add(target);
+            var targets = scanner.Scan(buffer);
+            foreach (var target in buffer)
+            {
+                hitSet.Add(target.gameObject);
+            }
         }
 
         OnHitStart?.Invoke();

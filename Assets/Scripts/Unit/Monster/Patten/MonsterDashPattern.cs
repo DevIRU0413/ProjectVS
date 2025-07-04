@@ -17,6 +17,8 @@ namespace ProjectVS.Unit.Monster.Pattern
         [SerializeField] private AudioClip _dashStartClip;
         [SerializeField] private AudioClip _dashImpactClip;
 
+        [SerializeField] private GameObject _dashArea;
+
         protected GameObject _target;
 
         [Header("IGroggyTrackable")]
@@ -24,13 +26,13 @@ namespace ProjectVS.Unit.Monster.Pattern
 
         public int GroggyThreshold => _groggyCountLine;
 
-        public bool IsFaild => true;
+        public bool IsFaild => false;
 
         public override void Init(MonsterPhaseController phaseController)
         {
             base.Init(phaseController);
             _target = PlayerSpawner.ForceInstance.CurrentPlayer;
-
+            if (_dashArea != null) _dashArea.SetActive(false);
         }
 
         public override bool Condition()
@@ -44,18 +46,32 @@ namespace ProjectVS.Unit.Monster.Pattern
             phaseController.OwnerController.ChangeState(MonsterStateType.Idle, true);
             phaseController.OwnerController.DelegateMovementAuthority();
             base.Enter();
+
+            if (_dashArea != null) _dashArea.SetActive(false);
         }
 
         protected override IEnumerator IE_PlayAction()
         {
-            if (castDelay > 0f)
+            float currentTime = castDelay;
+            if (_dashArea != null) _dashArea.SetActive(true);
+            phaseController.OwnerController.Anim.PlayClip(patternCastClips, 1.0f, true);
+            while (currentTime > 0)
             {
-                phaseController.OwnerController.Anim.PlayClip(patternCastClips, 1.0f, true);
-                yield return new WaitForSeconds(castDelay);
-                phaseController.OwnerController.Anim.Stop();
-                phaseController.OwnerController.Anim.PlayClip(patternActionClips, 1.0f, true);
+                currentTime -= Time.deltaTime;
+                Vector3 dir = _target.transform.position - transform.position;
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                _dashArea.transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+                yield return null;
             }
+            if (_dashArea != null) _dashArea.SetActive(false);
+            phaseController.OwnerController.Anim.Stop();
+            phaseController.OwnerController.Anim.PlayClip(patternActionClips, 1.0f, true);
 
+            // 애니메이션 or 이펙트 재생
+            if (_dashStartClip != null)
+                AudioSource.PlayClipAtPoint(_dashStartClip, transform.position);
+
+            // 타겟 있다면
             if (_target != null)
             {
                 Vector3 dashDir = (_target.transform.position - transform.position).normalized;
@@ -65,10 +81,6 @@ namespace ProjectVS.Unit.Monster.Pattern
                 float elapsed = 0f;
                 Vector3 startPos = transform.position;
 
-                // 애니메이션 or 이펙트 재생
-                if (_dashStartClip != null)
-                    AudioSource.PlayClipAtPoint(_dashStartClip, transform.position);
-
                 while (elapsed < dashTime)
                 {
                     transform.position = Vector3.Lerp(startPos, targetPos, elapsed / dashTime);
@@ -77,7 +89,6 @@ namespace ProjectVS.Unit.Monster.Pattern
                 }
 
                 transform.position = targetPos;
-
                 // 대쉬 후 충돌 or 충격 이펙트
                 if (_dashImpactClip != null)
                     AudioSource.PlayClipAtPoint(_dashImpactClip, transform.position);
@@ -96,6 +107,7 @@ namespace ProjectVS.Unit.Monster.Pattern
 
         public override void Exit()
         {
+            if (_dashArea != null) _dashArea.SetActive(false);
             base.Exit();
             phaseController.OwnerController.RevokeMovementAuthority();
         }

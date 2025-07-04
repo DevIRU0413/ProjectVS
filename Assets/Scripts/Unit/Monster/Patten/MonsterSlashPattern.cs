@@ -19,31 +19,41 @@ namespace ProjectVS.Unit.Monster
         [SerializeField, Min(0f)] private float _finishSlashActionDelay = 2.0f;
 
         [Header("Hit Detection")]
-        [SerializeField] private HitBoxSpriter normalSlashHitBox;
-        [SerializeField] private HitBoxSpriter finishSlashHitBox;
-        [SerializeField] private float normalScanRadius = 1.5f;
-        [SerializeField] private float finishScanRadius = 1.5f;
-        [SerializeField] private float attackRange = 4.0f;
-        [SerializeField] private LayerMask targetLayer;
+        [SerializeField] private HitScanner _normalHitScanner;
+        [SerializeField] private HitScanner _finishHitScanner;
+        [SerializeField] private float      _attackRange = 4.0f;
+        [SerializeField] private LayerMask  _targetLayer;
 
-        private int _successCount = 0;
-        private Collider2D[] targets = new Collider2D[5];
+        private int _hitSuccessCount = 0;
+        private Collider2D[] targets = new Collider2D[1];
 
         [Header("IGroggyTrackable")]
         [SerializeField, Min(0)] private int _groggyCountLine = 0;
         public int GroggyThreshold => _groggyCountLine;
-        public bool IsFaild => _successCount <= 0;
+        public bool IsFaild => _hitSuccessCount <= 0;
+
+        // HB 스프라이터
+        private HitBoxSpriter _normalHitSpriter;
+        private HitBoxSpriter _finishHitSpriter;
 
         public override void Init(MonsterPhaseController phaseController)
         {
             base.Init(phaseController);
-            if (normalSlashHitBox != null) normalSlashHitBox.gameObject.SetActive(false);
-            if (finishSlashHitBox != null) finishSlashHitBox.gameObject.SetActive(false);
+            if (_normalHitScanner != null)
+            {
+                _normalHitSpriter = _normalHitScanner.GetComponentInChildren<HitBoxSpriter>();
+                _normalHitScanner.gameObject.SetActive(false);
+            }
+            if (_finishHitScanner != null)
+            {
+                _finishHitSpriter = _normalHitScanner.GetComponentInChildren<HitBoxSpriter>();
+                _finishHitScanner.gameObject.SetActive(false);
+            }
         }
 
         public override bool Condition()
         {
-            return normalSlashHitBox != null &&
+            return _normalHitScanner != null &&
                    phaseController.OwnerController.Target != null &&
                    base.Condition();
         }
@@ -51,69 +61,100 @@ namespace ProjectVS.Unit.Monster
         public override void Enter()
         {
             phaseController.OwnerController.ChangeState(MonsterStateType.Idle, true);
-            phaseController.OwnerController.LockChangeState();
             phaseController.OwnerController.DelegateMovementAuthority();
-
             base.Enter();
 
-            _successCount = 0;
-            if (normalSlashHitBox != null) normalSlashHitBox.gameObject.SetActive(false);
-            if (finishSlashHitBox != null) finishSlashHitBox.gameObject.SetActive(false);
+            _hitSuccessCount = 0;
+            if (_normalHitScanner != null) _normalHitScanner.gameObject.SetActive(false);
+            if (_finishHitScanner != null) _finishHitScanner.gameObject.SetActive(false);
         }
 
         protected override IEnumerator IE_PlayAction()
         {
-            _successCount = 0;
+            // 세팅이 이상할 시, 초기 종료
+            if (_normalHitScanner == null || _finishHitScanner == null)
+            {
+                PatternState = MonsterPatternState.Done;
+                yield break;
+            }
 
+            // 필요 값들
             var thisTr = transform;
             var targetTr = phaseController.OwnerController.Target.transform;
-
-            normalSlashHitBox.gameObject.SetActive(true);
             Vector3 hitBoxPoint = CalculateHitBoxPosition(thisTr, targetTr);
-            normalSlashHitBox.transform.position = hitBoxPoint;
 
+            // 캐스팅 시간에서 애니메이션 시간 빼주기
             float elapsed = 0f;
+            var clip = (0 < _slashClips.Count) ? _slashClips[0] : patternActionClips;
+            elapsed = (clip == null) ? 0.0f : clip.length;
+
+            // 범위 활성화
+            _normalHitSpriter.changeTime = castDelay - elapsed;
+            _normalHitScanner.gameObject.SetActive(true);
+
+            // 플레이어 위치에 공격 예상 범위 포인트 갱신
             while (elapsed < castDelay)
             {
                 elapsed += Time.deltaTime;
                 hitBoxPoint = CalculateHitBoxPosition(thisTr, targetTr);
-                normalSlashHitBox.transform.position = hitBoxPoint;
+                _normalHitScanner.transform.position = hitBoxPoint;
                 yield return null;
             }
 
-            finishSlashHitBox.transform.position = hitBoxPoint;
-            normalSlashHitBox.gameObject.SetActive(false);
+            // 서클 위치 마지막 갱신
+            hitBoxPoint = CalculateHitBoxPosition(thisTr, targetTr);
+            _normalHitScanner.transform.position = hitBoxPoint;
+            _finishHitScanner.transform.position = hitBoxPoint;
+
+            _normalHitScanner.gameObject.SetActive(false);
 
             for (int i = 0; i < _slashCount - 1; i++)
             {
-                var clip = (i < _slashClips.Count) ? _slashClips[i] : patternActionClips;
-                PlaySlashAnimation(clip, normalSlashHitBox);
-                yield return new WaitForSeconds(clip.length);
-                normalSlashHitBox.gameObject.SetActive(false);
+                var slashClip = (i < _slashClips.Count) ? _slashClips[i] : patternActionClips;
+                phaseController.OwnerController.Anim.Stop();
+                phaseController.OwnerController.Anim.PlayClip(slashClip);
 
-                if (CheckHit(normalSlashHitBox.transform.position, normalScanRadius, targetLayer, targets))
-                    _successCount++;
+                _normalHitSpriter.changeTime = slashClip.length - 0.1f;
+                _normalHitScanner.gameObject.SetActive(true);
+                yield return new WaitForSeconds(slashClip.length - 0.1f);
+                _normalHitScanner.gameObject.SetActive(false);
 
+                if (_normalHitScanner.Scan(targets) > 0)
+                {
+                    _hitSuccessCount++;
+                    Debug.Log($"{typeof(MonsterSlashPattern).Name} Hit > {_hitSuccessCount}");
+                }
                 yield return new WaitForSeconds(_normalSlashInterval);
             }
-
-            normalSlashHitBox.gameObject.SetActive(false);
+            _normalHitScanner.gameObject.SetActive(false);
 
             if (_slashClips.Count > 0)
             {
-                finishSlashHitBox.gameObject.SetActive(true);
-                finishSlashHitBox.changeTime = _finishSlashActionDelay + 0.2f;
-                yield return new WaitForSeconds(_finishSlashActionDelay - 0.2f);
+                var slashClip = (0 < _slashClips.Count) ? _slashClips[_slashClips.Count - 1] : patternActionClips;
+                float finishCastTime = _finishSlashActionDelay - slashClip.length;
 
-                var clip = _slashClips[^1];
+                _finishHitSpriter.changeTime = finishCastTime;
+                _finishHitScanner.gameObject.SetActive(true);
+                yield return new WaitForSeconds(finishCastTime);
+
                 phaseController.OwnerController.Anim.Stop();
-                phaseController.OwnerController.Anim.PlayClip(clip);
+                phaseController.OwnerController.Anim.PlayClip(slashClip);
+                yield return new WaitForSeconds(slashClip.length - 0.1f);
+                _finishHitScanner.gameObject.SetActive(false);
 
-                yield return new WaitForSeconds(clip.length * 0.5f);
-                finishSlashHitBox.gameObject.SetActive(false);
+                if (_finishHitScanner.Scan(targets) > 0)
+                {
+                    _hitSuccessCount++;
+                    var damageable = targets[0].GetComponentInParent<Damageable>();
+                    var dir = damageable.gameObject.transform.position - hitBoxPoint;
 
-                if (CheckHit(finishSlashHitBox.transform.position, finishScanRadius, targetLayer, targets))
-                    _successCount++;
+                    if (damageable != null)
+                    {
+                        var dmg = phaseController.OwnerController.Stats.AtkSpd;
+                        damageable.ApplyDamage(new DamageInfo(amount: dmg, direction: dir));
+                    }
+                    Debug.Log($"{typeof(MonsterSlashPattern).Name} Hit > {_hitSuccessCount}");
+                }
             }
 
             yield return new WaitForSeconds(recoveryTime);
@@ -125,19 +166,9 @@ namespace ProjectVS.Unit.Monster
             Vector3 dir = targetTr.position - thisTr.position;
             float distance = dir.magnitude;
 
-            if (attackRange < distance)
-                return thisTr.position + dir.normalized * attackRange;
+            if (_attackRange < distance)
+                return thisTr.position + dir.normalized * _attackRange;
             return targetTr.position;
-        }
-
-        private void PlaySlashAnimation(AnimationClip clip, HitBoxSpriter hitBox)
-        {
-            hitBox.gameObject.SetActive(true);
-            hitBox.changeTime = clip.length;
-
-            var anim = phaseController.OwnerController.Anim;
-            anim.Stop();
-            anim.PlayClip(clip);
         }
 
         private bool CheckHit(Vector2 center, float radius, LayerMask mask, Collider2D[] buffer)
@@ -152,7 +183,7 @@ namespace ProjectVS.Unit.Monster
                 if (target != null)
                 {
                     target.TakeDamage(new DamageInfo(10, (hit.transform.position - transform.position).normalized));
-                    Debug.Log($"Slash Hit > {_successCount}");
+                    Debug.Log($"Slash Hit > {_hitSuccessCount}");
                     return true;
                 }
             }
@@ -162,26 +193,13 @@ namespace ProjectVS.Unit.Monster
         public override void Exit()
         {
             base.Exit();
-            phaseController.OwnerController.UnLockChangeState();
             phaseController.OwnerController.RevokeMovementAuthority();
         }
 
         private void OnDrawGizmos()
         {
-            if (normalSlashHitBox != null)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(normalSlashHitBox.transform.position, normalScanRadius);
-            }
-
-            if (finishSlashHitBox != null)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(finishSlashHitBox.transform.position, finishScanRadius);
-            }
-
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
+            Gizmos.DrawWireSphere(transform.position, _attackRange);
         }
     }
 }

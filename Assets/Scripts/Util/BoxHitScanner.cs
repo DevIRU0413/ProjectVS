@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ProjectVS.Util
 {
-    public class BoxHitScanner : MonoBehaviour, IHitScanner
+    public class BoxHitScanner : HitScanner
     {
         public Vector2 size = Vector2.one;
         public Vector2 offset = Vector2.zero;
@@ -14,20 +14,12 @@ namespace ProjectVS.Util
         public bool showGizmo = true;
         public Color gizmoColor = new Color(1, 0, 0, 0.3f);
 
-        public GameObject[] Scan(Func<GameObject, bool> filter = null)
+        public override int Scan(Collider2D[] buffer)
         {
             Vector2 center = transform.position;
             float angle = transform.eulerAngles.z;
-
             int count = OverlapScanUtility.BoxScan(center, offset, size, angle, buffer, targetMask);
-            var list = new List<GameObject>();
-            for (int i = 0; i < count; i++)
-            {
-                var go = buffer[i].gameObject;
-                if (go != null && go.activeInHierarchy && (filter == null || filter(go)))
-                    list.Add(go);
-            }
-            return list.ToArray();
+            return count;
         }
 
         private void OnDrawGizmosSelected()
