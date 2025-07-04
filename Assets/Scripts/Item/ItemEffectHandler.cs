@@ -155,7 +155,6 @@ namespace ProjectVS.Item
             return direction;
         }
 
-        // 수정
         public void Swing(Transform transform, float damage, float radius = 5f, float angle = 90f)
         {
             Vector2 origin = transform.position;
@@ -168,16 +167,12 @@ namespace ProjectVS.Item
                 Vector2 targetDir = (target - origin).normalized;
 
                 float angleToTarget = Vector2.Angle(swingDir, targetDir);
-
-                // 예각 범위 내일 때만 데미지
                 if (angleToTarget <= angle * 0.5f)
                 {
                     hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
                 }
             }
         }
-
-
 
         public void Shot(Transform user, float damage)
         {
@@ -271,35 +266,7 @@ namespace ProjectVS.Item
             _effectRoutine = null;
             Debug.Log("Tornado 종료");
         }
-
-        private void OnDrawGizmos()
-        {
-            Vector2 dir = transform.position + new Vector3(0.2f, 0f, 0f);
-
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireCube(transform.position + (Vector3)dir, new Vector3(3f, 0.5f, 0));
-
-            //========================
-            Vector3 origin = transform.position;
-            float radius = 5f;
-            float angle = 90f;
-
-            // 마우스 방향 기준 (또는 transform.right 사용 가능)
-            Vector3 forward = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - origin);
-            forward.z = 0;
-            forward.Normalize();
-
-            // 회전 방향 (Z축 기준으로 회전)
-            Vector3 leftDir = Quaternion.Euler(0, 0, -angle * 0.5f) * forward;
-            Vector3 rightDir = Quaternion.Euler(0, 0, angle * 0.5f) * forward;
-
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(origin, origin + leftDir * radius);
-            Gizmos.DrawLine(origin, origin + rightDir * radius);
-
-            // 오버랩 원 범위
-            Gizmos.DrawWireSphere(origin, radius);
-        }
+        
         #endregion
 
         public void Throw(Transform user, int damage, float range = 3f, float radius = 1.5f)
@@ -356,6 +323,34 @@ namespace ProjectVS.Item
                 Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
                 rb.velocity = shootDir.normalized * 5f;
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Vector2 dir = transform.position + new Vector3(0.2f, 0f, 0f);
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireCube(transform.position + (Vector3)dir, new Vector3(3f, 0.5f, 0));
+
+            //===============================
+
+            Vector3 origin = transform.position;
+            float radius = 5f;
+            float angle = 90f;
+
+            Vector3 forward = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - origin);
+            forward.z = 0;
+            forward.Normalize();
+
+            Vector3 leftDir = Quaternion.Euler(0, 0, -angle * 0.5f) * forward;
+            Vector3 rightDir = Quaternion.Euler(0, 0, angle * 0.5f) * forward;
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(origin, origin + leftDir * radius);
+            Gizmos.DrawLine(origin, origin + rightDir * radius);
+
+            // 오버랩 원 범위
+            Gizmos.DrawWireSphere(origin, radius);
         }
     }
 }
