@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &624993867294438700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462418317707175556}
+  - component: {fileID: 6401485248268821065}
+  m_Layer: 0
+  m_Name: Pattern_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1462418317707175556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624993867294438700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1720450865851303946}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6401485248268821065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624993867294438700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e65d3c41b504b44ba1fd8291f2639c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patternCastClips: {fileID: 0}
+  patternActionClips: {fileID: 0}
+  patternRecoveryClips: {fileID: 0}
+  <castDelay>k__BackingField: 0
+  <recoveryTime>k__BackingField: 4
+  _cooldown: 4
+  _shootableRange: 5
+  _projectilePrefab: {fileID: 1988102773127943700, guid: 99f8268500062c14482d38a2237f413e, type: 3}
+  _attackClip: {fileID: 0}
+  _attackCastClip: {fileID: 0}
+  totalProjectiles: 1
+  multiShotCount: 1
+  multiShotSpacing: 5
+  spreadAngle: 0
+  step: 1
+  stepDelay: 0.5
+  stepBaseAngleList: []
 --- !u!1 &3708467007834330952
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +168,7 @@ Transform:
   m_GameObject: {fileID: 5231254585524363362}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 2, y: 2, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -179,9 +240,6 @@ GameObject:
   - component: {fileID: 8287221502957274306}
   - component: {fileID: 8717279174655346626}
   - component: {fileID: 6582833408047252876}
-  - component: {fileID: 7185069644142046248}
-  - component: {fileID: 5997850327677063027}
-  - component: {fileID: 688008721563048687}
   m_Layer: 0
   m_Name: Banshee
   m_TagString: Untagged
@@ -205,6 +263,7 @@ Transform:
   - {fileID: 7876548200152588017}
   - {fileID: 4060312179004567458}
   - {fileID: 1783718670825714649}
+  - {fileID: 1720450865851303946}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &211638936342899880
@@ -268,13 +327,13 @@ MonoBehaviour:
   - MonsterHp: 1
     PhaseChangeDelay: 0
     MonsterPatternList:
-    - monsterPattern: {fileID: 688008721563048687}
+    - monsterPattern: {fileID: 6401485248268821065}
       Weight: 1
       AamageMultiplier: 1
   - MonsterHp: 0.3
-    PhaseChangeDelay: 0
+    PhaseChangeDelay: 2
     MonsterPatternList:
-    - monsterPattern: {fileID: 5997850327677063027}
+    - monsterPattern: {fileID: 6401485248268821065}
       Weight: 0
       AamageMultiplier: 1
 --- !u!114 &8717279174655346626
@@ -318,87 +377,39 @@ MonoBehaviour:
   critMultiplier: 0
   knockbackForce: 0
   _hitClip: {fileID: 0}
---- !u!114 &7185069644142046248
-MonoBehaviour:
+--- !u!1 &6110106692664745686
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6051400608539244084}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e65d3c41b504b44ba1fd8291f2639c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patternCastClips: {fileID: 0}
-  patternActionClips: {fileID: 0}
-  patternRecoveryClips: {fileID: 0}
-  <castDelay>k__BackingField: 0
-  <recoveryTime>k__BackingField: 0
-  _cooldown: 1
-  _shootableRange: 1
-  _projectilePrefab: {fileID: 0}
-  _attackClip: {fileID: 0}
-  _attackCastClip: {fileID: 0}
-  totalProjectiles: 24
-  multiShotCount: 3
-  multiShotSpacing: 5
-  spreadAngle: 360
-  step: 1
-  stepDelay: 0.5
-  stepBaseAngleList: []
---- !u!114 &5997850327677063027
-MonoBehaviour:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1720450865851303946}
+  m_Layer: 0
+  m_Name: Pattern
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1720450865851303946
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6051400608539244084}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e65d3c41b504b44ba1fd8291f2639c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patternCastClips: {fileID: 0}
-  patternActionClips: {fileID: 0}
-  patternRecoveryClips: {fileID: 0}
-  <castDelay>k__BackingField: 0
-  <recoveryTime>k__BackingField: 0
-  _cooldown: 1
-  _shootableRange: 1
-  _projectilePrefab: {fileID: 0}
-  _attackClip: {fileID: 0}
-  _attackCastClip: {fileID: 0}
-  totalProjectiles: 24
-  multiShotCount: 3
-  multiShotSpacing: 5
-  spreadAngle: 360
-  step: 1
-  stepDelay: 0.5
-  stepBaseAngleList: []
---- !u!114 &688008721563048687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6051400608539244084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a555b3a6f3078f341bcab62947a79e99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patternCastClips: {fileID: 7400000, guid: 00a33f605990a754fa53af3b3afc686c, type: 2}
-  patternActionClips: {fileID: 7400000, guid: e9bf6346db629184d976de81de663de3, type: 2}
-  patternRecoveryClips: {fileID: 7400000, guid: 00a33f605990a754fa53af3b3afc686c, type: 2}
-  <castDelay>k__BackingField: 1
-  <recoveryTime>k__BackingField: 1
-  _cooldown: 3
-  _dashSpeed: 20
-  _dashDistance: 5
-  _dashStartClip: {fileID: 0}
-  _dashImpactClip: {fileID: 0}
-  _groggyCountLine: 3
+  m_GameObject: {fileID: 6110106692664745686}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5221728407397555086}
+  - {fileID: 1462418317707175556}
+  m_Father: {fileID: 4350536783758570103}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6703767989880988265
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +669,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3.95
+  m_Radius: 1.5
 --- !u!1 &7910501202642694691
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,3 +754,64 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8646283014003054288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5221728407397555086}
+  - component: {fileID: 954759732187080779}
+  m_Layer: 0
+  m_Name: Pattern_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5221728407397555086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8646283014003054288}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1720450865851303946}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &954759732187080779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8646283014003054288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e65d3c41b504b44ba1fd8291f2639c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patternCastClips: {fileID: 0}
+  patternActionClips: {fileID: 0}
+  patternRecoveryClips: {fileID: 0}
+  <castDelay>k__BackingField: 0
+  <recoveryTime>k__BackingField: 4
+  _cooldown: 4
+  _shootableRange: 5
+  _projectilePrefab: {fileID: 1578519280804826849, guid: 0c4bd37fefb524649b8b07e64e640ef4, type: 3}
+  _attackClip: {fileID: 0}
+  _attackCastClip: {fileID: 0}
+  totalProjectiles: 1
+  multiShotCount: 1
+  multiShotSpacing: 5
+  spreadAngle: 0
+  step: 1
+  stepDelay: 0.5
+  stepBaseAngleList: []

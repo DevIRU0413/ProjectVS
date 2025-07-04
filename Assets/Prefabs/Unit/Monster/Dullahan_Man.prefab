@@ -94,15 +94,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 349870709840861804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11bda3dead064ee41a4360e2e432ec74, type: 3}
+  m_Script: {fileID: 11500000, guid: 55335da4d6c55424e9a8deaab882e4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinAlpha: 0
-  MaxAlpha: 0.5
-  changeTime: 1
-  forward: 0
-  useColor: {r: 1, g: 0, b: 0, a: 0}
-  spriteRenderer: {fileID: 0}
+  radius: 5
+  offset: {x: 0, y: 0}
+  buffer: []
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  showGizimo: 1
+  gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!1 &680770181278819381
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,15 +283,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3266399495064390670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11bda3dead064ee41a4360e2e432ec74, type: 3}
+  m_Script: {fileID: 11500000, guid: 55335da4d6c55424e9a8deaab882e4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinAlpha: 0
-  MaxAlpha: 0.5
-  changeTime: 1
-  forward: 0
-  useColor: {r: 1, g: 0, b: 0, a: 0}
-  spriteRenderer: {fileID: 0}
+  radius: 3
+  offset: {x: 0, y: 0}
+  buffer: []
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  showGizimo: 1
+  gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!1001 &2294859026238652462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,8 +482,8 @@ MonoBehaviour:
   - {fileID: 7400000, guid: eb6b90eec972fa343b0aa253c3893243, type: 2}
   _normalSlashInterval: 0.2
   _finishSlashActionDelay: 1
-  normalSlashHitBox: {fileID: 4601755659432773139}
-  finishSlashHitBox: {fileID: 8461550512471220752}
+  normalSlashHitBox: {fileID: 0}
+  finishSlashHitBox: {fileID: 0}
   normalScanRadius: 3
   finishScanRadius: 5
   attackRange: 6

@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-public class HitBoxController : MonoBehaviour
+public class HitBoxSpriter : MonoBehaviour
 {
     [Range(0, 1.0f)]public float MinAlpha;
     [Range(0, 1.0f)]public float MaxAlpha;
@@ -30,7 +30,6 @@ public class HitBoxController : MonoBehaviour
         if (_coroutine != null)
             StopCoroutine(_coroutine);
     }
-
 
     private IEnumerator ChangeColor()
     {
