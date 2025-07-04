@@ -19,8 +19,8 @@ namespace ProjectVS.Unit.Monster
         [SerializeField, Min(0f)] private float _finishSlashActionDelay = 2.0f;
 
         [Header("Hit Detection")]
-        [SerializeField] private HitBoxController normalSlashHitBox;
-        [SerializeField] private HitBoxController finishSlashHitBox;
+        [SerializeField] private HitBoxSpriter normalSlashHitBox;
+        [SerializeField] private HitBoxSpriter finishSlashHitBox;
         [SerializeField] private float normalScanRadius = 1.5f;
         [SerializeField] private float finishScanRadius = 1.5f;
         [SerializeField] private float attackRange = 4.0f;
@@ -130,7 +130,7 @@ namespace ProjectVS.Unit.Monster
             return targetTr.position;
         }
 
-        private void PlaySlashAnimation(AnimationClip clip, HitBoxController hitBox)
+        private void PlaySlashAnimation(AnimationClip clip, HitBoxSpriter hitBox)
         {
             hitBox.gameObject.SetActive(true);
             hitBox.changeTime = clip.length;
@@ -142,7 +142,7 @@ namespace ProjectVS.Unit.Monster
 
         private bool CheckHit(Vector2 center, float radius, LayerMask mask, Collider2D[] buffer)
         {
-            int count = OverlapScanUtility.SimpleScan(center, radius, mask, buffer);
+            int count = OverlapScanUtility.CircleScan(center, radius, mask, buffer);
             for (int i = 0; i < count; i++)
             {
                 var hit = buffer[i];

@@ -42,7 +42,6 @@ namespace ProjectVS.Unit.Monster.Pattern
         public override void Enter()
         {
             phaseController.OwnerController.ChangeState(MonsterStateType.Idle, true);
-            phaseController.OwnerController.LockChangeState();
             phaseController.OwnerController.DelegateMovementAuthority();
             base.Enter();
         }
@@ -98,7 +97,6 @@ namespace ProjectVS.Unit.Monster.Pattern
         public override void Exit()
         {
             base.Exit();
-            phaseController.OwnerController.UnLockChangeState();
             phaseController.OwnerController.RevokeMovementAuthority();
         }
     }
