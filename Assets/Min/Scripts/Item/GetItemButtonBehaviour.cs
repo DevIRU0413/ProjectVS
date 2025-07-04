@@ -1,44 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Utils.UIManager;
+
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace ProjectVS.Item.GetItemButtonBehaviour
 {
     public class GetItemButtonBehaviour : MonoBehaviour
     {
-        [SerializeField] private GameObject _buttonPrefab;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private Image _iconImage;
 
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _descriptionText;
 
         private ItemCombinator _itemCombinator;
         private ItemInventory _itemInventory;
-
         private ItemData _itemData;
+
         private bool _isSelected = false;
 
-        private void OnEnable()
-        {
-            _isSelected = false;
-        }
 
         public void Init(ItemData data, ItemCombinator combinator, ItemInventory inventory)
         {
             _itemData = data;
             _itemCombinator = combinator;
             _itemInventory = inventory;
+            _isSelected = false;
 
             RenewButtonAppearance();
         }
 
         private void RenewButtonAppearance()
         {
-            _spriteRenderer.sprite = _itemData.ItemIcon;
+            _iconImage.sprite = _itemData.ItemIcon;
 
             _nameText.text = _itemData.ItemName;
 
@@ -75,6 +74,7 @@ namespace ProjectVS.Item.GetItemButtonBehaviour
                         }
                         else
                         {
+                            // Debug.LogWarning("[GetItemButtonBehaviour] 둘 다 재료이면서 최대레벨이지만 조합 실패");
                             // _itemInventory.레벨업(_itemData);
                             // 아니면 _itemData.현재레벨++;
                         }
@@ -87,9 +87,10 @@ namespace ProjectVS.Item.GetItemButtonBehaviour
                     // 아니면 _itemData.현재레벨++;
                 }
 
-
                 _isSelected = true;
             }
+
+            UIManager.Instance.ForceCloseTopPanel();
         }
     }
 }
