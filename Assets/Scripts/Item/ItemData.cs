@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+
+using UnityEngine;
 
 namespace ProjectVS.Item
 {
@@ -27,6 +29,7 @@ namespace ProjectVS.Item
 
         [Header("아이템 최대 레벨 및 가격")]
         [field: SerializeField] public int ItemMaxLevel;
+        [field: SerializeField] public int ItemCurLevel;
         [field: SerializeField] public int ItemValue;
 
         [Header("공격 아이템 전용")]
@@ -45,5 +48,19 @@ namespace ProjectVS.Item
         /// 세트 효과 여부 확인
         /// </summary>
         public bool HasSetEffect => ItemSetNum > 0;
+
+        /// <summary>
+        /// 조합 여부 확인
+        /// 1회 조합 시, 이후 추가적인 조합 불가
+        /// </summary>
+        public bool IsComposited;
+
+        public void ItemLevelUp()
+        {
+            if (ItemCurLevel == ItemMaxLevel)
+                return;
+
+            ItemCurLevel++;
+        }
     }
 }

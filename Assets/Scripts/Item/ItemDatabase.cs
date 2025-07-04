@@ -36,8 +36,26 @@ namespace ProjectVS.Item
         /// <returns></returns>
         public ItemData GetItem(int id)
         {
-            _itemDict.TryGetValue(id, out var item);
-            return item;
+            if (_itemDict[id] == null)
+            {
+                return null;
+            }
+            else
+            {
+                _itemDict.TryGetValue(id, out var item);
+                return item;
+            }
+        }
+
+        // 조합 >> RemoveDict, IsComposited == true;
+
+        /// <summary>
+        /// 조합 시, 아이템 딕셔너리에서 제거
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveDict(int id)
+        {
+            _itemDict.Remove(id, out var item);
         }
 
         /// <summary>
