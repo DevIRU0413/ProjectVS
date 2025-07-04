@@ -6,10 +6,10 @@ using ProjectVS.Item;
 using UnityEngine;
 
 using RecipePanelButtonsClass = ProjectVS.UIs.PanelBehaviours.RecipePanelButtons.RecipePanelButtons;
-using ItemButtonBehaviourClass = ProjectVS.UIs.ItemButtonBehaviour.ItemButtonBehaviour;
+using ItemButtonBehaviourClass = ProjectVS.UIs.Item.ItemButtonBehaviour.ItemButtonBehaviour;
 using TMPro;
 
-namespace ProjectVS.UIs.RecipeBoxBehaviour
+namespace ProjectVS.UIs.Item.RecipeBoxBehaviour
 {
     public class RecipeBoxBehaviour : MonoBehaviour
     {

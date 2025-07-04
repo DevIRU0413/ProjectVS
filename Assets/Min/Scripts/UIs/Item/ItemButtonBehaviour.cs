@@ -7,7 +7,7 @@ using ProjectVS.Item;
 using RecipePanelButtonsClass = ProjectVS.UIs.PanelBehaviours.RecipePanelButtons.RecipePanelButtons;
 
 
-namespace ProjectVS.UIs.ItemButtonBehaviour
+namespace ProjectVS.UIs.Item.ItemButtonBehaviour
 {
     public class ItemButtonBehaviour : MonoBehaviour
     {

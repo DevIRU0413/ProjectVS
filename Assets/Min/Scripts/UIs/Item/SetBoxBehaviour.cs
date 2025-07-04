@@ -4,11 +4,11 @@ using UnityEngine;
 using TMPro;
 
 using RecipePanelButtonsClass = ProjectVS.UIs.PanelBehaviours.RecipePanelButtons.RecipePanelButtons;
-using ItemButtonBehaviourClass = ProjectVS.UIs.ItemButtonBehaviour.ItemButtonBehaviour;
+using ItemButtonBehaviourClass = ProjectVS.UIs.Item.ItemButtonBehaviour.ItemButtonBehaviour;
 using ProjectVS.Item;
 
 
-namespace ProjectVS.UIs.SetOrRecipeBoxBehaviour
+namespace ProjectVS.UIs.Item.SetOrRecipeBoxBehaviour
 {
     public class SetBoxBehaviour : MonoBehaviour
     {

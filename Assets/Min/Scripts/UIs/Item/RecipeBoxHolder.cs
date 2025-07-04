@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-namespace ProjectVS.UIs.RecipeBoxHolder
+namespace ProjectVS.UIs.Item.RecipeBoxHolder
 {
     public class RecipeBoxHolder : MonoBehaviour
     {
