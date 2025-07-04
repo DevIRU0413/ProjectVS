@@ -7,12 +7,14 @@ using ProjectVS.Manager;
 using GetItemButtonBehaviourClass = ProjectVS.Item.GetItemButtonBehaviour.GetItemButtonBehaviour;
 using BuyItemObjBehaviourClass = ProjectVS.Item.BuyItemObjBehaviour.BuyItemObjBehaviour;
 using ProjectVS.Utils.UIManager;
+using ProjectVS.Util;
+using ProjectVS.Interface;
 
 
 
 namespace ProjectVS.Item.ItemManager
 {
-    public class ItemManager : MonoBehaviour
+    public class ItemManager : SimpleSingleton<ItemManager>, IManager
     {
         private List<ItemData> _itemPool = new();
         //private List<ItemData> _allItemPool = new();
@@ -26,8 +28,13 @@ namespace ProjectVS.Item.ItemManager
         [SerializeField] private List<GetItemButtonBehaviourClass> _buttonList = new();
         [SerializeField] private List<BuyItemObjBehaviourClass> _objList = new();
 
-        private void Awake()
+        public int Priority => (int)ManagerPriority.ItemManager;
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
+
+        protected override void Awake()
         {
+            base.Awake();
+
             if (_itemCombinator == null)
                 _itemCombinator = new(ItemDatabase.Instance.GetAllItems());
         }
@@ -114,8 +121,7 @@ namespace ProjectVS.Item.ItemManager
 
             foreach (var item in PlayerDataManager.Instance.InventoryItems)
             {
-                // PlayerData의 item을 매니저님의 item으로 바꿔야될 듯
-                // _inventory.AddItem(item);
+                _inventory.AddItem(item);
             }
         }
 
@@ -128,9 +134,21 @@ namespace ProjectVS.Item.ItemManager
 
             foreach (var item in _inventory.GetAllItems())
             {
-                // 이것도 PlayerData의 item을 매니저님의 item으로 바꿔야될 듯
-                // PlayerDataManager.Instance.InventoryItems.Add(item);
+                PlayerDataManager.Instance.InventoryItems.Add(item);
             }
+        }
+
+        public void Initialize()
+        {
+            RecieveInventory();
+        }
+
+        public void Cleanup() { }
+
+
+        public GameObject GetGameObject()
+        {
+            return gameObject;
         }
     }
 }

@@ -5451,7 +5451,7 @@ GameObject:
   - component: {fileID: 471611675}
   m_Layer: 0
   m_Name: Item Manager
-  m_TagString: Untagged
+  m_TagString: Manager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5468,10 +5468,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef57ac91680d6724cbf988fe381fa19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonBehaviour:
+  m_isDontDestroyOnLoad: 0
+  _buttonList:
   - {fileID: 1281430452}
   - {fileID: 698978699}
   - {fileID: 1696323426}
+  _objList: []
 --- !u!4 &471611676
 Transform:
   m_ObjectHideFlags: 0
