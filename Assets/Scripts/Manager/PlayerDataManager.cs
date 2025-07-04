@@ -52,10 +52,17 @@ namespace ProjectVS.Manager
         public float TotalPlayTime; // 총 플레이 시간 (초 단위)
         public int BattleSceneCount; // 전투씬 진입 횟수
 
+        
+
         public int Priority => (int)ManagerPriority.PlayerDataManager;
         public bool IsDontDestroy => IsDontDestroyOnLoad;
         public GameObject GetGameObject() => this.gameObject;
-     
+        protected override void Awake()
+        {
+            // 데이터 매니저는 게임 매니저의 컴포넌트로 들어가고 게임 매니저가 유지되어야 플레이어 데이터의 세이브/로드가 유지됨
+            base.Awake();
+            DontDestroyOnLoad(this.gameObject);
+        }
         public void Initialize()
         {
             GamePlayType = GameManager.Instance.GamePlayType;
@@ -67,8 +74,8 @@ namespace ProjectVS.Manager
             // stats = new PlayerStats(); // playerStats에서 playerConfig로 클래스 가져올 수 있도록 변경함
             // stats = stats.TestStats(TestCharacterClass);
 
-            Stats = new Unit.Player.PlayerStats();
-            Stats = Stats.TestStats(TestCharacterClass);
+         //  Stats = new Unit.Player.PlayerStats();
+         //  Stats = Stats.TestStats(TestCharacterClass);
         }
         public void Cleanup() { }
 
@@ -76,7 +83,7 @@ namespace ProjectVS.Manager
         public void SavePlayerData(int index)
         {
             PlayerData data = new PlayerData();
-
+        
             data.Stats = Stats;
 
             data.InventoryItems = InventoryItems;
@@ -100,9 +107,13 @@ namespace ProjectVS.Manager
             data.TotalPlayTime = TotalPlayTime;
             data.BattleSceneCount = BattleSceneCount;
 
+            Debug.Log($"[저장 직전] HP: {Stats.CurrentHp}, Atk: {Stats.CurrentAtk}, 레벨: {Stats.Level}, Exp: {Stats.CurrentExp}");
+
+
             // Save
             SaveFileSystem.Save(data, index);
             print("저장");
+
         }
 
         public void LoadPlayerData(int index)
@@ -133,6 +144,9 @@ namespace ProjectVS.Manager
             BattleSceneCount = data.BattleSceneCount;
 
             print("불러오기");
+
+            Stats = new PlayerStats();// 비어 있는 Stats 객체 생성
+            Stats.ApplyFrom(data.Stats);// 저장된 데이터로 덮어쓰기
         }
 
         public void DeletePlayerData(int index)

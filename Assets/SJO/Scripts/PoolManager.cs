@@ -1,60 +1,63 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+namespace ProjectVS.SJO
 {
-    // ÇÁ¸®ÆÕµéÀ» º¸°üÇÒ º¯¼ö
-    public GameObject[] prefabs;
-
-    // Ç® ´ã´çÀ» ÇÏ´Â ¸®½ºÆ®
-    public List<GameObject>[] poolLists;
-
-    private void Awake()
+    public class PoolManager : MonoBehaviour
     {
-        // Ç®À» ´ã´Â ¹è¿­ ÃÊ±âÈ­
-        poolLists = new List<GameObject>[prefabs.Length];
+        // í”„ë¦¬íŒ¹ë“¤ì„ ë³´ê´€í•  ë³€ìˆ˜
+        public GameObject[] prefabs;
 
-        for (int i = 0; i < poolLists.Length; i++)
-        {
-            // ¸ğµç ¿ÀºêÁ§Æ® Ç® ¸®½ºÆ® ÃÊ±âÈ­
-            poolLists[i] = new List<GameObject>();
-        }
-    }
+        // í’€ ë‹´ë‹¹ì„ í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
+        public List<GameObject>[] poolLists;
 
-    // °ÔÀÓ ¿ÀºêÁ§Æ® ¹İÈ¯
-    public GameObject ReturnObject(int i)
-    {
-        // ÇöÀç ºñ¾úÀ½
-        GameObject select = null;
-    
-        // ´Ù¸¥ ½ºÅ©¸³Æ®¿¡¼­ ÀÌ ÇÔ¼ö¸¦ »ç¿ëÇÑ´Ù¸é
-        // ¼±ÅÃÇÑ Ç®¿¡ ³î°í ÀÖ´Â(ºñÈ°¼ºÈ­µÈ) °ÔÀÓ ¿ÀºêÁ§Æ® Á¢±Ù
-        foreach (GameObject item in poolLists[i])
+        private void Awake()
         {
-            // item(¿ÀºêÁ§Æ®)ÀÌ ºñÈ°¼ºÈ­(´ë±â »óÅÂ)ÀÎÁö È®ÀÎ
-            // ¸¸¾à ºñÈ°¼ºÈ­ »óÅÂ¶ó¸é
-            if (!item.activeSelf)
+            // í’€ì„ ë‹´ëŠ” ë°°ì—´ ì´ˆê¸°í™”
+            poolLists = new List<GameObject>[prefabs.Length];
+
+            for (int i = 0; i < poolLists.Length; i++)
             {
-                // ¹ß°ßÇÏ¸é select º¯¼ö¿¡ ÇÒ´ç
-                select = item;
-
-                // È°¼ºÈ­ »óÅÂ·Î º¯°æ
-                select.SetActive(true);
-                break;
+                // ëª¨ë“  ì˜¤ë¸Œì íŠ¸ í’€ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
+                poolLists[i] = new List<GameObject>();
             }
         }
-    
-        // ¸¸¾à ¸ğµÎ »ç¿ëÇÏ°í ÀÖ´Ù¸é
-        if (!select)
-        {
-            // »õ·Ó°Ô »ı¼ºÇÏ°í select º¯¼ö¿¡ ÇÒ´ç
-            select = Instantiate(prefabs[i], transform);
 
-            // »ı¼ºµÈ ¿ÀºêÁ§Æ®¸¦ ÇØ´ç ¿ÀºêÁ§Æ® Ç® ¸®½ºÆ®¿¡ Add ÇÔ¼ö·Î Ãß°¡(µî·Ï)
-            poolLists[i].Add(select);
+        // ê²Œì„ ì˜¤ë¸Œì íŠ¸ ë°˜í™˜
+        public GameObject ReturnObject(int i)
+        {
+            // í˜„ì¬ ë¹„ì—ˆìŒ
+            GameObject select = null;
+
+            // ë‹¤ë¥¸ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ì´ í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•œë‹¤ë©´
+            // ì„ íƒí•œ í’€ì— ë†€ê³  ìˆëŠ”(ë¹„í™œì„±í™”ëœ) ê²Œì„ ì˜¤ë¸Œì íŠ¸ ì ‘ê·¼
+            foreach (GameObject item in poolLists[i])
+            {
+                // item(ì˜¤ë¸Œì íŠ¸)ì´ ë¹„í™œì„±í™”(ëŒ€ê¸° ìƒíƒœ)ì¸ì§€ í™•ì¸
+                // ë§Œì•½ ë¹„í™œì„±í™” ìƒíƒœë¼ë©´
+                if (!item.activeSelf)
+                {
+                    // ë°œê²¬í•˜ë©´ select ë³€ìˆ˜ì— í• ë‹¹
+                    select = item;
+
+                    // í™œì„±í™” ìƒíƒœë¡œ ë³€ê²½
+                    select.SetActive(true);
+                    break;
+                }
+            }
+
+            // ë§Œì•½ ëª¨ë‘ ì‚¬ìš©í•˜ê³  ìˆë‹¤ë©´
+            if (!select)
+            {
+                // ìƒˆë¡­ê²Œ ìƒì„±í•˜ê³  select ë³€ìˆ˜ì— í• ë‹¹
+                select = Instantiate(prefabs[i], transform);
+
+                // ìƒì„±ëœ ì˜¤ë¸Œì íŠ¸ë¥¼ í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ í’€ ë¦¬ìŠ¤íŠ¸ì— Add í•¨ìˆ˜ë¡œ ì¶”ê°€(ë“±ë¡)
+                poolLists[i].Add(select);
+            }
+
+            return select;
         }
-    
-        return select;
     }
 }

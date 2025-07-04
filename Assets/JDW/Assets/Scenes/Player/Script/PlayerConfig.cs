@@ -19,10 +19,11 @@ namespace ProjectVS.JDW
 {
     public class PlayerConfig : MonoBehaviour
     {
+        [HideInInspector]public PlayerDataManager PlayerDataManager;
+
         public CharacterClass SelectedClass;
         public Timer Timer;
         public Scanner Scanner;
-        public PlayerDataManager PlayerDataManager;
         public AttackPosition AttackPosition;
 
         public bool IsDead = false;
@@ -37,7 +38,7 @@ namespace ProjectVS.JDW
         {
             _anim = GetComponent<Animator>();
             Scanner = GetComponent<Scanner>();
-            //  Stats = PlayerStats.TestStats(SelectedClass); // playerStats에서 클래스 데이터를 사용 할 경우 이걸사용
+
             // 타이머 자동 할당
             if (Timer == null)
             {
@@ -47,34 +48,38 @@ namespace ProjectVS.JDW
                     Debug.LogWarning("Timer를 씬에서 찾을 수 없습니다.");
                 }
             }
+            Stats = PlayerDataManager.Instance.Stats;
         }
         private void Start()
         {
             _uiManager = FindObjectOfType<BattleSceneUI>();
             UpdateHpBar(); // 초기 체력바 표시
-           
         }
 
         public void ApplyStatsFromData(CharacterSelectionDataClass data, int classIndex)
         {
             if (_statsApplied) return; // TSV 데이터로 이미 적용했으면 그 다음부터는 무시
             // TSV 데이터 기반으로 Stats 초기화
-            Stats = new PlayerStats(1, SelectedClass, data.HP, data.Attack, data.Defense, data.MoveSpeed, data.AttackSpeed);
-            Stats.CurrentHp = data.HP;
+            var stats = PlayerDataManager.Instance.Stats;
+
+            stats.Level = 1;                                           //////////
+            stats.CharacterClass = SelectedClass;                      //
+                                                                       //
+            stats.SetBaseStat(UnitStaus.MaxHp, data.HP);               //
+            stats.SetBaseStat(UnitStaus.Atk, data.Attack);             //
+            stats.SetBaseStat(UnitStaus.Dfs, data.Defense);            //     데이터 매니저와 연결
+            stats.SetBaseStat(UnitStaus.Spd, data.MoveSpeed);          //
+            stats.SetBaseStat(UnitStaus.AtkSpd, data.AttackSpeed);     //
+                                                                       //
+            stats.CurrentHp = data.HP;                                 //
+            stats.CurrentExp = 0;                                      //
+            stats.MaxExp = 100;                                        //////////////
+
+            Stats = stats;
 
             UpdateHpBar();
+            _statsApplied = true;
 
-            // 공격 위치 설정
-            AttackPosition = GetComponentInChildren<AttackPosition>();
-            if (AttackPosition != null)
-            {
-                switch (classIndex)
-                {
-                    case 0: AttackPosition.SwitchCoroutine(AttackPosition.Axe()); break;
-                    case 1: AttackPosition.SwitchCoroutine(AttackPosition.Sword()); break;
-                    case 2: AttackPosition.SwitchCoroutine(AttackPosition.Fire()); break;
-                }
-            }
             Debug.Log($"[TSV 적용됨] ATK: {Stats.CurrentAtk}, DEF: {Stats.CurrentDfs}, HP: {Stats.CurrentHp}, SPD: {Stats.CurrentSpd}");
         }
         private void UpdateHpBar()
@@ -112,8 +117,10 @@ namespace ProjectVS.JDW
         public void TakeDamage(float damage)
         {
             if (IsDead) return;
-
+            FindObjectOfType<CameraFollow>()?.ShakeCamera(0.3f, 0.5f);
             Stats.CurrentHp -= damage;
+
+            GetComponent<PlayerHiteEffect>()?.PlayerHitEffect(); // 플레이어가 데미지 입을 때 붉어지는 이펙트
             Debug.Log($"피해 : {damage}, 남은 체력 : {Stats.CurrentHp}");
             UpdateHpBar();  // Hp바 연동
 

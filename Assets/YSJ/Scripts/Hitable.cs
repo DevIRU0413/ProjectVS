@@ -45,32 +45,42 @@ public class Hitable : MonoBehaviour
 
         _colliderAction.OnTriggerEnterAction -= HitTriggerEnter;
         _colliderAction.OnTriggerEnterAction += HitTriggerEnter;
+
+        _colliderAction.OnCollisionEnterAction -= HitCollisionEnter;
+        _colliderAction.OnCollisionEnterAction += HitCollisionEnter;
     }
 
     // Trigger
-    protected virtual void HitTriggerEnter(Collider2D collider)
+    protected virtual void HitTriggerEnter(Collider2D coll)
     {
-        Hit(collider);
+        Hit(coll.gameObject);
     }
 
-    protected void Hit(Collider2D collider)
+    // Collision
+    protected virtual void HitCollisionEnter(Collision2D coll)
+    {
+        Hit(coll.gameObject);
+    }
+
+    protected void Hit(GameObject go)
     {
         // 비트 연산 진행 레이어 검출
-        int layerCheck = 1 << collider.gameObject.layer  & _hitLayer;
+        int layerCheck = 1 << go.layer  & _hitLayer;
         if (layerCheck != _hitLayer) return;
 
-        if (collider.TryGetComponent<Damagable>(out var damagable))
+        if (go.TryGetComponent<Damageable>(out var damagable))
         {
             if (_hitClip != null)
                 AudioManager.Instance.PlaySfx(_hitClip);
 
-            DamageInfo info = GetDamageInfo(collider);
+            DamageInfo info = GetDamageInfo(go);
             for (int i = 0; i < _hitCount; i++)
             {
                 damagable.ApplyDamage(info);
                 OnEnterHitEvent?.Invoke();
             }
 
+            Debug.Log("충돌");
             OnEnterHitEnd?.Invoke();
         }
     }
@@ -80,9 +90,9 @@ public class Hitable : MonoBehaviour
     {
         _unitStats = unitStats;
     }
-    protected DamageInfo GetDamageInfo(Collider2D collider)
+    protected DamageInfo GetDamageInfo(GameObject go)
     {
-        Vector2 dir = (collider.transform.position - transform.position).normalized;
+        Vector2 dir = (go.transform.position - transform.position).normalized;
         DamageInfo info = new DamageInfo(baseDamage, dir)
         {
             IsCritical = canCrit && UnityEngine.Random.value < critChance,

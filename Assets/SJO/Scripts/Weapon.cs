@@ -17,8 +17,8 @@ public class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        var config = GameManager.Instance.Player;
-        player = config.GetComponent<PlayerController>();
+       // var config = GameManager.Instance.Player;
+       // player = config.GetComponent<PlayerController>();
         _poolManager = ProjectVS.Util.PoolManager.ForceInstance;
     }
 

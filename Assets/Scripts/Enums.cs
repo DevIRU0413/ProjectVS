@@ -83,13 +83,13 @@
     }
 
     #region Item Enums
-    public enum ItemRank
+    /*public enum ItemRank
     {
         Sub = 0,         // 서브 아이템: 기본 재료 또는 일반 등급 아이템 (예: 쿠나이, 활 등)
         Anvil = 1,       // 강화 아이템: 아이템 강화에 사용 (예: 모루)
         Unique = 2,      // 고유 아이템: 특별한 효과를 가진 독립 아이템 (예: 검, 도끼, 지팡이)
         Composite = 3    // 조합 아이템: 서브 아이템을 조합해서 생성된 상위 아이템 (예: 연노, 인법첩 등)
-    }
+    }*/
 
     public enum ItemType
     {

@@ -29,11 +29,11 @@ namespace ProjectVS.Manager.Stage
                 Debug.LogWarning("[StageInitializer] PlayerSpawnPoint 태그를 찾지 못했습니다. (0,0) 사용");
 
             // 3. 플레이어 스포너 통해 소환
-            GameObject playerGO = Unit.Player.PlayerSpawner.Instance.CurrentPlayer;
+            GameObject playerGO = PlayerSpawner.Instance.CurrentPlayer;
             if (playerGO == null)
-                playerGO = Unit.Player.PlayerSpawner.Instance.SpawnPlayer(spawnPos, classType, stats);
+                playerGO = PlayerSpawner.Instance.SpawnPlayer(spawnPos, classType, stats);
 
-            playerGO = Unit.Player.PlayerSpawner.Instance.CurrentPlayer;
+            playerGO = PlayerSpawner.Instance.CurrentPlayer;
             PlayerConfig playerConfig = playerGO.GetComponent<PlayerConfig>();
             ctx.Player = playerConfig;
 

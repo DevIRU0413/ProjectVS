@@ -18,6 +18,10 @@ public class Timer : MonoBehaviour
     private void Start()
     {
         CurrentTime = TotalTime;
+        if (MapSwitcer == null)
+        {
+            MapSwitcer = FindObjectOfType<MapSwitcher>();
+        }
     }
     private void Update()
     {
@@ -37,7 +41,8 @@ public class Timer : MonoBehaviour
         else
         {
             TimerText.text = "00:00";
-            StartCoroutine(HandleFadeTransition());
+            // StartCoroutine(HandleFadeTransition());
+            MapSwitcer.OnStoreField();
             // TODO : 신 매니저 추가해서 신이동 코드 추가 요망
         }
   
@@ -55,7 +60,7 @@ public class Timer : MonoBehaviour
     {
 
         yield return StartCoroutine(FadeManager.FadeOut());
-        yield return StartCoroutine(FadeManager.FadeIn());
+        MapSwitcer.OnStoreField();
         CurrentTime = TotalTime; // 타이머 초기화
 
     }

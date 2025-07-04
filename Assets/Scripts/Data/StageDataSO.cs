@@ -11,7 +11,7 @@ namespace ProjectVS.Data
         [Range(1,1000)] public int MaxSpawnableCount = 1;
 
         [Header("몬스터 관련")]
-        public MonsterSpawnControllerConfigSO spawnerConfig;
+        public MonsterSpawnConfigSO spawnerConfig;
 
         [Header("보스 정보")]
         public GameObject BossPrefab;
