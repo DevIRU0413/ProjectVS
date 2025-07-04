@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 
+using ProjectVS.Interface;
 using ProjectVS.Unit.Player;
 
 using Unity.VisualScripting;
 
 using UnityEngine;
+
+using static Unity.VisualScripting.Member;
 
 namespace ProjectVS.Item
 {
@@ -153,28 +156,28 @@ namespace ProjectVS.Item
         }
 
         // 수정
-        public void Swing(Transform transform, float damage, float radius = 1.5f, float angle = 90f)
+        public void Swing(Transform transform, float damage, float radius = 5f, float angle = 90f)
         {
             Vector2 origin = transform.position;
-            Vector2 swingDir = GetMouseDirection2D(transform);
+            Vector2 swingDir = (GetMouseDirection2D(transform) - origin).normalized;
 
             Collider2D[] hits = Physics2D.OverlapCircleAll(origin, radius, _targetLayer);
-
             foreach (Collider2D hit in hits)
             {
-                Vector2 target = (Vector2)hit.transform.position - origin;
+                Vector2 target = hit.transform.position;
+                Vector2 targetDir = (target - origin).normalized;
 
-                if (target.magnitude > radius)
-                    continue;
+                float angleToTarget = Vector2.Angle(swingDir, targetDir);
 
-                float attackAngle = Vector2.Angle(swingDir, target);
-
-                if (attackAngle <= angle * 0.5f)
+                // 예각 범위 내일 때만 데미지
+                if (angleToTarget <= angle * 0.5f)
                 {
                     hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
                 }
             }
         }
+
+
 
         public void Shot(Transform user, float damage)
         {
@@ -275,6 +278,27 @@ namespace ProjectVS.Item
 
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireCube(transform.position + (Vector3)dir, new Vector3(3f, 0.5f, 0));
+
+            //========================
+            Vector3 origin = transform.position;
+            float radius = 5f;
+            float angle = 90f;
+
+            // 마우스 방향 기준 (또는 transform.right 사용 가능)
+            Vector3 forward = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - origin);
+            forward.z = 0;
+            forward.Normalize();
+
+            // 회전 방향 (Z축 기준으로 회전)
+            Vector3 leftDir = Quaternion.Euler(0, 0, -angle * 0.5f) * forward;
+            Vector3 rightDir = Quaternion.Euler(0, 0, angle * 0.5f) * forward;
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(origin, origin + leftDir * radius);
+            Gizmos.DrawLine(origin, origin + rightDir * radius);
+
+            // 오버랩 원 범위
+            Gizmos.DrawWireSphere(origin, radius);
         }
         #endregion
 

@@ -17,7 +17,7 @@ MonoBehaviour:
   ItemName: 
   ItemType: 0
   ItemAtkSpeed: 5
-  ItemEffect: 14
+  ItemEffect: 2
   ItemEffectValue: 5
   ItemAddID1: 0
   ItemAddID2: 0
