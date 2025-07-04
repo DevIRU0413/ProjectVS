@@ -2,6 +2,8 @@
 
 using ProjectVS.Unit.Player;
 
+using Unity.VisualScripting;
+
 using UnityEngine;
 
 namespace ProjectVS.Item
@@ -14,7 +16,6 @@ namespace ProjectVS.Item
 
         [SerializeField] GameObject _projectilePrefab;
         [SerializeField] GameObject _throwPrfab;
-        [SerializeField] GameObject _bombPrefab;
 
         [SerializeField] PlayerStats _playerStats;
 
@@ -153,6 +154,7 @@ namespace ProjectVS.Item
             return direction;
         }
 
+        // 수정
         public void Swing(Transform transform, float damage, float radius = 1.5f, float angle = 90f)
         {
             Vector2 origin = transform.position;
@@ -172,7 +174,6 @@ namespace ProjectVS.Item
                 if (attackAngle <= angle * 0.5f)
                 {
                     hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
-                    Debug.Log($"[Swing] Hit: {hit.name}");
                 }
             }
         }
@@ -183,19 +184,15 @@ namespace ProjectVS.Item
 
             Vector2 dir = GetMouseDirection2D(user);
             intance.GetComponent<Test_Projectile>().Init(dir, damage, 5f);
-
-            Debug.Log("Test : SHOT");
         }
 
         public void RandomShot(Transform user, float damage)
         {
-            // insideUnitCircle : 2D상에서 transform.position 기준 반지름 1인 원의 랜덤 방향의 벡터 반환, 
+            // insideUnitCircle : 2D상에서 transform.position 기준 반지름 1인 원의 랜덤 방향의 벡터 반환 
             Vector2 randomDir = UnityEngine.Random.insideUnitCircle.normalized;
 
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
             intance.GetComponent<Test_Projectile>().Init(randomDir, damage, 5f);
-
-            Debug.Log("Test : RANDOM SHOT");
         }
 
         public void Spin(Transform user, float radius, float damage)
@@ -205,7 +202,6 @@ namespace ProjectVS.Item
             {
                 hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
             }
-            Debug.Log("Test : SPIN");
         }
 
         #region ThreeShot(Transform user, float damage)
@@ -295,7 +291,7 @@ namespace ProjectVS.Item
 
         public void Fiveway(Transform user, int damage, float spacingAngle = 72f)
         {
-            Vector2 dir = user.transform.right; // 기준 방향 (예: 오른쪽)
+            Vector2 dir = user.transform.right;
 
             foreach (float angle in FiveWayAngle)
             {
@@ -305,27 +301,25 @@ namespace ProjectVS.Item
                 Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
                 rb.velocity = shootDir.normalized * 5f;
             }
-
-            Debug.Log("Test : FIVE WAY");
         }
 
         public void Bomb(Transform user, float damage)
         {
-            GameObject intance = Instantiate(_bombPrefab, user.position, Quaternion.identity);
+            GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
 
             Vector2 dir = GetMouseDirection2D(user);
             Test_Projectile projectile = intance.GetComponent<Test_Projectile>();
-            projectile.Init(dir, damage, 5f);
-            projectile.Bomb(damage);
+            projectile.Init(dir, 0, 5f);
+            projectile.AddComponent<ItemEffect_Bomb>().Init(damage, 4f);
         }
 
         public void Double(Transform user, int damage)
         {
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
-
+         
             Vector2 dir = GetMouseDirection2D(user);
-
-            Debug.Log("Test : Double");
+            intance.GetComponent<Test_Projectile>().Init(dir, damage, 5f);
+            intance.AddComponent<ItemEffect_Double>().Init(damage);
         }
 
         public void Eightway(Transform user, int damage, float spacingAngle = 72f)
@@ -340,8 +334,6 @@ namespace ProjectVS.Item
                 Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
                 rb.velocity = shootDir.normalized * 5f;
             }
-
-            Debug.Log("Test : EIGHT WAY");
         }
     }
 }

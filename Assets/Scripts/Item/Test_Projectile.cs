@@ -42,13 +42,4 @@ public class Test_Projectile : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    public void Bomb(float damage)
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 3f);
-        foreach (Collider2D hit in hits)
-        {
-            hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
-        }
-    }
 }
