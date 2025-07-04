@@ -24,7 +24,7 @@ namespace ProjectVS.Manager
         public PlayerStats Stats;
 
         [Header("Inventory & Items")]
-        public List<ItemData> InventoryItems = new List<ItemData>();
+        public List<Item.ItemData> InventoryItems = new List<Item.ItemData>();
 
         [Header("Progress Info")]
         public int CurrentStageFloor;

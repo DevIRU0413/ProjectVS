@@ -13419,7 +13419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _affinityValueText: {fileID: 2042253614}
-  _image: {fileID: 1533210709}
+  _image: {fileID: 0}
 --- !u!1 &1599115915
 GameObject:
   m_ObjectHideFlags: 0
@@ -14338,6 +14338,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameText: {fileID: 952605004}
   _contentText: {fileID: 2113649100}
+--- !u!1 &1728420963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728420965}
+  - component: {fileID: 1728420964}
+  m_Layer: 0
+  m_Name: Item Manager
+  m_TagString: Manager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1728420964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728420963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef57ac91680d6724cbf988fe381fa19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isDontDestroyOnLoad: 0
+  _buttonList: []
+  _objList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!4 &1728420965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728420963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1739.7615, y: 777.14813, z: -8.022858}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1753316818
 GameObject:
   m_ObjectHideFlags: 0
@@ -16700,6 +16752,7 @@ SceneRoots:
   - {fileID: 2059575503}
   - {fileID: 1290985204}
   - {fileID: 517770079}
+  - {fileID: 1728420965}
   - {fileID: 179539448}
   - {fileID: 317204341}
   - {fileID: 410487433}
