@@ -10,6 +10,7 @@ using UnityEngine;
 public class Test_Projectile : MonoBehaviour
 {
     private Rigidbody2D _rigid;
+
     private Vector2 _dir;
     private float _damage;
     private float _speed;
@@ -39,6 +40,15 @@ public class Test_Projectile : MonoBehaviour
         {
             other.GetComponent<Monster>()?.TakeDamage(_damage);
             Destroy(gameObject);
+        }
+    }
+
+    public void Bomb(float damage)
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 3f);
+        foreach (Collider2D hit in hits)
+        {
+            hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
         }
     }
 }

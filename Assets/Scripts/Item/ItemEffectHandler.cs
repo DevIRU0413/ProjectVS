@@ -1,9 +1,8 @@
-﻿using ProjectVS.Unit.Player;
-using ProjectVS.Monster;
-using Unity.VisualScripting;
+﻿using System.Collections;
+
+using ProjectVS.Unit.Player;
 
 using UnityEngine;
-using ProjectVS.JDW;
 
 namespace ProjectVS.Item
 {
@@ -13,13 +12,24 @@ namespace ProjectVS.Item
 
         [SerializeField] LayerMask _targetLayer;
 
-        [SerializeField]  GameObject _projectilePrefab;
-        [SerializeField]  GameObject _throwPrfab;
+        [SerializeField] GameObject _projectilePrefab;
+        [SerializeField] GameObject _throwPrfab;
+        [SerializeField] GameObject _bombPrefab;
 
         [SerializeField] PlayerStats _playerStats;
 
         private int[] FiveWayAngle = new int[5] { -144, -72, 0, 72, 144, };
         private int[] EightWayAngle = new int[8] { -135, -90, -45, 0, 45, 90, 135, 180 };
+
+        //============================================================================================
+        Coroutine _effectRoutine;
+
+        private SpriteRenderer _spriteRenderer;
+
+        private void Awake()
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
 
         private void Update()
         {
@@ -35,7 +45,7 @@ namespace ProjectVS.Item
         {
             Debug.Log("ApplyEffect - 1");
 
-          /*  if (item == null || stats == null) return;*/
+            /*  if (item == null || stats == null) return;*/
             int value = item.ItemEffectValue;
 
             switch (item.ItemEffect)
@@ -107,7 +117,7 @@ namespace ProjectVS.Item
 
                 // 13
                 case ItemEffect.Bomb:
-                    Bomb(value);
+                    Bomb(transform, value);
                     break;
 
                 // 14
@@ -126,10 +136,15 @@ namespace ProjectVS.Item
             }
         }
 
-        public  Vector2 GetMouseDirection2D(Transform from)
+        /// <summary>
+        /// 마우스 입력 지점 위치 반환 함수
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
+        public Vector2 GetMouseDirection2D(Transform from)
         {
             Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = 0f; 
+            mousePosition.z = 0f;
 
             Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePosition);
             worldMousePos.z = 0f;
@@ -138,7 +153,6 @@ namespace ProjectVS.Item
             return direction;
         }
 
-        #region Swing(Transform transform, float damage, float radius = 1.5f, float angle = 90f)
         public void Swing(Transform transform, float damage, float radius = 1.5f, float angle = 90f)
         {
             Vector2 origin = transform.position;
@@ -162,9 +176,7 @@ namespace ProjectVS.Item
                 }
             }
         }
-        #endregion
 
-        #region Shot(Transform user, float damage)
         public void Shot(Transform user, float damage)
         {
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
@@ -174,9 +186,7 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : SHOT");
         }
-        #endregion
 
-        #region RandomShot(Transform user, float damage)
         public void RandomShot(Transform user, float damage)
         {
             // insideUnitCircle : 2D상에서 transform.position 기준 반지름 1인 원의 랜덤 방향의 벡터 반환, 
@@ -187,9 +197,7 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : RANDOM SHOT");
         }
-        #endregion
 
-        #region Spin(Transform user, float radius, float damage)
         public void Spin(Transform user, float radius, float damage)
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(user.position, radius, _targetLayer);
@@ -199,32 +207,83 @@ namespace ProjectVS.Item
             }
             Debug.Log("Test : SPIN");
         }
-        #endregion
 
         #region ThreeShot(Transform user, float damage)
         public void ThreeShot(Transform user, float damage)
         {
+            StartCoroutine(ThreeShotCoroutine(user, damage));
+        }
+
+        private IEnumerator ThreeShotCoroutine(Transform user, float damage)
+        {
             Vector2 dir = GetMouseDirection2D(user);
+            WaitForSeconds ThreeShotDelay = new(0.2f);
 
             for (int i = 0; i < 3; i++)
             {
-                //TODO : 3점사 시간차 추가
-                GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
-                intance.GetComponent<Test_Projectile>().Init(dir, damage, 5f);
+                GameObject instance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
+                instance.GetComponent<Test_Projectile>().Init(dir, damage, 5f);
+                yield return ThreeShotDelay;
             }
-
-            Debug.Log("Test : THREE SHOT");
         }
         #endregion
 
         #region Tornado(int damage)
         public void Tornado(int damage)
         {
-            //TODO : RaycastAll  또는 LineCast로 지지기 구현
+            float duration = 3f; // 지속 시간
+
+            float range = 3f; // 범위 세로s
+            float width = 1.5f; // 범위 가로
+
+            Vector2 dir = (_spriteRenderer.flipX ? -transform.right : transform.right) + new Vector3(0.4f, 0f, 0f);
+
+            if (_effectRoutine == null)
+            {
+                _effectRoutine = StartCoroutine(TornadoCoroutine(transform, damage, duration, range, width, dir));
+            }
+
+            float Timer = duration; Timer -= Time.deltaTime;
+            if (Timer < 0)
+            {
+                StopCoroutine(_effectRoutine);
+            }
+        }
+
+        WaitForSeconds TornadoDelay = new(0.3f);
+        private IEnumerator TornadoCoroutine(Transform user, int damage, float duration, float range, float width, Vector2 dir)
+        {
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                Collider2D[] hits = Physics2D.OverlapBoxAll(user.position, new Vector2(range, width), 0);
+                foreach (Collider2D hit in hits)
+                {
+                    if (hit.CompareTag("Monster"))
+                    {
+                        hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
+                        Debug.Log($"Tornado 대상 : {hit.name} / 데미지 : {damage}");
+                    }
+                }
+
+                yield return TornadoDelay;
+                elapsed += 0.3f;
+            }
+
+            _effectRoutine = null;
+            Debug.Log("Tornado 종료");
+        }
+
+        private void OnDrawGizmos()
+        {
+            Vector2 dir = transform.position + new Vector3(0.2f, 0f, 0f);
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireCube(transform.position + (Vector3)dir, new Vector3(3f, 0.5f, 0));
         }
         #endregion
 
-        #region Throw(Transform user, int damage, float range = 3f, float radius = 1.5f)
         public void Throw(Transform user, int damage, float range = 3f, float radius = 1.5f)
         {
             Vector2 randomOffset = Random.insideUnitCircle * range;
@@ -233,9 +292,7 @@ namespace ProjectVS.Item
             GameObject instance = Instantiate(_throwPrfab, spawnPosition, Quaternion.identity);
             //TODO : 몇 초후 떨어지는 등, 생성 지점 표시 등 구현 
         }
-        #endregion
 
-        #region Fiveway(Transform user, int damage, float spacingAngle = 72f)
         public void Fiveway(Transform user, int damage, float spacingAngle = 72f)
         {
             Vector2 dir = user.transform.right; // 기준 방향 (예: 오른쪽)
@@ -251,26 +308,26 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : FIVE WAY");
         }
-        #endregion
 
-        #region Bomb(int damage)
-        public void Bomb(int damage)
+        public void Bomb(Transform user, float damage)
         {
-        }
-        #endregion
+            GameObject intance = Instantiate(_bombPrefab, user.position, Quaternion.identity);
 
-        #region Double(Transform user ,int damage)
-        public void Double(Transform user ,int damage)
+            Vector2 dir = GetMouseDirection2D(user);
+            Test_Projectile projectile = intance.GetComponent<Test_Projectile>();
+            projectile.Init(dir, damage, 5f);
+            projectile.Bomb(damage);
+        }
+
+        public void Double(Transform user, int damage)
         {
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
 
             Vector2 dir = GetMouseDirection2D(user);
-          
-            Debug.Log("Test : SHOT");
-        }
-        #endregion
 
-        #region Eightway(Transform user, int damage, float spacingAngle = 72f)
+            Debug.Log("Test : Double");
+        }
+
         public void Eightway(Transform user, int damage, float spacingAngle = 72f)
         {
             Vector2 dir = user.transform.right; // 기준 방향 (예: 오른쪽)
@@ -286,6 +343,5 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : EIGHT WAY");
         }
-        #endregion
     }
 }
