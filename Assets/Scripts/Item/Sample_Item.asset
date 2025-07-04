@@ -17,14 +17,16 @@ MonoBehaviour:
   ItemName: 
   ItemType: 0
   ItemAtkSpeed: 5
-  ItemEffect: 9
+  ItemEffect: 14
   ItemEffectValue: 5
   ItemAddID1: 0
   ItemAddID2: 0
   ItemSetEffect: 0
   ItemSetNum: 3
   ItemMaxLevel: 3
+  ItemCurLevel: 0
   ItemValue: 5
   ItemRange: 5
   ItemSize: 5
   ItemIcon: {fileID: 0}
+  IsComposited: 0

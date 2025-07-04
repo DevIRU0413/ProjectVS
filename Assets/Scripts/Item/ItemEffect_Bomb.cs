@@ -25,8 +25,8 @@ public class ItemEffect_Bomb : MonoBehaviour
         {
             if (hit.CompareTag("Monster"))
             {
-                hit.GetComponent<Monster>()?.TakeDamage(_damage);
-                Debug.Log($"[Bomb] {hit.name} 피해 {_damage}");
+                hit.GetComponent<Test_Monster>()?.TakeDamage(_damage);
+                Debug.Log($"대상 : {hit.name} / 데미지 : {_damage}");
             }
         }
     }
@@ -38,7 +38,7 @@ public class ItemEffect_Bomb : MonoBehaviour
         {
             if (hit.CompareTag("Monster"))
             {
-                hit.GetComponent<Monster>()?.TakeDamage(_damage);
+                hit.GetComponent<Test_Monster>()?.TakeDamage(_damage);
                 Debug.Log($"대상 : {hit.name} / 데미지 : {_damage}");
             }
         }

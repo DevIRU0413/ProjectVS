@@ -44,8 +44,6 @@ namespace ProjectVS.Item
         // 인벤에 귀속 기능 x
         public void ApplyEffect(PlayerStats stats, ItemData item)
         {
-            Debug.Log("ApplyEffect - 1");
-
             /*  if (item == null || stats == null) return;*/
             int value = item.ItemEffectValue;
 
