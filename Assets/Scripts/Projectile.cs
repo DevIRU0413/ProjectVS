@@ -13,15 +13,31 @@ namespace ProjectVS
         [SerializeField] private float rotSpeed = 360f;
         [SerializeField] private float damping = 0.0f;
         [SerializeField] private bool useGravity = false;
-        [SerializeField] private bool isHoming = false;
 
-        [Header("Lifetime")]
-        [SerializeField] private float lifeTime = 5f;
+        [Header("Homing Setting")]
+        [SerializeField] private Transform target;
+        [SerializeField, Min(-1)] private float homingTime = -1;
 
+        private bool isHoming = false;
+        private bool isFired = false;
         private Rigidbody2D rb;
         private Vector2 direction;
-        private Transform target;
-        private bool isFired = false;
+
+        private void Start()
+        {
+            if (target == null) return;
+
+            Vector3 dir = target.position - transform.position;
+            Fire(dir, target);
+        }
+
+        private void OnEnable()
+        {
+            if (target == null) return;
+
+            Vector3 dir = target.position - transform.position;
+            Fire(dir, target);
+        }
 
         public void Fire(Vector2 fireDirection, Transform target = null)
         {
@@ -34,26 +50,29 @@ namespace ProjectVS
             rb.gravityScale = useGravity ? 1f : 0f;
             rb.velocity = direction * speed;
 
+            isHoming = (homingTime > 0 || homingTime == -1) && target != null;
             RotateVisual(direction);
-
-            Destroy(gameObject, lifeTime);
         }
 
         private void FixedUpdate()
         {
             if (!isFired) return;
 
-            if (isHoming && target != null)
+            isHoming = (homingTime > 0 || homingTime == -1) && target != null;
+            if (isHoming)
             {
                 Vector2 toTarget = (target.position - transform.position).normalized;
                 Vector3 rotated = Vector3.RotateTowards(
-                (Vector3)direction,
-                (Vector3)toTarget,
-                rotSpeed * Mathf.Deg2Rad * Time.fixedDeltaTime,
-                0f
-            );
+                    (Vector3)direction,
+                    (Vector3)toTarget,
+                    rotSpeed * Mathf.Deg2Rad * Time.fixedDeltaTime,
+                    0f
+                );
+
                 direction = rotated;
                 rb.velocity = direction * speed;
+                if (homingTime != -1)
+                    homingTime = Mathf.Max(0, homingTime - Time.fixedDeltaTime);
             }
 
             if (damping > 0f)
@@ -64,8 +83,8 @@ namespace ProjectVS
 
         private void Update()
         {
-            if (!isFired || body == null) return;
-            RotateVisual(rb.velocity.normalized);
+            if (!isFired || body == null || !isHoming) return;
+            RotateVisual(direction);
         }
 
         private void RotateVisual(Vector2 faceDir)

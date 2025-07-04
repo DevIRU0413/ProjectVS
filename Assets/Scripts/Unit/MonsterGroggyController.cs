@@ -41,12 +41,15 @@ namespace ProjectVS.Unit.Monster
         public void OnPatternExit(MonsterPattern currentPattern)
         {
             var pattern = GetRegisterPattern(currentPattern);
-            if (pattern.IsFaild != false)
-                _patterns[pattern]++;
-
-            if (pattern.GroggyThreshold <= _patterns[pattern])
+            // 현재랑 끝나는 패턴이 다르다면 오류임
+            if (_currentPattern != pattern) return;
+            // 실패 했다면, 그로기 카운트 추가
+            if (_currentPattern.IsFaild == true) _patterns[pattern]++;
+            // 그로기 카운터가 됐다면
+            if (_currentPattern.GroggyThreshold <= _patterns[pattern])
             {
-                // 그로기 진행
+                // _core.UnLockChangeState();
+                // _core.ChangeState(그로기, true);
             }
         }
 

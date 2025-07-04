@@ -14,7 +14,7 @@ namespace ProjectVS.Unit.Monster.Phase
         [SerializeField] public List<MonsterPhase> _phases = new();
 
         public bool IsPatternControlLock { get; private set; } = false;
-        public MonsterController OnwerController { get; private set; }
+        public MonsterController OwnerController { get; private set; }
 
         private int _currentPhaseIndex = -1;
         private List<MonsterPhasePart> _activePhaseParts = new();
@@ -53,8 +53,8 @@ namespace ProjectVS.Unit.Monster.Phase
 
         private void Init()
         {
-            OnwerController = GetComponent<MonsterController>();
-            if (OnwerController.CurrentStateType == MonsterStateType.Death)
+            OwnerController = GetComponent<MonsterController>();
+            if (OwnerController.CurrentStateType == MonsterStateType.Death)
                 return;
 
             var patterns = GetComponents<MonsterPattern>();
@@ -65,15 +65,15 @@ namespace ProjectVS.Unit.Monster.Phase
 
             CheckPhaseTransition();
 
-            OnwerController.OnHit += CheckPhaseTransition;
+            OwnerController.OnHit += CheckPhaseTransition;
         }
 
         private void CheckPhaseTransition()
         {
-            if (OnwerController.IsStateLock)
+            if (OwnerController.IsStateLock)
                 return;
 
-            float hpRatio = OnwerController.Stats.CurrentHp / OnwerController.Stats.CurrentMaxHp;
+            float hpRatio = OwnerController.Stats.CurrentHp / OwnerController.Stats.CurrentMaxHp;
 
             for (int i = 0; i < _phases.Count; i++)
             {
@@ -96,7 +96,7 @@ namespace ProjectVS.Unit.Monster.Phase
 
             Debug.Log($"[MonsterPhase] Phase {_currentPhaseIndex} 활성화됨!");
 
-            OnwerController.LockChangeState();
+            OwnerController.LockChangeState();
 
             var oldPhase = oldPhaseIndex < 0 ? null : _phases[oldPhaseIndex];
             var currentPhase = _phases[_currentPhaseIndex];
@@ -159,7 +159,7 @@ namespace ProjectVS.Unit.Monster.Phase
         private IEnumerator UnlockStateAfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
-            OnwerController.UnLockChangeState();
+            OwnerController.UnLockChangeState();
             IsPatternControlLock = false;
             Debug.Log("[MonsterPhase] 상태 잠해제됨");
         }

@@ -2,7 +2,7 @@
 
 namespace ProjectVS.Monster
 {
-    public class MonsterColliderHit : Hitable
+    public class MonsterBodyColliderHit : Hitable
     {
         protected override void Init()
         {
@@ -36,6 +36,7 @@ namespace ProjectVS.Monster
             if (_hitTime + _unitStats.AtkSpd > Time.time) return;
             Hit(coll.gameObject);
         }
+
         private void HitTimeCheck()
         {
             Debug.Log("Hit");

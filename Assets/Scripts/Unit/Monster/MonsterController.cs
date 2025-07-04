@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 
 using ProjectVS.Interface;
+using ProjectVS.JDW;
 using ProjectVS.Monster.Data;
 using ProjectVS.Monster.State;
 using ProjectVS.Unit;
 using ProjectVS.Unit.Monster;
 using ProjectVS.Unit.Monster.Phase;
+using ProjectVS.Unit.Player;
 using ProjectVS.Util;
 
 using UnityEngine;
@@ -43,6 +45,10 @@ namespace ProjectVS.Monster
 
         public Action OnHit { get; set; }
         public Action OnDeath;
+
+        // 외부에서 효과 추가
+        public Action OnSpawn { get; set; }     // 예상 효과: 등장 이펙트, 사운드, 연출 추가
+        public Action OnDespawn { get; set; }   // 예상 효과: 데스 카운트 갱신, 등장 시 UI
 
         // 이동 관련
         [Header("Move State")]
@@ -93,6 +99,8 @@ namespace ProjectVS.Monster
         // 기본 데이터 세팅
         public void Init()
         {
+            OnSpawned();
+
             // 리지드바디 세팅
             var rig = gameObject.GetOrAddComponent<Rigidbody2D>();
             rig.gravityScale = 0.0f;
@@ -110,6 +118,20 @@ namespace ProjectVS.Monster
             _states.Add(MonsterStateType.Move, new MonsterMoveState(this, Anim.Animator));
             _states.Add(MonsterStateType.Win, new MonsterWinState(this, Anim.Animator));
             _states.Add(MonsterStateType.Death, new MonsterDeathState(this, Anim.Animator));
+
+            // 상태 락 관련 세팅
+            IsStateLock = false;
+
+            // 초기 상태 세팅
+            if (Stats == null)
+                ChangeState(MonsterStateType.Death, true);
+            else
+            {
+                if (Stats.CurrentHp > 0)
+                    ChangeState(MonsterStateType.Idle);
+                else
+                    ChangeState(MonsterStateType.Death);
+            }
         }
         public void SetTarget(GameObject target) => Target = target;
 
@@ -178,22 +200,12 @@ namespace ProjectVS.Monster
             if (config != null)
                 Stats = new MonsterStats(config.Hp, config.ATK, config.DFS, config.SPD, config.ATKSPD);
 
-            // 상태 락 관련 세팅
-            IsStateLock = false;
-
-            // 초기 상태 세팅
-            if (Stats == null)
-                ChangeState(MonsterStateType.Death, true);
-            else
-            {
-                if (Stats.CurrentHp > 0)
-                    ChangeState(MonsterStateType.Idle);
-                else
-                    ChangeState(MonsterStateType.Death);
-            }
+            Target = Unit.Player.PlayerSpawner.Instance.CurrentPlayer;
+            OnSpawn?.Invoke();
         }
-        public void OnDespawned() { }
-
-
+        public void OnDespawned()
+        {
+             OnDespawn?.Invoke();
+        }
     }
 }
