@@ -12,27 +12,31 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
 {
     public class TextTyperBase : MonoBehaviour
     {
+        [Header("텍스트 등록")]
         [SerializeField] protected TMP_Text _nameText;
         [SerializeField] protected TMP_Text _contentText;
-        [SerializeField] protected float _normalTypingSpeed = 0.05f;
-        [SerializeField] protected float _skippedTypingSpeed = 0.01f;
-        // [SerializeField] protected float _cursorBlinkingInterval = 0.5f;
 
+        // 타이핑 효과
+        protected float _normalTypingSpeed = 0.05f;
+        protected float _skippedTypingSpeed = 0.01f;
+        protected float _cursorBlinkingInterval = 0.5f;
+        private const string Cursor_Text = "|";
+
+        // 타이핑 코루틴
         protected Coroutine _typingCo;
-        // protected Coroutine _cursorBlinkingCo;
-
-        protected string _currentContent;
-
+        protected Coroutine _cursorBlinkingCo;
         protected WaitForSecondsRealtime normalTypingSeconds;
         protected WaitForSecondsRealtime skippedTypingSeconds;
 
+        protected string _currentContent;                          // 현재 출력 중인 전체 텍스트
+        private string _currentDisplayText = "";                   // 타이핑 중 보여줄 텍스트
+        private bool _isTypingNow = false;                         // 타이핑 중 여부
+        private bool _showCursor = true;                           // 커서 on/off 상태
 
-        public Action OnTypingComplete;
-        public bool IsTyping => _typingCo != null; // 현재 타이핑 중인지 확인할 수 있는 프로퍼티
+        public Action OnTypingComplete;                            // 타이핑 완료 시 콜백
+        public bool IsTyping => _typingCo != null;                 // 현재 타이핑 중인지 확인할 수 있는 프로퍼티
 
-        public ObservableProperty<bool> IsSkipToggled = new();
-
-        // private const string Cursor_Text = "█";
+        public ObservableProperty<bool> IsSkipToggled = new();     // 스킵 토글 상태
 
 
         protected virtual void Awake()
@@ -44,6 +48,30 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
         protected virtual void OnEnable()
         {
             IsSkipToggled.Value = false;
+            _showCursor = true;
+
+            if (!_isTypingNow && !string.IsNullOrEmpty(_currentContent))
+            {
+                StartCursorBlinking(); // 로그 패널에서 복귀 시 커서 깜빡임 재시작
+            }
+        }
+
+        protected virtual void OnDisable()
+        {
+            if (_typingCo != null)
+            {
+                StopCoroutine(_typingCo);
+                _typingCo = null;
+            }
+
+            if (_cursorBlinkingCo != null)
+            {
+                StopCoroutine(_cursorBlinkingCo);
+                _cursorBlinkingCo = null;
+            }
+
+            _showCursor = true;
+            _contentText.text = _currentContent; // 비활성화되는 시점에 텍스트가 짤리지 않게 풀 텍스트 강제 대입
         }
 
         public virtual void StartContentTyping(string content)
@@ -76,10 +104,13 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
             _contentText.text = "";
             StringBuilder sb = new StringBuilder();
 
+            _isTypingNow = true;
+
             foreach (char c in content)
             {
                 sb.Append(c);
-                _contentText.text = sb.ToString();
+                _currentDisplayText = sb.ToString();
+                UpdateTextWithCursor();
 
                 if (IsSkipToggled.Value)
                 {
@@ -91,41 +122,52 @@ namespace ProjectVS.Dialogue.TextEffect.TextTyperBase
                 }
             }
 
+            _isTypingNow = false;
             _typingCo = null;
 
-            // StartCursorBlinking();
+            StartCursorBlinking();
 
             OnTypingComplete?.Invoke();
         }
 
 
-        //protected virtual void StartCursorBlinking()
-        //{
-        //    if (_cursorBlinkingCo != null)
-        //    {
-        //        StopCoroutine(_cursorBlinkingCo);
-        //    }
+        protected virtual void StartCursorBlinking()
+        {
+            if (_cursorBlinkingCo != null)
+            {
+                StopCoroutine(_cursorBlinkingCo);
+            }
 
-        //    _cursorBlinkingCo = StartCoroutine(IE_BlinkCursor());
-        //}
+            _cursorBlinkingCo = StartCoroutine(IE_BlinkCursor());
+        }
 
-        //protected virtual IEnumerator IE_BlinkCursor()
-        //{
-        //    bool showCursor = true;
-        //    while (true)
-        //    {
-        //        _contentText.text = _currentContent + (showCursor ? Cursor_Text : "");
-        //        showCursor = !showCursor;
-        //        yield return new WaitForSeconds(_cursorBlinkingInterval);
-        //    }
-        //}
+        protected virtual IEnumerator IE_BlinkCursor()
+        {
+            while (true)
+            {
+                _showCursor = !_showCursor;
+
+                UpdateTextWithCursor();
+
+                yield return new WaitForSecondsRealtime(_cursorBlinkingInterval);
+            }
+        }
+
+        private void UpdateTextWithCursor()
+        {
+            if (_contentText == null) return;
+
+            // 타이핑 중일 때는 _currentDisplayText 사용
+            string baseText = _isTypingNow ? _currentDisplayText : _currentContent;
+
+            _contentText.text = baseText + (_showCursor ? Cursor_Text : "");
+        }
 
 
         public virtual void ClearAction()
         {
             OnTypingComplete = null;
         }
-
 
         // 이전 스킵용 코드
 
