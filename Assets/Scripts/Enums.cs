@@ -12,6 +12,7 @@
         UIManager,
 
         PlayerDataManager,      // Data Manager 
+        ItemManager,
         NPCAffinityModel,
         DialogueManager,
         StageManager,
