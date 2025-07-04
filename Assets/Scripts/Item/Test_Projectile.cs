@@ -10,7 +10,6 @@ using UnityEngine;
 public class Test_Projectile : MonoBehaviour
 {
     private Rigidbody2D _rigid;
-
     private Vector2 _dir;
     private float _damage;
     private float _speed;

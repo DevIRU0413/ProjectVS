@@ -138,6 +138,7 @@ namespace ProjectVS.Item
             return direction;
         }
 
+        #region Swing(Transform transform, float damage, float radius = 1.5f, float angle = 90f)
         public void Swing(Transform transform, float damage, float radius = 1.5f, float angle = 90f)
         {
             Vector2 origin = transform.position;
@@ -161,8 +162,9 @@ namespace ProjectVS.Item
                 }
             }
         }
-       
+        #endregion
 
+        #region Shot(Transform user, float damage)
         public void Shot(Transform user, float damage)
         {
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
@@ -172,7 +174,9 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : SHOT");
         }
+        #endregion
 
+        #region RandomShot(Transform user, float damage)
         public void RandomShot(Transform user, float damage)
         {
             // insideUnitCircle : 2D상에서 transform.position 기준 반지름 1인 원의 랜덤 방향의 벡터 반환, 
@@ -183,7 +187,9 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : RANDOM SHOT");
         }
+        #endregion
 
+        #region Spin(Transform user, float radius, float damage)
         public void Spin(Transform user, float radius, float damage)
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(user.position, radius, _targetLayer);
@@ -193,7 +199,9 @@ namespace ProjectVS.Item
             }
             Debug.Log("Test : SPIN");
         }
+        #endregion
 
+        #region ThreeShot(Transform user, float damage)
         public void ThreeShot(Transform user, float damage)
         {
             Vector2 dir = GetMouseDirection2D(user);
@@ -207,12 +215,16 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : THREE SHOT");
         }
+        #endregion
 
+        #region Tornado(int damage)
         public void Tornado(int damage)
         {
             //TODO : RaycastAll  또는 LineCast로 지지기 구현
         }
+        #endregion
 
+        #region Throw(Transform user, int damage, float range = 3f, float radius = 1.5f)
         public void Throw(Transform user, int damage, float range = 3f, float radius = 1.5f)
         {
             Vector2 randomOffset = Random.insideUnitCircle * range;
@@ -221,7 +233,9 @@ namespace ProjectVS.Item
             GameObject instance = Instantiate(_throwPrfab, spawnPosition, Quaternion.identity);
             //TODO : 몇 초후 떨어지는 등, 생성 지점 표시 등 구현 
         }
+        #endregion
 
+        #region Fiveway(Transform user, int damage, float spacingAngle = 72f)
         public void Fiveway(Transform user, int damage, float spacingAngle = 72f)
         {
             Vector2 dir = user.transform.right; // 기준 방향 (예: 오른쪽)
@@ -237,21 +251,26 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : FIVE WAY");
         }
+        #endregion
 
+        #region Bomb(int damage)
         public void Bomb(int damage)
         {
         }
+        #endregion
 
+        #region Double(Transform user ,int damage)
         public void Double(Transform user ,int damage)
         {
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
 
             Vector2 dir = GetMouseDirection2D(user);
-
-            // 데미지 2번 적용 Projectile 클래스쪽에서 적용할지 or 이쪽에서 구현할지
+          
             Debug.Log("Test : SHOT");
         }
+        #endregion
 
+        #region Eightway(Transform user, int damage, float spacingAngle = 72f)
         public void Eightway(Transform user, int damage, float spacingAngle = 72f)
         {
             Vector2 dir = user.transform.right; // 기준 방향 (예: 오른쪽)
@@ -267,5 +286,6 @@ namespace ProjectVS.Item
 
             Debug.Log("Test : EIGHT WAY");
         }
+        #endregion
     }
 }
