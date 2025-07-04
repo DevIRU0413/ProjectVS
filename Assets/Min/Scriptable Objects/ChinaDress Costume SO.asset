@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: ChinaDress Costume SO
   m_EditorClassIdentifier: 
   CostumeName: ChinaDress
-  CostumeDescription: ChinaDress Description
-  CostumeSprite: {fileID: 21300000, guid: 28edba34501ff5b468adf0836f4c9d0b, type: 3}
-  FullScene: {fileID: 21300000, guid: 815f64e420ba29343801501051e61114, type: 3}
-  IconSprite: {fileID: 21300000, guid: 49763e4938a032a42b07ba4bbceec699, type: 3}
+  CostumeDescription: "\uC8FC\uC778\uB2D8\uC774\uB77C \uBD88\uB7EC\uB2EC\uB77C\uACE0?"
+  CostumeSprite: {fileID: 21300000, guid: 61109ad2f3b2f2f44b9d94b5fed5c955, type: 3}
+  FullScene: {fileID: 21300000, guid: faee2b6bb2c6bb6409c4a793bdba2e23, type: 3}
+  IconSprite: {fileID: 21300000, guid: 18938e032a73959429ce39e1706ed815, type: 3}
   IsUnlocked: 0
   IsEquipped: 0
   CostumeDialogueID: 200003
+  Price: 2000

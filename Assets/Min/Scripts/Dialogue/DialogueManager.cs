@@ -18,13 +18,16 @@ using ChoiceDialogueManagerClass = ProjectVS.Dialogue.ChoiceDialogueManager.Choi
 using SpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
 using ProjectVS.Manager;
 using ProjectVS.Util;
+using ProjectVS.Interface;
+using System.Linq;
 
 
 namespace ProjectVS.Dialogue.DialogueManager
 {
     // TODO: 클래스에 책임이 너무 많은 것 같아서 분리해야 될 듯
+    // TODO: 세이브 관련 주석 해제
 
-    public class DialogueManager : SimpleSingleton<DialogueManager>
+    public class DialogueManager : SimpleSingleton<DialogueManager>, IManager
     {
         [Header("각 분기별 텍스트")]
         [SerializeField] private DialogueTextTyperClass _shopEnterText;
@@ -45,10 +48,15 @@ namespace ProjectVS.Dialogue.DialogueManager
 
         public DialogueDataClass CurrentDialogueData => _currentDialogueData; // 코스튬 상점에서 접근하기 위해 열어둠
 
+        public int Priority => (int)ManagerPriority.DialogueManager;
+
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
+
         private List<DialogueDataClass> _dialogueList = new();
         private List<ChoiceDataClass> _choiceList = new();
 
         private int _currentDialogueIndex = 100001;
+
 
         [Header("자동 진행 설정")]
         [SerializeField] private float _autoNextDelay = 1f;
@@ -66,6 +74,8 @@ namespace ProjectVS.Dialogue.DialogueManager
         [SerializeField] private int _passAffinity = 5;
 
         public ObservableProperty<bool> IsAutoMode = new(false);
+        public bool IsClosed = false;
+
 
         protected override void Awake()
         {
@@ -82,7 +92,7 @@ namespace ProjectVS.Dialogue.DialogueManager
             // 세이브 데이터에 따라 IsPrinted 값 변경
             // 만약 이 매니저가 데이터 로드 전 부터 존재한다면 호출 순서 변경해야 됨
 
-            ChangeIsPrintedBySaveData();
+            //ChangeIsPrintedBySaveData();
         }
 
         private void LoadDialogueCSV()
@@ -217,7 +227,13 @@ namespace ProjectVS.Dialogue.DialogueManager
             if (nextData == null)
             {
                 Debug.LogWarning($"[DialogueManager] 다음 대사(ID {nextID})가 존재하지 않음");
-                UIManager.Instance.ForceCloseTopPanel();
+
+                if (!IsClosed)
+                {
+                    UIManager.Instance.ForceCloseTopPanel();
+                    IsClosed = true;
+                }
+
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 return;
@@ -226,7 +242,13 @@ namespace ProjectVS.Dialogue.DialogueManager
             if (_currentDialogueIndex >= _dialogueList.Count + 100000) // csv가 100000 부터 시작하여 (Count + 100000) 하드코딩 됨
             {
                 Debug.Log("[DialogueManager] 더 이상 대사가 없습니다");
-                UIManager.Instance.ForceCloseTopPanel();
+
+                if (!IsClosed)
+                {
+                    UIManager.Instance.ForceCloseTopPanel();
+                    IsClosed = true;
+                }
+
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 _currentDialogueIndex--;
@@ -238,7 +260,13 @@ namespace ProjectVS.Dialogue.DialogueManager
                 Debug.Log($"현재 데이터 {_currentDialogueData.OccurTiming}, 다음 {nextData.OccurTiming}");
                 Debug.Log($"현재 {_currentDialogueData.ID}, 다음 {nextData.ID}");
                 Debug.Log("[DialogueManager] 다음 대사의 OccurTiming이 달라서 대화를 중단합니다.");
-                UIManager.Instance.ForceCloseTopPanel();
+
+                if (!IsClosed)
+                {
+                    UIManager.Instance.ForceCloseTopPanel();
+                    IsClosed = true;
+                }
+
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 return;
@@ -247,7 +275,13 @@ namespace ProjectVS.Dialogue.DialogueManager
             if (!CheckAffinity())
             {
                 Debug.Log($"[DialogueManager] 다음 대사는 접근할 수 없는 호감도 대화입니다");
-                UIManager.Instance.ForceCloseTopPanel();
+
+                if (!IsClosed)
+                {
+                    UIManager.Instance.ForceCloseTopPanel();
+                    IsClosed = true;
+                }
+
                 IsAutoMode.Value = false;
                 _dialogueLogManager.ClearLogBox();
                 _currentDialogueIndex--;
@@ -358,36 +392,71 @@ namespace ProjectVS.Dialogue.DialogueManager
         [ContextMenu("Show Repeat Dialogue")]
         public void ShowRepeatDialogue()
         {
-            List<DialogueDataClass> repeatables = new();
+            // 1. 가장 최근에 본 EventDialogue 중 가장 최근에 본 이벤트 찾기
+            DialogueDataClass lastEvent = _dialogueList
+                .Where(d => d.OccurTiming == 2 && d.IsPrinted)
+                .OrderByDescending(d => d.ID)
+                .FirstOrDefault();
 
-            foreach (var data in _dialogueList)
+
+            List<DialogueDataClass> repeatables;
+
+            // 2. 본 이벤트가 없다면 가장 낮은 호감도의 반복 대사 출력
+            if (lastEvent == null)
             {
-                if (!data.IsRepeatable) continue;
-                if (NPCAffinityModel.Instance.AffinityLevel < data.NeedAffinity) continue;
+                Debug.Log("[DialogueManager] 아직 본 이벤트 대사가 없습니다. 가장 낮은 호감도의 RepeatDialogue를 반환");
 
-                repeatables.Add(data);
-            }
+                // 2-1. 모든 반복 대사 리스트 필터링
+                repeatables = _dialogueList
+                    .Where(d => d.IsRepeatable)
+                    .ToList();
 
-            if (repeatables.Count == 0)
-            {
-                Debug.Log("[DialogueManager] 반복 출력 가능한 대사가 없습니다");
+                if (repeatables.Count == 0)
+                {
+                    Debug.LogWarning("[DialogueManager] 데이터 테이블에 반복 대사가 하나도 없습니다");
+                    return;
+                }
+
+                // 2-2. NeedAffinity가 가장 낮은 대사들 찾기
+                int minAffinity = repeatables.Min(d => d.NeedAffinity);
+
+                // 2-3. 해당 대사들 중 랜덤 선택
+                List<DialogueDataClass> candidates = repeatables
+                    .Where(d => d.NeedAffinity == minAffinity)
+                    .ToList();
+
+                DialogueDataClass selected = candidates[Random.Range(0, candidates.Count)];
+
+                // 2-4. 랜덤으로 선택된 대사 출력
+                ShowDialogue(selected.ID, _repeatText);
                 return;
             }
 
-            // 가장 높은 NeedAffinity 값 필터
-            int maxAffinity = -1;
-            foreach (var data in repeatables)
+            // 3. 마지막으로 본 이벤트 대사의 호감도
+            int maxAllowedAffinity = lastEvent.NeedAffinity;
+
+            // 3-1. 반복 대사 중 NeedAffinity가 마지막 이벤트 대사의 NeedAffinity 이하인 것들을 필터링
+            repeatables = _dialogueList
+                .Where(d => d.IsRepeatable && d.NeedAffinity <= maxAllowedAffinity)
+                .ToList();
+
+            if (repeatables.Count == 0)
             {
-                if (data.NeedAffinity > maxAffinity)
-                {
-                    maxAffinity = data.NeedAffinity;
-                }
+                Debug.Log("[DialogueManager] 조건을 만족하는 반복 대사가 없습니다");
+                return;
             }
 
-            List<DialogueDataClass> filtered = repeatables.FindAll(d => d.NeedAffinity == maxAffinity);
-            DialogueDataClass selected = filtered[Random.Range(0, filtered.Count)];
+            // 3-2. 해당 대사 중 NeedAffinity가 가장 높은 값 찾기
+            int maxAffinity = repeatables.Max(d => d.NeedAffinity);
 
-            ShowDialogue(selected.ID, _repeatText);
+            // 3-3. 해당 NeedAffinity의 대사 중 랜덤으로 선택
+            List<DialogueDataClass> finalCandidates = repeatables
+                .Where(d => d.NeedAffinity == maxAffinity)
+                .ToList();
+
+            DialogueDataClass finalSelected = finalCandidates[Random.Range(0, finalCandidates.Count)];
+            // 3-4. 랜덤으로 선택된 대사 출력
+            ShowDialogue(finalSelected.ID, _repeatText);
         }
 
 
@@ -489,7 +558,7 @@ namespace ProjectVS.Dialogue.DialogueManager
         public void OnToggleAutoMode()
         {
             IsAutoMode.Value = !IsAutoMode.Value;
-            Debug.Log($"현재 AutoMode: {IsAutoMode.Value}");
+            Debug.Log($"[DialogueManager] 현재 AutoMode: {IsAutoMode.Value}");
 
             // 이전 이벤트 제거
             _currentText.OnTypingComplete -= HandleAutoAfterTyping;
@@ -509,6 +578,10 @@ namespace ProjectVS.Dialogue.DialogueManager
                         StartCoroutine(IE_AutoNextDelay());
                     }
                 }
+                else
+                {
+                    Debug.LogWarning($"[DialogueManager] _currentText가 null입니다");
+                }
             }
         }
 
@@ -516,7 +589,14 @@ namespace ProjectVS.Dialogue.DialogueManager
         // Auto 키가 켜져있을 때 _autoNextDelay 초 후 자동으로 next 호출
         private IEnumerator IE_AutoNextDelay()
         {
-            yield return new WaitForSeconds(_autoNextDelay);
+            yield return new WaitForSecondsRealtime(_autoNextDelay);
+
+            if (!IsAutoMode.Value)
+            {
+                Debug.Log("[DialogueManager] AutoMode가 중간에 꺼져서 자동 진행 중단");
+                yield break;
+            }
+
             Next();
         }
 
@@ -562,6 +642,19 @@ namespace ProjectVS.Dialogue.DialogueManager
                     data.IsPrinted = true;
                 }
             }
+        }
+
+        public void Initialize()
+        {
+            //GetReadDialogueIDs();
+            //ChangeIsPrintedBySaveData();
+        }
+
+        public void Cleanup() { }
+
+        public GameObject GetGameObject()
+        {
+            return gameObject;
         }
     }
 }

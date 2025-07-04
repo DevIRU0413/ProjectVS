@@ -86,7 +86,7 @@ namespace ProjectVS.JDW
         {
             // 프리팹 생성
             GameObject newPlayer = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
-            // playerConfig 컴포넌트 가져옴
+            // PlayerConfig 컴포넌트 가져옴
             PlayerConfig config = newPlayer.GetComponent<PlayerConfig>();
 
             if (config == null) return;

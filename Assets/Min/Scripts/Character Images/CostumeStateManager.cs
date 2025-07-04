@@ -8,6 +8,8 @@ using CostumeSOClass = ProjectVS.CharacterImages.CostumeSO.CostumeSO;
 using EventSpriteChangeManagerClass = ProjectVS.CharacterImages.EventSpriteChangeManager.EventSpriteChangeManager;
 using ShopSceneNPCBehaviourClass = ProjectVS.NPC.ShopSceneNPCBehaviour.ShopSceneNPCBehaviour;
 using ProjectVS.NPC.ShopSceneNPCBehaviour;
+using ProjectVS.UIs.CostumeBuyButton;
+using ProjectVS.Dialogue.DialogueManagerR;
 
 
 namespace ProjectVS.CharacterImages.CostumeStateManager
@@ -20,12 +22,17 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
         public List<CostumeSOClass> CostumeSOs => _costumeSOs;
 
         private CostumeSOClass _currentCostume = null;
+        private CostumeSOClass _wantToBuyCostume = null;
+        protected CostumeBuyButton _buyButton;
 
         [SerializeField] private EventSpriteChangeManagerClass _eventSpriteChangeManager;
         [SerializeField] private ShopSceneNPCBehaviourClass _shopSceneNPCBehaviour;
 
 
         public CostumeSOClass CurrentCostume => _currentCostume;
+        public CostumeSOClass WantToBuyCostume => _wantToBuyCostume;
+        public CostumeBuyButton CostumeBuyButton => _buyButton;
+
         public bool IsEquipped(CostumeSOClass costume) => costume.IsEquipped;
 
         private void Awake()
@@ -49,8 +56,12 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
                 // 착용 중이면 해제
                 costume.IsEquipped = false;
                 _currentCostume = null;
-                _eventSpriteChangeManager.ChangeRepeatImage(DialogueManager.Instance.CurrentDialogueData.IllustPath);
-                DialogueManager.Instance.ShowRepeatDialogue();
+                //_eventSpriteChangeManager.ChangeRepeatImage(DialogueManager.Instance.CurrentDialogueData.IllustPath);
+                //DialogueManager.Instance.ShowRepeatDialogue();
+
+                _eventSpriteChangeManager.ChangeRepeatImage(DialogueManagerR.Instance.CurrentDialogueData.IllustPath);
+                DialogueManagerR.Instance.CanShowDialogueByType(DialogueType.Repeat);
+
                 //SaveWornCostume();
                 _shopSceneNPCBehaviour.RenewCostumeAnimation();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 미착용 상태로 전환");
@@ -76,7 +87,8 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
             costume.IsEquipped = true;
             _currentCostume = costume;
 
-            DialogueManager.Instance.ShowBuyDialogue(costume.CostumeDialogueID);
+            //DialogueManager.Instance.ShowBuyDialogue(costume.CostumeDialogueID);
+            DialogueManagerR.Instance.ShowDialogueByType(DialogueType.WearCostume);
             _eventSpriteChangeManager.ChangeCostumeImage();
         }
 
@@ -104,6 +116,12 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
                     PlayerDataManager.Instance.WornCostumeName = costume.name;
                 }
             }
+        }
+
+        public void WillBuyCostume(CostumeSOClass costume, CostumeBuyButton button)
+        {
+            _wantToBuyCostume = costume;
+            _buyButton = button;
         }
 
         private void LoadAcquiredCostumes()

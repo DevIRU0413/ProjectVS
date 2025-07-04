@@ -15,9 +15,16 @@ public class Test_Projectile : MonoBehaviour
     private float _damage;
     private float _speed;
 
+    private bool _hasDouble;
+
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();
+    }
+
+    public void InitDouble()
+    {
+        _hasDouble = true;
     }
 
     public void Init(Vector2 dir, float dmg, float spd)
@@ -38,7 +45,13 @@ public class Test_Projectile : MonoBehaviour
     {
         if (other.CompareTag("Monster"))
         {
-            other.GetComponent<Monster>()?.TakeDamage(_damage);
+            other.GetComponent<Test_Monster>()?.TakeDamage(_damage);
+
+            if (_hasDouble)
+            {
+                other.GetComponent<Test_Monster>()?.TakeDamage(_damage);
+            }
+
             Destroy(gameObject);
         }
     }

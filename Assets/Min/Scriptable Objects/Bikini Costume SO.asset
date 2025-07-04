@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Bikini Costume SO
   m_EditorClassIdentifier: 
   CostumeName: Bikini
-  CostumeDescription: Bikini Description
-  CostumeSprite: {fileID: 21300000, guid: 52a8b1607c767d54abf193bdda659da6, type: 3}
-  FullScene: {fileID: 21300000, guid: 386693ddc4c23aa4bbda46dc54827169, type: 3}
-  IconSprite: {fileID: 21300000, guid: 49763e4938a032a42b07ba4bbceec699, type: 3}
+  CostumeDescription: "\uC5EC\uAE34 \uBC14\uB2E4\uB3C4 \uC5C6\uB294\uB370?"
+  CostumeSprite: {fileID: 21300000, guid: 983c785c971a7e5438536ee7832e768b, type: 3}
+  FullScene: {fileID: 21300000, guid: 237c8ee7d3ca35a48b35e9253a834d59, type: 3}
+  IconSprite: {fileID: 21300000, guid: 0b60a62ab78c306419f944a610c5be83, type: 3}
   IsUnlocked: 0
-  IsEquipped: 1
+  IsEquipped: 0
   CostumeDialogueID: 200001
+  Price: 1000

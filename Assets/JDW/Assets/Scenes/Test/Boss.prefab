@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7587761201080512381}
   - component: {fileID: 62534083241620433}
   - component: {fileID: 7576493993212972030}
-  - component: {fileID: 5619523104021871816}
+  - component: {fileID: 9096548852948723370}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!114 &5619523104021871816
+--- !u!114 &9096548852948723370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,11 +140,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1673134169377035974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9081efa3d3748b47a9420d8ffaa8cdb, type: 3}
+  m_Script: {fileID: 11500000, guid: 72fa3b96027c9f841a8a81caf7f5d72b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Timer: {fileID: 0}
   maxHp: 500
   currentHp: 0
   _exp: 90
   _gold: 500
-  _bossHpBar: {fileID: 0}
+  _bossHpBar: {fileID: 1673134169377035974}

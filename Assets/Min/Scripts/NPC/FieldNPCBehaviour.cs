@@ -20,6 +20,8 @@ namespace ProjectVS.NPC.NPCBehaviour
         [SerializeField] private GameObject HeartEmoji;
         [SerializeField] private GameObject CryEmoji;
 
+        [SerializeField] private Animator _animator;
+
         [Header("호감도 증감 설정")]
         [SerializeField] private int _affinityIncrease = 20;
         [SerializeField] private int _affinityDecrease = 30;
@@ -69,12 +71,14 @@ namespace ProjectVS.NPC.NPCBehaviour
 
         public void Save()
         {
+            AnimateRun();
             HeartEmoji.SetActive(true);
             NPCAffinityModel.Instance.IncreaseAffinity(_affinityIncrease);
         }
 
         public void Rob()
         {
+            AnimateRun();
             CryEmoji.SetActive(true);
             NPCAffinityModel.Instance.DecreaseAffinity(_affinityDecrease);
             RandomlyGetDiamond();
@@ -107,6 +111,11 @@ namespace ProjectVS.NPC.NPCBehaviour
         private IEnumerator IE_WaitBeforeVanish()
         {
             yield return new WaitForSeconds(_waitBeforeVanishTime);
+        }
+
+        private void AnimateRun()
+        {
+            _animator.SetTrigger("Run");
         }
     }
 }

@@ -28,8 +28,8 @@ public class InputManager : MonoBehaviour
     }
 
     private void OnDisable()
-    {
-        inputActions.Disable();
+    {  
+       inputActions.Disable();
     }
 
     // 필요하면 리스너를 여기서 등록하거나,

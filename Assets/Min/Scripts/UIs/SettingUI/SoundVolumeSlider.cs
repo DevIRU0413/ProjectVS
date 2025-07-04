@@ -14,6 +14,12 @@ namespace ProjectVS.UIs.SettingUI.SoundVolumeSlider
         [SerializeField] private Slider _sfxSlider;
         [SerializeField] private Slider _bgmSlider;
 
+        private void OnEnable()
+        {
+            _bgmSlider.value = AudioManager.Instance.GetBgmVolume();
+            _sfxSlider.value = AudioManager.Instance.GetSfxVolume();
+        }
+
 
         private void Update()
         {
