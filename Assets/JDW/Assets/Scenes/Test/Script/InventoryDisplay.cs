@@ -6,12 +6,10 @@ using ProjectVS.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestInventoryDisplay : MonoBehaviour
+public class InventoryDisplay : MonoBehaviour
 {
     public Transform SlotParent;  // 슬롯이 들어갈 부모
     public GameObject SlotPrefab; // 슬롯 프리팹
-    private List<GameObject> ActiveSlots = new(); // 현재 표시된 슬롯
-
     public void UpdateInventoryUI(List<TestItemData> items)
     {
         // 기존 슬롯 제거

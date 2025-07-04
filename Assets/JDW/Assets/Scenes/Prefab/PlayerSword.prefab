@@ -324,7 +324,6 @@ MonoBehaviour:
     CurrentExp: 0
     MaxExp: 0
   _hpBar: {fileID: 2827814678606631806}
-  Inventory: []
 --- !u!114 &5786611776289020374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,7 +367,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d76398e354ed594cb957ae8b9ca3fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxItemCount: 8
   items: []
+  PlayerConfig: {fileID: 8042441434584137574}
 --- !u!1 &5919637639147977788
 GameObject:
   m_ObjectHideFlags: 0
