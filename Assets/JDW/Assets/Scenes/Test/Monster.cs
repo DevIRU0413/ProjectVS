@@ -28,6 +28,9 @@ namespace ProjectVS.JDW
                 Die();
             }
         }
+
+
+
         private void Die()
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
