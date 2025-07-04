@@ -340,8 +340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e961f160ac3334897ff69562375c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _affinityFillImage: {fileID: 0}
   _affinityValueText: {fileID: 0}
+  _image: {fileID: 0}
 --- !u!1 &108656190
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,6 +398,7 @@ MonoBehaviour:
   _choiceDialogueManager: {fileID: 0}
   _spriteChangeManager: {fileID: 0}
   _passAffinity: 5
+  IsClosed: 0
 --- !u!1 &158180875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2023,6 +2024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72dcf3e8e21188f4d8a07ab316e23790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isDontDestroyOnLoad: 1
 --- !u!1 &718738592
 GameObject:
   m_ObjectHideFlags: 0
@@ -2907,8 +2909,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameText: {fileID: 0}
   _contentText: {fileID: 0}
-  _normalTypingSpeed: 0.05
-  _skippedTypingSpeed: 0.01
 --- !u!1 &943696672
 GameObject:
   m_ObjectHideFlags: 0
@@ -10014,8 +10014,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameText: {fileID: 0}
   _contentText: {fileID: 0}
-  _normalTypingSpeed: 0.05
-  _skippedTypingSpeed: 0.01
 --- !u!1 &1216896615
 GameObject:
   m_ObjectHideFlags: 0
@@ -10745,8 +10743,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameText: {fileID: 0}
   _contentText: {fileID: 0}
-  _normalTypingSpeed: 0.05
-  _skippedTypingSpeed: 0.01
 --- !u!1 &1482054171
 GameObject:
   m_ObjectHideFlags: 0
@@ -11386,13 +11382,70 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2181325236741763756, guid: 0b0aeb020cdb1d044812fbbf8ba7ffca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1533616023}
   m_SourcePrefab: {fileID: 100100000, guid: 0b0aeb020cdb1d044812fbbf8ba7ffca, type: 3}
 --- !u!224 &1533616018 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8397294130159455797, guid: 0b0aeb020cdb1d044812fbbf8ba7ffca, type: 3}
   m_PrefabInstance: {fileID: 1533616017}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1533616019 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3978076355787902718, guid: 0b0aeb020cdb1d044812fbbf8ba7ffca, type: 3}
+  m_PrefabInstance: {fileID: 1533616017}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1533616020 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4841490574406764434, guid: 0b0aeb020cdb1d044812fbbf8ba7ffca, type: 3}
+  m_PrefabInstance: {fileID: 1533616017}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1533616021 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2059771958205800380, guid: 0b0aeb020cdb1d044812fbbf8ba7ffca, type: 3}
+  m_PrefabInstance: {fileID: 1533616017}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1533616022 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2181325236741763756, guid: 0b0aeb020cdb1d044812fbbf8ba7ffca, type: 3}
+  m_PrefabInstance: {fileID: 1533616017}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1533616023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533616022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3f5d2fc5eefb647ad59184d9147b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  LevelText: {fileID: 1533616021}
+  GoldText: {fileID: 1533616020}
+  DiamondsText: {fileID: 1533616019}
 --- !u!1 &1535275523
 GameObject:
   m_ObjectHideFlags: 0
@@ -13913,8 +13966,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameText: {fileID: 0}
   _contentText: {fileID: 0}
-  _normalTypingSpeed: 0.05
-  _skippedTypingSpeed: 0.01
 --- !u!1 &2139944883
 GameObject:
   m_ObjectHideFlags: 0

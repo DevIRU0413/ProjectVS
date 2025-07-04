@@ -129,6 +129,14 @@ namespace ProjectVS.Unit.Player
             // current stats 초기화 
             this.CurrentHp = other.CurrentHp; 
         }
+        public void SubtractBaseStats(float hp, float atk, float dfs, float spd, float atkSpd) // 아이템 제거로 감소 될 스탯
+        {
+            SetIncreaseBaseStats(UnitStaus.MaxHp, -hp);
+            SetIncreaseBaseStats(UnitStaus.Atk, -atk);
+            SetIncreaseBaseStats(UnitStaus.Dfs, -dfs);
+            SetIncreaseBaseStats(UnitStaus.Spd, -spd);
+            SetIncreaseBaseStats(UnitStaus.AtkSpd, -atkSpd);
+        }
 
     }
 }

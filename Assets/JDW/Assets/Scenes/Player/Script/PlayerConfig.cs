@@ -33,7 +33,6 @@ namespace ProjectVS.JDW
         [SerializeField] private PixelUI.ValueBar _hpBar;
 
         private Animator _anim;
-        public List<string> Inventory = new List<string>(); // 아이템 이름 저장용
         private void Awake()
         {
             _anim = GetComponent<Animator>();
@@ -108,11 +107,18 @@ namespace ProjectVS.JDW
 
             // 체력 회복은 별도로 처리
             Stats.CurrentHp = Mathf.Min(Stats.CurrentHp + bonusHp, Stats.CurrentMaxHp);
-            Inventory.Add(itemName);
             UpdateHpBar(); // 최대 체력이 오를 때 Hp바도 같이
 
             Debug.Log($"{itemName} 구매 완료! 체력 +{bonusHp}, 공격력 +{bonusAtk}, 방어력 +{bonusDfs},  공격속도 +{bonusAtkSpd}, 이동속도 +{bonusSpd} 남은 골드: {PlayerDataManager.Instance.Gold}");
             return true;
+        }
+        public void RemoveItemStats(int bonusHp, int bonusAtk, int bonusDfs, float bonusAtkSpd, float bonusSpd)
+        {
+            Stats.SubtractBaseStats(bonusHp, bonusAtk, bonusDfs, bonusSpd, bonusAtkSpd);
+            Stats.CurrentHp = Mathf.Min(Stats.CurrentHp, Stats.CurrentMaxHp);
+            UpdateHpBar();
+
+            Debug.Log($"아이템 효과 제거 완료! HP -{bonusHp}, ATK -{bonusAtk}, DFS -{bonusDfs}, AtkSpd -{bonusAtkSpd}, Spd -{bonusSpd}");
         }
         public void TakeDamage(float damage)
         {
