@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using ProjectVS.Data;
 using ProjectVS.Interface;
 using ProjectVS.Unit.Player;
 using ProjectVS.Util;
+using sItem = ProjectVS.Item.SerializableItemData.SerializableItemData;
 
 using UnityEngine;
-using UnityEngine.Rendering;
+using ProjectVS.Item.SerializableItemData;
+using ProjectVS.Item;
 
 namespace ProjectVS.Manager
 {
@@ -24,7 +27,8 @@ namespace ProjectVS.Manager
         public PlayerStats Stats;
 
         [Header("Inventory & Items")]
-        public List<Item.ItemData> InventoryItems = new List<Item.ItemData>();
+        public List<Item.ItemData> InventoryItems; // 게임 중 사용할 것
+        public List<sItem> SavedInventoryItems; // 저장용
 
         [Header("Progress Info")]
         public int CurrentStageFloor;
@@ -86,7 +90,12 @@ namespace ProjectVS.Manager
         
             data.Stats = Stats;
 
-            data.InventoryItems = InventoryItems;
+            data.InventoryItems = InventoryItems.Select(item => new sItem
+            {
+                ItemID = item.ItemID,
+                ItemCurLevel = item.ItemCurLevel,
+                IsComposited = item.IsComposited
+            }).ToList();
 
             data.CurrentStage = CurrentStageFloor;
             data.MonstersDefeated = MonstersDefeated;
@@ -122,7 +131,25 @@ namespace ProjectVS.Manager
             PlayerData data = SaveFileSystem.Load(index);
             if (data == null) return;
 
-            InventoryItems = data.InventoryItems;
+            // SO 복원
+            InventoryItems = data.InventoryItems
+                .Select(sItem =>
+                {
+                    var baseItem = ItemDatabase.Instance.GetItem(sItem.ItemID);
+                    if (baseItem == null)
+                    {
+                        Debug.LogWarning($"[PlayerDataManager] ItemDatabase에 ID {sItem.ItemID}인 아이템이 없습니다");
+                        return null;
+                    }
+
+                    Item.ItemData item = ScriptableObject.Instantiate(baseItem);
+                    item.ItemCurLevel = sItem.ItemCurLevel;
+                    item.IsComposited = sItem.IsComposited;
+                    return item;
+                })
+                .Where(item => item != null)
+                .ToList();
+
 
             CurrentStageFloor = data.CurrentStage;
             MonstersDefeated = data.MonstersDefeated;
