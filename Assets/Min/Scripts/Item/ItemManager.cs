@@ -10,6 +10,7 @@ using ProjectVS.Utils.UIManager;
 using ProjectVS.Util;
 using ProjectVS.Interface;
 using System;
+using UnityEngine.InputSystem;
 
 
 
@@ -39,10 +40,20 @@ namespace ProjectVS.Item.ItemManager
 
         protected override void Awake()
         {
+            TestInitInventory(); // 테스트용 인벤토리 초기화, 추후 삭제해야 됨
+
             base.Awake();
 
             if (_itemCombinator == null)
                 _itemCombinator = new(ItemDatabase.Instance.GetAllItems());
+        }
+
+        private void Update()
+        {
+            if (Keyboard.current.uKey.wasPressedThisFrame)
+            {
+                LevelUpItem();
+            }
         }
 
 
@@ -80,38 +91,74 @@ namespace ProjectVS.Item.ItemManager
         /// </summary>
         private List<ItemData> ReturnItem(int quantity)
         {
+            //List<ItemData> allItemPool = ItemDatabase.Instance.GetAllItems();
+            //List<ItemData> inventory = _inventory.GetAllItems();
+
+            //List<ItemData> candidates;
+
+            //// 인벤토리가 다 찼으면
+            //if (inventory.Count == 8)
+            //{
+            //    candidates = inventory.Where(item =>
+            //        (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
+            //         item.ItemType == ItemType.Passive) &&   // 패시브 아이템인지
+            //        !_inventory.GetItemsByID(item.ItemID).All(i => i.ItemCurLevel >= i.ItemMaxLevel) && // 최대 레벨이 아닌지
+            //        !item.IsComposited                       // 조합되어 나오면 안되는 아이템이 아닌지
+            //    ).ToList();
+            //}
+            //// 인벤토리가 비어있으면 
+            //else
+            //{
+            //    candidates = allItemPool.Where(item =>
+            //        (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
+            //         item.ItemType == ItemType.Passive) &&   // 패시브 아이템인지
+            //        (
+            //            _inventory.HasItem(item.ItemID) ||   // 인벤토리에 있는 아이템이거나
+            //            !_inventory.GetItemsByID(item.ItemID).All(i => i.ItemCurLevel >= i.ItemMaxLevel) // 최대 레벨이 아닌 아이템
+            //        ) &&
+            //        (!item.IsComposited) &&                  // 조합되어 나오면 안되는 아이템이 아닌지
+            //        (item.ItemRank != ItemRank.Composite ||  // 조합 아이템이 아닌 경우 포함
+            //         _inventory.HasItem(item.ItemID))        // 조합 아이템이라면 해금(획득) 여부 확인
+            //    ).ToList();
+            //}
+
+            //// 랜덤 추출
+            //_itemPool = candidates.OrderBy(x => UnityEngine.Random.value).Take(quantity).ToList();
+
+            //return _itemPool;
+
             List<ItemData> allItemPool = ItemDatabase.Instance.GetAllItems();
-            List<ItemData> inventory = _inventory.GetAllItems();
 
-            List<ItemData> candidates;
+            List<ItemData> candidates = new();
 
-            // 인벤토리가 다 찼으면
-            if (inventory.Count == 8)
+            foreach (var item in allItemPool)
             {
-                candidates = inventory.Where(item =>
-                    (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
-                     item.ItemType == ItemType.Passive) &&   // 패시브 아이템인지
-                    !_inventory.GetItemsByID(item.ItemID).All(i => i.ItemCurLevel >= i.ItemMaxLevel) && // 최대 레벨이 아닌지
-                    !item.IsComposited                       // 조합되어 나오면 안되는 아이템이 아닌지
-                ).ToList();
-            }
-            // 인벤토리가 비어있으면 
-            else
-            {
-                candidates = allItemPool.Where(item =>
-                    (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
-                     item.ItemType == ItemType.Passive) &&   // 패시브 아이템인지
-                    (
-                        _inventory.HasItem(item.ItemID) ||   // 인벤토리에 있는 아이템이거나
-                        !_inventory.GetItemsByID(item.ItemID).All(i => i.ItemCurLevel >= i.ItemMaxLevel) // 최대 레벨이 아닌 아이템
-                    ) &&
-                    (!item.IsComposited) &&                  // 조합되어 나오면 안되는 아이템이 아닌지
-                    (item.ItemRank != ItemRank.Composite ||  // 조합 아이템이 아닌 경우 포함
-                     _inventory.HasItem(item.ItemID))        // 조합 아이템이라면 해금(획득) 여부 확인
-                ).ToList();
+                // 공격형 또는 패시브 아이템만 대상으로 함
+                if (item.ItemType != ItemType.Attack && item.ItemType != ItemType.Passive)
+                    continue;
+
+                // 조합되어 나오면 안 되는 아이템은 제외
+                if (item.IsComposited)
+                    continue;
+
+                // 조합 아이템이면 해금 여부 확인
+                if (item.ItemRank == ItemRank.Composite && !_inventory.HasItem(item.ItemID))
+                    continue;
+
+                // 인벤토리에 동일 ID 아이템이 있는 경우, 그 중 아직 최대 레벨이 아닌 게 있는지 확인
+                if (_inventory.HasItem(item.ItemID))
+                {
+                    bool hasNonMaxItem = _inventory.GetItemsByID(item.ItemID)
+                        .Any(i => i.ItemCurLevel < i.ItemMaxLevel && !i.IsComposited);
+
+                    if (!hasNonMaxItem)
+                        continue; // 전부 만렙이거나 조합됨 → 스킵
+                }
+
+                candidates.Add(item);
             }
 
-            // 랜덤 추출
+            // 무작위 선택
             _itemPool = candidates.OrderBy(x => UnityEngine.Random.value).Take(quantity).ToList();
 
             return _itemPool;
@@ -155,6 +202,40 @@ namespace ProjectVS.Item.ItemManager
         public GameObject GetGameObject()
         {
             return gameObject;
+        }
+
+        private void TestInitInventory()
+        {
+            _inventory = new ItemInventory();
+
+            List<ItemData> items = ItemDatabase.Instance.GetAllItems();
+
+            foreach (var item in items)
+            {
+                if (item.ItemRank == ItemRank.Composite) continue;
+                _inventory.AddItem(item);
+            }
+        }
+
+        [ContextMenu("Test Look Inv")]
+        private void TestLookInventory()
+        {
+            Debug.Log("=== [ItemManager] 현재 인벤토리 상태 출력 ===");
+
+            List<ItemData> items = _inventory.GetAllItems();
+
+            if (items.Count == 0)
+            {
+                Debug.Log("인벤토리에 아이템이 없습니다.");
+                return;
+            }
+
+            foreach (var item in items)
+            {
+                Debug.Log($"- 이름: {item.ItemName}, ID: {item.ItemID}, 현재 레벨: {item.ItemCurLevel}, 최대 레벨: {item.ItemMaxLevel}, 조합됨: {item.IsComposited}");
+            }
+
+            Debug.Log("=== [ItemManager] 인벤토리 출력 끝 ===");
         }
     }
 }
