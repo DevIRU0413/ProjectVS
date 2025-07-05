@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using ProjectVS.Item;
 
 using UnityEngine;
-
+using RecipeBoxHolderClass = ProjectVS.UIs.Item.RecipeBoxHolder.RecipeBoxHolder;
 using RecipePanelButtonsClass = ProjectVS.UIs.PanelBehaviours.RecipePanelButtons.RecipePanelButtons;
 using ItemButtonBehaviourClass = ProjectVS.UIs.Item.ItemButtonBehaviour.ItemButtonBehaviour;
 using TMPro;
@@ -17,16 +17,18 @@ namespace ProjectVS.UIs.Item.RecipeBoxBehaviour
         [SerializeField] private ItemButtonBehaviourClass _baseItemButton1;
         [SerializeField] private ItemButtonBehaviourClass _baseItemButton2;
 
+
+        private RecipeBoxHolderClass _boxHolder;
+
         [SerializeField] private TMP_Text _itemNameText;
 
 
         private ItemData _item;
-        private RecipePanelButtonsClass _recipePanel;
 
-        public void Init(ItemData item, RecipePanelButtonsClass recipePanel)
+        public void Init(ItemData item, RecipeBoxHolderClass boxHolder)
         {
             _item = item;
-            _recipePanel = recipePanel;
+            _boxHolder = boxHolder;
 
             RenewBoxAppearance();
             CreateItemIconButtons();
@@ -39,9 +41,9 @@ namespace ProjectVS.UIs.Item.RecipeBoxBehaviour
 
         private void CreateItemIconButtons()
         {
-            _compositeItemButton.Init(_item.ItemID, _recipePanel, true);
-            _baseItemButton1.Init(_item.ItemAddID1, _recipePanel, true);
-            _baseItemButton2.Init(_item.ItemAddID2, _recipePanel, true);
+            _compositeItemButton.Init(_item.ItemID, _boxHolder, true);
+            _baseItemButton1.Init(_item.ItemAddID1, _boxHolder, true);
+            _baseItemButton2.Init(_item.ItemAddID2, _boxHolder, true);
         }
     }
 }
