@@ -9,27 +9,33 @@ using BuyItemObjBehaviourClass = ProjectVS.Item.BuyItemObjBehaviour.BuyItemObjBe
 using ProjectVS.Utils.UIManager;
 using ProjectVS.Util;
 using ProjectVS.Interface;
+using System;
 
 
 
 namespace ProjectVS.Item.ItemManager
 {
+    /// <summary>
+    /// 인벤토리 조작 및 인스턴스 유지 접근, 아이템 조합기 보유, UI 연결 역할 수행
+    /// </summary>
+
+    // TODO: 역할 분리 가능할 듯
     public class ItemManager : SimpleSingleton<ItemManager>, IManager
     {
         private List<ItemData> _itemPool = new();
-        //private List<ItemData> _allItemPool = new();
-
 
         private ItemCombinator _itemCombinator;
-        private ItemInventory _inventory; // 이거 누가 넘겨줘야되지?
-                                          // 본 클래스가 싱글톤으로써 인스턴스를 계속 갖고 있어줘야되나?
-                                          // 아니면 씬 넘어갈 때, PlayerData에 넘기고 다시 해당 씬에서 주고 받기?
+        private ItemInventory _inventory;
+        public ItemInventory Inventory => _inventory;
 
+        [Header("아이템 획득 및 구매 연동")]
         [SerializeField] private List<GetItemButtonBehaviourClass> _buttonList = new();
         [SerializeField] private List<BuyItemObjBehaviourClass> _objList = new();
 
         public int Priority => (int)ManagerPriority.ItemManager;
         public bool IsDontDestroy => IsDontDestroyOnLoad;
+
+        public event Action OnInventoryChanged;
 
         protected override void Awake()
         {
@@ -83,30 +89,30 @@ namespace ProjectVS.Item.ItemManager
             if (inventory.Count == 8)
             {
                 candidates = inventory.Where(item =>
-                (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
-                item.ItemType == ItemType.Passive) //&&    // 패시브 아이템인지
-                //!_inventory.최대레벨검사(item.ItemID)    // max레벨인지 검사
+                    (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
+                     item.ItemType == ItemType.Passive) &&   // 패시브 아이템인지
+                    !_inventory.GetItemsByID(item.ItemID).All(i => i.ItemCurLevel >= i.ItemMaxLevel) && // 최대 레벨이 아닌지
+                    !item.IsComposited                       // 조합되어 나오면 안되는 아이템이 아닌지
                 ).ToList();
             }
             // 인벤토리가 비어있으면 
             else
             {
-                // 전체 아이템에서 필터링
                 candidates = allItemPool.Where(item =>
-                (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
-                item.ItemType == ItemType.Passive) &&    // 패시브 아이템인지
-                //!_inventory.조합되어 사라진 아이템인지 &&
-
-                (_inventory.HasItem(item.ItemID) //|| // !item.최대레벨검사)  // 인벤토리에 있으면서 최대 레벨이 아닌지
-                )
-                &&
-                (item.ItemRank != ItemRank.Composite) // || _inventory.해금된건지 검사)
-                )
-                .ToList();
+                    (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
+                     item.ItemType == ItemType.Passive) &&   // 패시브 아이템인지
+                    (
+                        _inventory.HasItem(item.ItemID) ||   // 인벤토리에 있는 아이템이거나
+                        !_inventory.GetItemsByID(item.ItemID).All(i => i.ItemCurLevel >= i.ItemMaxLevel) // 최대 레벨이 아닌 아이템
+                    ) &&
+                    (!item.IsComposited) &&                  // 조합되어 나오면 안되는 아이템이 아닌지
+                    (item.ItemRank != ItemRank.Composite ||  // 조합 아이템이 아닌 경우 포함
+                     _inventory.HasItem(item.ItemID))        // 조합 아이템이라면 해금(획득) 여부 확인
+                ).ToList();
             }
 
             // 랜덤 추출
-            _itemPool = candidates.OrderBy(x => Random.value).Take(quantity).ToList();
+            _itemPool = candidates.OrderBy(x => UnityEngine.Random.value).Take(quantity).ToList();
 
             return _itemPool;
         }
