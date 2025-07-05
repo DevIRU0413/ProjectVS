@@ -49,6 +49,11 @@ namespace ProjectVS.UIs.PanelBehaviours.RecipePanelButtons
                 _itemPanel.SetActive(true);
                 _setPanel.SetActive(false);
             }
+            else
+            {
+                _itemPanel.SetActive(false);
+                _setPanel.SetActive(true);
+            }
         }
     }
 }
