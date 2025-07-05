@@ -6,13 +6,15 @@ using UnityEngine;
 namespace ProjectVS.Item.SetItemData
 {
     [System.Serializable]
-    public class SetItemData : MonoBehaviour
+    public class SetItemData
     {
         public int ID;
-        public string Name;
+        public string SetName;
         public int SetEffect;
-        public int SetEffectValue;
-        public int[] BaseItemID;
-        public string IllustPath;
+        public float[] SetValue;
+        public int[] SetItemID;
+        public string SetItemICON;
+        public Sprite SetIcon;
+        public string SetEffectText;
     }
 }
