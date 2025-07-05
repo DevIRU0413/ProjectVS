@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1441fe75217ba0a43bcdabc169935e85, type: 3}
+  m_Name: "\uBA38\uB9AC\uB760"
+  m_EditorClassIdentifier: 
+  ItemID: 10202
+  ItemRank: 0
+  ItemName: "\uBA38\uB9AC\uB760"
+  ItemType: 4
+  Price: 30
+  Description: "\uD328\uC2DC\uBE0C \uC544\uC774\uD15C '\uBA38\uB9AC\uB760'"
+  ItemAtkSpeed: -1
+  ItemEffect: 6
+  ItemEffectValue: 1
+  ItemAddID1: -1
+  ItemAddID2: -1
+  ItemSetEffect: 0
+  ItemSetNum: 4
+  ItemMaxLevel: 5
+  ItemCurLevel: 0
+  ItemValue: 0
+  ItemRange: -1
+  ItemSize: -1
+  ItemIcon: {fileID: 21300000, guid: 34d81d16b3f68cc4784003768cca337d, type: 3}
+  ItemIconPath: Images/Sprite/Item/Headband
+  IsComposited: 0

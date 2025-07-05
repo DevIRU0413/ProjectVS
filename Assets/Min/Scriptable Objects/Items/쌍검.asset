@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1441fe75217ba0a43bcdabc169935e85, type: 3}
+  m_Name: "\uC30D\uAC80"
+  m_EditorClassIdentifier: 
+  ItemID: 11005
+  ItemRank: 3
+  ItemName: "\uC30D\uAC80"
+  ItemType: 3
+  Price: -1
+  Description: "\uC870\uD569 \uC544\uC774\uD15C '\uC30D\uAC80'"
+  ItemAtkSpeed: 1.5
+  ItemEffect: 14
+  ItemEffectValue: 15
+  ItemAddID1: 10103
+  ItemAddID2: 10104
+  ItemSetEffect: -1
+  ItemSetNum: -1
+  ItemMaxLevel: 5
+  ItemCurLevel: 0
+  ItemValue: 0
+  ItemRange: 30
+  ItemSize: 1
+  ItemIcon: {fileID: 21300000, guid: 3822f30bbc5897047bf8c42966de4d92, type: 3}
+  ItemIconPath: Images/Sprite/Item/Doubleswords
+  IsComposited: 0
