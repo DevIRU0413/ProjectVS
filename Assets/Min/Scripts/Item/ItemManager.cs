@@ -121,84 +121,101 @@ namespace ProjectVS.Item.ItemManager
         private List<ItemData> ReturnItemForLvlUp(int quantity)
         {
             List<ItemData> allItemPool = ItemDatabase.Instance.GetAllItems();
+            List<ItemData> result = new();
 
-            List<ItemData> candidates = new();
+            // 1. 인벤토리에 있는 Composite, Sub 아이템 개수
+            int ownedCount = _inventory.GetAllItems()
+                .Count(item => item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite);
 
-            foreach (var item in allItemPool)
-            {
-                // 공격형 또는 패시브 아이템만 대상으로 함
-                if (item.ItemType != ItemType.Attack && item.ItemType != ItemType.Passive)
-                    continue;
+            int total = 8;
+            int requiredOwnedMin = 0;
 
-                // 조합되어 나오면 안 되는 아이템은 제외
-                if (item.IsComposited)
-                    continue;
+            if (ownedCount == 8)
+                requiredOwnedMin = quantity;
+            else if (ownedCount == 7)
+                requiredOwnedMin = 2;
+            else if (ownedCount == 6)
+                requiredOwnedMin = 1;
 
-                // 조합 아이템이면 해금 여부 확인
-                if (item.ItemRank == ItemRank.Composite && !_inventory.HasItem(item.ItemID))
-                    continue;
+            // 2. 우선 인벤토리에 있고, 아직 최대 레벨이 아닌 아이템 수집
+            List<ItemData> fromInventory = _inventory.GetAllItems()
+                .Where(item =>
+                    (item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite) &&
+                    item.ItemCurLevel < item.ItemMaxLevel &&
+                    !item.IsComposited &&
+                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive))
+                .ToList();
 
-                // 인벤토리에 동일 ID 아이템이 있는 경우, 그 중 아직 최대 레벨이 아닌 게 있는지 확인
-                if (_inventory.HasItem(item.ItemID))
-                {
-                    bool hasNonMaxItem = _inventory.GetItemsByID(item.ItemID)
-                        .Any(i => i.ItemCurLevel < i.ItemMaxLevel && !i.IsComposited);
+            fromInventory = fromInventory
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(requiredOwnedMin)
+                .ToList();
 
-                    if (!hasNonMaxItem)
-                        continue; // 전부 만렙이거나 조합됨 → 스킵
-                }
+            result.AddRange(fromInventory);
 
-                candidates.Add(item);
-            }
+            // 3. 후보군에서 남은 슬롯 채우기
+            List<ItemData> candidates = allItemPool
+                .Where(item =>
+                    !item.IsComposited &&
+                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive) &&
+                    (item.ItemRank != ItemRank.Composite || _inventory.HasItem(item.ItemID)))
+                .Except(fromInventory)
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(quantity - result.Count)
+                .ToList();
 
-            // 무작위 선택
-            _itemPool = candidates.OrderBy(x => UnityEngine.Random.value).Take(quantity).ToList();
+            result.AddRange(candidates);
 
-            return _itemPool;
+            return result;
         }
 
 
         private List<ItemData> ReturnItemForSell(int quantity)
         {
             List<ItemData> allItemPool = ItemDatabase.Instance.GetAllItems();
+            List<ItemData> result = new();
 
-            List<ItemData> candidates = new();
+            int ownedCount = _inventory.GetAllItems()
+                .Count(item => item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite);
 
-            foreach (var item in allItemPool)
-            {
-                // 공격형 또는 패시브 아이템만 대상으로 함
-                if (item.ItemType != ItemType.Attack && item.ItemType != ItemType.Passive)
-                    continue;
+            int requiredOwnedMin = 0;
+            if (ownedCount == 8) requiredOwnedMin = quantity;
+            else if (ownedCount == 7) requiredOwnedMin = 4;
+            else if (ownedCount == 6) requiredOwnedMin = 3;
+            else if (ownedCount == 5) requiredOwnedMin = 2;
+            else if (ownedCount == 4) requiredOwnedMin = 1;
 
-                // 조합되어 나오면 안 되는 아이템은 제외
-                if (item.IsComposited)
-                    continue;
+                // 1. 인벤토리에 있고 최대 레벨 미만인 아이템
+                List<ItemData> fromInventory = _inventory.GetAllItems()
+                    .Where(item =>
+                        (item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite) &&
+                        item.ItemCurLevel < item.ItemMaxLevel &&
+                        !item.IsComposited &&
+                        (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive))
+                    .ToList();
 
-                // 유니크 아이템은 상점에서 나오면 안됨
-                if (item.ItemRank == ItemRank.Unique)
-                    continue;
+            fromInventory = fromInventory
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(requiredOwnedMin)
+                .ToList();
 
-                // 조합 아이템이면 해금 여부 확인
-                if (item.ItemRank == ItemRank.Composite && !_inventory.HasItem(item.ItemID))
-                    continue;
+            result.AddRange(fromInventory);
 
-                // 인벤토리에 동일 ID 아이템이 있는 경우, 그 중 아직 최대 레벨이 아닌 게 있는지 확인
-                if (_inventory.HasItem(item.ItemID))
-                {
-                    bool hasNonMaxItem = _inventory.GetItemsByID(item.ItemID)
-                        .Any(i => i.ItemCurLevel < i.ItemMaxLevel && !i.IsComposited);
+            // 2. 후보군에서 나머지 채우기
+            List<ItemData> candidates = allItemPool
+                .Where(item =>
+                    item.ItemRank != ItemRank.Unique &&
+                    !item.IsComposited &&
+                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive) &&
+                    (item.ItemRank != ItemRank.Composite || _inventory.HasItem(item.ItemID)))
+                .Except(fromInventory)
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(quantity - result.Count)
+                .ToList();
 
-                    if (!hasNonMaxItem)
-                        continue; // 전부 만렙이거나 조합됨 → 스킵
-                }
+            result.AddRange(candidates);
 
-                candidates.Add(item);
-            }
-
-            // 무작위 선택
-            _itemPool = candidates.OrderBy(x => UnityEngine.Random.value).Take(quantity).ToList();
-
-            return _itemPool;
+            return result;
         }
 
 
