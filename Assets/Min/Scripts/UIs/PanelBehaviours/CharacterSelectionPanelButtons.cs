@@ -5,12 +5,14 @@ using UnityEngine;
 using ProjectVS.Utils.UIManager;
 using ProjectVS.Manager;
 using ProjectVS.Scene;
-
+using ControlFilePanelButtonsClass = ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons.ControlFilePanelButtons;
 
 namespace ProjectVS.UIs.PanelBehaviours.CharacterSelectionPanelButtons
 {
     public class CharacterSelectionPanelButtons : MonoBehaviour
     {
+        [SerializeField] private ControlFilePanelButtonsClass _controlFilePanel;
+
         public void OnClickESCButton()
         {
             UIManager.Instance.CloseTopPanel();
@@ -18,6 +20,25 @@ namespace ProjectVS.UIs.PanelBehaviours.CharacterSelectionPanelButtons
 
         public void OnClickSelectButton()
         {
+            switch (_controlFilePanel.CurrentFileIndex)
+            {
+                case 1:
+                    PlayerDataManager.Instance.TestCharacterClass = CharacterClass.Sword;
+                    PlayerDataManager.ForceInstance.SavePlayerData(_controlFilePanel.CurrentFileIndex);
+                    break;
+                case 2:
+                    PlayerDataManager.Instance.TestCharacterClass = CharacterClass.Axe;
+                    PlayerDataManager.ForceInstance.SavePlayerData(_controlFilePanel.CurrentFileIndex);
+                    break;
+                case 3:
+                    PlayerDataManager.Instance.TestCharacterClass = CharacterClass.Magic;
+                    PlayerDataManager.ForceInstance.SavePlayerData(_controlFilePanel.CurrentFileIndex);
+                    break;
+                default:
+                    Debug.LogWarning($"[CharacterSelectionPanelButtons] 유효하지 않은 파일 인덱스: {_controlFilePanel.CurrentFileIndex}");
+                    break;
+            }
+
             Debug.Log($"[CharacterSelectionPanelButtons] 캐릭터 선택, 인게임씬 호출");
             SceneLoader.Instance.LoadSceneAsync(SceneID.InGameScene);
         }
