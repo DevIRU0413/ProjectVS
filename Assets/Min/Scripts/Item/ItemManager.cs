@@ -127,7 +127,6 @@ namespace ProjectVS.Item.ItemManager
             int ownedCount = _inventory.GetAllItems()
                 .Count(item => item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite);
 
-            int total = 8;
             int requiredOwnedMin = 0;
 
             if (ownedCount == 8)
