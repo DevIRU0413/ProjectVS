@@ -26,7 +26,7 @@ MonoBehaviour:
   ItemSetEffect: 3
   ItemSetNum: -1
   ItemMaxLevel: 5
-  ItemCurLevel: 0
+  ItemCurLevel: 4
   ItemValue: 0
   ItemRange: -1
   ItemSize: -1

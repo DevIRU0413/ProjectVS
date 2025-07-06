@@ -26,10 +26,10 @@ MonoBehaviour:
   ItemSetEffect: -1
   ItemSetNum: -1
   ItemMaxLevel: 5
-  ItemCurLevel: 0
-  ItemValue: 0
+  ItemCurLevel: 4
+  ItemValue: 30
   ItemRange: 30
   ItemSize: 1
   ItemIcon: {fileID: 21300000, guid: 5a1b118ec2f0418469e6e1dcec8758e3, type: 3}
   ItemIconPath: Images/Sprite/Item/Lazor
-  IsComposited: 0
+  IsComposited: 1

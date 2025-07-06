@@ -26,8 +26,8 @@ MonoBehaviour:
   ItemSetEffect: 0
   ItemSetNum: 4
   ItemMaxLevel: 5
-  ItemCurLevel: 0
-  ItemValue: 0
+  ItemCurLevel: 5
+  ItemValue: 30
   ItemRange: -1
   ItemSize: -1
   ItemIcon: {fileID: 21300000, guid: 34d81d16b3f68cc4784003768cca337d, type: 3}
