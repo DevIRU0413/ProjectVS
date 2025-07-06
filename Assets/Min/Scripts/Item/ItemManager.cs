@@ -11,6 +11,7 @@ using ProjectVS.Util;
 using ProjectVS.Interface;
 using System;
 using UnityEngine.InputSystem;
+using InventoryUIClass = ProjectVS.UIs.Item.InventoryUI.InventoryUI;
 
 
 
@@ -23,6 +24,8 @@ namespace ProjectVS.Item.ItemManager
     // TODO: 역할 분리 가능할 듯
     public class ItemManager : SimpleSingleton<ItemManager>, IManager
     {
+        [SerializeField] private InventoryUIClass _inventoryUI;
+
         private List<ItemData> _itemPool = new();
 
         private ItemCombinator _itemCombinator;
@@ -60,6 +63,8 @@ namespace ProjectVS.Item.ItemManager
         {
             if (_objList.Count > 0)
                 DisplayShopItem();
+
+            TestInitUniqueItem();
         }
 
 
@@ -123,18 +128,33 @@ namespace ProjectVS.Item.ItemManager
             List<ItemData> allItemPool = ItemDatabase.Instance.GetAllItems();
             List<ItemData> result = new();
 
+            //CharacterClass currentClass = PlayerDataManager.Instance.Stats.CharacterClass;
+
+            CharacterClass currentClass = CharacterClass.Sword;
+            List<int> allowedUniqueIDs = new();
+            switch (currentClass)
+            {
+                case CharacterClass.Sword:
+                    allowedUniqueIDs.Add(10001);
+                    break;
+                case CharacterClass.Axe:
+                    allowedUniqueIDs.Add(10002);
+                    break;
+                case CharacterClass.Magic:
+                    allowedUniqueIDs.Add(10003);
+                    break;
+            }
+
             // 1. 인벤토리에 있는 Composite, Sub 아이템 개수
             int ownedCount = _inventory.GetAllItems()
                 .Count(item => item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite);
 
-            int requiredOwnedMin = 0;
+            Debug.Log($"[ItemManager] ownedCount: {ownedCount}");
 
-            if (ownedCount == 8)
-                requiredOwnedMin = quantity;
-            else if (ownedCount == 7)
-                requiredOwnedMin = 2;
-            else if (ownedCount == 6)
-                requiredOwnedMin = 1;
+            int requiredOwnedMin = 0;
+            if (ownedCount == 8) requiredOwnedMin = quantity;
+            else if (ownedCount == 7) requiredOwnedMin = 2;
+            else if (ownedCount == 6) requiredOwnedMin = 1;
 
             // 2. 우선 인벤토리에 있고, 아직 최대 레벨이 아닌 아이템 수집
             List<ItemData> fromInventory = _inventory.GetAllItems()
@@ -152,13 +172,17 @@ namespace ProjectVS.Item.ItemManager
 
             result.AddRange(fromInventory);
 
+            HashSet<int> fromInventoryIds = fromInventory.Select(i => i.ItemID).ToHashSet();
+
             // 3. 후보군에서 남은 슬롯 채우기
             List<ItemData> candidates = allItemPool
                 .Where(item =>
-                    !item.IsComposited &&
                     (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive) &&
-                    (item.ItemRank != ItemRank.Composite || _inventory.HasItem(item.ItemID)))
-                .Except(fromInventory)
+                    item.ItemRank != ItemRank.Composite &&
+                    !fromInventoryIds.Contains(item.ItemID) &&
+                    !item.IsComposited &&
+                    (item.ItemRank != ItemRank.Unique || allowedUniqueIDs.Contains(item.ItemID))
+                )
                 .OrderBy(_ => UnityEngine.Random.value)
                 .Take(quantity - result.Count)
                 .ToList();
@@ -184,30 +208,28 @@ namespace ProjectVS.Item.ItemManager
             else if (ownedCount == 5) requiredOwnedMin = 2;
             else if (ownedCount == 4) requiredOwnedMin = 1;
 
-                // 1. 인벤토리에 있고 최대 레벨 미만인 아이템
-                List<ItemData> fromInventory = _inventory.GetAllItems()
-                    .Where(item =>
-                        (item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite) &&
-                        item.ItemCurLevel < item.ItemMaxLevel &&
-                        !item.IsComposited &&
-                        (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive))
-                    .ToList();
-
-            fromInventory = fromInventory
+            // 1. 인벤토리에 있고 최대 레벨 미만이며 Composite가 아닌 아이템만 수집
+            List<ItemData> fromInventory = _inventory.GetAllItems()
+                .Where(item =>
+                    item.ItemRank == ItemRank.Sub && // Composite 제외
+                    item.ItemCurLevel < item.ItemMaxLevel &&
+                    !item.IsComposited &&
+                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive))
                 .OrderBy(_ => UnityEngine.Random.value)
                 .Take(requiredOwnedMin)
                 .ToList();
 
             result.AddRange(fromInventory);
 
-            // 2. 후보군에서 나머지 채우기
+            HashSet<int> fromInventoryIds = fromInventory.Select(i => i.ItemID).ToHashSet();
+
+            // 2. 전체 풀에서 후보 채우기 (Composite은 제외)
             List<ItemData> candidates = allItemPool
                 .Where(item =>
-                    item.ItemRank != ItemRank.Unique &&
+                    item.ItemRank == ItemRank.Sub &&
                     !item.IsComposited &&
-                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive) &&
-                    (item.ItemRank != ItemRank.Composite || _inventory.HasItem(item.ItemID)))
-                .Except(fromInventory)
+                    !fromInventoryIds.Contains(item.ItemID) &&
+                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive))
                 .OrderBy(_ => UnityEngine.Random.value)
                 .Take(quantity - result.Count)
                 .ToList();
@@ -261,14 +283,36 @@ namespace ProjectVS.Item.ItemManager
         private void TestInitInventory()
         {
             _inventory = new ItemInventory();
+        }
 
-            List<ItemData> items = ItemDatabase.Instance.GetAllItems();
+        private void TestInitUniqueItem()
+        {
+            // 플레이어의 현재 클래스에 따라 초기 유니크 아이템 부여
+            //CharacterClass currentClass = PlayerDataManager.Instance.Stats.CharacterClass;
 
-            foreach (var item in items)
+            CharacterClass currentClass = CharacterClass.Sword;
+
+            int itemID = currentClass switch
             {
-                if (item.ItemRank == ItemRank.Composite) continue;
-                _inventory.AddItem(item);
+                CharacterClass.Sword => 10001,
+                CharacterClass.Axe => 10002,
+                CharacterClass.Magic => 10003,
+                _ => 0
+            };
+
+            Debug.Log($"CharacterClass는 {currentClass}");
+
+            if (itemID != 0)
+            {
+                ItemData data = ItemDatabase.Instance.GetItem(itemID);
+                data.ItemCurLevel = 1;          // 초기 레벨 설정
+
+                _inventory.AddItem(data);
             }
+
+            TestLookInventory();
+
+            _inventoryUI.RenewUISlots();
         }
 
         [ContextMenu("Test Look Inv")]
