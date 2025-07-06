@@ -10,8 +10,17 @@ namespace ProjectVS.UIs.Item.ItemSlotUI
     public class ItemSlotUI : MonoBehaviour
     {
         [SerializeField] private Image _icon;
+        [SerializeField] private Sprite _nullSprite;
 
-        
 
+        public void SetIcon(Sprite icon)
+        {
+            _icon.sprite = icon;
+        }
+
+        public void RemoveIcon()
+        {
+            _icon.sprite = _nullSprite;
+        }
     }
 }
