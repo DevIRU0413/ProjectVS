@@ -5,6 +5,8 @@ using ProjectVS.Manager;
 using ProjectVS.Unit;
 using ProjectVS.Util;
 
+using Scripts.Managers;
+
 using UnityEngine;
 
 // 공격 할 수 있음.

@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using ProjectVS;
+using ProjectVS.Interface;
 using ProjectVS.Util;
 
 using UnityEngine;
 
-namespace ProjectVS.Manager
+namespace Scripts.Managers
 {
-    public class AudioManager : SimpleSingleton<AudioManager> //, IManager
+    public class AudioManager : SimpleSingleton<AudioManager>, IManager
     {
         #region Constants
         private const string BGM_GAMEOBJECT_NAME = "BGM_Audio";
@@ -29,18 +31,12 @@ namespace ProjectVS.Manager
         #endregion
 
         #region PublicVariables
-        // public int Priority => (int)ManagerPriority.AudioManager;
+        public int Priority => (int)ManagerPriority.AudioManager;
         public bool IsDontDestroy => IsDontDestroyOnLoad;
 
         #endregion
 
         #region PublicMethod
-        protected override void Awake()
-        {
-            base.Awake();
-            Initialize();
-        }
-
         public void Initialize()
         {
             m_audioManager = gameObject;

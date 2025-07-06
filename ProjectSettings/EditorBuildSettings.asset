@@ -5,14 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PrologScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/Scenes/MainMenuScene.unity
-    guid: c40e9d8a800b74648be94972715dface
   - enabled: 1
-    path: Assets/JDW/Assets/Scenes/ShopScene 1.unity
-    guid: 94f6fce16297b51499867d08ffecf9dc
+    path: Assets/Min/Scenes/StartSpriteScene.unity
+    guid: 82fc3c324b7f68349ba8cbb547b77d77
+  - enabled: 1
+    path: Assets/Min/Scenes/OnWorkScene/MainMenuScene.unity
+    guid: b52b532af6163cc4fb5c4ca6a4b5e8ec
+  - enabled: 1
+    path: Assets/Scenes/InGameScene.unity
+    guid: ebae7c897c3ead4418a17c43e1236e34
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: a2b7b09595f0a3949a4bda785064f5f5, type: 3}

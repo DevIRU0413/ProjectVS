@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using ProjectVS.Manager;
+﻿using Scripts.Managers;
 
 using UnityEngine;
 using UnityEngine.UI;

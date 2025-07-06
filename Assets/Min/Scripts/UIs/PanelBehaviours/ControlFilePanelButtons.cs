@@ -93,22 +93,20 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
 
         public void OnClickFile1Button()
         {
-            CheckWhatButtonToggled();
             _currentFileIndex = 1;
+            CheckWhatButtonToggled();
         }
 
         public void OnClickFile2Button()
         {
-            CheckWhatButtonToggled();
-
             _currentFileIndex = 2;
+            CheckWhatButtonToggled();
         }
 
         public void OnClickFile3Button()
         {
-            CheckWhatButtonToggled();
-
             _currentFileIndex = 3;
+            CheckWhatButtonToggled();
         }
 
         public void OnClickESCButton()
@@ -162,7 +160,6 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
                 Debug.Log($"[ControlFilePanelButtons] _isDeleteButtonToggled");
 
                 // 삭제 파일 - 인덱스로
-                PlayerDataManager.ForceInstance.DeletePlayerData(_currentFileIndex);
                 Debug.Log("삭제");
             }
         }
@@ -172,6 +169,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
             //if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
 
             UIManager.Instance.CloseTopPanel();
+            PlayerDataManager.ForceInstance.DeletePlayerData(_currentFileIndex);
 
             _currentFileIndex = -1;
         }

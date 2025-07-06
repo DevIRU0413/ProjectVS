@@ -5,6 +5,7 @@ using ProjectVS.Unit;
 using ProjectVS.Manager;
 using ProjectVS.Util;
 using ProjectVS;
+using Scripts.Managers;
 
 public class ScannerHitable : MonoBehaviour
 {

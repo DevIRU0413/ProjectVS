@@ -13,6 +13,7 @@ namespace ProjectVS.CutSceneEffectors.StartSpriteEffector
         [SerializeField, Range(0f, 1f)] private float _frameRate = 0.02f;
         [SerializeField, Range(0, 255)] private int _fadeStep = 5;
 
+
         private void OnEnable()
         {
             StartCoroutine(IE_FadeInAndOut());
