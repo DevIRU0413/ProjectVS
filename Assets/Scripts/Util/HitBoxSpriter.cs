@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
 
@@ -10,14 +12,18 @@ public class HitBoxSpriter : MonoBehaviour
     public  bool forward = true;
 
     public Color useColor;
-    public SpriteRenderer spriteRenderer;
+    public List<SpriteRenderer> spriteRenderers = new();
 
     private Coroutine _coroutine;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = useColor;
+        if (spriteRenderers.Count == 0)
+            spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+
+        if (spriteRenderers.Count == 0)
+            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                spriteRenderer.color = useColor;
     }
 
     private void OnEnable()
@@ -47,12 +53,15 @@ public class HitBoxSpriter : MonoBehaviour
             float alpha = forward ? Mathf.Lerp(MinAlpha, MaxAlpha, t) : Mathf.Lerp(MaxAlpha, MinAlpha, t);
 
             color.a = alpha;
-            spriteRenderer.color = color;
+
+            if (spriteRenderers.Count != 0)
+                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                    spriteRenderer.color = color;
 
             if (t >= 1f)
             {
                 timer = 0f;
-                forward = !forward; 
+                forward = !forward;
             }
         }
     }

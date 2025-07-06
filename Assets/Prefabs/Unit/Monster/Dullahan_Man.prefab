@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2745246630088361165}
   - component: {fileID: 911103879104490596}
   - component: {fileID: 8461550512471220752}
+  - component: {fileID: 8631934381781307602}
   m_Layer: 0
   m_Name: FinshHitBox
   m_TagString: Untagged
@@ -99,12 +100,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 5
   offset: {x: 0, y: 0}
-  buffer: []
   targetMask:
     serializedVersion: 2
     m_Bits: 8
   showGizimo: 1
-  gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
+  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &8631934381781307602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349870709840861804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b9ac8f019196ce4d97a7d08fafdd8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinAlpha: 0
+  MaxAlpha: 0.5
+  changeTime: 1
+  forward: 1
+  useColor: {r: 1, g: 0, b: 0, a: 1}
+  spriteRenderer: {fileID: 911103879104490596}
 --- !u!1 &680770181278819381
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +218,7 @@ GameObject:
   - component: {fileID: 926361722575912747}
   - component: {fileID: 1644611022454722474}
   - component: {fileID: 4601755659432773139}
+  - component: {fileID: 9211170152203343964}
   m_Layer: 0
   m_Name: NormalHitBox
   m_TagString: Untagged
@@ -288,12 +307,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 3
   offset: {x: 0, y: 0}
-  buffer: []
   targetMask:
     serializedVersion: 2
     m_Bits: 8
   showGizimo: 1
-  gizmoColor: {r: 0, g: 1, b: 0, a: 0.3}
+  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &9211170152203343964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3266399495064390670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b9ac8f019196ce4d97a7d08fafdd8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinAlpha: 0
+  MaxAlpha: 0.5
+  changeTime: 1
+  forward: 1
+  useColor: {r: 1, g: 0, b: 0, a: 1}
+  spriteRenderer: {fileID: 1644611022454722474}
 --- !u!1001 &2294859026238652462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -472,7 +508,7 @@ MonoBehaviour:
   patternCastClips: {fileID: 7400000, guid: 249183299ec124e408e7ed72f19d6433, type: 2}
   patternActionClips: {fileID: 7400000, guid: eb6b90eec972fa343b0aa253c3893243, type: 2}
   patternRecoveryClips: {fileID: 7400000, guid: 249183299ec124e408e7ed72f19d6433, type: 2}
-  <castDelay>k__BackingField: 0
+  <castDelay>k__BackingField: 3
   <recoveryTime>k__BackingField: 1
   _cooldown: 5
   _slashCount: 3
@@ -482,12 +518,10 @@ MonoBehaviour:
   - {fileID: 7400000, guid: eb6b90eec972fa343b0aa253c3893243, type: 2}
   _normalSlashInterval: 0.2
   _finishSlashActionDelay: 1
-  normalSlashHitBox: {fileID: 0}
-  finishSlashHitBox: {fileID: 0}
-  normalScanRadius: 3
-  finishScanRadius: 5
-  attackRange: 6
-  targetLayer:
+  _normalHitScanner: {fileID: 4601755659432773139}
+  _finishHitScanner: {fileID: 8461550512471220752}
+  _attackRange: 4
+  _targetLayer:
     serializedVersion: 2
     m_Bits: 8
   _groggyCountLine: 5

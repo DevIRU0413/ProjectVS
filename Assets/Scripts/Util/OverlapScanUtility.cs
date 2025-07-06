@@ -13,17 +13,16 @@ namespace ProjectVS.Util
             return count;
         }
 
-        public static int BoxScan(Vector2 center, Vector2 offset, Vector2 size, float angle, Collider2D[] buffer, LayerMask targetMask)
+        public static int BoxScan(Vector2 center, Vector2 offset, Vector2 size, float angle, LayerMask targetMask, Collider2D[] buffer)
         {
             int count = Physics2D.OverlapBoxNonAlloc(center + offset, size, angle, buffer, targetMask);
             return count;
         }
 
-        public static List<GameObject> CircleScan(float radius, Vector2 center, LayerMask mask, Collider2D[] buffer, Func<GameObject, bool> filter = null)
+        public static List<GameObject> CircleScan(Vector2 center, float radius, LayerMask mask, Collider2D[] buffer, Func<GameObject, bool> filter = null)
         {
             var results = new List<GameObject>();
-
-            int count = Physics2D.OverlapCircleNonAlloc(center, radius, buffer, mask);
+            int count = CircleScan(center, radius, mask, buffer);
 
             for (int i = 0; i < count; i++)
             {
@@ -35,11 +34,11 @@ namespace ProjectVS.Util
             return results;
         }
 
-        public static List<GameObject> BoxScan(Vector2 center, Vector2 offset, Vector2 size, float angle, Collider2D[] buffer, LayerMask targetMask, Func<GameObject, bool> filter = null)
+        public static List<GameObject> BoxScan(Vector2 center, Vector2 offset, Vector2 size, float angle, LayerMask targetMask, Collider2D[] buffer, Func<GameObject, bool> filter = null)
         {
             var results = new List<GameObject>();
+            int count = BoxScan(center, offset, size, angle, targetMask, buffer);
 
-            int count = BoxScan(center, offset, size, angle, buffer, targetMask);
             for (int i = 0; i < count; i++)
             {
                 var go = buffer[i].gameObject;
