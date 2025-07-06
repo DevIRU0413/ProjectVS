@@ -3838,6 +3838,7 @@ GameObject:
   m_Component:
   - component: {fileID: 382827053}
   - component: {fileID: 382827054}
+  - component: {fileID: 382827055}
   m_Layer: 5
   m_Name: UniqueSlot
   m_TagString: Untagged
@@ -3875,6 +3876,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382827052}
   m_CullTransparentMesh: 1
+--- !u!114 &382827055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382827052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca80cf93e4ff2d3488b9405cf41246af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 1928395690}
+  _nullSprite: {fileID: 876044981, guid: 682f3d5bf1930f74e836242b1c3ead10, type: 3}
 --- !u!1 &399784690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4496,6 +4511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDontDestroyOnLoad: 0
+  _inventoryUI: {fileID: 798783617}
   _buttonList:
   - {fileID: 1696323426}
   - {fileID: 1281430452}
@@ -7716,8 +7732,12 @@ MonoBehaviour:
   - {fileID: 1595507253}
   - {fileID: 1860460047}
   - {fileID: 532587452}
+  _uniqueSlot: {fileID: 382827055}
   _buyObjList: []
-  _getButtonList: []
+  _getButtonList:
+  - {fileID: 1281430452}
+  - {fileID: 698978699}
+  - {fileID: 1696323426}
 --- !u!1 &802350643
 GameObject:
   m_ObjectHideFlags: 0
