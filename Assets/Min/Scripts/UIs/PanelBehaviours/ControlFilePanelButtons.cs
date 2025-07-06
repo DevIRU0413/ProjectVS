@@ -28,7 +28,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
         private bool _isDeleteButtonToggled = false;
 
         private int _currentFileIndex = -1;
-
+        public int CurrentFileIndex => _currentFileIndex;
 
         private void OnEnable()
         {
@@ -136,7 +136,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
                 //if (PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
 
                 // 새 파일 생성 - 인덱스로
-                PlayerDataManager.ForceInstance.SavePlayerData(_currentFileIndex);
+                // PlayerDataManager.ForceInstance.SavePlayerData(_currentFileIndex);
 
                 UIManager.Instance.Hide("Control File Panel");
                 UIManager.Instance.Show("Character Select Panel");

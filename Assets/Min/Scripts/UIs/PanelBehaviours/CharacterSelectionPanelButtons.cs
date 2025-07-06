@@ -5,12 +5,14 @@ using UnityEngine;
 using ProjectVS.Utils.UIManager;
 using ProjectVS.Manager;
 using ProjectVS.Scene;
-
+using ControlFilePanelButtonsClass = ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons.ControlFilePanelButtons;
 
 namespace ProjectVS.UIs.PanelBehaviours.CharacterSelectionPanelButtons
 {
     public class CharacterSelectionPanelButtons : MonoBehaviour
     {
+        [SerializeField] private ControlFilePanelButtonsClass _controlFilePanel;
+
         public void OnClickESCButton()
         {
             UIManager.Instance.CloseTopPanel();
