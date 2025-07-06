@@ -13,6 +13,11 @@ namespace ProjectVS.Unit.Player
 
         public GameObject CurrentPlayer { get; private set; }
 
+        protected override void Awake()
+        {
+            CurrentPlayer = GameObject.FindGameObjectWithTag("Player");
+        }
+
         public GameObject SpawnPlayer(Vector3 position, CharacterClass classType, PlayerStats stats)
         {
             if (CurrentPlayer != null)

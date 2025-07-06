@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 
+using ProjectVS.Interface;
 using ProjectVS.Unit.Monster.Phase;
 using ProjectVS.Unit.Player;
 
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace ProjectVS.Unit.Monster.Pattern
 {
-    public class MonsterDashPattern : MonsterPattern
+    public class MonsterDashPattern : MonsterPattern, IGroggyTrackable
     {
         [Header("Dash Info")]
         [SerializeField, Min(0.0f)] private float _dashSpeed = 20f;           // 대쉬 속도
@@ -17,6 +18,13 @@ namespace ProjectVS.Unit.Monster.Pattern
         [SerializeField] private AudioClip _dashImpactClip;
 
         protected GameObject _target;
+
+        [Header("IGroggyTrackable")]
+        [SerializeField, Min(0)] private int _groggyCountLine = 0;
+
+        public int GroggyThreshold => _groggyCountLine;
+
+        public bool IsFaild => true;
 
         public override void Init(MonsterPhaseController phaseController)
         {
@@ -33,8 +41,8 @@ namespace ProjectVS.Unit.Monster.Pattern
 
         public override void Enter()
         {
-            phaseController.OnwerController.ChangeState(MonsterStateType.Idle, true);
-            phaseController.OnwerController.LockChangeState();
+            phaseController.OwnerController.ChangeState(MonsterStateType.Idle, true);
+            phaseController.OwnerController.DelegateMovementAuthority();
             base.Enter();
         }
 
@@ -42,10 +50,10 @@ namespace ProjectVS.Unit.Monster.Pattern
         {
             if (castDelay > 0f)
             {
-                phaseController.OnwerController.Anim.PlayClip(patternCastClips, true);
+                phaseController.OwnerController.Anim.PlayClip(patternCastClips, 1.0f, true);
                 yield return new WaitForSeconds(castDelay);
-                phaseController.OnwerController.Anim.Stop();
-                phaseController.OnwerController.Anim.PlayClip(patternActionClips, true);
+                phaseController.OwnerController.Anim.Stop();
+                phaseController.OwnerController.Anim.PlayClip(patternActionClips, 1.0f, true);
             }
 
             if (_target != null)
@@ -77,13 +85,19 @@ namespace ProjectVS.Unit.Monster.Pattern
 
             if (recoveryTime > 0f)
             {
-                phaseController.OnwerController.Anim.Stop();
-                phaseController.OnwerController.Anim.PlayClip(patternRecoveryClips, true);
+                phaseController.OwnerController.Anim.Stop();
+                phaseController.OwnerController.Anim.PlayClip(patternRecoveryClips, 1.0f, true);
                 yield return new WaitForSeconds(recoveryTime);
-                phaseController.OnwerController.Anim.Stop();
+                phaseController.OwnerController.Anim.Stop();
             }
 
             PatternState = MonsterPatternState.Done;
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            phaseController.OwnerController.RevokeMovementAuthority();
         }
     }
 }

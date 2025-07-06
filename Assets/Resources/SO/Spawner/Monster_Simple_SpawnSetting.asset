@@ -30,8 +30,8 @@ MonoBehaviour:
     Interval: 240
     AutoStart: 1
     StopAfterTime: 900
-    timer: 21.365818
-    activeTime: 21.365818
+    timer: 18.156681
+    activeTime: 18.156681
   - GroupName: Circle
     SpawnGroupType: 3
     SpawnableObjects:
@@ -40,18 +40,27 @@ MonoBehaviour:
     Interval: 180
     AutoStart: 1
     StopAfterTime: 900
-    timer: 21.365818
-    activeTime: 21.365818
+    timer: 18.156681
+    activeTime: 18.156681
   - GroupName: Boss
-    SpawnGroupType: 1
-    SpawnableObjects:
-    - {fileID: 2503613428698559689, guid: 0e5e4f5f22c040a45b7507964ae54beb, type: 3}
+    SpawnGroupType: 0
+    SpawnableObjects: []
     GroupUnitSpawnCount: 1
     Interval: 450
     AutoStart: 1
     StopAfterTime: 900
-    timer: 21.365818
-    activeTime: 21.365818
+    timer: 0
+    activeTime: 0
+  - GroupName: Boss1
+    SpawnGroupType: 1
+    SpawnableObjects:
+    - {fileID: 6051400608539244084, guid: 73badf2e9ba26624f961670670812f54, type: 3}
+    GroupUnitSpawnCount: 1
+    Interval: 450
+    AutoStart: 1
+    StopAfterTime: 900
+    timer: 18.156681
+    activeTime: 18.156681
   radius: 16
   isReverseLine: 1
   offset: 2

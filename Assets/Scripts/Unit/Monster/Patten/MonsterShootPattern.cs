@@ -43,7 +43,8 @@ namespace ProjectVS.Unit.Monster.Pattern
 
         public override void Enter()
         {
-            phaseController.OnwerController.ChangeState(MonsterStateType.Idle, true);
+            phaseController.OwnerController.ChangeState(MonsterStateType.Idle, true);
+            phaseController.OwnerController.DelegateMovementAuthority();
             base.Enter();
         }
 
@@ -72,6 +73,12 @@ namespace ProjectVS.Unit.Monster.Pattern
                 yield return new WaitForSeconds(recoveryTime);
 
             PatternState = MonsterPatternState.Done;
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            phaseController.OwnerController.RevokeMovementAuthority();
         }
 
         private IEnumerator FireMultiPattern(
@@ -123,8 +130,6 @@ namespace ProjectVS.Unit.Monster.Pattern
 
         private void OnDrawGizmos()
         {
-            if (!Application.isPlaying) return;
-
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, _shootableRange);
         }

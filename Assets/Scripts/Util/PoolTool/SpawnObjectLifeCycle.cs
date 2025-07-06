@@ -9,6 +9,7 @@ namespace ProjectVS.Util
     {
         [SerializeField, Min(0f)]
         private float _lifeTime = 3f;
+        public bool _onceFirst = false;
 
         private Coroutine _lifeCoroutine;
 
@@ -16,8 +17,11 @@ namespace ProjectVS.Util
 
         private void Awake()
         {
+            // 플매니저가 업는지
+            // 플매니저에 등록되었는지 여부
+            // 플링 가능 한 옵젝 인지
             if (PoolManager.Instance == null
-                || PoolManager.Instance.HasPool(this.gameObject.name)
+                || !PoolManager.Instance.HasPool(this.gameObject.name)
                 || this.GetComponentInParent<IPoolable>() == null)
             {
                 return;
@@ -37,19 +41,29 @@ namespace ProjectVS.Util
 
         private void OnDisable()
         {
-            Destroy(this);
+            if (_onceFirst)
+            {
+                if (_lifeCoroutine != null)
+                    StopCoroutine(_lifeCoroutine);
+                Destroy(this);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_lifeCoroutine != null)
+                StopCoroutine(_lifeCoroutine);
         }
 
         private IEnumerator LifeTimer()
         {
             yield return new WaitForSeconds(_lifeTime);
 
-            if(_isPoolableObject)
+            if (_isPoolableObject)
                 PoolManager.Instance.Despawn(gameObject);
             else
                 Destroy(gameObject);
         }
-
         public void SetLifeTime(float time)
         {
             _lifeTime = time;

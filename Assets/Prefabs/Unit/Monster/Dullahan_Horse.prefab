@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 22100000, guid: a2bcd33eacbbe1a40b8a7f50f33bc52c, type: 2}
     - target: {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_Name
-      value: Dullahan
+      value: Dullahan_Horse
       objectReference: {fileID: 0}
     - target: {fileID: 5120001472748250191, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_LocalScale.x
@@ -245,9 +245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a555b3a6f3078f341bcab62947a79e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patternCastClips: {fileID: 7400000, guid: eb6b90eec972fa343b0aa253c3893243, type: 2}
-  patternActionClips: {fileID: 7400000, guid: 4bd05ae8431f6014a8a7615270e358c5, type: 2}
-  patternRecoveryClips: {fileID: 7400000, guid: eb6b90eec972fa343b0aa253c3893243, type: 2}
+  patternCastClips: {fileID: 7400000, guid: b0f893ad16a195c4ca62573c83a742b1, type: 2}
+  patternActionClips: {fileID: 7400000, guid: 061d094e7e426f5498f523fb41e241df, type: 2}
+  patternRecoveryClips: {fileID: 7400000, guid: b0f893ad16a195c4ca62573c83a742b1, type: 2}
   <castDelay>k__BackingField: 2
   <recoveryTime>k__BackingField: 3
   _cooldown: 5

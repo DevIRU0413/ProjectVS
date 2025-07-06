@@ -27,7 +27,7 @@ namespace ProjectVS.Unit.Monster
         }
 
 
-        public void PlayClip(AnimationClip clip, bool loop = false)
+        public void PlayClip(AnimationClip clip, float animSpeed = 1.0f, bool loop = false)
         {
             if (clip == null || Animator == null) return;
             if (_isPlayingOverride) return;
@@ -47,7 +47,7 @@ namespace ProjectVS.Unit.Monster
             _playableClip.SetApplyFootIK(false);
             _playableClip.SetApplyPlayableIK(false);
             _playableClip.SetTime(0f);
-            _playableClip.SetSpeed(1f);
+            _playableClip.SetSpeed(animSpeed);
 
             var output = AnimationPlayableOutput.Create(_graph, "Animation", Animator);
             output.SetSourcePlayable(_playableClip);

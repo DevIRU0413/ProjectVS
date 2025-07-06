@@ -38,8 +38,8 @@ namespace ProjectVS.Unit.Monster.Pattern
         public virtual bool Condition()
         {
             return phaseController != null
-                && !phaseController.OnwerController.IsStateLock
-                && !phaseController.OnwerController.IsDeath
+                && !phaseController.OwnerController.IsStateLock
+                && !phaseController.OwnerController.IsDeath
                 && currentCooldown <= 0;
         }
 
@@ -58,7 +58,7 @@ namespace ProjectVS.Unit.Monster.Pattern
 
         public virtual void Enter()
         {
-            phaseController.OnwerController.LockChangeState();
+            phaseController.OwnerController.LockChangeState();
         }
 
         public void Action()
@@ -69,7 +69,7 @@ namespace ProjectVS.Unit.Monster.Pattern
 
         public virtual void Exit()
         {
-            phaseController.OnwerController.UnLockChangeState();
+            phaseController.OwnerController.UnLockChangeState();
             currentCooldown = _cooldown;
             PatternState = MonsterPatternState.None;
         }
