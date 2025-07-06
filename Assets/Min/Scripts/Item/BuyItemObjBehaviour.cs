@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using ProjectVS.Manager;
@@ -28,6 +29,8 @@ namespace ProjectVS.Item.BuyItemObjBehaviour
 
         private bool _isPurchased = false;
         private bool _isSoldOut = false;
+
+        public event Action OnBuyItem;
 
         public void Init(ItemData data, ItemCombinator combinator, ItemInventory inventory)
         {
@@ -113,7 +116,7 @@ namespace ProjectVS.Item.BuyItemObjBehaviour
             // 후보가 하나라도 있으면 랜덤으로 선택해 조합
             if (validCombinations.Count > 0)
             {
-                var selected = validCombinations[Random.Range(0, validCombinations.Count)];
+                var selected = validCombinations[UnityEngine.Random.Range(0, validCombinations.Count)];
                 ItemData other = selected.other;
                 ItemData result = selected.result;
 
