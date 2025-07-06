@@ -81,8 +81,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e65d3c41b504b44ba1fd8291f2639c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CastDelay>k__BackingField: 2
-  <RecoveryTime>k__BackingField: 2
+  patternCastClips: {fileID: 0}
+  patternActionClips: {fileID: 0}
+  patternRecoveryClips: {fileID: 0}
+  <castDelay>k__BackingField: 0
+  <recoveryTime>k__BackingField: 0
   _cooldown: 10
   _shootableRange: 20
   _projectilePrefab: {fileID: 3942935392967977735, guid: 4d6f7cb295e82004d9cd3d31fd204f89, type: 3}
