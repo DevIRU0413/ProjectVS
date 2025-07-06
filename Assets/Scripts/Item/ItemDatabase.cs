@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using ProjectVS.Data;
+using ProjectVS.Manager;
 using ProjectVS.Util;
 
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace ProjectVS.Item
         protected override void Awake()
         {
             InitDatabase();
+            RemoveCompositedItem();
         }
 
         // 초기 등록용
@@ -26,6 +28,18 @@ namespace ProjectVS.Item
                     _itemDict.Add(item.ItemID, item);
                 else
                     Debug.LogWarning($"[ItemDatabase] 중복된 아이템 ID: {item.ItemID}");
+            }
+        }
+
+        /// <summary>
+        /// 이미 조합된 아이템 제거용
+        /// </summary>
+        private void RemoveCompositedItem()
+        {
+            foreach (var item in PlayerDataManager.Instance.InventoryItems)
+            {
+                if (item.IsComposited)
+                    RemoveDict(item.ItemID);
             }
         }
 

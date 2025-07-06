@@ -36,8 +36,8 @@ namespace ProjectVS.UIs.PanelBehaviours.CharacterIndicatorPausePanelButtons
 
         public void OnClickRecipeButton()
         {
-            //UIManager.Instance.Hide("Pause Buttons Panel");
-            //UIManager.Instance.Show("Recipe Panel");
+            UIManager.Instance.Hide("Pause Buttons Panel");
+            UIManager.Instance.Show("Recipe Panel");
 
             Debug.Log($"[PausePanelButtons] Recipe Button 패널 호출");
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using ProjectVS.Item.SerializableItemData;
 using ProjectVS.Unit.Player;
 
 namespace ProjectVS.Data
@@ -10,7 +11,7 @@ namespace ProjectVS.Data
     {
         public PlayerStats          Stats;                    // 플레이어 스탯 및 레벨/경험치/현재 HP 등 (레벨 비례 스탯 상승 포함)
 
-        public List<Item.ItemData>  InventoryItems;           // 플레이어가 소지 중인 아이템 목록
+        public List<SerializableItemData>  InventoryItems;    // 플레이어가 소지 중인 아이템 목록
 
         public int                  CurrentStage;             // 현재 진행 중인 스테이지 층 수 (몬스터 스탯 증가에 사용됨)
         public int                  MonstersDefeated;         // 누적 몬스터 처치 수 (도전 과제, 보상 등 트리거에 사용 가능)

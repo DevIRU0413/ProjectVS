@@ -13,6 +13,8 @@ namespace ProjectVS.Item
         [field: SerializeField] public ItemRank ItemRank;
         [field: SerializeField] public string ItemName;
         [field: SerializeField] public ItemType ItemType;
+        [field: SerializeField] public int Price;
+        [field: SerializeField] public string Description;
 
         [Header("공격 속도 및 효과")]
         [field: SerializeField] public float ItemAtkSpeed;
@@ -38,6 +40,7 @@ namespace ProjectVS.Item
 
         [Header("아이콘")]
         [field: SerializeField] public Sprite ItemIcon;
+        [field: SerializeField] public string ItemIconPath;
 
         /// <summary>
         /// 조합 아이템 여부 확인

@@ -17,7 +17,7 @@ namespace ProjectVS.Item
 
             int rowCount = table.Table.GetLength(0);
 
-            for (int r = 3; r < rowCount; r++)
+            for (int r = 4; r < rowCount; r++)
             {
                 ItemData data = new()
                 {
@@ -31,13 +31,13 @@ namespace ProjectVS.Item
                     ItemAddID1 = CsvParseUtils.TryParseInt(table.GetData(r, 8)),
                     ItemAddID2 = CsvParseUtils.TryParseInt(table.GetData(r, 9)),
                     ItemSetEffect = (ItemSetEffect)CsvParseUtils.TryParseInt(table.GetData(r, 10)),
-                    //SetEffectRequiredCount = CsvParseUtils.TryParseInt(table.GetData(r, 11)),
+                    ItemSetNum = CsvParseUtils.TryParseInt(table.GetData(r, 11)),
                     ItemMaxLevel = CsvParseUtils.TryParseInt(table.GetData(r, 12)),
-                    //Price = CsvParseUtils.TryParseInt(table.GetData(r, 13)),
+                    Price = CsvParseUtils.TryParseInt(table.GetData(r, 13)),
                     ItemRange = CsvParseUtils.TryParseInt(table.GetData(r, 14)),
                     ItemSize = CsvParseUtils.TryParseFloat(table.GetData(r, 15)),
-                    //Description = CsvParseUtils.TryParseString(table.GetData(r, 16))
-                    // ItemIconPath = CsvParseUtils.TryParseString(table.GetData(r, 17)) // TODO: 아이템 아이콘 경로(Resource폴더에 넣을) 추가해야 됨
+                    ItemIconPath = CsvParseUtils.TryParseString(table.GetData(r, 16)),
+                    Description = CsvParseUtils.TryParseString(table.GetData(r, 17))
                 };
                 list.Add(data);
             }

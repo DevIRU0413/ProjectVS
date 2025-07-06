@@ -18,16 +18,17 @@ namespace ProjectVS.Item.SetItemDataParser
 
             int rowCount = table.Table.GetLength(0);
 
-            for (int r = 3; r < rowCount; r++)
+            for (int r = 4; r < rowCount; r++)
             {
                 SetItemDataClass data = new()
                 {
-                    ID = CsvParseUtils.TryParseInt(table.GetData(r, 0)),
-                    Name = CsvParseUtils.TryParseString(table.GetData(r, 1)),
-                    SetEffect = CsvParseUtils.TryParseInt(table.GetData(r, 2)),
-                    SetEffectValue = CsvParseUtils.TryParseInt(table.GetData(r, 3)),
-                    //BaseItemID
-                    IllustPath = CsvParseUtils.TryParseString(table.GetData(r, 5))
+                    ID = CsvParseUtils.TryParseInt(table.GetData(r, 1)),
+                    SetName = CsvParseUtils.TryParseString(table.GetData(r, 2)),
+                    SetEffect = CsvParseUtils.TryParseInt(table.GetData(r, 3)),
+                    SetValue = CsvParseUtils.TryParseFloatArray(table.GetData(r, 4)),
+                    SetItemID = CsvParseUtils.TryParseIntArray(table.GetData(r, 5)),
+                    SetItemICON = CsvParseUtils.TryParseString(table.GetData(r, 6)),
+                    SetEffectText = CsvParseUtils.TryParseString(table.GetData(r, 7))
                 };
 
                 list.Add(data);

@@ -9,34 +9,57 @@ using BuyItemObjBehaviourClass = ProjectVS.Item.BuyItemObjBehaviour.BuyItemObjBe
 using ProjectVS.Utils.UIManager;
 using ProjectVS.Util;
 using ProjectVS.Interface;
+using System;
+using UnityEngine.InputSystem;
 
 
 
 namespace ProjectVS.Item.ItemManager
 {
+    /// <summary>
+    /// 인벤토리 조작 및 인스턴스 유지 접근, 아이템 조합기 보유, UI 연결 역할 수행
+    /// </summary>
+
+    // TODO: 역할 분리 가능할 듯
     public class ItemManager : SimpleSingleton<ItemManager>, IManager
     {
         private List<ItemData> _itemPool = new();
-        //private List<ItemData> _allItemPool = new();
-
 
         private ItemCombinator _itemCombinator;
-        private ItemInventory _inventory; // 이거 누가 넘겨줘야되지?
-                                          // 본 클래스가 싱글톤으로써 인스턴스를 계속 갖고 있어줘야되나?
-                                          // 아니면 씬 넘어갈 때, PlayerData에 넘기고 다시 해당 씬에서 주고 받기?
+        private ItemInventory _inventory;
+        public ItemInventory Inventory => _inventory;
 
+        [Header("아이템 획득 및 구매 연동")]
         [SerializeField] private List<GetItemButtonBehaviourClass> _buttonList = new();
         [SerializeField] private List<BuyItemObjBehaviourClass> _objList = new();
 
         public int Priority => (int)ManagerPriority.ItemManager;
         public bool IsDontDestroy => IsDontDestroyOnLoad;
 
+        public event Action OnInventoryChanged;
+
         protected override void Awake()
         {
+            TestInitInventory(); // 테스트용 인벤토리 초기화, 추후 삭제해야 됨
+
             base.Awake();
 
             if (_itemCombinator == null)
                 _itemCombinator = new(ItemDatabase.Instance.GetAllItems());
+        }
+
+        private void Update()
+        {
+            if (Keyboard.current.uKey.wasPressedThisFrame)
+            {
+                LevelUpItem();
+            }
+        }
+
+        private void Start()
+        {
+            if (_objList.Count > 0)
+                DisplayShopItem();
         }
 
 
@@ -46,11 +69,27 @@ namespace ProjectVS.Item.ItemManager
         [ContextMenu("Test Level Up")]
         public void LevelUpItem()
         {
-            List<ItemData> levelUpPool = ReturnItem(3);
+            Debug.Log($"[ItemManager] 레벨 업 호출됨");
+
+            List<ItemData> levelUpPool = ReturnItemForLvlUp(3);
+
+            // 레벨업 할 것이 하나도 없다면
+            if (levelUpPool.Count == 0)
+            {
+                Debug.Log("[ItemManager] 레벨업 할 것이 아무것도 없어 return 합니다");
+                return;
+            }
 
             for (int i = 0; i < 3; i++)
             {
-                _buttonList[i].Init(levelUpPool[i], _itemCombinator, _inventory);
+                if (i < levelUpPool.Count)
+                {
+                    _buttonList[i].Init(levelUpPool[i], _itemCombinator, _inventory);
+                }
+                else
+                {
+                    _buttonList[i].Init(null, null, null); // 아이템이 부족한 경우 표시 
+                }
             }
 
             UIManager.Instance.Show("Level Up Item Panel");
@@ -61,54 +100,122 @@ namespace ProjectVS.Item.ItemManager
         /// </summary>
         public void DisplayShopItem()
         {
-            List<ItemData> buyPool = ReturnItem(5);
+            List<ItemData> buyPool = ReturnItemForSell(5);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
-                _objList[i].Init(buyPool[i], _itemCombinator, _inventory);
+                if (i < buyPool.Count)
+                {
+                    _objList[i].Init(buyPool[i], _itemCombinator, _inventory);
+                }
+                else
+                {
+                    _objList[i].Init(null, null, null); // 아이템이 부족한 경우 품절 표시
+                }
             }
         }
 
         /// <summary>
         /// quantity 개수 길이의 아이템 리스트 반환
         /// </summary>
-        private List<ItemData> ReturnItem(int quantity)
+        private List<ItemData> ReturnItemForLvlUp(int quantity)
         {
             List<ItemData> allItemPool = ItemDatabase.Instance.GetAllItems();
-            List<ItemData> inventory = _inventory.GetAllItems();
+            List<ItemData> result = new();
 
-            List<ItemData> candidates;
+            // 1. 인벤토리에 있는 Composite, Sub 아이템 개수
+            int ownedCount = _inventory.GetAllItems()
+                .Count(item => item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite);
 
-            // 인벤토리가 다 찼으면
-            if (inventory.Count == 8)
-            {
-                candidates = inventory.Where(item =>
-                (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
-                item.ItemType == ItemType.Passive) //&&    // 패시브 아이템인지
-                //!_inventory.최대레벨검사(item.ItemID)    // max레벨인지 검사
-                ).ToList();
-            }
-            // 인벤토리가 비어있으면 
-            else
-            {
-                // 전체 아이템에서 필터링
-                candidates = allItemPool.Where(item =>
-                (item.ItemType == ItemType.Attack ||     // 액티브 아이템인지
-                item.ItemType == ItemType.Passive) &&    // 패시브 아이템인지
-                //!_inventory.조합되어 사라진 아이템인지 &&
+            int total = 8;
+            int requiredOwnedMin = 0;
 
-                (_inventory.HasItem(item.ItemID) //|| // !item.최대레벨검사)  // 인벤토리에 있으면서 최대 레벨이 아닌지
-                )
-                &&
-                (item.ItemRank != ItemRank.Composite) // || _inventory.해금된건지 검사)
-                )
+            if (ownedCount == 8)
+                requiredOwnedMin = quantity;
+            else if (ownedCount == 7)
+                requiredOwnedMin = 2;
+            else if (ownedCount == 6)
+                requiredOwnedMin = 1;
+
+            // 2. 우선 인벤토리에 있고, 아직 최대 레벨이 아닌 아이템 수집
+            List<ItemData> fromInventory = _inventory.GetAllItems()
+                .Where(item =>
+                    (item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite) &&
+                    item.ItemCurLevel < item.ItemMaxLevel &&
+                    !item.IsComposited &&
+                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive))
                 .ToList();
-            }
 
-            // 랜덤 추출
-            _itemPool = candidates.OrderBy(x => Random.value).Take(quantity).ToList();
+            fromInventory = fromInventory
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(requiredOwnedMin)
+                .ToList();
 
-            return _itemPool;
+            result.AddRange(fromInventory);
+
+            // 3. 후보군에서 남은 슬롯 채우기
+            List<ItemData> candidates = allItemPool
+                .Where(item =>
+                    !item.IsComposited &&
+                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive) &&
+                    (item.ItemRank != ItemRank.Composite || _inventory.HasItem(item.ItemID)))
+                .Except(fromInventory)
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(quantity - result.Count)
+                .ToList();
+
+            result.AddRange(candidates);
+
+            return result;
+        }
+
+
+        private List<ItemData> ReturnItemForSell(int quantity)
+        {
+            List<ItemData> allItemPool = ItemDatabase.Instance.GetAllItems();
+            List<ItemData> result = new();
+
+            int ownedCount = _inventory.GetAllItems()
+                .Count(item => item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite);
+
+            int requiredOwnedMin = 0;
+            if (ownedCount == 8) requiredOwnedMin = quantity;
+            else if (ownedCount == 7) requiredOwnedMin = 4;
+            else if (ownedCount == 6) requiredOwnedMin = 3;
+            else if (ownedCount == 5) requiredOwnedMin = 2;
+            else if (ownedCount == 4) requiredOwnedMin = 1;
+
+                // 1. 인벤토리에 있고 최대 레벨 미만인 아이템
+                List<ItemData> fromInventory = _inventory.GetAllItems()
+                    .Where(item =>
+                        (item.ItemRank == ItemRank.Sub || item.ItemRank == ItemRank.Composite) &&
+                        item.ItemCurLevel < item.ItemMaxLevel &&
+                        !item.IsComposited &&
+                        (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive))
+                    .ToList();
+
+            fromInventory = fromInventory
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(requiredOwnedMin)
+                .ToList();
+
+            result.AddRange(fromInventory);
+
+            // 2. 후보군에서 나머지 채우기
+            List<ItemData> candidates = allItemPool
+                .Where(item =>
+                    item.ItemRank != ItemRank.Unique &&
+                    !item.IsComposited &&
+                    (item.ItemType == ItemType.Attack || item.ItemType == ItemType.Passive) &&
+                    (item.ItemRank != ItemRank.Composite || _inventory.HasItem(item.ItemID)))
+                .Except(fromInventory)
+                .OrderBy(_ => UnityEngine.Random.value)
+                .Take(quantity - result.Count)
+                .ToList();
+
+            result.AddRange(candidates);
+
+            return result;
         }
 
 
@@ -140,7 +247,8 @@ namespace ProjectVS.Item.ItemManager
 
         public void Initialize()
         {
-            RecieveInventory();
+            // TODO: 씬 병합 시 주석 해제
+            // RecieveInventory();
         }
 
         public void Cleanup() { }
@@ -149,6 +257,40 @@ namespace ProjectVS.Item.ItemManager
         public GameObject GetGameObject()
         {
             return gameObject;
+        }
+
+        private void TestInitInventory()
+        {
+            _inventory = new ItemInventory();
+
+            List<ItemData> items = ItemDatabase.Instance.GetAllItems();
+
+            foreach (var item in items)
+            {
+                if (item.ItemRank == ItemRank.Composite) continue;
+                _inventory.AddItem(item);
+            }
+        }
+
+        [ContextMenu("Test Look Inv")]
+        private void TestLookInventory()
+        {
+            Debug.Log("=== [ItemManager] 현재 인벤토리 상태 출력 ===");
+
+            List<ItemData> items = _inventory.GetAllItems();
+
+            if (items.Count == 0)
+            {
+                Debug.Log("인벤토리에 아이템이 없습니다.");
+                return;
+            }
+
+            foreach (var item in items)
+            {
+                Debug.Log($"- 이름: {item.ItemName}, ID: {item.ItemID}, 현재 레벨: {item.ItemCurLevel}, 최대 레벨: {item.ItemMaxLevel}, 조합됨: {item.IsComposited}");
+            }
+
+            Debug.Log("=== [ItemManager] 인벤토리 출력 끝 ===");
         }
     }
 }

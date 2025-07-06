@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using ProjectVS.Manager;
@@ -6,6 +7,7 @@ using ProjectVS.Manager;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace ProjectVS.Item.BuyItemObjBehaviour
@@ -14,87 +16,129 @@ namespace ProjectVS.Item.BuyItemObjBehaviour
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private TMP_Text _priceText;
-        [SerializeField] private GameObject _xImage;
+        [SerializeField] private Sprite _soldOutSprite;
+
 
         [SerializeField] private LayerMask _playerMask;
+
+        private string SOLDOUT_TEXT = "품절";
 
         private ItemCombinator _itemCombinator;
         private ItemInventory _itemInventory;
         private ItemData _itemData;
 
         private bool _isPurchased = false;
+        private bool _isSoldOut = false;
+
+        public event Action OnBuyItem;
 
         public void Init(ItemData data, ItemCombinator combinator, ItemInventory inventory)
         {
+            // 품절 처리
+            if (data == null)
+            {
+                _isPurchased = false;
+                SetSoldOutState();
+                _isSoldOut = true;
+
+                return;
+            }
+
             _itemData = data;
             _itemCombinator = combinator;
             _itemInventory = inventory;
             _isPurchased = false;
+            _isSoldOut = false;
 
-            _xImage.SetActive(false);
             RenewObjAppearance();
         }
 
         private void RenewObjAppearance()
         {
             _spriteRenderer.sprite = _itemData.ItemIcon;
-            _priceText.text = _itemData.ItemValue.ToString();
+            _priceText.text = $"$ {_itemData.ItemValue.ToString()}";
+        }
+
+        private void SetSoldOutState()
+        {
+            _spriteRenderer.sprite = _soldOutSprite;
+            _priceText.text = SOLDOUT_TEXT;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (((1 << collision.gameObject.layer) & _playerMask) != 0)
+            if (((1 << collision.gameObject.layer) & _playerMask) == 0) return;
+            //if (PlayerDataManager.Instance.Gold < _itemData.ItemValue) return;
+            if (_isPurchased) return;
+            if (_isSoldOut) return;
+
+            switch (_itemData.ItemRank)
             {
-                if (PlayerDataManager.Instance.Gold < _itemData.ItemValue) return; // 돈이 없으면 return
-                if (_isPurchased) return; // 이미 구매했으면 return
+                case ItemRank.Sub:
+                    HandleCompositeItem();
+                    break;
+                case ItemRank.Composite:
+                    Debug.Log("[BuyItemObj] Composite 아이템은 상점에서 별도 조합 없이 구매 불가 → 그냥 레벨업");
+                    _itemData.ItemLevelUp();
+                    break;
+                default:
+                    Debug.LogWarning($"[OnClickGetButton] 들어오면 안되는 아이템이 클릭됨: {_itemData.ItemName}, {_itemData.ItemRank}, {_itemData.ItemID}");
+                    break;
+            }
 
-                // 조합 아이템인지 확인
-                if (_itemData.ItemRank == ItemRank.Composite)
+            _isPurchased = true;
+            ChangeToDeactivation();
+        }
+
+        private void HandleCompositeItem()
+        {
+            int thisId = _itemData.ItemID;
+            List<int> pairCandidates = _itemCombinator.GetAllPossiblePairs(thisId);
+
+            // 실제 인벤토리에 존재하고 조건을 만족하는 조합 후보 수집
+            List<(ItemData other, ItemData result)> validCombinations = new();
+
+            foreach (int pairId in pairCandidates)
+            {
+                List<ItemData> candidates = _itemInventory.GetItemsByID(pairId);
+
+                foreach (var other in candidates)
                 {
-                    int id1 = _itemData.ItemAddID1;
-                    int id2 = _itemData.ItemAddID2;
+                    bool isUsable = other.ItemCurLevel >= other.ItemMaxLevel && !other.IsComposited;
 
-                    // 두 재료 아이템이 인벤토리에 있는지 확인
-                    if (_itemInventory.HasItem(id1) && _itemInventory.HasItem(id2))
+                    if (isUsable && _itemCombinator.TryCombine(thisId, pairId, out ItemData result))
                     {
-                        // 둘 다 Max 레벨인지 확인
-                        //if (_itemInventory.최대레벨인지(id1) && _itemInventory.최대레벨인지(id2))
-                        //{
-                        // 조합 시도
-                        if (_itemCombinator.TryCombine(id1, id2, out ItemData result))
-                        {
-                            // 기존 아이템 제거
-                            _itemInventory.RemoveItem(ItemDatabase.Instance.GetItem(id1));
-                            _itemInventory.RemoveItem(ItemDatabase.Instance.GetItem(id2));
-
-                            // 조합 아이템 추가
-                            _itemInventory.AddItem(result);
-                        }
-                        else
-                        {
-                            // Debug.LogWarning("[GetItemButtonBehaviour] 둘 다 재료이면서 최대레벨이지만 조합 실패");
-                            // _itemInventory.레벨업(_itemData);
-                            // 아니면 _itemData.현재레벨++;
-                        }
-                        //}
+                        validCombinations.Add((other, result));
                     }
-                    else
-                    {
-                        // 단순 레벨업
-                        // _itemInventory.레벨업(_itemData);
-                        // 아니면 _itemData.현재레벨++;
-                    }
-
-                    _isPurchased = true;
-                    ChangeToDeactivation();
                 }
+            }
+
+            // 후보가 하나라도 있으면 랜덤으로 선택해 조합
+            if (validCombinations.Count > 0)
+            {
+                var selected = validCombinations[UnityEngine.Random.Range(0, validCombinations.Count)];
+                ItemData other = selected.other;
+                ItemData result = selected.result;
+
+                Debug.Log($"[BuyItemObj] 조합 성공: {thisId} + {other.ItemID} = {result.ItemName}");
+
+                _itemInventory.RemoveItem(_itemData); // 구매 아이템 제거
+                other.IsComposited = true;
+                _itemInventory.RemoveItem(other);     // 조합 상대 제거
+                _itemInventory.AddItem(result);       // 조합 결과 추가
+            }
+            else
+            {
+                Debug.Log("[BuyItemObj] 조합 조건 없음 → 그냥 레벨업");
+                _itemData.ItemLevelUp();
             }
         }
 
         private void ChangeToDeactivation()
         {
+            if (_isSoldOut) return;
+
             _spriteRenderer.color = new Color(0f, 0f, 0f, 0.5f);
-            _xImage.SetActive(true);
         }
     }
 }

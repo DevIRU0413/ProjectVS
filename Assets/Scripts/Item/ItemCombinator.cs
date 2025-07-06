@@ -42,5 +42,21 @@ namespace ProjectVS.Item
         {
             return _combineDict.TryGetValue(CreateKey(id1, id2), out result);
         }
+
+
+        public List<int> GetAllPossiblePairs(int id)
+        {
+            List<int> result = new();
+
+            foreach (var pair in _combineDict.Keys)
+            {
+                if (pair.Item1 == id)
+                    result.Add(pair.Item2);
+                else if (pair.Item2 == id)
+                    result.Add(pair.Item1);
+            }
+
+            return result;
+        }
     }
 }

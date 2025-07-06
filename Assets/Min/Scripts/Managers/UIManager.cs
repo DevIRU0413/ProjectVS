@@ -219,13 +219,21 @@ namespace ProjectVS.Utils.UIManager
 
         public void ShowAsFirst(string key)
         {
+            Debug.Log($"[UIManager] ShowAsFirst({key}) 호출됨");
+
             if (_uiPanels.TryGetValue(key, out GameObject panel))
             {
+                Debug.Log($"[UIManager] 패널 발견: {panel.name}");
+
                 _uiStack.Clear();
                 var uiBase = panel.GetComponent<UIBase>();
                 panel.SetActive(true);
                 uiBase?.ShowImmediately();
                 _uiStack.Push(panel);
+            }
+            else
+            {
+                Debug.LogWarning($"[UIManager] {key} 패널을 찾을 수 없음!");
             }
         }
 
@@ -247,6 +255,12 @@ namespace ProjectVS.Utils.UIManager
         public void Initialize()
         {
             ClearAll();
+
+            // 예외적으로 Main Menu Panel만 다시 켜줌
+            if (_uiPanels.TryGetValue("Main Menu Panel", out GameObject mainMenuPanel))
+            {
+                mainMenuPanel.SetActive(true);
+            }
         }
 
         public void Cleanup() { }
