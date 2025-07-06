@@ -38,8 +38,8 @@ public class ScanHitable : MonoBehaviour
     public void PerformScanHit()
     {
         List<GameObject> targets = useBoxScan ?
-            OverlapScanUtility.BoxScan(transform.position, boxOffset, boxSize, boxAngle, _buffer, targetMask, FilterTarget) :
-            OverlapScanUtility.CircleScan(scanRadius, transform.position, targetMask, _buffer, FilterTarget);
+            OverlapScanUtility.BoxScan(transform.position, boxOffset, boxSize, boxAngle, targetMask, _buffer, FilterTarget) :
+            OverlapScanUtility.CircleScan(transform.position, scanRadius, targetMask, _buffer, FilterTarget);
 
         OnHitStarted?.Invoke();
 

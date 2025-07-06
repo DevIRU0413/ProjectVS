@@ -40,7 +40,7 @@ public class ScannerHitable : MonoBehaviour
             }
 
             // 충돌 것들 추가
-            var targets = scanner.Scan(buffer);
+            var targets = scanner.GetScanGameObjectList(buffer);
             foreach (var target in buffer)
             {
                 hitSet.Add(target.gameObject);
