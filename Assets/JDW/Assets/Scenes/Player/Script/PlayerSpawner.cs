@@ -7,65 +7,110 @@ using UnityEngine.InputSystem;
 using ProjectVS.CharacterSelectionData.CharacterSelectionDataParser;
 using CharacterSelectionDataClass = ProjectVS.CharacterSelectionData.CharacterSelectionData.CharacterSelectionData;
 using ProjectVS.Utils.CsvTable;
-public class PlayerSpawner : MonoBehaviour
+using ProjectVS.Manager;
+using ProjectVS.Unit.Player;
+
+namespace ProjectVS.JDW
 {
-    public GameObject[] playerPrefabs; // 0 = 검, 1 = 도끼, 2 = 마법
-    public Transform playerSpawnPoint;
-
-    public int CurrentClassIndex { get; private set; }
-
-    private PlayerAction _inputActions; // 입력 처리용 액션
-    private GameObject _currentPlayerInstance;
-    private List<CharacterSelectionDataClass> _characterDataList;// TSV에서 파싱된 캐릭터 정보
-
-    private void Awake()
+    public class PlayerSpawner : MonoBehaviour
     {
-        // TSV 데이터 불러옴
-        CsvTable table = new CsvTable("Min/Resources/CharacterSelectionData.tsv", '\t');
-        _characterDataList = CharacterSelectionDataParser.Parse(table);
+        public GameObject[] playerPrefabs; // 0 = 검, 1 = 도끼, 2 = 마법
+        public Transform playerSpawnPoint;
 
-        _inputActions = new PlayerAction(); // 인풋액션 등록
-        _inputActions.CharacterSelect.Enable();
-        _inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
-     
-    }
-    private void OnDestroy()
-    {
-        _inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect; // 한번 입력후 이벤트 해제
-    }
-    private void OnClassSelect(InputAction.CallbackContext ctx)
-    {
-        if (_currentPlayerInstance != null)
+        public int CurrentClassIndex { get; private set; }
+
+        private PlayerAction _inputActions; // 입력 처리용 액션
+        private GameObject _currentPlayerInstance;
+        private List<CharacterSelectionDataClass> _characterDataList;// TSV에서 파싱된 캐릭터 정보
+
+        private void Awake()
         {
-            return; // 이미 플레이어가 생성되었으면 무시
+            // TSV 데이터 불러옴
+            CsvTable table = new CsvTable("Min/Resources/CharacterSelectionData.tsv", '\t');
+            _characterDataList = CharacterSelectionDataParser.Parse(table);
+        }
+        private void Start()
+        {
+            if (InputManager.Instance == null)
+            {
+                Debug.LogError("InputManager.Instance is null! 확인 필요");
+                return;
+            }
+            _inputActions = InputManager.Instance.inputActions;
+            _inputActions.CharacterSelect.SelectClass.performed += OnClassSelect;
+            _inputActions.CharacterSelect.Enable();
+        }
+        private void OnEnable()
+        {
+            _inputActions?.CharacterSelect.Enable();
         }
 
-        string key = ctx.control.displayName; // 입력된 키 문자열 ("1", "2", "3")
-        int index = -1;
-
-        // 키에 따라 프리팹 인덱스 결정
-        switch (key)
+        private void OnDisable()
         {
-            case "1": index = 0; break;
-            case "2": index = 1; break;
-            case "3": index = 2; break;
+            if (_inputActions != null)
+            {
+                _inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect;
+                _inputActions.CharacterSelect.Disable();
+            }
+        }
+        private void OnDestroy()
+        {
+            if (_inputActions != null)
+            {
+                _inputActions.CharacterSelect.SelectClass.performed -= OnClassSelect;
+            }
+        }
+        private void OnClassSelect(InputAction.CallbackContext ctx)
+        {
+            if (_currentPlayerInstance != null)
+            {
+                return; // 이미 플레이어가 생성되었으면 무시
+            }
+
+            string key = ctx.control.displayName; // 입력된 키 문자열 ("1", "2", "3")
+            int index = -1;
+
+            // 키에 따라 프리팹 인덱스 결정
+            switch (key)
+            {
+                case "1": index = 0; break;
+                case "2": index = 1; break;
+                case "3": index = 2; break;
+            }
+
+            if (index >= 0 && index < playerPrefabs.Length)
+                SpawnPlayer(index); // 해당 인덱스의 클래스 생성
         }
 
-        if (index >= 0 && index < playerPrefabs.Length)
-            SpawnPlayer(index); // 해당 인덱스의 클래스 생성
-    }
-
-    private void SpawnPlayer(int index)
-    {
-        // 프리팹 생성
-        GameObject newPlayer = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
-        // playerConfig 컴포넌트 가져옴
-        PlayerConfig config = newPlayer.GetComponent<PlayerConfig>();
-        if (config != null && index < _characterDataList.Count)
+        private void SpawnPlayer(int index)
         {
-            config.ApplyStatsFromData(_characterDataList[index], index);// TSV와 클래스 정보 공격방식을 적용
+            // 프리팹 생성
+            GameObject newPlayer = Instantiate(playerPrefabs[index], playerSpawnPoint.position, Quaternion.identity);
+            // PlayerConfig 컴포넌트 가져옴
+            PlayerConfig config = newPlayer.GetComponent<PlayerConfig>();
+
+            if (config == null) return;
+
+            config.PlayerDataManager = PlayerDataManager.Instance;
+
+            var loadedStats = PlayerDataManager.Instance.Stats;
+
+            // 저장된 값이 있으면 TSV 초기화 생략
+            if (loadedStats != null && loadedStats.Level > 1)
+            {
+                // 불러온 값 적용
+                Debug.Log("[Stats 불러오기] 저장된 스탯을 적용합니다.");
+            }
+            else
+            {
+                // TSV 초기값 적용
+                if (index < _characterDataList.Count)
+                {
+                    config.ApplyStatsFromData(_characterDataList[index], index);
+                }
+            }
+            // 현재 클래스 인덱스 저장
+            CurrentClassIndex = index;
         }
-        // 현재 클래스 인덱스 저장
-        CurrentClassIndex = index;
     }
 }

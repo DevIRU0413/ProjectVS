@@ -30,11 +30,6 @@ namespace ProjectVS.UIs.PanelBehaviours.GalleryPanelButtons
             }
         }
 
-        private void OnEnable()
-        {
-            CheckLocked();
-        }
-
         private void Start()
         {
             for (int i = 0; i < _images.Count; i++)
@@ -46,6 +41,8 @@ namespace ProjectVS.UIs.PanelBehaviours.GalleryPanelButtons
 
                 _images[i].sprite = costumeSOs[i].FullScene;
             }
+
+            CheckLocked();
         }
 
         private void ShowImage(int index)
@@ -77,12 +74,42 @@ namespace ProjectVS.UIs.PanelBehaviours.GalleryPanelButtons
                 {
                     _lockedImages[i].enabled = false;
                     _buttons[i].interactable = true;
+
+                    ShowThumbnail(i);
                 }
                 else
                 {
                     _lockedImages[i].enabled = true;
                     _buttons[i].interactable = false;
                 }
+            }
+        }
+
+        private void ShowThumbnail(int index)
+        {
+            Image buttonImage = _buttons[index].GetComponent<Image>();
+            if (buttonImage != null && _images[index].sprite != null)
+            {
+                Sprite fullSprite = _images[index].sprite;
+                Texture2D texture = fullSprite.texture;
+
+                // 원본 스프라이트의 중심 정사각형 영역 계산
+                Rect originalRect = fullSprite.textureRect;
+                float squareSize = Mathf.Min(originalRect.width, originalRect.height);
+                float x = originalRect.x + (originalRect.width - squareSize) / 2f;
+                float y = originalRect.y + (originalRect.height - squareSize) / 2f;
+                Rect squareRect = new Rect(x, y, squareSize, squareSize);
+
+                // 새 스프라이트 생성 (pivot은 가운데로)
+                Sprite croppedSprite = Sprite.Create(
+                    texture,
+                    squareRect,
+                    new Vector2(0.5f, 0.5f),
+                    fullSprite.pixelsPerUnit
+                );
+
+                buttonImage.sprite = croppedSprite;
+                buttonImage.color = Color.white;
             }
         }
     }

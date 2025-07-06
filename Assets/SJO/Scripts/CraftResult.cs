@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,12 +7,12 @@ public class CraftResult : MonoBehaviour
 {
     [Header("Image")]
 
-    [SerializeField] Sprite _resultSprite;
+    private Sprite _resultSprite;
 
-    // PossibleCraft °¡Á®¿À°í
-    private Crafting _crafting;
+    // PossibleCraft ê°€ì ¸ì˜¤ê³ 
+    [SerializeField] private Crafting _crafting;
 
-    // Á¶ÇÕ °á°ú ·¹½ÃÇÇ °¡Á®¿À°í
+    // ì¡°í•© ê²°ê³¼ ë ˆì‹œí”¼ ê°€ì ¸ì˜¤ê³ 
     private Recipe _resultRecipe;
 
     private void Update()
@@ -22,5 +22,15 @@ public class CraftResult : MonoBehaviour
         {
             _resultSprite = _resultRecipe.resultIcon;
         }
+    }
+
+    private void GetResult()
+    {
+        GameObject.Instantiate(_resultRecipe.result, transform);
+    }
+
+    private void OnEnable()
+    {
+        _crafting.OnCraft += GetResult;
     }
 }

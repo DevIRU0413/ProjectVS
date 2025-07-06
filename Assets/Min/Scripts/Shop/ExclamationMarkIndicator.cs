@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using ProjectVS.Dialogue.DialogueManager;
+using ProjectVS.Dialogue.DialogueManagerR;
 
 
 namespace ProjectVS.Shop.ExclamationMarkIndicator
@@ -27,7 +28,12 @@ namespace ProjectVS.Shop.ExclamationMarkIndicator
 
         public void CheckCanShowMark()
         {
-            if (DialogueManager.Instance.CanShowEventDialogue())
+            //if (DialogueManager.Instance.CanShowEventDialogue())
+            //    _spriteRenderer.enabled = true;
+            //else
+            //    _spriteRenderer.enabled = false;
+
+            if (DialogueManagerR.Instance.CanShowDialogueByType(DialogueType.ShopEvent))
                 _spriteRenderer.enabled = true;
             else
                 _spriteRenderer.enabled = false;

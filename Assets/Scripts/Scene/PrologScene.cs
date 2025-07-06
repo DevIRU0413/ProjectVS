@@ -1,7 +1,7 @@
 ﻿using ProjectVS;
 using ProjectVS.Manager;
 
-namespace Scripts.Scene
+namespace ProjectVS.Scene
 {
     public class PrologScene : SceneBase
     {
@@ -10,10 +10,6 @@ namespace Scripts.Scene
         protected override void Initialize()
         {
 
-        }
-
-        public void NextScene()
-        {
         }
     }
 }

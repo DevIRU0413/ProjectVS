@@ -20,6 +20,8 @@ namespace ProjectVS.NPC.NPCBehaviour
         [SerializeField] private GameObject HeartEmoji;
         [SerializeField] private GameObject CryEmoji;
 
+        [SerializeField] private Animator _animator;
+
         [Header("호감도 증감 설정")]
         [SerializeField] private int _affinityIncrease = 20;
         [SerializeField] private int _affinityDecrease = 30;
@@ -31,6 +33,8 @@ namespace ProjectVS.NPC.NPCBehaviour
         [SerializeField, Range(0f, 10f)] private float _vanishDuration = 2f;
         [SerializeField, Range(0f, 10f)] private float _waitBeforeVanishTime = 2f;
         [SerializeField, Range(0f, 10f)] float _moveDistance = 3f;
+
+        private bool _isInteracted = false;
 
         private void Awake()
         {
@@ -48,6 +52,8 @@ namespace ProjectVS.NPC.NPCBehaviour
 
             HeartEmoji.SetActive(false);
             CryEmoji.SetActive(false);
+
+            _isInteracted = false;
         }
 
 
@@ -55,6 +61,9 @@ namespace ProjectVS.NPC.NPCBehaviour
         {
             if (((1 << collision.gameObject.layer) & _playerLayer) != 0)
             {
+                if (_isInteracted) return;
+
+                _isInteracted = true;
                 UIManager.Instance.Show("NPC Interaction Select Panel");
                 Vanish();
             }
@@ -62,12 +71,14 @@ namespace ProjectVS.NPC.NPCBehaviour
 
         public void Save()
         {
+            AnimateRun();
             HeartEmoji.SetActive(true);
             NPCAffinityModel.Instance.IncreaseAffinity(_affinityIncrease);
         }
 
         public void Rob()
         {
+            AnimateRun();
             CryEmoji.SetActive(true);
             NPCAffinityModel.Instance.DecreaseAffinity(_affinityDecrease);
             RandomlyGetDiamond();
@@ -100,6 +111,11 @@ namespace ProjectVS.NPC.NPCBehaviour
         private IEnumerator IE_WaitBeforeVanish()
         {
             yield return new WaitForSeconds(_waitBeforeVanishTime);
+        }
+
+        private void AnimateRun()
+        {
+            _animator.SetTrigger("Run");
         }
     }
 }

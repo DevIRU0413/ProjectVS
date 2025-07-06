@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,7 +35,7 @@ public class Item : MonoBehaviour
             case ItemDataScriptableObject.ItemType.Range:
                 if (level == 0)
                 {
-                    // ºó ¿ÀºêÁ§Æ® »ı¼º
+                    // ë¹ˆ ì˜¤ë¸Œì íŠ¸ ìƒì„±
                     GameObject newWeapon = new GameObject();
                     weapon = newWeapon.AddComponent<Weapon>();
                     weapon.Init(data);
@@ -46,8 +46,8 @@ public class Item : MonoBehaviour
                     float nextDamage = data.baseDamage;
                     int nextCount = 0;
 
-                    // ¸Ç Ã³À½ ÀÌÈÄÀÇ ·¹º§¾÷ : µ¥¹ÌÁö, È½¼ö °è»ê
-                    // ·¹º§¾÷ ÀÌÈÄ Ãß°¡ÀûÀ¸·Î ¹ß»ıÇÏ´Â µ¥¹ÌÁöÀÌ±â ¶§¹®¿¡ ´õÇØÁÜ
+                    // ë§¨ ì²˜ìŒ ì´í›„ì˜ ë ˆë²¨ì—… : ë°ë¯¸ì§€, íšŸìˆ˜ ê³„ì‚°
+                    // ë ˆë²¨ì—… ì´í›„ ì¶”ê°€ì ìœ¼ë¡œ ë°œìƒí•˜ëŠ” ë°ë¯¸ì§€ì´ê¸° ë•Œë¬¸ì— ë”í•´ì¤Œ
                     nextDamage += data.baseDamage * data.damages[level];
 
                     nextCount += data.counts[level];
@@ -60,7 +60,7 @@ public class Item : MonoBehaviour
             case ItemDataScriptableObject.ItemType.Shoe:
                 if (level == 0)
                 {
-                    // ºó ¿ÀºêÁ§Æ® »ı¼º
+                    // ë¹ˆ ì˜¤ë¸Œì íŠ¸ ìƒì„±
                     GameObject newGear = new GameObject();
                     gear = newGear.AddComponent<Equipment>();
                     gear.Init(data);
@@ -76,7 +76,7 @@ public class Item : MonoBehaviour
 
         level++;
 
-        // ·¹º§ÀÌ ÃÖ´ë·Î ¿Ã¶ó°¡¸é ¸·±â
+        // ë ˆë²¨ì´ ìµœëŒ€ë¡œ ì˜¬ë¼ê°€ë©´ ë§‰ê¸°
         if (level == data.damages.Length)
         {
             GetComponent<Button>().interactable = false;

@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using ProjectVS.Manager;
+﻿using ProjectVS.Manager;
+using ProjectVS.Unit.Player;
 
 using UnityEngine;
 
@@ -15,9 +13,9 @@ public class Equipment : MonoBehaviour
     {
         // Basic Set
         name = "Equipment" + data.itemId;
-        transform.parent = GameManager.Instance.Player.transform;
+        transform.parent = PlayerSpawner.Instance.CurrentPlayer.transform;
         transform.localPosition = Vector3.zero;
-        
+
         // Property Set
         type = data.itemType;
         levelData = data.damages[0];
@@ -73,6 +71,6 @@ public class Equipment : MonoBehaviour
     private void SpeedUp()
     {
         float speed = 3f;
-        PlayerDataManager.Instance.stats.SetIncreaseBaseStats(ProjectVS.UnitStaus.Spd, speed + speed * levelData);
+        PlayerDataManager.Instance.Stats.SetIncreaseBaseStats(ProjectVS.UnitStaus.Spd, speed + speed * levelData);
     }
 }

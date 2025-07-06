@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using ProjectVS.Utils.UIManager;
 using ProjectVS.Dialogue.DialogueManager;
 using ExclamationMarkIndicatorClass = ProjectVS.Shop.ExclamationMarkIndicator.ExclamationMarkIndicator;
+using ProjectVS.Dialogue.DialogueManagerR;
 
 namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 {
@@ -27,7 +28,8 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 
         private void OnEnable()
         {
-            DialogueManager.Instance.ShowRepeatDialogue();
+            //DialogueManager.Instance.ShowRepeatDialogue();
+            DialogueManagerR.Instance.ShowDialogueByType(DialogueType.Repeat);
 
             CheckDisableButton();
 
@@ -46,13 +48,27 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 
         public void OnClickEventButton()
         {
-            if (!DialogueManager.Instance.CanShowEventDialogue())
+            //if (!DialogueManager.Instance.CanShowEventDialogue())
+            //{
+            //    Debug.Log("[EventSelectPanelButtons] 출력 가능한 이벤트 대사가 없습니다.");
+            //    return;
+            //}
+
+            ////DialogueManager.Instance.ShowEventDialogue();
+            //DialogueManagerR.Instance.ShowDialogueByType(DialogueType.ShopEvent);
+
+            //UIManager.Instance.Hide("Event Select Panel");
+            //UIManager.Instance.Show("Event Panel");
+
+
+            if (!DialogueManagerR.Instance.CanShowDialogueByType(DialogueType.ShopEvent))
             {
                 Debug.Log("[EventSelectPanelButtons] 출력 가능한 이벤트 대사가 없습니다.");
                 return;
             }
 
-            DialogueManager.Instance.ShowEventDialogue();
+            //DialogueManager.Instance.ShowEventDialogue();
+            DialogueManagerR.Instance.ShowDialogueByType(DialogueType.ShopEvent);
 
             UIManager.Instance.Hide("Event Select Panel");
             UIManager.Instance.Show("Event Panel");
@@ -75,7 +91,16 @@ namespace ProjectVS.UIs.PanelBehaviours.EventSelectPanelButtons
 
         private void CheckDisableButton()
         {
-            if (!DialogueManager.Instance.CanShowEventDialogue())
+            //if (!DialogueManager.Instance.CanShowEventDialogue())
+            //{
+            //    _eventButton.interactable = false;
+            //}
+            //else
+            //{
+            //    _eventButton.interactable = true;
+            //}
+
+            if (!DialogueManagerR.Instance.CanShowDialogueByType(DialogueType.ShopEvent))
             {
                 _eventButton.interactable = false;
             }

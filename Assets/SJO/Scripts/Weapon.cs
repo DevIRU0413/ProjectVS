@@ -1,5 +1,4 @@
-﻿using ProjectVS;
-using static ProjectVS.Util.PoolManager;
+﻿using ProjectVS.JDW;
 
 using UnityEngine;
 
@@ -11,14 +10,15 @@ public class Weapon : MonoBehaviour
     public int count;
     public float speed;
 
-    private float _timer;
+    public float timer;
+    public PlayerController player;
 
-    public PlayerConfig player;
     private ProjectVS.Util.PoolManager _poolManager;
 
     private void Awake()
     {
-        player = GameManager.Instance.Player;
+       // var config = GameManager.Instance.Player;
+       // player = config.GetComponent<PlayerController>();
         _poolManager = ProjectVS.Util.PoolManager.ForceInstance;
     }
 
@@ -48,7 +48,8 @@ public class Weapon : MonoBehaviour
                 WeaponPosition();
                 break;
 
-            default:
+            case 1:
+                // 일단 총알 연사 속도
                 speed = 0.3f;
                 break;
         }
@@ -77,11 +78,12 @@ public class Weapon : MonoBehaviour
                 transform.Rotate(Vector3.forward * speed * Time.deltaTime);
                 break;
 
-            default:
-                _timer += Time.deltaTime;
-                if (_timer > speed)
+            case 1:
+                timer += Time.deltaTime;
+
+                if (timer > speed)
                 {
-                    _timer = 0f;
+                    timer = 0f;
                     Fire();
                 }
                 break;
@@ -118,14 +120,23 @@ public class Weapon : MonoBehaviour
 
     private void Fire()
     {
-        if (!player.Scanner.nearestTarget) return;
+        // 플레이어 근처에 적이 없다면 반환
+        Debug.Log(player.scanner.nearestTarget);
+        if (!player.scanner.nearestTarget) return;
 
-        Vector3 targetPos = player.Scanner.nearestTarget.position;
-        Vector3 dir = (targetPos - transform.position).normalized;
+        Vector3 targetPos = player.scanner.nearestTarget.position;
 
-        GameObject obj = _poolManager.Spawn(poolKey, transform.position, Quaternion.identity);
-        obj.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        // 크기 포함 방향 : 목표 위치 - 자신 위치
+        Vector3 dir = targetPos - transform.position;
 
-        obj.GetComponent<MeleeWeapon>().Init(damage, count, dir);
+        // 정규화
+        dir = dir.normalized;
+
+        Transform bullet = _poolManager.Spawn(poolKey, transform.position, Quaternion.identity).transform;
+
+        // 지정한 축을 중심으로 목표를 향해 회전(z축)
+        bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+
+        bullet.GetComponent<RangeWeapon>().Init(damage, count, dir);
     }
 }

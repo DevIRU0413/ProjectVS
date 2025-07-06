@@ -7,11 +7,13 @@ using UnityEngine.InputSystem;
 using ProjectVS.Utils.PriorityQueue;
 using ProjectVS.Utils.Singleton;
 using ProjectVS.UIs.UIBase;
+using ProjectVS.Util;
+using ProjectVS.Interface;
 
 
 namespace ProjectVS.Utils.UIManager
 {
-    public class UIManager : Singleton<UIManager>
+    public class UIManager : SimpleSingleton<UIManager>, IManager
     {
         private Dictionary<string, GameObject> _uiPanels = new();
         private Stack<GameObject> _uiStack = new();
@@ -19,13 +21,9 @@ namespace ProjectVS.Utils.UIManager
         private PriorityQueue<Action> _animationQueue = new();
         private bool _isAnimating = false;
 
-
         public int PanelCount => _uiPanels.Count;
-
-        private void Awake()
-        {
-            SingletonInit();
-        }
+        public int Priority => (int)ManagerPriority.UIManager;
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
 
         private void Update()
         {
@@ -221,13 +219,21 @@ namespace ProjectVS.Utils.UIManager
 
         public void ShowAsFirst(string key)
         {
+            Debug.Log($"[UIManager] ShowAsFirst({key}) 호출됨");
+
             if (_uiPanels.TryGetValue(key, out GameObject panel))
             {
+                Debug.Log($"[UIManager] 패널 발견: {panel.name}");
+
                 _uiStack.Clear();
                 var uiBase = panel.GetComponent<UIBase>();
                 panel.SetActive(true);
                 uiBase?.ShowImmediately();
                 _uiStack.Push(panel);
+            }
+            else
+            {
+                Debug.LogWarning($"[UIManager] {key} 패널을 찾을 수 없음!");
             }
         }
 
@@ -244,6 +250,24 @@ namespace ProjectVS.Utils.UIManager
             _uiStack.Clear();
             _animationQueue.Clear();
             _isAnimating = false;
+        }
+
+        public void Initialize()
+        {
+            ClearAll();
+
+            // 예외적으로 Main Menu Panel만 다시 켜줌
+            if (_uiPanels.TryGetValue("Main Menu Panel", out GameObject mainMenuPanel))
+            {
+                mainMenuPanel.SetActive(true);
+            }
+        }
+
+        public void Cleanup() { }
+
+        public GameObject GetGameObject()
+        {
+            return gameObject;
         }
     }
 }

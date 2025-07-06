@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8939059610055477475}
   - component: {fileID: 1254981856934315064}
-  - component: {fileID: 6042697840603409780}
   - component: {fileID: 512707748654477689}
+  - component: {fileID: 2557308124709883976}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Monster
@@ -86,19 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6042697840603409780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537394790108370385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f4b0080c2920e408f5f4ceefdf5436, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 100
 --- !u!60 &512707748654477689
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -166,3 +153,18 @@ PolygonCollider2D:
       - {x: 0.29296875, y: 0.90234375}
       - {x: 0.15234375, y: 0.97265625}
   m_UseDelaunayMesh: 0
+--- !u!114 &2557308124709883976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537394790108370385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b25c9cd88e788e47b3a043aadcfd90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  _exp: 90
+  _gold: 5

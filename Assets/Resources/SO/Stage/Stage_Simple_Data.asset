@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4809bd8f55fdbc740a1792cbe4020008, type: 3}
   m_Name: Stage_Simple_Data
   m_EditorClassIdentifier: 
-  clearTime: 900
-  difficultyLevel: 1
-  bossPrefab: {fileID: 0}
-  reward:
+  ClearTime: 900
+  DifficultyLevel: 1
+  MaxSpawnableCount: 100
+  spawnerConfig: {fileID: 11400000, guid: b0eaf84ad68868a42b6f7412951ae4f2, type: 2}
+  BossPrefab: {fileID: 0}
+  Reward:
     rewardName: "\uAE30\uBCF8 \uBCF4\uC0C1"
     goldAmount: 100
     itemReward: {fileID: 0}

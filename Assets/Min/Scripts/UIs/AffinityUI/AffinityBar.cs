@@ -14,8 +14,8 @@ namespace ProjectVS.UIs.AffinityBar
     public class AffinityBar : MonoBehaviour
     {
         [Header("호감도 바 참조")]
-        [SerializeField] Image _affinityFillImage;
-        [SerializeField] TMP_Text _affinityValueText;
+        [SerializeField] private TMP_Text _affinityValueText;
+        [SerializeField] private Image _image;
 
 
         private void OnEnable()
@@ -23,13 +23,14 @@ namespace ProjectVS.UIs.AffinityBar
             RenewAffinity();
         }
 
-
+        
         private void RenewAffinity()
         {
-            _affinityValueText.text = NPCAffinityModel.Instance.AffinityLevelString; // 레벨만 표시
+            Vector3 v3 = _image.rectTransform.localScale;
+            v3.x = (float)NPCAffinityModel.Instance.AffinityCurrentExp / NPCAffinityModel.Instance.AffinityExpMax;
+            _image.rectTransform.localScale = v3;
 
-            float fillAmount = (float)NPCAffinityModel.Instance.AffinityCurrentExp / NPCAffinityModel.Instance.AffinityExpMax;
-            _affinityFillImage.fillAmount = fillAmount;
+            _affinityValueText.text = NPCAffinityModel.Instance.AffinityLevelString; // 레벨만 표시
         }
     }
 }

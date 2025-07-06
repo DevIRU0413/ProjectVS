@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
 using ProjectVS.Dialogue.DialogueManager;
+using ProjectVS.Dialogue.DialogueManagerR;
 
 public class AutoAndSkipButtonPainter : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class AutoAndSkipButtonPainter : MonoBehaviour
     private void OnEnable()
     {        
         _eventDialogueTextTyper.IsSkipToggled.Subscribe(CheckSkipToggled);
-        DialogueManager.Instance.IsAutoMode.Subscribe(CheckAutoToggled);
+        //DialogueManager.Instance.IsAutoMode.Subscribe(CheckAutoToggled);
+        DialogueManagerR.Instance.IsAutoMode.Subscribe(CheckAutoToggled);
     }
 
     private void Start()
@@ -27,15 +29,26 @@ public class AutoAndSkipButtonPainter : MonoBehaviour
         CheckAutoToggled();
     }
 
+    public void OnToggleAutoButton()
+    {
+        DialogueManagerR.Instance.OnToggleAutoMode();
+        CheckAutoToggled();
+    }
+
+
     private void OnDisable()
     {
         if (_eventDialogueTextTyper != null)
         {
             _eventDialogueTextTyper.IsSkipToggled.Unsubscribe(CheckSkipToggled);
         }
-        if (DialogueManager.Instance != null)
+        //if (DialogueManager.Instance != null)
+        //{
+        //    DialogueManager.Instance.IsAutoMode.Unsubscribe(CheckAutoToggled);
+        //}
+        if (DialogueManagerR.Instance != null)
         {
-            DialogueManager.Instance.IsAutoMode.Unsubscribe(CheckAutoToggled);
+            DialogueManagerR.Instance.IsAutoMode.Unsubscribe(CheckAutoToggled);
         }
     }
 
@@ -54,7 +67,16 @@ public class AutoAndSkipButtonPainter : MonoBehaviour
 
     private void CheckAutoToggled()
     {
-        if (DialogueManager.Instance.IsAutoMode.Value)
+        //if (DialogueManager.Instance.IsAutoMode.Value)
+        //{
+        //    _autoButtonImage.color = _toggledColor;
+        //}
+        //else
+        //{
+        //    _autoButtonImage.color = Color.white;
+        //}
+
+        if (DialogueManagerR.Instance.IsAutoMode.Value)
         {
             _autoButtonImage.color = _toggledColor;
         }

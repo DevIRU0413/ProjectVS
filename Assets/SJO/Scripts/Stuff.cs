@@ -1,16 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Stuff", menuName = "Stuff/StuffData")]
 public class Stuff : ScriptableObject
 {
-    // ±¸ºĞÀ» À§ÇÑ ÀÌ¸§
-    public string ItemName;
+    // êµ¬ë¶„ì„ ìœ„í•œ ì´ë¦„
+    public string itemName;
 
-    // UI ¿¬µ¿
+    // UI ì—°ë™
     public Sprite Icon;
 
-    // ÇÁ¸®ÆÕ
+    // í”„ë¦¬íŒ¹
     public GameObject Prefab;
 }

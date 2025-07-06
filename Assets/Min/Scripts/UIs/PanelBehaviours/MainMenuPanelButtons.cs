@@ -34,8 +34,8 @@ namespace ProjectVS.UIs.PanelBehaviours.MainMenuPanel
 
         public void OnClickExitButton()
         {
-#if Unity_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
             Application.Quit();
 #endif

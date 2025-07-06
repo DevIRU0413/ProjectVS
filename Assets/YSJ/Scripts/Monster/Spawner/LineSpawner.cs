@@ -6,14 +6,16 @@ using UnityEngine;
 
 namespace ProjectVS.Monster.Spawner
 {
-    public class LineSpawner : Spawner
+    public class LineSpawner : SpawnerBase
     {
         public bool isReverseLine = false;
         public float offset = 1.5f;
         public float distance = 10.0f;
         public List<Vector2> directionList = new();
 
-        public override void SpawnUnits(Vector3 spawnPoint, int unitCount)
+        public float spawnLifeCycle = 0;
+
+        public override void SpawnUnits(GameObject target, Vector3 spawnPoint, int unitCount)
         {
             if (directionList.Count <= 0) return;
 
@@ -25,13 +27,13 @@ namespace ProjectVS.Monster.Spawner
 
             // 정방향
             Vector3 forwardSpawnPoint = spawnPoint + (randmonDir.normalized * distance);
-            lineSpawn(spanwUnit, spawnPoint, forwardSpawnPoint, unitCount);
+            lineSpawn(spanwUnit, target, spawnPoint, forwardSpawnPoint, unitCount);
             SpawnPositionList.Add(forwardSpawnPoint);
 
             // 역방향
             if (!isReverseLine) return;
             Vector3 reverseSpawnPoint = spawnPoint + (-randmonDir.normalized * distance);
-            lineSpawn(spanwUnit, spawnPoint, reverseSpawnPoint, unitCount);
+            lineSpawn(spanwUnit, target, spawnPoint, reverseSpawnPoint, unitCount);
             SpawnPositionList.Add(reverseSpawnPoint);
         }
 
@@ -41,7 +43,7 @@ namespace ProjectVS.Monster.Spawner
 
         }
 
-        private void lineSpawn(GameObject spanwUnit, Vector3 originPoint, Vector3 spawnPoint, int spawnCount)
+        private void lineSpawn(GameObject spanwUnit, GameObject target, Vector3 originPoint, Vector3 spawnPoint, int spawnCount)
         {
             Vector3 moveDir = (originPoint - spawnPoint).normalized;
 
@@ -57,12 +59,23 @@ namespace ProjectVS.Monster.Spawner
                 Vector3 sideDir = (i % 2 == 0) ? leftDir : rightDir;
                 Vector3 spawnPos = spawnPoint + sideDir * offsetDistance;
 
-                GameObject go = Instantiate(spanwUnit, spawnPos, Quaternion.identity);
-                spawned.Add(go);
+                // GameObject go = GameObject.Instantiate(spanwUnit, spawnPos, Quaternion.identity);
+                // spawned.Add(go);
+                GameObject go = ProjectVS.Util.PoolManager.ForceInstance.Spawn(spanwUnit.name, spawnPos, Quaternion.identity);
 
+                // 이동 위임
                 var monUnit = go.GetOrAddComponent<MonsterController>();
+                monUnit.SetTarget(target);
+
                 monUnit.DelegateMovementAuthority();
                 monUnit.SetMoveDirection(moveDir, true);
+
+                var ctrl = go.GetComponent<MonsterController>();
+                if (ctrl && spawnLifeCycle > 0)
+                {
+                    var lifeCmp = go.GetOrAddComponent<SpawnObjectLifeCycle>();
+                    lifeCmp.SetLifeTime(spawnLifeCycle);
+                }
             }
         }
     }

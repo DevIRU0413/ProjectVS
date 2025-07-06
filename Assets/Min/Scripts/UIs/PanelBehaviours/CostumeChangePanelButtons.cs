@@ -5,7 +5,7 @@ using UnityEngine;
 using CostumeStateManagerClass = ProjectVS.CharacterImages.CostumeStateManager.CostumeStateManager;
 using CostumeSOClass = ProjectVS.CharacterImages.CostumeSO.CostumeSO;
 using UnityEngine.UI;
-using CostumeBuyButtonBehaviourClass = ProjectVS.UIs.CostumeBuyButtonBehaviour.CostumeBuyButtonBehaviour;
+using CostumeBuyButtonClass = ProjectVS.UIs.CostumeBuyButton.CostumeBuyButton;
 
 namespace ProjectVS.UIs.PanelBehaviours.CostumeChangePanelBehaviour
 {
@@ -22,9 +22,9 @@ namespace ProjectVS.UIs.PanelBehaviours.CostumeChangePanelBehaviour
             {
                 GameObject buyButtton = Instantiate(_costumeButtonPrefab, _contentBox);
                 Image image = buyButtton.GetComponentInChildren<Image>();
-                image.sprite = costumeSO.IconSprite;
+                //image.sprite = costumeSO.IconSprite;
 
-                var buttonBehaviour = buyButtton.GetComponent<CostumeBuyButtonBehaviourClass>();
+                var buttonBehaviour = buyButtton.GetComponent<CostumeBuyButtonClass>();
                 buttonBehaviour.Init(costumeSO, _costumeStateManager);
             }
         }

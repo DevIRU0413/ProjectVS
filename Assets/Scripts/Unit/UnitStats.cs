@@ -5,13 +5,13 @@ namespace ProjectVS.Unit
     [System.Serializable]
     public class UnitStats
     {
-        // base (직렬화 필요)
-        [SerializeField] private float _hp;
-        [SerializeField] private float _baseMaxHp;
-        [SerializeField] private float _baseAtk;
-        [SerializeField] private float _baseDfs;
-        [SerializeField] private float _baseSpd;
-        [SerializeField] private float _baseAtkSpd;
+        // base (직렬화 필요) // 저장을 위해 임시로 public 처리
+        [SerializeField] public float _hp;              
+        [SerializeField] public float _baseMaxHp;
+        [SerializeField] public float _baseAtk;
+        [SerializeField] public float _baseDfs;
+        [SerializeField] public float _baseSpd;
+        [SerializeField] public float _baseAtkSpd;
 
         // weight (직렬화 필요 없음)
         private float _weightMaxHp;
@@ -101,6 +101,17 @@ namespace ProjectVS.Unit
                 case UnitStaus.Spd: return _baseSpd;
                 case UnitStaus.AtkSpd: return _baseAtkSpd;
                 default: return 0f;
+            }
+        }
+        public void SetBaseStat(UnitStaus stat, float value) // 덮어쓰기용
+        {
+            switch (stat)
+            {
+                case UnitStaus.MaxHp: _baseMaxHp = value; break;
+                case UnitStaus.Atk: _baseAtk = value; break;
+                case UnitStaus.Dfs: _baseDfs = value; break;
+                case UnitStaus.Spd: _baseSpd = value; break;
+                case UnitStaus.AtkSpd: _baseAtkSpd = value; break;
             }
         }
     }

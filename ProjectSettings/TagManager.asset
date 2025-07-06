@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - MeleeWeapon
+  - Monster
   - Ground
   - Area
   - Rocks
@@ -11,8 +13,10 @@ TagManager:
   - Boss
   - Store
   - Door
-  - Monster
   - PlayerSpawn
+  - PlayerSpawnPoint
+  - SceneBase
+  - Manager
   layers:
   - Default
   - TransparentFX
@@ -49,4 +53,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ui
+    uniqueID: 1514110913
     locked: 0

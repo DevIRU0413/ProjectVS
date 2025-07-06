@@ -1,19 +1,17 @@
-﻿using ProjectVS.Interface;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ProjectVS.Monster.Spawner
 {
-    public class GridSpawner : Spawner
+    public class GridSpawner : SpawnerBase
     {
-        public Vector2 gridSize = new Vector2(3, 3);
-        public float spacing = 2f;
+        public Vector2 GridSize = new Vector2(3, 3);
+        public float Spacing = 2f;
 
-        public override void SpawnUnits(Vector3 spawnPoint, int unitCount)
+        public override void SpawnUnits(GameObject target, Vector3 spawnPoint, int unitCount)
         {
-            Vector3 basePos = transform.position;
-            int rows = Mathf.CeilToInt(gridSize.y);
-            int cols = Mathf.CeilToInt(gridSize.x);
+            Vector3 basePos = spawnPoint;
+            int rows = Mathf.CeilToInt(GridSize.y);
+            int cols = Mathf.CeilToInt(GridSize.x);
             int spawnedCount = 0;
 
             GameObject spanwUnit = GetSpawnUnit();
@@ -23,9 +21,11 @@ namespace ProjectVS.Monster.Spawner
             {
                 for (int x = 0; x < cols && spawnedCount < unitCount; x++)
                 {
-                    Vector3 pos = basePos + new Vector3(x * spacing, y * spacing, 0);
-                    GameObject go = Instantiate(spanwUnit, pos, Quaternion.identity);
-                    spawned.Add(go);
+                    Vector3 pos = basePos + new Vector3(x * Spacing, y * Spacing, 0);
+                    // GameObject go = GameObject.Instantiate(spanwUnit, pos, Quaternion.identity);
+                    // spawned.Add(go);
+
+                    GameObject go = Util.PoolManager.ForceInstance.Spawn(spanwUnit.name, pos, Quaternion.identity);
                     spawnedCount++;
                 }
             }
@@ -33,7 +33,7 @@ namespace ProjectVS.Monster.Spawner
 
         public override void InitUnits(GameObject target)
         {
-            
+
         }
     }
 }
