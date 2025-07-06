@@ -15,23 +15,38 @@ namespace ProjectVS.Item.GetItemButtonBehaviour
     public class GetItemButtonBehaviour : MonoBehaviour
     {
         [SerializeField] private Image _iconImage;
+        [SerializeField] private Sprite _soldOutSprite;
 
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _descriptionText;
+
+        private string _soldOutText = "품절";
 
         private ItemCombinator _itemCombinator;
         private ItemInventory _itemInventory;
         private ItemData _itemData;
 
         private bool _isSelected = false;
-
+        private bool _isSoldOut = false;
 
         public void Init(ItemData data, ItemCombinator combinator, ItemInventory inventory)
         {
+            if (data == null)
+            {
+                _iconImage.sprite = _soldOutSprite;
+                _nameText.text = _soldOutText;
+                _descriptionText.text = _soldOutText;
+                _isSelected = false;
+                _isSoldOut = true;
+
+                return;
+            }
+
             _itemData = data;
             _itemCombinator = combinator;
             _itemInventory = inventory;
             _isSelected = false;
+            _isSoldOut = false;
 
             RenewButtonAppearance();
         }
@@ -51,6 +66,7 @@ namespace ProjectVS.Item.GetItemButtonBehaviour
         public void OnClickGetButton()
         {
             if (_isSelected) return;
+            if (_isSoldOut) return;
 
             switch (_itemData.ItemRank)
             {
@@ -81,43 +97,47 @@ namespace ProjectVS.Item.GetItemButtonBehaviour
             // 1. 조합 가능한 모든 쌍 조회
             List<int> pairCandidates = _itemCombinator.GetAllPossiblePairs(thisId);
 
+            // 2. 실제 인벤토리에 존재하고 조건을 만족하는 조합 후보 수집
+            List<(ItemData other, ItemData result)> validCombinations = new();
+
             foreach (int pairId in pairCandidates)
             {
-                // 2. 인벤토리에 해당 ID가 있고, 조건 만족하는지 검사
                 List<ItemData> candidates = _itemInventory.GetItemsByID(pairId);
 
                 foreach (var other in candidates)
                 {
                     bool isUsable = other.ItemCurLevel >= other.ItemMaxLevel && !other.IsComposited;
 
-                    if (isUsable)
+                    if (isUsable && _itemCombinator.TryCombine(thisId, pairId, out ItemData result))
                     {
-                        // 3. TryCombine 시도
-                        if (_itemCombinator.TryCombine(thisId, pairId, out ItemData result))
-                        {
-                            Debug.Log($"[조합 시도] {thisId} + {pairId} = {result.ItemName}");
-
-                            // 4. 현재 아이템과 조합 상대 아이템 제거
-                            _itemInventory.RemoveItem(_itemData);
-                            other.IsComposited = true;
-                            _itemInventory.RemoveItem(other);
-
-                            // 5. 조합 아이템 추가
-                            _itemInventory.AddItem(result);
-
-                            Debug.Log($"[OnClickGetButton] 조합 성공, {result.ItemName} 획득");
-
-                            _isSelected = true;
-                            UIManager.Instance.ForceCloseTopPanel();
-                            return;
-                        }
+                        validCombinations.Add((other, result));
                     }
                 }
             }
 
-            // 조건을 만족하는 조합 상대가 없으면 레벨업
-            Debug.Log("[OnClickGetButton] 조합 조건 없음 → 그냥 레벨업");
-            _itemData.ItemLevelUp();
+            // 3. 후보가 하나라도 있으면 랜덤으로 선택해 조합
+            if (validCombinations.Count > 0)
+            {
+                var selected = validCombinations[Random.Range(0, validCombinations.Count)];
+                ItemData other = selected.other;
+                ItemData result = selected.result;
+
+                Debug.Log($"[조합 시도] {thisId} + {other.ItemID} = {result.ItemName}");
+
+                _itemInventory.RemoveItem(_itemData);
+                other.IsComposited = true;
+                _itemInventory.RemoveItem(other);
+                _itemInventory.AddItem(result);
+
+                Debug.Log($"[OnClickGetButton] 조합 성공, {result.ItemName} 획득");
+            }
+            else
+            {
+                // 4. 조건을 만족하는 조합 상대가 없으면 레벨업
+                Debug.Log("[OnClickGetButton] 조합 조건 없음 → 그냥 레벨업");
+                _itemData.ItemLevelUp();
+            }
+
             _isSelected = true;
             UIManager.Instance.ForceCloseTopPanel();
         }
