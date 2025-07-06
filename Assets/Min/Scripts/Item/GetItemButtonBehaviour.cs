@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,6 +29,8 @@ namespace ProjectVS.Item.GetItemButtonBehaviour
 
         private bool _isSelected = false;
         private bool _isSoldOut = false;
+
+        public event Action OnGetItem;
 
         public void Init(ItemData data, ItemCombinator combinator, ItemInventory inventory)
         {
@@ -118,7 +121,7 @@ namespace ProjectVS.Item.GetItemButtonBehaviour
             // 3. 후보가 하나라도 있으면 랜덤으로 선택해 조합
             if (validCombinations.Count > 0)
             {
-                var selected = validCombinations[Random.Range(0, validCombinations.Count)];
+                var selected = validCombinations[UnityEngine.Random.Range(0, validCombinations.Count)];
                 ItemData other = selected.other;
                 ItemData result = selected.result;
 
