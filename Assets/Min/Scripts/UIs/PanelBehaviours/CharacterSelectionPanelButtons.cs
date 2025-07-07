@@ -50,7 +50,7 @@ namespace ProjectVS.UIs.PanelBehaviours.CharacterSelectionPanelButtons
                     PlayerDataManager.Instance.Stats.CharacterClass = CharacterClass.Axe;
                     PlayerStats p2Stat = new(
                         2,
-                        CharacterClass.Sword,
+                        CharacterClass.Axe,
                         _characterDisc.CharacterSelectionList[1].HP,
                         _characterDisc.CharacterSelectionList[1].Attack,
                         _characterDisc.CharacterSelectionList[1].Defense,
@@ -69,7 +69,7 @@ namespace ProjectVS.UIs.PanelBehaviours.CharacterSelectionPanelButtons
                     PlayerDataManager.Instance.Stats.CharacterClass = CharacterClass.Magic;
                     PlayerStats p3Stat = new(
                         3,
-                        CharacterClass.Sword,
+                        CharacterClass.Magic,
                         _characterDisc.CharacterSelectionList[2].HP,
                         _characterDisc.CharacterSelectionList[2].Attack,
                         _characterDisc.CharacterSelectionList[2].Defense,
