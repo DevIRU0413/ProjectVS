@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Manager;
 using ProjectVS.Utils.UIManager;
 
 using UnityEngine;
@@ -44,7 +45,7 @@ namespace ProjectVS.UIs.PanelBehaviours.CharacterIndicatorPausePanelButtons
 
         public void OnClickGoToMainMenuButton()
         {
-            SceneManager.LoadScene(1); // 메인메뉴가 1번 씬이라고 가정
+            SceneLoader.Instance.LoadSceneAsync(SceneID.MainMenuScene);
         }
     }
 }
