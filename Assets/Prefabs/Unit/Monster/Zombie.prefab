@@ -225,7 +225,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: -823157231, guid: ec2bca561eea3274090d844e48683567, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -355,13 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1b60d79029baa42bd183c46b19fe06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _phases:
-  - MonsterHp: 1
-    PhaseChangeDelay: 0
-    MonsterPatternList:
-    - monsterPattern: {fileID: 0}
-      Weight: 1
-      AamageMultiplier: 1
+  _phases: []
 --- !u!114 &257882931130782202
 MonoBehaviour:
   m_ObjectHideFlags: 0
