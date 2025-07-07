@@ -6,10 +6,7 @@ using ProjectVS.Unit.Monster.Pattern;
 using ProjectVS.Unit.Monster.Phase;
 using ProjectVS.Util;
 
-using Unity.VisualScripting;
 using UnityEngine;
-
-using static UnityEngine.GraphicsBuffer;
 
 namespace ProjectVS.Unit.Monster
 {
@@ -21,6 +18,9 @@ namespace ProjectVS.Unit.Monster
         [SerializeField] private List<AnimationClip> _slashClips;
         [SerializeField, Min(0f)] private float _normalSlashInterval = 0.5f;
         [SerializeField, Min(0f)] private float _finishSlashActionDelay = 2.0f;
+
+        [SerializeField] private bool _isNormalSlashCamShake = false;
+        [SerializeField] private bool _isFinishSlashCamShake = false;
 
         [Header("Hit Detection")]
         [SerializeField] private HitScanner _normalHitScanner;
@@ -43,9 +43,14 @@ namespace ProjectVS.Unit.Monster
         Transform _thisTr;
         Transform _targetTr;
 
+        CameraFollow _camFollow;
+
         public override void Init(MonsterPhaseController phaseController)
         {
             base.Init(phaseController);
+
+            _camFollow = FindObjectOfType<CameraFollow>();
+
             if (_normalHitScanner != null)
             {
                 _normalHitSpriter = _normalHitScanner.GetComponentInChildren<HitBoxSpriter>();
@@ -149,6 +154,9 @@ namespace ProjectVS.Unit.Monster
                 yield return new WaitForSeconds(slashClip.length - 0.1f);
                 _normalHitScanner.gameObject.SetActive(false);
 
+                if (_isNormalSlashCamShake)
+                    _camFollow?.ShakeCamera(0.3f, 0.5f);
+
                 if (_normalHitScanner.GetScanCount(targets) > 0)
                 {
                     _hitSuccessCount++;
@@ -171,6 +179,9 @@ namespace ProjectVS.Unit.Monster
                 phaseController.OwnerController.Anim.PlayClip(slashClip);
                 yield return new WaitForSeconds(slashClip.length - 0.1f);
                 _finishHitScanner.gameObject.SetActive(false);
+
+                if (_isFinishSlashCamShake)
+                    _camFollow?.ShakeCamera(0.3f, 0.5f);
 
                 if (_finishHitScanner.GetScanCount(targets) > 0)
                 {
