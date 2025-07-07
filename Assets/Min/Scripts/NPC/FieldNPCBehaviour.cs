@@ -27,8 +27,8 @@ namespace ProjectVS.NPC.NPCBehaviour
         [SerializeField] private int _affinityIncrease = 20;
         [SerializeField] private int _affinityDecrease = 30;
 
-        [Header("다이아몬드 강탈 확률 설정")]
-        [SerializeField, Range(0, 100)] private int _robChance = 10;
+        [Header("다이아몬드 강탈 수 설정")]
+        [SerializeField] private int _robDiamondQuantity;
 
         [Header("NPC 사라짐 모션 설정")]
         [SerializeField, Range(0f, 10f)] private float _vanishDuration = 2f;
@@ -100,13 +100,8 @@ namespace ProjectVS.NPC.NPCBehaviour
 
         private void RandomlyGetDiamond()
         {
-            int randomValue = Random.Range(0, 100);
-
-            if (randomValue < _robChance)
-            {
-                PlayerDataManager.Instance.Diamonds += randomValue;
-                Debug.Log($"[FieldNPCBehaviour] 다이아몬드 {randomValue}만큼 획득하여 현재 다이아 개수: {PlayerDataManager.Instance.Diamonds}");
-            }
+            PlayerDataManager.Instance.Diamonds += _robDiamondQuantity;
+            Debug.Log($"[FieldNPCBehaviour] 다이아몬드 {_robDiamondQuantity}만큼 획득하여 현재 다이아 개수: {PlayerDataManager.Instance.Diamonds}");
         }
 
         private void Vanish()
