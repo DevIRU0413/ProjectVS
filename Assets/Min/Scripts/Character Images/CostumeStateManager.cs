@@ -35,10 +35,10 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
 
         public bool IsEquipped(CostumeSOClass costume) => costume.IsEquipped;
 
-        private void Awake()
+        private void Start()
         {
-            //LoadAcquiredCostumes();
-            //LoadWornCostume();
+            LoadAcquiredCostumes();
+            LoadWornCostume();
         }
 
         // TODO: 돈이 있는지 확인하고 구매 결정해야되는 로직 추후 추가 예정
@@ -48,7 +48,7 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
             {
                 // 안샀으면 구매처리
                 costume.IsUnlocked = true;
-                //SaveAcquiredCostumes();
+                SaveAcquiredCostumes();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 구매 완료");
             }
             else if (costume.IsEquipped)
@@ -62,7 +62,7 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
                 _eventSpriteChangeManager.ChangeRepeatImage(DialogueManagerR.Instance.CurrentDialogueData.IllustPath);
                 DialogueManagerR.Instance.CanShowDialogueByType(DialogueType.Repeat);
 
-                //SaveWornCostume();
+                SaveWornCostume();
                 _shopSceneNPCBehaviour.RenewCostumeAnimation();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 미착용 상태로 전환");
             }
@@ -70,7 +70,7 @@ namespace ProjectVS.CharacterImages.CostumeStateManager
             {
                 // 착용
                 EquipCostume(costume);
-                //SaveWornCostume();
+                SaveWornCostume();
                 _shopSceneNPCBehaviour.RenewCostumeAnimation();
                 Debug.Log($"[CostumeStateManager] {costume.CostumeName} 착용 완료");
             }
