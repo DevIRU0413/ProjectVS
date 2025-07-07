@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using ProjectVS.Interface;
+using ProjectVS.Manager;
 using ProjectVS.Util;
 
 using UnityEngine;
@@ -50,6 +51,8 @@ namespace ProjectVS.Shop.NPCAffinityModel
 
                 _affinityLevel = Mathf.Clamp(_affinityLevel, AFFINITY_LEVEL_MIN, AFFINITY_LEVEL_MAX);
             }
+
+            SaveAffinityData();
         }
 
         public void DecreaseAffinity(int amount)
@@ -64,6 +67,20 @@ namespace ProjectVS.Shop.NPCAffinityModel
 
             _affinityCurrentExp = Mathf.Clamp(_affinityCurrentExp, AFFINITY_EXP_MIN, AFFINITY_EXP_MAX);
             _affinityLevel = Mathf.Clamp(_affinityLevel, AFFINITY_LEVEL_MIN, AFFINITY_LEVEL_MAX);
+
+            SaveAffinityData();
+        }
+
+        private void SaveAffinityData()
+        {
+            PlayerDataManager.Instance.CurrentAffinityLevel = _affinityLevel;
+            PlayerDataManager.Instance.CurrentAffinityExp = _affinityCurrentExp;
+        }
+
+        private void LoadAffnityData()
+        {
+            _affinityLevel = PlayerDataManager.Instance.CurrentAffinityLevel;
+            _affinityCurrentExp = PlayerDataManager.Instance.CurrentAffinityExp;
         }
 
         #region Test Method
@@ -80,6 +97,7 @@ namespace ProjectVS.Shop.NPCAffinityModel
                 _affinityLevel = Mathf.Clamp(_affinityLevel, AFFINITY_LEVEL_MIN, AFFINITY_LEVEL_MAX);
             }
 
+            SaveAffinityData();
             Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
         }
 
@@ -89,6 +107,7 @@ namespace ProjectVS.Shop.NPCAffinityModel
         {
             _affinityLevel = 20;
 
+            SaveAffinityData();
             Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
         }
 
@@ -97,11 +116,16 @@ namespace ProjectVS.Shop.NPCAffinityModel
         public void TestDownAffinity()
         {
             DecreaseAffinity(50);
+
+            SaveAffinityData();
             Debug.Log($"[NPCAffinityModel] 현재 경험치: {_affinityCurrentExp}, 현재 레벨: {_affinityLevel}");
         }
         #endregion
 
-        public void Initialize() { }
+        public void Initialize()
+        {
+            LoadAffnityData();
+        }
 
         public void Cleanup() { }
 
