@@ -9,6 +9,8 @@ using CostumeStateManagerClass = ProjectVS.CharacterImages.CostumeStateManager.C
 using UnityEngine.UI;
 
 using StarIndicatorClass = ProjectVS.UIs.StarIndicator.StarIndicator;
+using ProjectVS.Manager;
+using ProjectVS.CharacterImages.CostumeStateManager;
 
 
 
@@ -37,7 +39,11 @@ namespace ProjectVS.UIs.PanelBehaviours.BuyCheckPanelButtons
 
         public void OnClickBuyButton()
         {
-            //if (돈이 없으면) return;
+            if (PlayerDataManager.Instance.Diamonds < _costumeStateManager.WantToBuyCostume.Price)
+            {
+                Debug.Log($"[BuyCheckPanelButtons] 다이아몬드가 부족합니다. 현재 소지한 다이아: {_costumeStateManager.WantToBuyCostume.Price}, 가격: {PlayerDataManager.Instance.Diamonds}");
+                return;
+            }
 
             _costumeStateManager.WantToBuyCostume.IsUnlocked = true;
 
@@ -52,6 +58,8 @@ namespace ProjectVS.UIs.PanelBehaviours.BuyCheckPanelButtons
             }
 
             //_costumeStateManager.CostumeBuyButton?.CheckUnlocked();
+
+            PlayerDataManager.Instance.Diamonds -= _costumeStateManager.WantToBuyCostume.Price;
             UIManager.Instance.CloseTopPanel();
             _starIndicator.RenewStar();
         }
