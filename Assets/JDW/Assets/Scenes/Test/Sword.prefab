@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8238695368794642997}
   - component: {fileID: 3990077426810671669}
   - component: {fileID: 2747120871307133613}
-  - component: {fileID: 8016078956096982783}
   - component: {fileID: 5138815505549657868}
   m_Layer: 0
   m_Name: Sword
@@ -103,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigid: {fileID: 3990077426810671669}
-  _collider: {fileID: 0}
+  _collider: {fileID: 2747120871307133613}
   damageDelay: 0.1
 --- !u!50 &3990077426810671669
 Rigidbody2D:
@@ -177,20 +176,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9506478, y: 1.953445}
   m_EdgeRadius: 0
---- !u!114 &8016078956096982783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1044545731354326905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b223efe12d55fda4d801b603d599c3e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _delayDstory: 0
-  _vfx: {fileID: 0}
 --- !u!114 &5138815505549657868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,10 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c19e641ae107934f82d805e0892e1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitCollider: {fileID: 0}
+  _hitCollider: {fileID: 2747120871307133613}
   _hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   _hitCount: 1
   baseDamage: 10
   canCrit: 1

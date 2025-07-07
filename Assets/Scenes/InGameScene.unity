@@ -741,8 +741,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDontDestroyOnLoad: 1
-  swordPrefab: {fileID: 1345928038722599383, guid: 15679f91a14e0614d8892d887d288743, type: 3}
-  axePrefab: {fileID: 1345928038722599383, guid: d4f3bad766b95a94d9bf75d0286fc4e3, type: 3}
+  swordPrefab: {fileID: 1345928038722599383, guid: d4f3bad766b95a94d9bf75d0286fc4e3, type: 3}
+  axePrefab: {fileID: 1345928038722599383, guid: 15679f91a14e0614d8892d887d288743, type: 3}
   magicPrefab: {fileID: 1345928038722599383, guid: 1b0a21561f7a22b4c80333d3fa9efd10, type: 3}
 --- !u!4 &2112683060
 Transform:

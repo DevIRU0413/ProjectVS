@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2653410328506881482}
   - component: {fileID: 1736620404123943131}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Magic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigid: {fileID: 8111487149940831672}
-  _collider: {fileID: 0}
+  _collider: {fileID: 1736620404123943131}
   damageDelay: 0
 --- !u!61 &1736620404123943131
 BoxCollider2D:
@@ -162,7 +162,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 14.041339, y: 0.10339463}
+  m_Offset: {x: 17.2, y: 0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -173,7 +173,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 29.382017, y: 1.2570114}
+  m_Size: {x: 23, y: 1.2570114}
   m_EdgeRadius: 0
 --- !u!1001 &8249548363345983498
 PrefabInstance:

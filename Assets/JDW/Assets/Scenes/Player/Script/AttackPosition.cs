@@ -33,6 +33,7 @@ namespace ProjectVS.JDW
 
             StartCoroutine(AttackRoutine(_attackPrefab, _attackDuration, _attackOffset)); // 생성 프리팹 / 사라지는 속도 / 플레이어와의 거리
         }
+
         private IEnumerator AttackRoutine(GameObject prefab, float duration, float offset)
         {
             Debug.Log("코루틴 시작");
@@ -68,10 +69,9 @@ namespace ProjectVS.JDW
                     float elapsed = 0f;
                     while (elapsed < duration)
                     {
-                        Debug.Log($"{elapsed} < {duration} = {elapsed < duration} / instance == null || _player == null / {instance == null} || {_player == null}");
                         if (instance == null || _player == null)
                         {
-                            // break;
+                            break;
                         }
 
                         instance.transform.position = _player.transform.position + direction * offset;
@@ -84,7 +84,6 @@ namespace ProjectVS.JDW
                     // 그 지속 전환이 끝났을 때, 삭제
                     Destroy(instance);
                 }
-
                 yield return new WaitForSeconds(GetAttackDelay());
             }
         }
