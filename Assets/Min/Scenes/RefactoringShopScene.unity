@@ -5685,6 +5685,7 @@ MonoBehaviour:
   _descriptionText: {fileID: 1280799985}
   _costumeIconImage: {fileID: 293026747}
   _costumeStateManager: {fileID: 35585568}
+  _starIndicator: {fileID: 1941806832}
 --- !u!1 &894627296
 GameObject:
   m_ObjectHideFlags: 0
@@ -19345,7 +19346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9323efffeade0b749adc163fdfc823ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _starText: {fileID: 0}
+  _starText: {fileID: 2039823157}
 --- !u!1 &1943503707
 GameObject:
   m_ObjectHideFlags: 0

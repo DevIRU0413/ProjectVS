@@ -8,6 +8,7 @@ using ProjectVS.Utils.UIManager;
 using CostumeStateManagerClass = ProjectVS.CharacterImages.CostumeStateManager.CostumeStateManager;
 using UnityEngine.UI;
 
+using StarIndicatorClass = ProjectVS.UIs.StarIndicator.StarIndicator;
 
 
 
@@ -19,6 +20,7 @@ namespace ProjectVS.UIs.PanelBehaviours.BuyCheckPanelButtons
         [SerializeField] private TMP_Text _descriptionText;
         [SerializeField] private Image _costumeIconImage;
         [SerializeField] private CostumeStateManagerClass _costumeStateManager;
+        [SerializeField] private StarIndicatorClass _starIndicator;
 
         private CostumeSO _costume;
 
@@ -51,6 +53,7 @@ namespace ProjectVS.UIs.PanelBehaviours.BuyCheckPanelButtons
 
             //_costumeStateManager.CostumeBuyButton?.CheckUnlocked();
             UIManager.Instance.CloseTopPanel();
+            _starIndicator.RenewStar();
         }
 
         private void RenewPanel()
