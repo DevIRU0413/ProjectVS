@@ -89,6 +89,7 @@ namespace ProjectVS.Item.BuyItemObjBehaviour
 
             _isPurchased = true;
             ChangeToDeactivation();
+            OnBuyItem?.Invoke();
         }
 
         private void HandleCompositeItem()

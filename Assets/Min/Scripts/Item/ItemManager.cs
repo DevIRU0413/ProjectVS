@@ -39,7 +39,7 @@ namespace ProjectVS.Item.ItemManager
         public int Priority => (int)ManagerPriority.ItemManager;
         public bool IsDontDestroy => IsDontDestroyOnLoad;
 
-        public event Action OnInventoryChanged;
+        //public event Action OnInventoryChanged;
 
         protected override void Awake()
         {

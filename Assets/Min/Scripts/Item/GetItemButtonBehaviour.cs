@@ -102,7 +102,7 @@ namespace ProjectVS.Item.GetItemButtonBehaviour
             _isSelected = true;
             UIManager.Instance.ForceCloseTopPanel();
 
-            OnGetItem.Invoke();
+            OnGetItem?.Invoke();
         }
 
         private void HandleCompositeItem()
