@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using ProjectVS.Data;
+using ProjectVS.Interface;
 using ProjectVS.Manager;
 using ProjectVS.Util;
 
@@ -8,16 +9,26 @@ using UnityEngine;
 
 namespace ProjectVS.Item
 {
-    public class ItemDatabase : SimpleSingleton<ItemDatabase>
+    public class ItemDatabase : SimpleSingleton<ItemDatabase>, IManager
     {
         [SerializeField] private List<ItemData> itemDataList = new();
         private Dictionary<int, ItemData> _itemDict = new();
 
-        protected override void Awake()
+        public int Priority => (int)ManagerPriority.ItemManager;
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
+        public GameObject GetGameObject() => this.gameObject;
+
+
+        protected override void Awake() => Initialize();
+
+        // IManager
+        public void Initialize()
         {
             InitDatabase();
             RemoveCompositedItem();
         }
+        public void Cleanup() { }
+
 
         // 초기 등록용
         private void InitDatabase()

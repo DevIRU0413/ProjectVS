@@ -12,6 +12,7 @@ namespace ProjectVS.JDW
 {
     public class AttackPosition : MonoBehaviour
     {
+        [SerializeField] private string _actionableSceneName = "BattleScene";
         [SerializeField] private Transform _muzzlePos;
         [SerializeField] private GameObject _attackPrefab;
         [SerializeField] private float _attackDuration = 0f;// 오브젝트의 지속시간
@@ -21,7 +22,7 @@ namespace ProjectVS.JDW
 
         private void Start()
         {
-            if (SceneManager.GetActiveScene().name != "BattleScene") return;
+            if (SceneManager.GetActiveScene().name != _actionableSceneName) return;
 
             _player = GetComponentInParent<PlayerConfig>();
             if (_player == null || _attackPrefab == null)
@@ -32,6 +33,7 @@ namespace ProjectVS.JDW
 
             StartCoroutine(AttackRoutine(_attackPrefab, _attackDuration, _attackOffset)); // 생성 프리팹 / 사라지는 속도 / 플레이어와의 거리
         }
+
         private IEnumerator AttackRoutine(GameObject prefab, float duration, float offset)
         {
             Debug.Log("코루틴 시작");
@@ -47,6 +49,7 @@ namespace ProjectVS.JDW
                     Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                     mouseWorldPos.z = 0f;
 
+                    // 방향 구하기
                     Vector3 direction = (mouseWorldPos - _player.transform.position);
                     if (direction.sqrMagnitude < 0.01f)
                     {
@@ -54,12 +57,15 @@ namespace ProjectVS.JDW
                     }
                     direction.Normalize();
 
+                    // 해당 방향에 임의의 위치 지정 소환
                     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                     Vector3 spawnPos = _player.transform.position + direction * 0.5f;
 
+                    // 해당 방향으로 돌려주기
                     GameObject instance = Instantiate(prefab, spawnPos, Quaternion.Euler(0f, 0f, angle));
                     instance.GetComponent<Attack>()?.SetDamage(_player.Stats.CurrentAtk);
 
+                    // 공격이 진행 되는 동안 플레이어와 몬스터의 거리 계산과 그에 맞는 회전을 해서 몬스터쪽으로 공격하게 지속 전환
                     float elapsed = 0f;
                     while (elapsed < duration)
                     {
@@ -75,9 +81,9 @@ namespace ProjectVS.JDW
                         yield return null;
                     }
 
+                    // 그 지속 전환이 끝났을 때, 삭제
                     Destroy(instance);
                 }
-
                 yield return new WaitForSeconds(GetAttackDelay());
             }
         }

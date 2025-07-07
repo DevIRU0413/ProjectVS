@@ -12,6 +12,26 @@ PrefabInstance:
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[0].monsterPattern
       value: 
       objectReference: {fileID: 2133665760329920176}
+    - target: {fileID: 1595064588322703561, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595064588322703561, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595064588322703561, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595064588322703561, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.456
+      objectReference: {fileID: 0}
+    - target: {fileID: 2617710943436193720, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 0629096a006a64249b1e8456eeb9045c, type: 2}
     - target: {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_Name
       value: CursedTentacle
@@ -56,13 +76,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5198718876284040431, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5198718876284040431, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2035312985, guid: f9c3dc3feb06c7b4db9f49130cc814d8, type: 3}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.149
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1126034904811091071, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2133665760329920176}
+    - targetCorrespondingSourceObject: {fileID: 5195692760197841264, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3747668327302259626}
   m_SourcePrefab: {fileID: 100100000, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
 --- !u!1 &1352360658915763524 stripped
 GameObject:
@@ -106,3 +158,43 @@ MonoBehaviour:
   - 45
   - 45
   - 45
+--- !u!1 &8235244271952446520 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5195692760197841264, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+  m_PrefabInstance: {fileID: 4202905195625219400}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &3747668327302259626
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235244271952446520}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6

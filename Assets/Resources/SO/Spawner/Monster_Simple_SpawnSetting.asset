@@ -20,8 +20,8 @@ MonoBehaviour:
     Interval: 4
     AutoStart: 1
     StopAfterTime: 900
-    timer: 0
-    activeTime: 0
+    timer: 3.659504
+    activeTime: 15.669954
   - GroupName: Line
     SpawnGroupType: 0
     SpawnableObjects:
@@ -54,13 +54,13 @@ MonoBehaviour:
   - GroupName: Boss1
     SpawnGroupType: 1
     SpawnableObjects:
-    - {fileID: 2503613428698559689, guid: 0e5e4f5f22c040a45b7507964ae54beb, type: 3}
+    - {fileID: 7040384962415546113, guid: a5ba6e208ac534446acf43f53751d4d3, type: 3}
     GroupUnitSpawnCount: 1
     Interval: 450
     AutoStart: 1
     StopAfterTime: 900
-    timer: 42.635098
-    activeTime: 42.635098
+    timer: 15.669954
+    activeTime: 15.669954
   radius: 16
   isReverseLine: 1
   offset: 2

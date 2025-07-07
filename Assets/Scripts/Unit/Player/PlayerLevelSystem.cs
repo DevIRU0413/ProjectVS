@@ -23,7 +23,7 @@ namespace ProjectVS.Unit.Player
                 _stats.CurrentExp -= _stats.MaxExp;
                 _stats.Level++;
                 _stats.MaxExp *= 1.2f;
-
+                Debug.Log("레벨 업");
                 ApplyLevelGrowth(_stats.CharacterClass);
                 OnLevelUp?.Invoke(_stats.Level);
             }
@@ -33,7 +33,9 @@ namespace ProjectVS.Unit.Player
         {
             switch (classType)
             {
+                case CharacterClass.Sword:
                 case CharacterClass.Axe:
+                case CharacterClass.Magic:
                     _stats.SetIncreaseBaseStats(UnitStaus.MaxHp, 10);
                     _stats.SetIncreaseBaseStats(UnitStaus.Atk, 8);
                     break;

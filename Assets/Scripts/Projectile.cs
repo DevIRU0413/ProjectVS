@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+
+using ProjectVS.Util;
+
+using UnityEngine;
 
 namespace ProjectVS
 {
@@ -23,22 +27,6 @@ namespace ProjectVS
         private Vector2 direction;
         private Transform target;
         private bool isFired = false;
-
-        public void Fire(Vector2 fireDirection, Transform target = null)
-        {
-            rb = GetComponent<Rigidbody2D>();
-
-            this.direction = fireDirection.normalized;
-            this.target = target;
-            isFired = true;
-
-            rb.gravityScale = useGravity ? 1f : 0f;
-            rb.velocity = direction * speed;
-
-            RotateVisual(direction);
-
-            Destroy(gameObject, lifeTime);
-        }
 
         private void FixedUpdate()
         {
@@ -74,6 +62,21 @@ namespace ProjectVS
             RotateVisual(rb.velocity.normalized);
         }
 
+        public void Fire(Vector2 fireDirection, Transform target = null)
+        {
+            rb = GetComponent<Rigidbody2D>();
+
+            this.direction = fireDirection.normalized;
+            this.target = target;
+            isFired = true;
+
+            rb.gravityScale = useGravity ? 1f : 0f;
+            rb.velocity = direction * speed;
+
+            RotateVisual(direction);
+
+            Destroy(gameObject, lifeTime);
+        }
         private void RotateVisual(Vector2 faceDir)
         {
             if (faceDir == Vector2.zero || body == null) return;

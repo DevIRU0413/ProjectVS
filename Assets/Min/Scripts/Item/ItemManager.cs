@@ -1,16 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-using ProjectVS.Manager;
-using GetItemButtonBehaviourClass = ProjectVS.Item.GetItemButtonBehaviour.GetItemButtonBehaviour;
-using BuyItemObjBehaviourClass = ProjectVS.Item.BuyItemObjBehaviour.BuyItemObjBehaviour;
-using ProjectVS.Utils.UIManager;
-using ProjectVS.Util;
 using ProjectVS.Interface;
-using System;
+using ProjectVS.Manager;
+using ProjectVS.Util;
+using ProjectVS.Utils.UIManager;
+
+using UnityEngine;
 using UnityEngine.InputSystem;
+
+using BuyItemObjBehaviourClass = ProjectVS.Item.BuyItemObjBehaviour.BuyItemObjBehaviour;
+using GetItemButtonBehaviourClass = ProjectVS.Item.GetItemButtonBehaviour.GetItemButtonBehaviour;
 using InventoryUIClass = ProjectVS.UIs.Item.InventoryUI.InventoryUI;
 
 
@@ -64,7 +64,10 @@ namespace ProjectVS.Item.ItemManager
             if (_objList.Count > 0)
                 DisplayShopItem();
 
-            TestInitUniqueItem();
+            if (GameManager.Instance.GamePlayType == GamePlayType.Test)
+            {
+                // TestInitUniqueItem();
+            }
         }
 
 

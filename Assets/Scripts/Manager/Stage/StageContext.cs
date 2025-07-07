@@ -9,7 +9,7 @@ namespace ProjectVS.Manager
     public class StageContext
     {
         // 필드
-        public PlayerConfig Player { get; set; }
+        public JDW.PlayerConfig Player { get; set; }
         public TimerPresenter Timer { get; set; }
         public MonsterSpawnController Spawner { get; set; }
         public MonsterController BossController { get; set; }

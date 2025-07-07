@@ -12,6 +12,18 @@ PrefabInstance:
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[0].monsterPattern
       value: 
       objectReference: {fileID: 4674166924770414428}
+    - target: {fileID: 1595064588322703561, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595064588322703561, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595064588322703561, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2617710943436193720, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_Controller
       value: 
@@ -19,6 +31,22 @@ PrefabInstance:
     - target: {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_Name
       value: ShadowShooter
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842759914165352858, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842759914165352858, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842759914165352858, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842759914165352858, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5120001472748250191, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60,6 +88,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5198718876284040431, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 202645391, guid: 08aab1ca370ee684bab50a953a31e8f9, type: 3}
+    - target: {fileID: 5991109044786636311, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991109044786636311, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991109044786636311, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7861017942197088506, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.27
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -85,8 +145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e65d3c41b504b44ba1fd8291f2639c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CastDelay>k__BackingField: 1
-  <RecoveryTime>k__BackingField: 1
+  patternCastClips: {fileID: 0}
+  patternActionClips: {fileID: 0}
+  patternRecoveryClips: {fileID: 0}
+  <castDelay>k__BackingField: 0
+  <recoveryTime>k__BackingField: 0
   _cooldown: 5
   _shootableRange: 20
   _projectilePrefab: {fileID: 3942935392967977735, guid: 0a64d202120539948aafaea99022fb66, type: 3}
