@@ -133,7 +133,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
         {
             if (_isNewButtonToggled)
             {
-                //if (PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
+                if (PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
 
                 // 새 파일 생성 - 인덱스로
                 // PlayerDataManager.ForceInstance.SavePlayerData(_currentFileIndex);
@@ -143,7 +143,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
             }
             if (_isLoadButtonToggled)
             {
-                //if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
+                if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
 
                 // 로드 파일 - 인덱스로
                 PlayerDataManager.ForceInstance.LoadPlayerData(_currentFileIndex);
@@ -152,8 +152,7 @@ namespace ProjectVS.UIs.PanelBehaviours.ControlFilePanelButtons
             }
             if (_isDeleteButtonToggled)
             {
-                //if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
-
+                if (!PlayerDataManager.ForceInstance.CheckPlayerData(_currentFileIndex)) return;
 
                 UIManager.Instance.Show("Delete Check Panel");
 
