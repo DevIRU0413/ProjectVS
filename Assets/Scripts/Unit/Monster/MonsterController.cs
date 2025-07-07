@@ -20,6 +20,8 @@ namespace ProjectVS.Monster
     [RequireComponent(typeof(MonsterPhaseController))]
     public class MonsterController : MonoBehaviour, IDamageable, IPoolable
     {
+        private bool _isInit = false;
+
         [SerializeField] private GameObject _body;
         private Vector3 _bodyScale;
 
@@ -40,7 +42,7 @@ namespace ProjectVS.Monster
         public bool IsWin => false;
 
         public MonsterAnimationPlayer Anim { get; private set; }
-        public MonsterStats Stats { get; private set; }
+        [field: SerializeField] public MonsterStats Stats { get; private set; }
         public Vector3 MoveDirection { get; private set; } = Vector3.zero;
 
         public Action OnHit { get; set; }
@@ -97,9 +99,9 @@ namespace ProjectVS.Monster
         }
 
         // 기본 데이터 세팅
-        public void Init()
+        private void Init()
         {
-            OnSpawned();
+            if (_isInit) return;
 
             // 리지드바디 세팅
             var rig = gameObject.GetOrAddComponent<Rigidbody2D>();
@@ -122,6 +124,10 @@ namespace ProjectVS.Monster
             // 상태 락 관련 세팅
             IsStateLock = false;
 
+            var config = GetComponent<UnitStatsConfig>();
+            if (config != null)
+                Stats = new MonsterStats(config.Hp, config.ATK, config.DFS, config.SPD, config.ATKSPD);
+
             // 초기 상태 세팅
             if (Stats == null)
                 ChangeState(MonsterStateType.Death, true);
@@ -132,7 +138,9 @@ namespace ProjectVS.Monster
                 else
                     ChangeState(MonsterStateType.Death);
             }
+            _isInit = true;
         }
+
         public void SetTarget(GameObject target) => Target = target;
 
         // 상태 전환 관련
@@ -188,7 +196,8 @@ namespace ProjectVS.Monster
         // IDamageable
         public void TakeDamage(DamageInfo info)
         {
-            Debug.Log("몬스터 데미지 테스트");
+            Debug.Log($"데미지 입는 대상: {this.gameObject.name}\n" +
+                $"현재 체력 {Stats.CurrentHp} / 피격후 예상 체력 {Stats.CurrentHp - info.Amount}");
             Stats.CurrentHp -= info.Amount;
             OnHit.Invoke();
         }
@@ -196,9 +205,16 @@ namespace ProjectVS.Monster
         // IPoolable
         public void OnSpawned()
         {
+            if (!_isInit) Init();
+
             var config = GetComponent<UnitStatsConfig>();
             if (config != null)
                 Stats = new MonsterStats(config.Hp, config.ATK, config.DFS, config.SPD, config.ATKSPD);
+
+            if (Stats.CurrentHp > 0)
+                ChangeState(MonsterStateType.Idle, true);
+            else
+                ChangeState(MonsterStateType.Death, true);
 
             Target = Unit.Player.PlayerSpawner.Instance.CurrentPlayer;
             OnSpawn?.Invoke();
