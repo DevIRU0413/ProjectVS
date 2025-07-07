@@ -7,6 +7,7 @@ using ProjectVS.Shop.NPCAffinityModel;
 using ProjectVS.Utils.UIManager;
 using TargetArrowUIClass = ProjectVS.UIs.InGameUI.TargetArrowUI.TargetArrowUI;
 using UnityEngine;
+using ProjectVS.Manager;
 
 
 namespace ProjectVS.NPC.NPCBehaviour
@@ -103,7 +104,8 @@ namespace ProjectVS.NPC.NPCBehaviour
 
             if (randomValue < _robChance)
             {
-                // TODO: 다이아 얻는 로직
+                PlayerDataManager.Instance.Diamonds += randomValue;
+                Debug.Log($"[FieldNPCBehaviour] 다이아몬드 {randomValue}만큼 획득하여 현재 다이아 개수: {PlayerDataManager.Instance.Diamonds}");
             }
         }
 
