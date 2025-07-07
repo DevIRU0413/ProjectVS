@@ -5,7 +5,7 @@ using DG.Tweening;
 
 using ProjectVS.Shop.NPCAffinityModel;
 using ProjectVS.Utils.UIManager;
-
+using TargetArrowUIClass = ProjectVS.UIs.InGameUI.TargetArrowUI.TargetArrowUI;
 using UnityEngine;
 
 
@@ -36,6 +36,8 @@ namespace ProjectVS.NPC.NPCBehaviour
 
         private bool _isInteracted = false;
 
+        [SerializeField] private TargetArrowUIClass _npcArrow;
+
         private void Awake()
         {
             if (_spriteRenderer == null)
@@ -54,6 +56,16 @@ namespace ProjectVS.NPC.NPCBehaviour
             CryEmoji.SetActive(false);
 
             _isInteracted = false;
+
+            // NPC 화살표 UI 활성화
+            _npcArrow.gameObject.SetActive(true);
+            _npcArrow.SetTargetTransform(transform);
+        }
+
+        private void OnDisable()
+        {
+            // NPC 화살표 UI 비활성화
+            _npcArrow.gameObject.SetActive(false);
         }
 
 
