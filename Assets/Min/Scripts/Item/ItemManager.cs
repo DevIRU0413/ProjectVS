@@ -272,7 +272,7 @@ namespace ProjectVS.Item.ItemManager
         public void Initialize()
         {
             // TODO: 씬 병합 시 주석 해제
-            // RecieveInventory();
+            RecieveInventory();
         }
 
         public void Cleanup() { }
