@@ -35,6 +35,7 @@ namespace ProjectVS.UIs.CharacterSelect.SelectionEffect
 
 
         private int currentIndex = 0;
+        public int CurrentIndex => currentIndex;
 
         private bool _isMoving = false;
         private Coroutine _moveCo;

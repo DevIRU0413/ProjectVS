@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Manager;
+
 using TMPro;
 
 using UnityEngine;
@@ -17,10 +19,9 @@ namespace ProjectVS.UIs.StarIndicator
             RenewStar();
         }
 
-        private void RenewStar()
+        public void RenewStar()
         {
-            // 한 번 확인해봐야 될 듯
-            //_starText.text = $"{PlayerDataManager.Instance.Star}";
+            _starText.text = $"{PlayerDataManager.Instance.Diamonds}";
         }
     }
 }
