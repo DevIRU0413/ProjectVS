@@ -7,12 +7,13 @@ using ProjectVS.Utils.PooledObject;
 using UnityEngine;
 using ProjectVS.Utils.ObjectPool;
 using UnityEngine.InputSystem;
-using static UnityEngine.GraphicsBuffer;
+using ProjectVS.Util;
+
 
 
 namespace ProjectVS.UIs.InGameUI.AlertUIManager
 {
-    public class AlertUIManager : MonoBehaviour
+    public class AlertUIManager : SimpleSingleton<AlertUIManager>
     {
         [SerializeField] private AlertArrowUIClass _alertPrefab;
         [SerializeField] private Transform _poolParent;
@@ -22,7 +23,10 @@ namespace ProjectVS.UIs.InGameUI.AlertUIManager
 
         private ObjectPool<AlertArrowUIClass> _arrowPool;
 
-        private void Awake()
+        public bool IsDontDestroy => IsDontDestroyOnLoad;
+
+
+        protected override void Awake()
         {
             _arrowPool = new ObjectPool<AlertArrowUIClass>(_poolParent, _alertPrefab, 5);
         }
