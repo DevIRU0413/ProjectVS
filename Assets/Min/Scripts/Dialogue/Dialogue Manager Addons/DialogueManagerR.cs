@@ -96,7 +96,7 @@ namespace ProjectVS.Dialogue.DialogueManagerR
             // 세이브 데이터에 따라 IsPrinted 값 변경
             // 만약 이 매니저가 데이터 로드 전 부터 존재한다면 호출 순서 변경해야 됨
 
-            //ChangeIsPrintedBySaveData();
+            ChangeIsPrintedBySaveData();
         }
 
 
@@ -355,7 +355,7 @@ namespace ProjectVS.Dialogue.DialogueManagerR
         // 세이브할 때 읽은 대사 번호 List<int> 로 반환
         // 내가 다시 필터링할 때 해당 List 참조하여 필터링
 
-        public HashSet<int> GetReadDialogueIDs() // 세이브 시 호출하여 반환
+        public void GetReadDialogueIDs() // 세이브 시 호출하여 반환
         {
             HashSet<int> readIDs = new();
             foreach (var data in _dataService.GetAllDialogues())
@@ -364,10 +364,12 @@ namespace ProjectVS.Dialogue.DialogueManagerR
                 {
                     readIDs.Add(data.ID);
                 }
-            }
-            return readIDs;
+            }   
+
+            PlayerDataManager.Instance.ReadDialogeIDs = readIDs;
         }
 
+        // 로드 시 호출
         private void ChangeIsPrintedBySaveData()
         {
             HashSet<int> savedIDs = PlayerDataManager.Instance.ReadDialogeIDs;
@@ -389,7 +391,6 @@ namespace ProjectVS.Dialogue.DialogueManagerR
 
         public void Initialize()
         {
-            //GetReadDialogueIDs();
             //ChangeIsPrintedBySaveData();
         }
 
