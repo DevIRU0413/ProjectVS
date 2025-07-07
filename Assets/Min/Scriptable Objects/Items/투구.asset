@@ -26,10 +26,10 @@ MonoBehaviour:
   ItemSetEffect: -1
   ItemSetNum: -1
   ItemMaxLevel: 5
-  ItemCurLevel: 4
+  ItemCurLevel: 0
   ItemValue: 30
   ItemRange: -1
   ItemSize: -1
   ItemIcon: {fileID: 21300000, guid: 61791729ccccade4db125683104ca7cb, type: 3}
   ItemIconPath: Images/Sprite/Item/Helmet
-  IsComposited: 1
+  IsComposited: 0
