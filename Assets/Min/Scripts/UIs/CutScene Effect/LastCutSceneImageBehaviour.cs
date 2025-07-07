@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ProjectVS.UIs.CutSceneEffect.CutSceneController;
+
 using UnityEngine;
 
+using CutSceneControllerClass = ProjectVS.UIs.CutSceneEffect.CutSceneController.CutSceneController;
 
 namespace ProjectVS.UIs.CutSceneEffect.LastCutSceneImageBehaviour
 {
@@ -12,10 +15,13 @@ namespace ProjectVS.UIs.CutSceneEffect.LastCutSceneImageBehaviour
         [SerializeField] private GameObject _normalEndScene;
         [SerializeField] private GameObject _trueEndScene;
 
+        [SerializeField] private CutSceneControllerClass _cutSceneController;
+
         public void OnClickLastOpeningImage()
         {
             // 캐릭터 선택 끝나고
             _openingScene.SetActive(false);
+            _cutSceneController.PlayCutScene(CutSceneType.Intro);
         }
 
         public void OnClickLastIntroImage()
