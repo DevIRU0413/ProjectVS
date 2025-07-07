@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ProjectVS.Manager;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,8 +16,8 @@ namespace ProjectVS.Shop.NextStageMover
         {
             if (((1 << collision.gameObject.layer) & _playerLayer) != 0)
             {
-                //SceneManager.LoadScene();
-                Debug.Log("[NextStageMover] 씬 이동");
+                Debug.Log("[NextStageMover] InGameScene으로 이동");
+                SceneLoader.Instance.LoadSceneAsync(SceneID.InGameScene);
             }
         }
     }
