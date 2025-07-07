@@ -4659,6 +4659,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1941806832}
+        m_TargetAssemblyTypeName: ProjectVS.UIs.StarIndicator.StarIndicator, Assembly-CSharp
+        m_MethodName: RenewStar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &676887225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21459,6 +21471,7 @@ SceneRoots:
   - {fileID: 1782425159}
   - {fileID: 693798443}
   - {fileID: 1753316819}
+  - {fileID: 606938671}
   - {fileID: 934433596}
   - {fileID: 1988095039}
   - {fileID: 365496302}
@@ -21471,4 +21484,3 @@ SceneRoots:
   - {fileID: 317204341}
   - {fileID: 410487433}
   - {fileID: 1943503708}
-  - {fileID: 606938671}
