@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+using ProjectVS.Data;
 using ProjectVS.Manager;
 
 using TMPro;
@@ -69,7 +70,7 @@ namespace ProjectVS.Item.BuyItemObjBehaviour
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (((1 << collision.gameObject.layer) & _playerMask) == 0) return;
-            //if (PlayerDataManager.Instance.Gold < _itemData.ItemValue) return;
+            if (PlayerDataManager.Instance.Gold < _itemData.ItemValue) return;
             if (_isPurchased) return;
             if (_isSoldOut) return;
 
@@ -88,6 +89,8 @@ namespace ProjectVS.Item.BuyItemObjBehaviour
             }
 
             _isPurchased = true;
+            PlayerDataManager.Instance.Gold -= _itemData.ItemValue;
+            Debug.Log($"[BuyItemObjBehaviour] 구매하여 골드 감소: {_itemData.ItemValue}만큼 떨어져 현재 골드: {PlayerDataManager.Instance.Gold}");
             ChangeToDeactivation();
             OnBuyItem?.Invoke();
         }
