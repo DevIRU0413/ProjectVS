@@ -65,7 +65,8 @@ namespace ProjectVS.NPC.NPCBehaviour
         private void OnDisable()
         {
             // NPC 화살표 UI 비활성화
-            _npcArrow.gameObject.SetActive(false);
+            if (_npcArrow != null)
+                _npcArrow.gameObject.SetActive(false);
         }
 
 
