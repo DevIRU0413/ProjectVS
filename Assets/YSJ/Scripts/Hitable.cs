@@ -12,7 +12,7 @@ using UnityEngine;
 // 공격 할 수 있음.
 public class Hitable : MonoBehaviour
 {
-    [SerializeField] private Collider2D _hitCollider;
+    [SerializeField] protected Collider2D _hitCollider;
     [SerializeField] protected LayerMask _hitLayer;
 
     // 최소 수치가 0인 이유, 차후 충돌 시 > 버프 또는 디버프 관련 요청을 위함
@@ -82,7 +82,7 @@ public class Hitable : MonoBehaviour
                 OnEnterHitEvent?.Invoke();
             }
 
-            Debug.Log("충돌");
+            Debug.Log($"충돌(충돌체: {this.gameObject}, 충돌체에 충돌된 대상: {go.name})");
             OnEnterHitEnd?.Invoke();
         }
     }

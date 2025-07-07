@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using ProjectVS.Data;
+using ProjectVS.Interface;
 using ProjectVS.Manager;
 using ProjectVS.Unit;
 using ProjectVS.Unit.Player;
@@ -17,7 +18,7 @@ using CharacterSelectionDataClass = ProjectVS.CharacterSelectionData.CharacterSe
 
 namespace ProjectVS.JDW
 {
-    public class PlayerConfig : MonoBehaviour
+    public class PlayerConfig : MonoBehaviour, IDamageable
     {
         [HideInInspector]public PlayerDataManager PlayerDataManager;
 
@@ -120,7 +121,7 @@ namespace ProjectVS.JDW
 
             Debug.Log($"아이템 효과 제거 완료! HP -{bonusHp}, ATK -{bonusAtk}, DFS -{bonusDfs}, AtkSpd -{bonusAtkSpd}, Spd -{bonusSpd}");
         }
-        public void TakeDamage(float damage)
+        /*public void TakeDamage(float damage)
         {
             if (IsDead) return;
             FindObjectOfType<CameraFollow>()?.ShakeCamera(0.3f, 0.5f);
@@ -135,7 +136,7 @@ namespace ProjectVS.JDW
                 Die();
             }
          
-        }
+        }*/
         private void Die()
         {
             IsDead = true;
@@ -179,6 +180,22 @@ namespace ProjectVS.JDW
                 Debug.Log($"레벨 업 {Stats.Level}");
                 UpdateHpBar();  // 레벨업 시 체력바 갱신
             }
-        }   
+        }
+
+        public void TakeDamage(DamageInfo info)
+        {
+            if (IsDead) return;
+            // FindObjectOfType<CameraFollow>()?.ShakeCamera(0.3f, 0.5f);
+            Stats.CurrentHp -= info.Amount;
+
+            GetComponent<PlayerHiteEffect>()?.PlayerHitEffect(); // 플레이어가 데미지 입을 때 붉어지는 이펙트
+            Debug.Log($"피해 : {info.Amount}, 남은 체력 : {Stats.CurrentHp}");
+            UpdateHpBar();  // Hp바 연동
+
+            if (Stats.CurrentHp <= 0)
+            {
+                Die();
+            }
+        }
     }
 }

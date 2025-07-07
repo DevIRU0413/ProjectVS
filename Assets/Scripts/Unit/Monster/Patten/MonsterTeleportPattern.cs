@@ -23,7 +23,7 @@ namespace ProjectVS.Unit.Monster.Pattern
         [SerializeField, Min(0.0f)] private float _teleportNearTargetRange = 0.0f;  // 현재 오브젝트가 등장가능 범위(0 이면 플레이어 위치로 고정)
 
         [Header("Body Collider")]
-        [SerializeField] private Collider2D _bodyCollider2d;
+        [SerializeField] private List<Collider2D> _bodyCollider2ds = new();
 
         [Header("Hit Scanner")]
         [SerializeField] private HitScanner _hitScanner;                            // 텔레포트 위치에 공격 할거 때 사용할 스캐너
@@ -37,9 +37,13 @@ namespace ProjectVS.Unit.Monster.Pattern
         Transform _thisTr;
         Transform _targetTr;
 
+        CameraFollow _camFollow;
+
         public override void Init(MonsterPhaseController phaseController)
         {
             base.Init(phaseController);
+
+            _camFollow = FindObjectOfType<CameraFollow>();
 
             if (_hitScanner != null)
             {
@@ -186,6 +190,7 @@ namespace ProjectVS.Unit.Monster.Pattern
                 yield return new WaitForSeconds(showClipLength);
 
             // 스캐너, 스캔한 옵젝이 데미지를 줄 수 있다면, 데미지를 줌
+            _camFollow?.ShakeCamera(0.3f, 0.5f);
             ScannerHit();
 
 
@@ -231,18 +236,28 @@ namespace ProjectVS.Unit.Monster.Pattern
 
         private void Hide()
         {
-            _bodyCollider2d?.gameObject.SetActive(false);
+            if (_bodyCollider2ds.Count > 0)
+            {
+                foreach (var coll in _bodyCollider2ds)
+                    coll?.gameObject.SetActive(false);
+            }
+
             if (_hideSpriteRenderers.Count > 0)
                 foreach (var sRenderer in _hideSpriteRenderers)
-                    sRenderer.gameObject.SetActive(false);
+                    sRenderer?.gameObject.SetActive(false);
         }
 
         private void Show()
         {
-            _bodyCollider2d?.gameObject.SetActive(true);
+            if (_bodyCollider2ds != null)
+            {
+                foreach (var coll in _bodyCollider2ds)
+                    coll?.gameObject.SetActive(true);
+            }
+
             if (_hideSpriteRenderers.Count > 0)
                 foreach (var sRenderer in _hideSpriteRenderers)
-                    sRenderer.gameObject.SetActive(true);
+                    sRenderer?.gameObject.SetActive(true);
         }
 
         private void ScannerHit()

@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -207,6 +207,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 229333824155960595}
     m_Modifications:
+    - target: {fileID: 1037612098414626980, guid: 5d0ceb21e3c69fe47ae6c534f1904092, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2173643541137597934, guid: 5d0ceb21e3c69fe47ae6c534f1904092, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.8000462
@@ -262,6 +266,10 @@ PrefabInstance:
     - target: {fileID: 3092744015179547081, guid: 5d0ceb21e3c69fe47ae6c534f1904092, type: 3}
       propertyPath: m_Name
       value: Weapon_Wand
+      objectReference: {fileID: 0}
+    - target: {fileID: 4104476724876510980, guid: 5d0ceb21e3c69fe47ae6c534f1904092, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

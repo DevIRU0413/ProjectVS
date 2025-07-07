@@ -14,53 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnEntries:
   - GroupName: Radius
-    SpawnGroupType: 0
-    SpawnableObjects: []
+    SpawnGroupType: 1
+    SpawnableObjects:
+    - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+    - {fileID: 6773870201672131864, guid: e12a49b4c9116cb44b24f5c30191dac2, type: 3}
+    - {fileID: 7388677132878714472, guid: 2983511bfcb77f84c9b4b25eec409c37, type: 3}
+    - {fileID: 2459041630460869292, guid: e5af0e5fee5dacc449a86d4598107b89, type: 3}
+    - {fileID: 6150469384424873328, guid: 333638d2b878cd842b4a8373fde59ff8, type: 3}
+    - {fileID: 1352360658915763524, guid: fe9332272d5b4cf449d2d1f1d57f6b85, type: 3}
     GroupUnitSpawnCount: 2
     Interval: 4
     AutoStart: 1
     StopAfterTime: 900
-    timer: 3.659504
-    activeTime: 15.669954
+    timer: 2.4103856
+    activeTime: 22.448498
   - GroupName: Line
-    SpawnGroupType: 0
+    SpawnGroupType: 2
     SpawnableObjects:
     - {fileID: 6773870201672131864, guid: e12a49b4c9116cb44b24f5c30191dac2, type: 3}
     GroupUnitSpawnCount: 30
     Interval: 240
-    AutoStart: 1
+    AutoStart: 0
     StopAfterTime: 900
-    timer: 0
-    activeTime: 0
+    timer: 22.448498
+    activeTime: 22.448498
   - GroupName: Circle
-    SpawnGroupType: 0
+    SpawnGroupType: 3
     SpawnableObjects:
     - {fileID: 6773870201672131864, guid: e12a49b4c9116cb44b24f5c30191dac2, type: 3}
     GroupUnitSpawnCount: 30
     Interval: 180
-    AutoStart: 1
+    AutoStart: 0
     StopAfterTime: 900
-    timer: 0
-    activeTime: 0
-  - GroupName: Boss
-    SpawnGroupType: 0
-    SpawnableObjects: []
-    GroupUnitSpawnCount: 1
-    Interval: 450
-    AutoStart: 1
-    StopAfterTime: 900
-    timer: 0
-    activeTime: 0
-  - GroupName: Boss1
-    SpawnGroupType: 1
-    SpawnableObjects:
-    - {fileID: 7040384962415546113, guid: a5ba6e208ac534446acf43f53751d4d3, type: 3}
-    GroupUnitSpawnCount: 1
-    Interval: 450
-    AutoStart: 1
-    StopAfterTime: 900
-    timer: 15.669954
-    activeTime: 15.669954
+    timer: 22.448498
+    activeTime: 22.448498
   radius: 16
   isReverseLine: 1
   offset: 2
