@@ -5,13 +5,14 @@ using UnityEngine.InputSystem;
 
 using ProjectVS.Utils.UIManager;
 using ShopNPCInteractionTriggerClass = ProjectVS.Shop.ShopNPCInteractionTrigger.ShopNPCInteractionTrigger;
-
+using CheatUIManagerClass = ProjectVS.Cheat.CheatUIManager.CheatUIManager;
 
 namespace ProjectVS.Player.TestMove
 {
     public class TestPlayer : MonoBehaviour
     {
         [SerializeField] ShopNPCInteractionTriggerClass _shopNPCInteractionTrigger;
+        [SerializeField] CheatUIManagerClass _cheatUIManager;
 
         [SerializeField] private float _moveSpeed = 5f;
         private Vector2 _moveDirection;
@@ -22,6 +23,7 @@ namespace ProjectVS.Player.TestMove
         {
             GetInput();
             InteractWithNPC();
+            ActiveSelfCheatPanel();
         }
         private void FixedUpdate()
         {
@@ -88,6 +90,12 @@ namespace ProjectVS.Player.TestMove
             {
                 UIManager.Instance.Show("Event Select Panel");
             }
+        }
+
+        private void ActiveSelfCheatPanel()
+        {
+            if (Keyboard.current.cKey.wasPressedThisFrame)
+                _cheatUIManager.gameObject.SetActive(!_cheatUIManager.gameObject.activeSelf);
         }
     }
 }
