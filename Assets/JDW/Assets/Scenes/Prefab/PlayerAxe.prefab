@@ -527,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0191ed0ce2009a4a94dbe538fc637f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _actionableSceneName: InGameScene
   _muzzlePos: {fileID: 846167591246401027}
   _attackPrefab: {fileID: 1476766215471760246, guid: a28979e937bef6e49852b0b24dab1a03, type: 3}
   _attackDuration: 0.7

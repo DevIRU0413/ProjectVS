@@ -1,4 +1,6 @@
 ﻿using ProjectVS.Data;
+using ProjectVS.Item;
+using ProjectVS.Item.ItemManager;
 using ProjectVS.Monster;
 using ProjectVS.Unit.Player;
 using ProjectVS.Util;
@@ -18,7 +20,6 @@ namespace ProjectVS.Manager.Stage
 
             // 1. PlayerStats 가져오기
             var stats = PlayerDataManager.ForceInstance.Stats;
-            var classType = stats.CharacterClass;
 
             // 2. 스폰 위치 찾기
             Vector3 spawnPos = Vector3.zero;
@@ -31,11 +32,14 @@ namespace ProjectVS.Manager.Stage
             // 3. 플레이어 스포너 통해 소환
             GameObject playerGO = PlayerSpawner.Instance.CurrentPlayer;
             if (playerGO == null)
-                playerGO = PlayerSpawner.Instance.SpawnPlayer(spawnPos, classType, stats);
+                playerGO = PlayerSpawner.Instance.SpawnPlayer(spawnPos);
 
             playerGO = PlayerSpawner.Instance.CurrentPlayer;
-            PlayerConfig playerConfig = playerGO.GetComponent<PlayerConfig>();
+            JDW.PlayerConfig playerConfig = playerGO.GetComponent<JDW.PlayerConfig>();
             ctx.Player = playerConfig;
+
+            // 3-1. 플레이어에게 아이템 주기
+            // ItemDatabase.Instance.GetItem();
 
             // 4. 몬스터 스폰 초기화
             var spawner = root.GetOrAddComponent<MonsterSpawnController>();

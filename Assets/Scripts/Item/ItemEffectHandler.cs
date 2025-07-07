@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 
-using ProjectVS.Interface;
+using ProjectVS.Monster;
 using ProjectVS.Unit.Player;
 
 using Unity.VisualScripting;
 
 using UnityEngine;
 
-using static Unity.VisualScripting.Member;
-
 namespace ProjectVS.Item
 {
     public class ItemEffectHandler : MonoBehaviour
     {
+        [SerializeField] private GameObject _bodyGo;
+
+        //============================================================================================
         [SerializeField] ItemData _data;
 
         [SerializeField] LayerMask _targetLayer;
@@ -27,13 +28,6 @@ namespace ProjectVS.Item
 
         //============================================================================================
         Coroutine _effectRoutine;
-
-        private SpriteRenderer _spriteRenderer;
-
-        private void Awake()
-        {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-        }
 
         private void Update()
         {
@@ -169,7 +163,10 @@ namespace ProjectVS.Item
                 float angleToTarget = Vector2.Angle(swingDir, targetDir);
                 if (angleToTarget <= angle * 0.5f)
                 {
-                    hit.GetComponent<Test_Monster>()?.TakeDamage(damage);
+                    DamageInfo info = new DamageInfo();
+                    info.Amount = damage;
+
+                    hit.GetComponentInParent<MonsterController>()?.TakeDamage(info);
                 }
             }
         }
@@ -179,7 +176,7 @@ namespace ProjectVS.Item
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
 
             Vector2 dir = GetMouseDirection2D(user);
-            intance.GetComponent<Test_Projectile>().Init(dir, damage, 5f);
+            intance.GetComponent<Projectile>().Fire(dir);
         }
 
         public void RandomShot(Transform user, float damage)
@@ -228,7 +225,7 @@ namespace ProjectVS.Item
             float range = 3f; // 범위 세로s
             float width = 1.5f; // 범위 가로
 
-            Vector2 dir = (_spriteRenderer.flipX ? -transform.right : transform.right) + new Vector3(0.4f, 0f, 0f);
+            Vector2 dir = (_bodyGo.transform.localScale.x == 1 ? -transform.right : transform.right) + new Vector3(0.4f, 0f, 0f);
 
             if (_effectRoutine == null)
             {
@@ -266,7 +263,7 @@ namespace ProjectVS.Item
             _effectRoutine = null;
             Debug.Log("Tornado 종료");
         }
-        
+
         #endregion
 
         public void Throw(Transform user, int damage, float range = 3f, float radius = 1.5f)
@@ -305,7 +302,7 @@ namespace ProjectVS.Item
         public void Double(Transform user, int damage)
         {
             GameObject intance = Instantiate(_projectilePrefab, user.position, Quaternion.identity);
-         
+
             Vector2 dir = GetMouseDirection2D(user);
             intance.GetComponent<Test_Projectile>().Init(dir, damage, 5f);
             intance.AddComponent<ItemEffect_Double>().Init(damage);
@@ -327,13 +324,16 @@ namespace ProjectVS.Item
 
         private void OnDrawGizmos()
         {
-            Vector2 dir = transform.position + new Vector3(0.2f, 0f, 0f);
+            if (!Application.isPlaying) return;
+            Vector2 dir = Vector2.zero;
+            dir = (_bodyGo.transform.localScale.x == 1 ? -transform.right : transform.right) + new Vector3(0.4f, 0f, 0f);
 
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireCube(transform.position + (Vector3)dir, new Vector3(3f, 0.5f, 0));
 
             //===============================
 
+            // Sword Range Gizomo?
             Vector3 origin = transform.position;
             float radius = 5f;
             float angle = 90f;

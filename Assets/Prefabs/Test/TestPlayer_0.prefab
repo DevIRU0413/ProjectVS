@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 5353302564758398499}
   - component: {fileID: -6807170293955095206}
   - component: {fileID: 7339854075843533338}
+  - component: {fileID: -2447873927000918683}
   m_Layer: 0
   m_Name: TestPlayer_0
   m_TagString: Player
@@ -266,6 +267,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed695fca69bff62429644f6d1810847e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Stats>k__BackingField:
+    _hp: 0
+    _baseMaxHp: 0
+    _baseAtk: 0
+    _baseDfs: 0
+    _baseSpd: 0
+    _baseAtkSpd: 0
+    Level: 1
+    CharacterClass: 0
+    CurrentExp: 0
+    MaxExp: 100
 --- !u!114 &89864291009970338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +332,36 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 262144
   _scannerObject: {fileID: 8227567852670510111}
+--- !u!114 &-2447873927000918683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531073935289293416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dbba5843f22c442ab2145458f6c63d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bodyGo: {fileID: 3012483234277078575}
+  _data: {fileID: 11400000, guid: 83af87551faf5714a9ea69bc9ccb2090, type: 2}
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 262144
+  _projectilePrefab: {fileID: 3942935392967977735, guid: 5e1f619952accb24d89000248cbc4062, type: 3}
+  _throwPrfab: {fileID: 0}
+  _playerStats:
+    _hp: 0
+    _baseMaxHp: 0
+    _baseAtk: 0
+    _baseDfs: 0
+    _baseSpd: 0
+    _baseAtkSpd: 0
+    Level: 1
+    CharacterClass: 0
+    CurrentExp: 0
+    MaxExp: 100
 --- !u!1 &6836688355473318910
 GameObject:
   m_ObjectHideFlags: 0

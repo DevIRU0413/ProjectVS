@@ -4,7 +4,7 @@ namespace ProjectVS.Unit.Player
 {
     public class PlayerConfig : MonoBehaviour
     {
-        public PlayerStats Stats { get; private set; }
+        [field: SerializeField] public PlayerStats Stats { get; private set; }
 
         public void Init(PlayerStats stats)
         {
