@@ -31,13 +31,13 @@ namespace ProjectVS.UIs.InGameUI.AlertUIManager
             _arrowPool = new ObjectPool<AlertArrowUIClass>(_poolParent, _alertPrefab, 5);
         }
 
-        private void Update()
-        {
-            if (Keyboard.current.zKey.wasPressedThisFrame)
-            {
-                SpawnAlertArrow(_testTarget.position); // 테스트용
-            }
-        }
+        //private void Update()
+        //{
+        //    if (Keyboard.current.zKey.wasPressedThisFrame)
+        //    {
+        //        SpawnAlertArrow(_testTarget.position); // 테스트용
+        //    }
+        //}
 
         /// <summary>
         /// 위험 경고 UI를 스폰하는 메서드입니다.
