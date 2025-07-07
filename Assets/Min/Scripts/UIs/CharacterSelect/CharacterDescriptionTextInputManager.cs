@@ -26,7 +26,7 @@ namespace ProjectVS.UIs.CharacterSelect.CharacterDescriptionTextInputManager
 
         private StringBuilder _sb = new();
         private List<CharacterSelectionDataClass> _characterSelectionList;
-
+        public List<CharacterSelectionDataClass> CharacterSelectionList => _characterSelectionList;
 
         private void Awake()
         {
