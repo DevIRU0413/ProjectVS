@@ -312,7 +312,14 @@ namespace ProjectVS.Item.ItemManager
 
             TestLookInventory();
 
-            _inventoryUI.RenewUISlots();
+            if (_inventoryUI != null)
+            {
+                _inventoryUI.RenewUISlots();
+            }
+            else
+            {
+                Debug.Log($"[ItemManager] _inventoryUI가 null입니다");
+            }
         }
 
         [ContextMenu("Test Look Inv")]
