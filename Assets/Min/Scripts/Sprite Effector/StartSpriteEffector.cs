@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace ProjectVS.CutSceneEffectors.StartSpriteEffector
 {
     public class StartSpriteEffector : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private Image _spriteRenderer;
 
         [Header("Fade In/Out Settings")]
         [SerializeField, Range(0f, 1f)] private float _frameRate = 0.02f;

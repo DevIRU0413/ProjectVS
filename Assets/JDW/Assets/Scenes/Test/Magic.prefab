@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 229333824155960595}
   - component: {fileID: 5724112146705344512}
   - component: {fileID: 8111487149940831672}
-  - component: {fileID: 2653410328506881482}
   - component: {fileID: 1736620404123943131}
+  - component: {fileID: 2653410328506881482}
+  - component: {fileID: 8967777783759793277}
   m_Layer: 0
   m_Name: Magic
   m_TagString: Untagged
@@ -115,21 +116,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2653410328506881482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2418890576715569026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0960422e503d19344830eeabd7e735dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigid: {fileID: 8111487149940831672}
-  _collider: {fileID: 1736620404123943131}
-  damageDelay: 0
 --- !u!61 &1736620404123943131
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -175,6 +161,44 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 23, y: 1.2570114}
   m_EdgeRadius: 0
+--- !u!114 &2653410328506881482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418890576715569026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0960422e503d19344830eeabd7e735dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigid: {fileID: 8111487149940831672}
+  _collider: {fileID: 1736620404123943131}
+  damageDelay: 0
+--- !u!114 &8967777783759793277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418890576715569026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c19e641ae107934f82d805e0892e1d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitCollider: {fileID: 1736620404123943131}
+  _hitLayer:
+    serializedVersion: 2
+    m_Bits: 262144
+  _hitCount: 1
+  baseDamage: 10
+  canCrit: 1
+  critChance: 0.2
+  critMultiplier: 2
+  knockbackForce: 0
+  _hitClip: {fileID: 0}
 --- !u!1001 &8249548363345983498
 PrefabInstance:
   m_ObjectHideFlags: 0

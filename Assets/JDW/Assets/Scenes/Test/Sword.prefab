@@ -191,7 +191,7 @@ MonoBehaviour:
   _hitCollider: {fileID: 2747120871307133613}
   _hitLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 262144
   _hitCount: 1
   baseDamage: 10
   canCrit: 1
