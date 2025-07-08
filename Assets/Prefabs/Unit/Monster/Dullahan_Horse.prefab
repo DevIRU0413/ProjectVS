@@ -92,6 +92,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 257882931130782202, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: <MonsterID>k__BackingField
+      value: 30020
+      objectReference: {fileID: 0}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[0].monsterPattern
       value: 
