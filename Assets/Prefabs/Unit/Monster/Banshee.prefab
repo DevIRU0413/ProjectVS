@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 8287221502957274306}
   - component: {fileID: 8717279174655346626}
   - component: {fileID: 6582833408047252876}
+  - component: {fileID: 1250439596305271295}
   m_Layer: 0
   m_Name: Banshee
   m_TagString: Untagged
@@ -398,13 +399,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 6703767989880988265}
+  _stopMoveRange: 0.7
   <MonsterID>k__BackingField: 30030
   <Name>k__BackingField: N/A
   <CurrentStateType>k__BackingField: 0
   <IsStateLock>k__BackingField: 0
   <Target>k__BackingField: {fileID: 0}
-  _stopMoveRange: 0.7
   <DespawnDelay>k__BackingField: 1
+  <Stats>k__BackingField:
+    _hp: 0
+    _baseMaxHp: 0
+    _baseAtk: 0
+    _baseDfs: 0
+    _baseSpd: 0
+    _baseAtkSpd: 0
+    _exp: 0
+    _dropGold: 0
+    _dropGoldPer: 0
+    _dropDiamond: 0
+    _dropDiamondPer: 0
 --- !u!114 &6582833408047252876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +441,18 @@ MonoBehaviour:
   critMultiplier: 0
   knockbackForce: 0
   _hitClip: {fileID: 0}
+--- !u!114 &1250439596305271295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6051400608539244084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d062d7f450933b646843f3acb62743ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6110106692664745686
 GameObject:
   m_ObjectHideFlags: 0

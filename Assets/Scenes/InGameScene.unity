@@ -14197,6 +14197,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6513240185319412276, guid: 5cd9412504e71e84b8708fae56cfc1db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6939462402876377010, guid: 5cd9412504e71e84b8708fae56cfc1db, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
       value: 1
@@ -16912,8 +16916,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 185129674254750707, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
-      propertyPath: m_AnimatedTiles.Array.data[5].second.m_AnimationSpeed
+      propertyPath: m_AnimatedTiles.Array.data[0].second.m_AnimationSpeed
       value: 5.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 185129674254750707, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[5].second.m_AnimationSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2989184496004346707, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
       propertyPath: m_Name
@@ -16973,7 +16981,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7759245750229302142, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[7].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759245750229302142, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[11].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759245750229302142, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[13].second.m_AnimationSpeed
       value: 5.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759245750229302142, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[24].second.m_AnimationSpeed
+      value: 5.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759245750229302142, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[28].second.m_AnimationSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7759245750229302142, guid: ec1ae1b10d7171947abb07470000af6e, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[29].second.m_AnimationSpeed
@@ -17610,7 +17634,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1930667512}
   - component: {fileID: 1930667511}
-  - component: {fileID: 1930667513}
   m_Layer: 0
   m_Name: StageManager
   m_TagString: Manager
@@ -17646,19 +17669,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1930667513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1930667510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1742ecfbf4538b343af5b81de1444e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _config: {fileID: 0}
 --- !u!1 &1968045059
 GameObject:
   m_ObjectHideFlags: 0
@@ -19098,8 +19108,8 @@ SceneRoots:
   - {fileID: 956271638}
   - {fileID: 110066668}
   - {fileID: 1817646484}
-  - {fileID: 1930667512}
   - {fileID: 1585703498}
+  - {fileID: 1930667512}
   - {fileID: 987026376}
   - {fileID: 60281587}
   - {fileID: 2112683060}
