@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using ProjectVS.Dialogue.DialogueManagerR;
 using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
+using ProjectVS.Item.BuyItemObjBehaviour;
+using ProjectVS.Item.ItemManager;
 using ProjectVS.Manager;
 
 using TMPro;
@@ -20,10 +22,17 @@ namespace ProjectVS.Scene.StoreScene
         [SerializeField] private DialogueTextTyper _repeatText;
         [SerializeField] private DialogueTextTyper _eventText;
 
+        [SerializeField] private List<BuyItemObjBehaviour> _buyItems;
+
         protected override void Initialize()
         {
             SpawnPlayer();
             AssignText();
+        }
+
+        private void Start()
+        {
+            AssignBuyObjects();
         }
 
         private void SpawnPlayer()
@@ -50,6 +59,11 @@ namespace ProjectVS.Scene.StoreScene
             if (_eventText == null) Debug.LogWarning($"[StoreScene] EventText가 등록되지 않았습니다");
 
             DialogueManagerR.Instance.AssignTextWhenSceneChanged(_eventText, _repeatText, _eventText, _eventText);
+        }
+
+        private void AssignBuyObjects()
+        {
+            ItemManager.Instance.AssignBuyItemObjects(_buyItems);
         }
     }
 }

@@ -288,6 +288,16 @@ namespace ProjectVS.Item.ItemManager
             _inventory = new ItemInventory();
         }
 
+        public void AssignGetItemButtons(List<GetItemButtonBehaviourClass> buttons)
+        {
+            _buttonList = buttons;
+        }
+
+        public void AssignBuyItemObjects(List<BuyItemObjBehaviourClass> objList)
+        {
+            _objList = objList;
+        }
+
         private void TestInitUniqueItem()
         {
             // 플레이어의 현재 클래스에 따라 초기 유니크 아이템 부여
