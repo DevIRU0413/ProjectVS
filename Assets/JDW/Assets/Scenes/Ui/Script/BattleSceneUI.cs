@@ -94,11 +94,16 @@ namespace ProjectVS.JDW
         private void UpdateBossHpBar()
         {
             if (Boss == null || BossHpBar == null)
+            {
+                if (BossHpBar != null)
+                    BossHpBar.gameObject.SetActive(false);
                 return;
-
+            }
+            BossHpBar.gameObject.SetActive(true);
             BossHpBar.MaxValue = Boss.maxHp;
             BossHpBar.CurrentValue = Boss.currentHp;
         }
+
 
         private void UpdateTexts()
         {

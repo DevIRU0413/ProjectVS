@@ -31,7 +31,7 @@ namespace ProjectVS.Manager.Stage
             }
 
             if (_ctx.Timer != null)
-                _ctx.Timer.Update(UnityEngine.Time.deltaTime);
+                _ctx.Timer.Update(Time.deltaTime);
 
             _ctx.Spawner?.Update();
 

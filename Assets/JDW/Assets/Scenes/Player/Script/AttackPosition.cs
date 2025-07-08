@@ -90,7 +90,7 @@ namespace ProjectVS.JDW
 
         private float GetAttackDelay()
         {
-            float atkSpeed = _player.Stats.AtkSpd;
+            float atkSpeed = _player.Stats.CurrentAtkSpd;
             if (atkSpeed <= 0.01f)
             {
                 atkSpeed = 5f; // 최소 공격속도 보정

@@ -10,9 +10,14 @@ namespace ProjectVS.JDW
 
         private PlayerMove _playerMove;
         private PlayerConfig _player;
+        private static int _movedThisFrame = 0;
+
 
         private void OnTriggerExit2D(Collider2D collision)
         {
+            if (_movedThisFrame >= 2) return; // 2번까지만 이동 허용
+            _movedThisFrame++;
+
             if (!IsActive) return;
             // 벗어난 콜라이더가 "Area" 태그를 가지고 있지 않으면 아무 작업도 하지 않고 종료
             if (!collision.CompareTag("Area"))
@@ -39,24 +44,27 @@ namespace ProjectVS.JDW
             // 플레이어가 입력한 방향 벡터
             Vector3 playerDir = GetPlayerMoveInput();
             // x축 방향 : 왼쪽이면 -1, 아니면 +1
-            float dirx = playerDir.x < 0 ? -1 : 1;
+            float dirx = Mathf.Sign(playerDir.x);
             // y축 방향 : 아래쪽이면 -1 , 아니면 +1
-            float diry = playerDir.y < 0 ? -1 : 1;
+            float diry = Mathf.Sign(playerDir.y);
 
+
+            const float THRESHOLD = 0.01f;
             //현재 오브젝트의 태그에 따라 처리 분기
             switch (transform.tag)
             {
+
                 case "Ground":
-                    // x축 차이가 더 크면 좌우로 이동
-                    if (diffx > diffy)
+                    if (Mathf.Abs(diffx - diffy) < THRESHOLD && dirx != 0 && diry != 0)
                     {
-                        // x축 방향으로 40만큼 이동
+                        transform.Translate(new Vector3(dirx * 80, diry * 80, 0));
+                    }
+                    else if (diffx > diffy && dirx != 0)
+                    {
                         transform.Translate(Vector3.right * dirx * 80);
                     }
-                    // y축 차이가 더 크면 상하로 이동
-                    else if (diffx < diffy)
+                    else if (diffx < diffy && diry != 0)
                     {
-                        // y축 방향으로 40만큼 이동
                         transform.Translate(Vector3.up * diry * 80);
                     }
                     break;
@@ -75,6 +83,10 @@ namespace ProjectVS.JDW
             }
 
             return (_playerMove == null) ? Vector3.zero : _playerMove.MoveInput;
+        }
+        void LateUpdate()
+        {
+            _movedThisFrame = 0;
         }
     }
 }

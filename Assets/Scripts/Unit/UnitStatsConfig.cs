@@ -1,25 +1,20 @@
-﻿using ProjectVS.Manager;
+﻿using System;
+
+using ProjectVS.Manager;
 
 using UnityEngine;
 
 namespace ProjectVS.Unit
 {
-    public class UnitStatsConfig : MonoBehaviour
+    [Serializable]
+    public class UnitStatsConfig
     {
-        [field: Header("ID")]
-        [field: SerializeField] public int ID { get; private set; }
-
-        [field: Header("Stats")]
-        [field: SerializeField] public float Hp { get; private set; }
-        [field: SerializeField] public float ATK { get; private set; }
-        [field: SerializeField] public float DFS { get; private set; }
-        [field: SerializeField] public float SPD { get; private set; }
-        [field: SerializeField] public float ATKSPD { get; private set; }
-
-        protected virtual void Awake()
-        {
-            // if (GameManager.Instance.GamePlayType == GamePlayType.Test) return;
-            // if (ID == 0) return;
-        }
+        public int ID;
+        public float Hp;
+        public float ATK;
+        public float DFS;
+        public float SPD;
+        public float ATKSPD;
+        public float ATKRange;
     }
 }

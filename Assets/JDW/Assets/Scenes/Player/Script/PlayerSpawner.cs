@@ -9,6 +9,7 @@ using CharacterSelectionDataClass = ProjectVS.CharacterSelectionData.CharacterSe
 using ProjectVS.Utils.CsvTable;
 using ProjectVS.Manager;
 using ProjectVS.Unit.Player;
+using ProjectVS.Utils.CsvReader;
 
 namespace ProjectVS.JDW
 {
@@ -27,6 +28,7 @@ namespace ProjectVS.JDW
         {
             // TSV 데이터 불러옴
             CsvTable table = new CsvTable("Min/Resources/CharacterSelectionData.tsv", '\t');
+            CsvReader.Read(table);
             _characterDataList = CharacterSelectionDataParser.Parse(table);
         }
         private void Start()
