@@ -488,6 +488,7 @@ MonoBehaviour:
   TotalKills: 0
   TotalPlayTime: 0
   BattleSceneCount: 0
+  CurrentdFileIndex: 0
 --- !u!4 &1199212785
 Transform:
   m_ObjectHideFlags: 0

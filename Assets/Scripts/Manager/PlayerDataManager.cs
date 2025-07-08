@@ -41,6 +41,7 @@ namespace ProjectVS.Manager
 
         [Header("Dialogue")]
         public HashSet<int> ReadDialogeIDs;
+        public int LastDialogueID;
 
         [Header("Affinity")]
         public int CurrentAffinityExp;
@@ -126,6 +127,45 @@ namespace ProjectVS.Manager
             SaveFileSystem.Save(data, index);
             print("저장");
 
+        }
+
+        public void SavePlayerData()
+        {
+            PlayerData data = new PlayerData();
+
+            data.Stats = Stats;
+
+            data.InventoryItems = InventoryItems.Select(item => new sItem
+            {
+                ItemID = item.ItemID,
+                ItemCurLevel = item.ItemCurLevel,
+                IsComposited = item.IsComposited
+            }).ToList();
+
+            data.CurrentStage = CurrentStageFloor;
+            data.MonstersDefeated = MonstersDefeated;
+
+            data.Gold = Gold;
+            data.Diamonds = Diamonds;
+
+            data.ReadDialogeIDs = ReadDialogeIDs;
+
+            data.CurrentAffinityExp = CurrentAffinityExp;
+            data.CurrentAffinityLevel = CurrentAffinityLevel;
+
+            data.AcquiredCostumeName = AcquiredCostumeName;
+            data.WornCostumeName = WornCostumeName;
+
+            data.TotalKills = TotalKills;
+
+            data.TotalPlayTime = TotalPlayTime;
+            data.BattleSceneCount = BattleSceneCount;
+
+            Debug.Log($"[저장 직전] HP: {Stats.CurrentHp}, Atk: {Stats.CurrentAtk}, 레벨: {Stats.Level}, Exp: {Stats.CurrentExp}");
+
+            // Save
+            SaveFileSystem.Save(data, CurrentdFileIndex);
+            print("저장");
         }
 
         public void LoadPlayerData(int index)

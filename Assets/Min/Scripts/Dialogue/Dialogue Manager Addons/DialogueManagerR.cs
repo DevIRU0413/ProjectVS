@@ -17,6 +17,7 @@ using ProjectVS.Util;
 using ProjectVS.Interface;
 using ProjectVS.Dialogue.DialogueManagerAddons.DialogueDataService;
 using EvaluatorClass = ProjectVS.Dialogue.DialogueManagerAddons.DialogueConditionEvaluator.DialogueConditionEvaluator;
+using System.Linq;
 
 namespace ProjectVS.Dialogue.DialogueManagerR
 {
@@ -97,6 +98,7 @@ namespace ProjectVS.Dialogue.DialogueManagerR
             // 만약 이 매니저가 데이터 로드 전 부터 존재한다면 호출 순서 변경해야 됨
 
             ChangeIsPrintedBySaveData();
+            SetLastDialogueID();
         }
 
 
@@ -386,6 +388,33 @@ namespace ProjectVS.Dialogue.DialogueManagerR
                 {
                     data.IsPrinted = true;
                 }
+            }
+        }
+
+        private void SetLastDialogueID()
+        {
+            // OccurTiming == 2인 대사 중, 출력된(IsPrinted) 것들만 필터링
+            var lastEvent = _dataService.GetByTiming(2)
+                .Where(d => d.IsPrinted)
+                .OrderByDescending(d => d.ID)
+                .FirstOrDefault();
+
+            if (lastEvent == null)
+            {
+                Debug.Log("[DialogueManager] 출력된 이벤트 대사가 없습니다.");
+                return;
+            }
+
+            int lastID = lastEvent.ID;
+
+            if (PlayerDataManager.Instance.LastDialogueID != lastID)
+            {
+                Debug.Log($"[DialogueManager] 마지막 대사 ID 갱신: {PlayerDataManager.Instance.LastDialogueID} → {lastID}");
+                PlayerDataManager.Instance.LastDialogueID = lastID;
+            }
+            else
+            {
+                Debug.Log("[DialogueManager] 마지막 대사 ID는 이미 최신입니다.");
             }
         }
 

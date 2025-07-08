@@ -1,4 +1,5 @@
 ﻿using ProjectVS.Interface;
+using ProjectVS.UIs.CutSceneEffect.CutSceneController;
 using ProjectVS.Utils.UIManager;
 
 namespace ProjectVS.Manager.Stage
@@ -20,11 +21,25 @@ namespace ProjectVS.Manager.Stage
             // 이겼을 때, 인벤토리 저장
             if (_ctx.StageResult == StageResult.Win)
                 Item.ItemManager.ItemManager.Instance.SendInventory();
+
+            if (_ctx.IsTrueEnding())
+            {
+                CutSceneController.Instance.PlayCutScene(CutSceneType.TrueEnding);
+                return;
+            }
+
+            if (_ctx.IsNormalEnding())
+            {
+                CutSceneController.Instance.PlayCutScene(CutSceneType.NormalEnding);
+            }
         }
 
         public void Update() { }
 
-        public void Exit() { }
+        public void Exit()
+        {
+            PlayerDataManager.Instance.SavePlayerData();
+        }
     }
 
 }

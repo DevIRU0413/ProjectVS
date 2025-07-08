@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Utils.SceneSingleton;
+
 using UnityEngine;
 
 
@@ -14,7 +16,7 @@ namespace ProjectVS.UIs.CutSceneEffect.CutSceneController
         TrueEnding
     }
 
-    public class CutSceneController : MonoBehaviour
+    public class CutSceneController : SceneSingleton<CutSceneController>
     {
         [SerializeField] private List<CutSceneTypeObjectPair> _cutSceneObjects;
 
