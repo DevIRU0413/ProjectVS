@@ -23,6 +23,11 @@ namespace ProjectVS.UIs.CutSceneEffect.CutSceneInitiator
             }
         }
 
+        private void OnEnable()
+        {
+            Time.timeScale = 0f;
+        }
+
         private void OnDisable()
         {
             for (int i = 0; i < _cutSceneObjects.Count; i++)

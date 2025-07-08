@@ -22,6 +22,13 @@ namespace ProjectVS.UIs.CutSceneEffect.LastCutSceneImageBehaviour
         [SerializeField] private GameObject _battlePanel;
         [SerializeField] private GameObject _itemInventoryPanel;
 
+
+        private void OnDisable()
+        {
+            Time.timeScale = 1.0f;
+        }
+
+
         public void OnClickLastOpeningImage()
         {
             // 캐릭터 선택 끝나고

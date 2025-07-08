@@ -54,13 +54,17 @@ namespace ProjectVS.CutSceneEffectors.FadeInAndOutEffector
         private void FadeIn(Action onComplete = null)
         {
             SetAlpha(0f);
-            _image.DOFade(1f, _fadeDuration).OnComplete(() => onComplete?.Invoke());
+            _image.DOFade(1f, _fadeDuration)
+                .SetUpdate(true)
+                .OnComplete(() => onComplete?.Invoke());
         }
 
         private void FadeOut(Action onComplete = null)
         {
             SetAlpha(1f);
-            _image.DOFade(0f, _fadeDuration).OnComplete(() => onComplete?.Invoke());
+            _image.DOFade(0f, _fadeDuration)
+                .SetUpdate(true)
+                .OnComplete(() => onComplete?.Invoke());
         }
 
         private void SetAlpha(float alpha)
