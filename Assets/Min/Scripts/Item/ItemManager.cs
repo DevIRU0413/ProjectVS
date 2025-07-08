@@ -43,8 +43,6 @@ namespace ProjectVS.Item.ItemManager
 
         protected override void Awake()
         {
-            TestInitInventory(); // 테스트용 인벤토리 초기화, 추후 삭제해야 됨
-
             base.Awake();
 
             if (_itemCombinator == null)
@@ -271,7 +269,7 @@ namespace ProjectVS.Item.ItemManager
 
         public void Initialize()
         {
-            // TODO: 씬 병합 시 주석 해제
+            _inventory ??= new ItemInventory();
             RecieveInventory();
         }
 
