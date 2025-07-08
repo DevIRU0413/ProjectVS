@@ -191,7 +191,7 @@ namespace ProjectVS.Unit.Monster
 
                     if (damageable != null)
                     {
-                        var dmg = phaseController.OwnerController.Stats.AtkSpd;
+                        var dmg = phaseController.OwnerController.Stats.CurrentAtkSpd;
                         damageable.ApplyDamage(new DamageInfo(amount: dmg, direction: dir));
                     }
                     Debug.Log($"{typeof(MonsterComboHitPattern).Name} Hit > {_hitSuccessCount}");
