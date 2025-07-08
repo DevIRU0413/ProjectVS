@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 607968483408253690}
   - component: {fileID: 257882931130782202}
   - component: {fileID: 2321390148805907380}
+  - component: {fileID: 3414021965483399722}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -350,13 +351,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 2766689452698661969}
+  _stopMoveRange: 0.7
   <MonsterID>k__BackingField: 10010
   <Name>k__BackingField: N/A
   <CurrentStateType>k__BackingField: 0
   <IsStateLock>k__BackingField: 0
   <Target>k__BackingField: {fileID: 0}
-  _stopMoveRange: 0.7
   <DespawnDelay>k__BackingField: 1
+  <Stats>k__BackingField:
+    _hp: 0
+    _baseMaxHp: 0
+    _baseAtk: 0
+    _baseDfs: 0
+    _baseSpd: 0
+    _baseAtkSpd: 0
+    _exp: 0
+    _dropGold: 0
+    _dropGoldPer: 0
+    _dropDiamond: 0
+    _dropDiamondPer: 0
 --- !u!114 &2321390148805907380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,6 +393,18 @@ MonoBehaviour:
   critMultiplier: 0
   knockbackForce: 0
   _hitClip: {fileID: 0}
+--- !u!114 &3414021965483399722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2924864599327088652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d062d7f450933b646843f3acb62743ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3743887969438791258
 GameObject:
   m_ObjectHideFlags: 0

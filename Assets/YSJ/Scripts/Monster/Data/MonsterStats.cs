@@ -1,16 +1,21 @@
-﻿using ProjectVS.Unit;
+﻿using System;
+
+using ProjectVS.Unit;
+
+using UnityEngine;
 
 namespace ProjectVS.Monster.Data
 {
+    [System.Serializable]
     public class MonsterStats : UnitStats
     {
-        private int _exp;
+        [SerializeField] private int _exp;
 
-        private int _dropGold;
-        private int _dropGoldPer;
+        [SerializeField] private int _dropGold;
+        [SerializeField] private int _dropGoldPer;
 
-        private int _dropDiamond;
-        private int _dropDiamondPer;
+        [SerializeField] private int _dropDiamond;
+        [SerializeField] private int _dropDiamondPer;
 
         public int Exp => _exp;                         // 경험치
 
