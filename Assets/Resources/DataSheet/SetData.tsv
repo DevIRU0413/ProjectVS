@@ -1,0 +1,9 @@
+							
+	세트 아이템 고유 번호	세트 아이템 이름	세트 아이템 효과	세트 아이템 수치	필요 세트 아이템 아이디	세트 아이템 아이콘	세트 아이템 효과 설명 텍스트
+	SetID	SetName	SetEffect	SetValue	SetItemID	SetItemICON	SetEffectText
+	int	string	enum<int>	list<int>	list<int>	string	string
+	10000	도적 세트	1	7, 3, 2	10103, 10202, 10231, 10260 	Images/Sprite/SetICON/TheftSet	좀도둑들이 애용하는 경장 장비 세트다. 이동 속도는 증가하지만 공격 속도와 방어력이 감소한다.\n\n* 이동 속도 + (세트 아이템 수치 1)\n* 공격 속도 - (세트 아이템 수치 2)\n방어력 - (세트 아이템 수치 3)
+	10001	마법사 세트	2	3, 5	10105, 11102, 11132, 11162	Images/Sprite/SetICON/MagicianSet	마법사들의 최신 의상 트렌드 세트. 전투에 왜 비단 옷을 입고 오는진 잘 모르겠다.\n\n* 공격 속도 - (가)\n* 공격력 + (세트 아이템 수치 2)
+	10002	로빈 후드 세트	3	1.5	10201, 10232, 11000, 11161	Images/Sprite/SetICON/RobinSet	이렇게 차려 입었다고 사람 머리 위에 사과를 올려놓고 쏘지는 말자.\n\n* 투사체 크기 + (세트 아이템 수치 1)
+	10003	닌자 세트	4	5, 2	11001, 11101, 11131, 11161	Images/Sprite/SetICON/NinjaSet	도-모, 몬스터=상. 닌자 데스.\n\n* 공격 속도 + (세트 아이템 수치 1)\n* 공격력 - (세트 아이템 수치 2)
+	10004	기사 세트	5	5, 3	11100, 11130, 11160	Images/Sprite/SetICON/KnightSet	풍차 거인에게 돌격하던 라 만차의 영주 키호테 경이 있었다. 맷집 하나는 끝내줬다.\n\n* 방어력 + (세트 아이템 수치 1)\n* 이동 속도 - (세트 아이템 수치 2)

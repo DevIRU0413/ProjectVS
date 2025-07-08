@@ -1,13 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-using ProjectVS.Data;
 using ProjectVS.JDW;
-using ProjectVS.Manager;
 
 using UnityEngine;
-
-using static UnityEditor.Progress;
 
 public class TestPlayerInventory : MonoBehaviour // 아이템 ui를 위한 테스트용 인벤토리
 {
@@ -59,5 +54,5 @@ public class TestPlayerInventory : MonoBehaviour // 아이템 ui를 위한 테�
         // UI 갱신
         FindObjectOfType<InventoryDisplay>()?.UpdateInventoryUI(items);
         Debug.Log($"아이템 제거됨: {item.Name}, 스탯도 제거됨");
-    }  
+    }
 }

@@ -21,7 +21,7 @@ namespace ProjectVS.Manager.Stage
             if (_ctx.StageResult == StageResult.Win)
             {
                 Item.ItemManager.ItemManager.Instance.SendInventory();
-                SceneLoader.Instance.LoadSceneAsync(SceneID.StoreScene);
+                SceneLoader.Instance.LoadSceneAsync(SceneID.InGameScene);
             }
 
             if (_ctx.IsTrueEnding())

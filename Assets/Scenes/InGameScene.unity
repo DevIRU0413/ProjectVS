@@ -27584,6 +27584,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDontDestroyOnLoad: 1
+  _stageDataSOList:
+  - {fileID: 11400000, guid: a750be84d88d3a24e9d5e2bb6cecc69e, type: 2}
+  - {fileID: 11400000, guid: ae9f65b3e4abccd47ade51019466ed25, type: 2}
+  - {fileID: 11400000, guid: fc7959b16cc6bab48b1695e7a902b767, type: 2}
+  - {fileID: 11400000, guid: 5c38305f594b5bf4580394d4c859563c, type: 2}
+  - {fileID: 11400000, guid: 621a3cb9abe246a43addf274c8095cc6, type: 2}
+  - {fileID: 11400000, guid: 109b6582dd2f59b4cb5fc59d8261c9d9, type: 2}
+  - {fileID: 11400000, guid: 325a428c40aa53143b056186173d4e82, type: 2}
+  - {fileID: 11400000, guid: ee4982f5d24a6ee438e6a9c4c03ca030, type: 2}
+  - {fileID: 11400000, guid: 190b3ecfcc068304294220d612ed2317, type: 2}
+  - {fileID: 11400000, guid: 0749d63bce230c440baffcc44989c0e7, type: 2}
+  - {fileID: 11400000, guid: 41dbbdb894e67654eb94d1fcacaaf195, type: 2}
+  - {fileID: 11400000, guid: 1fa67fe1b3a94dc449716e1dc9c81aec, type: 2}
+  - {fileID: 11400000, guid: 166f756fc4feb2d4891e2f58dbcb62bf, type: 2}
+  - {fileID: 11400000, guid: 0586783166434094aad2b8c47a1f50cb, type: 2}
+  - {fileID: 11400000, guid: 99f7a09db9ddaad4c87fe6e8588ca111, type: 2}
+  _stageCount: 0
 --- !u!4 &1930667512
 Transform:
   m_ObjectHideFlags: 0

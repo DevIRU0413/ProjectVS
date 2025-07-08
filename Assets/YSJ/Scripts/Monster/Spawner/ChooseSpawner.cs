@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-using static UnityEditor.PlayerSettings;
-
 namespace ProjectVS.Monster.Spawner
 {
     public class ChooseSpawner : SpawnerBase

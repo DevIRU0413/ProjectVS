@@ -1,0 +1,211 @@
+대사 고유 번호	할당 캐릭터	등장 호감도	등장 일러스트 파일 명	대사 내용	연결 씬 이미지	기획자 확인란	발생 시점	장착 코스튬
+DialgueID	CharacterID	ChkLike	ChrIllust	DialougeKR	LinkScene		WhenID	NowClothes
+Int	Int	Int	String	String	String		int	string
+100001	2	1	Images/standingCG/ShopNPC1_Kidnapped	꺄…악!		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100002	1	1	Images/standingCG/Hero1_Surprised	어엇?? 사람?		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100003	1	1	Images/standingCG/Hero1_Surprised	잠, 잠시만요??!		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100004	2	1	Images/standingCG/ShopNPC1_Surprised	뭐야, 사람이 왜 여기에??		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100005	1	1	Images/standingCG/Hero1_Worried	괜찮으세요?		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100006	2	1	Images/standingCG/ShopNPC1_Mad	무슨 정신으로 여길 온거야? 여기 위험한 몰라?		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100007	1	1	Images/standingCG/Hero1_AwkwardSmile	(까..까칠해) 		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100008	1	1	Images/standingCG/Hero1_BigSmile	이래뵈도 용사거든요!		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100009	2	1	Images/standingCG/ShopNPC1_Mad	용사? 흥, 지나가는 개가 웃겠다.		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100010	1	1	Images/standingCG/Hero1_AwkwardSmile	진, 진짜인데…어? 상처가…		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100011	2	1	Images/standingCG/ShopNPC1_Normal	아. 괜찮아. 신경쓰지 마.		첫 번째 웨이브 보스 처치 시 발생하는 스크립트(스테이지 끝나고)	4	기본
+100012	2	1	Images/standingCG/ShopNPC1_Mad	왜 따라오는거야!!?		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100013	1	1	Images/standingCG/Hero1_BigSmile	용사로서 상처입은 사람을 무시할 순 없죠!		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100014	2	1	Images/standingCG/ShopNPC1_Tsundere	…이정도 상처는 나혼자서도 치료할 수 있어.		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100015	1	1	Images/standingCG/Hero1_Curious	그리고 보니…여긴		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100016	2	1	Images/standingCG/ShopNPC1_Mad	눈치 한 번 더럽게 느리네! 이제서야 안 거야?		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100017	1	1	Images/standingCG/Hero1_Surprised	상점 주인이셨군요?		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100018	2	1	Images/standingCG/ShopNPC1_Tsundere	흥! / 뭐, 온김에 뭐라도 사던지…		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100019	1	1	Images/standingCG/Hero1_AwkwardSmile	사..사는 거군요.		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100020	2	1	Images/standingCG/ShopNPC1_Mad	그럼 뭐? 구해줬으니 공짜로 달라고?		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100021	1	1	Images/standingCG/Hero1_AwkwardSmile	그, 그건 아닌데…하하		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100022	2	1	Images/standingCG/ShopNPC1_Tsundere	……………		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100023	2	1	Images/standingCG/ShopNPC1_Tsundere	…야		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100024	1	1	Images/standingCG/Hero1_Surprised	어…진짜 주시는 거예요?		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100025	2	1	Images/standingCG/ShopNPC1_Tsundere	사람을 오랜만에 봤다느니…사실은 고마웠다느니 그런 건 아니니까!! 오해하지 마!		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100026	2	1	Images/standingCG/ShopNPC1_Tsundere	그, 그냥 물건이 남아도니까 주는거야!		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100027	2	1	Images/standingCG/ShopNPC1_Tsundere	어차피 못 팔면 버리려고 했어!		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100028	1	1	Images/standingCG/Hero1_BigSmile	아하하…감사해요.		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100029	1	1	Images/standingCG/Hero1_BigSmile	(사람을 오랜만에 만나고 사실은 구해줘서 고마웠구나.)		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100030	1	1	Images/standingCG/Hero1_BigSmile	위치도 알았고 가끔 찾아 올께요.		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100031	2	1	Images/standingCG/ShopNPC1_Mad	찾아오지마!		위의 스크립트 종료 후 상점으로 강제 이동 발생하는 스크립트(강제)	1	기본
+100032	1	1	Images/standingCG/Hero1_Curious	저기 어쩌다 괴물에게 붙잡힌거죠?		호감도 레벨 1 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 1(대화)	2	기본
+100033	2	1	Images/standingCG/ShopNPC1_Tsundere	그, 그냥! 우연히 숲을 지나가다…		호감도 레벨 1 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 1(대화)	2	기본
+100034	1	1	Images/standingCG/Hero1_Basic	아무리 귀여운 몬스터라지만, 조심하셔야 해요.		호감도 레벨 1 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 1(대화)	2	기본
+100035	2	1	Images/standingCG/ShopNPC1_Embarrassed	귀, 귀여운…? 너 취향이 독특하구나?		호감도 레벨 1 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 1(대화)	2	기본
+100036	2	1	Images/standingCG/ShopNPC1_Frown	….		호감도 레벨 1 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 1(대화)	2	기본
+100037	1	1	Images/standingCG/Hero1_AwkwardSmile	하하하…(표정이 무서워…)		호감도 레벨 1 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 1(대화)	2	기본
+100038	2	1	Images/standingCG/ShopNPC1_Frown	….		챕터 1 스크립트가 종료된 후 발생하는 반복 스크립트(반복)	3	기본
+100039	1	6	Images/standingCG/Hero1_Frown	….		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100040	2	6	Images/standingCG/ShopNPC1_Awkward	….		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100041	1	6	Images/standingCG/Hero1_Frown	제가 뭘 말하려지 아시죠?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100042	2	6	Images/standingCG/ShopNPC1_Awkward	…알아		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100043	1	6	Images/standingCG/Hero1_Frown	….		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100044	2	6	Images/standingCG/ShopNPC1_Awkward	….		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100045	1	6	Images/standingCG/Hero1_WeakAnger	위험하다고요!!		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100046	2	6	Images/standingCG/ShopNPC1_Mad	알아! 안다고!!		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100047	1	6	Images/standingCG/Hero1_WeakAnger	왜 그렇게 밖을 돌아다니는 거에요!?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100048	2	6	Images/standingCG/ShopNPC1_Tsundere	네가 알아서 뭐하게? 네가 궁금하면 내가 알려줘야 해?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100049	2	6	Images/standingCG/ShopNPC1_Tsundere	너, 뭐 돼?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100050	1	6	Images/standingCG/Hero1_Frown	괴물에게 붙잡힌 당신의 목숨을 구해주는 용사…		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100051	2	6	Images/standingCG/ShopNPC1_Awkward	…		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100052	2	6	Images/standingCG/ShopNPC1_Mad	아아아아아!! 시끄러! 내가 나가든 말든 뭔 상관이야?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100053	1	6	Images/standingCG/Hero1_WeakAnger	이제 안 구해줍니다?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100054	2	6	Images/standingCG/ShopNPC1_Awkward	…그, 그건 너무하잖아!		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100055	2	6	Images/standingCG/ShopNPC1_Awkward	사람이 위험에 처했는데 무시하는 영웅이 어디있어?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100056	2	6	Images/standingCG/ShopNPC1_Mad	선택적 영웅이야?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100057	1	6	Images/standingCG/Hero1_WeakAnger	그 위험에 스스로 들어가는 사람을 위해 위험을 감수하는 바보는 아니라고요.		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100058	2	6	Images/standingCG/ShopNPC1_Mad	이런 곳에 다니는 것만으로 넌 충분히 바보야!		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100059	1	6	Images/standingCG/Hero1_Frown	….		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100060	2	6	Images/standingCG/ShopNPC1_Normal	….아, 알았어! 3%!!!		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100061	1	6	Images/standingCG/Hero1_Curious	3%?		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100062	2	6	Images/standingCG/ShopNPC1_Normal	할인해주겠다고! 불만 없지??		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100063	1	6	Images/standingCG/Hero1_BigSmile	딜.		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100064	2	6	Images/standingCG/ShopNPC1_Frown	이런 게 영웅이라니…세상이 망하긴 했구나.		호감도 레벨 6 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 2(대화)	2	기본
+100065	2	6	Images/standingCG/ShopNPC1_Tsundere	네가 구해주니까 특별히 해주는거야…!!		챕터 2 스크립트가 종료된 후 발생하는 반복 스크립트(반복)	3	기본
+100066	2	10	Images/standingCG/ShopNPC1_Awkward	끄응….		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100067	1	10	Images/standingCG/Hero1_Dissatisfaction	끄응이 아니라고요.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100068	1	10	Images/standingCG/Hero1_Dissatisfaction	이제 말해주시죠.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100069	2	10	Images/standingCG/ShopNPC1_Embarrassed	뭐…뭘? 난 너한테 딱히 할 말이…		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100070	1	10	Images/standingCG/Hero1_Frown	왜. 어째서. 무엇을 위해. 그런 위험을 감수하고 괴물의 주둔지로 가시는거죠?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100071	2	10	Images/standingCG/ShopNPC1_Awkward	…끄응		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100072	1	10	Images/standingCG/Hero1_Worried	지금이야 운이 좋아서 제가 발견하고 구해주지만, 혹여나 발견하지 못하면…		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100073	2	10	Images/standingCG/ShopNPC1_Normal	알아. 나도 장난감처럼 다뤄지다 가축처럼 잡아먹겠지.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100074	2	10	Images/standingCG/ShopNPC1_LightSmile	음~ 난 먹을 게 없으니까. 잡아먹지는 않고 그냥 죽이려나?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100075	1	10	Images/standingCG/Hero1_WeakAnger	장난칠 상황이 아니라고요.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100076	2	10	Images/standingCG/ShopNPC1_Normal	나도 장난치는 거 아니야.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100077	1	10	Images/standingCG/Hero1_WeakAnger	제가 꼭 괴물들을 쓰러뜨릴 때까지 여기서 기다리세요…!		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100078	1	10	Images/standingCG/Hero1_BigSmile	이 영웅을 믿으세요!		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100079	1	10	Images/standingCG/Hero1_BigSmile	영웅은 약자를 돕기 위해 존재하는 법이니까요!		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100080	2	10	Images/standingCG/ShopNPC1_Normal	….		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100081	2	10	Images/standingCG/ShopNPC1_Normal	네가 실패하면?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100082	1	10	Images/standingCG/Hero1_Surprised	네?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100083	2	10	Images/standingCG/ShopNPC1_Normal	‘네가 실패하면?’ 이라고 말했어.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100084	2	10	Images/standingCG/ShopNPC1_Normal	나보고 또 살아남은 도망자가 되라고?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100085	2	10	Images/standingCG/ShopNPC1_LightSmile	미안한데 싫어. 차라리 죽고 말지.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100086	1	10	Images/standingCG/Hero1_Embarrassed	살아남은 도망자라니…		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100087	2	10	Images/standingCG/ShopNPC1_LightSmile	너도 알다시피 세상이 괴물때문에 난리가 났잖아?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100088	2	10	Images/standingCG/ShopNPC1_LightSmile	많은 사람들이 잡아먹히거나 장난감처럼 다뤄지다 죽었지.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100089	2	10	Images/standingCG/ShopNPC1_Normal	난 지금까지 그 상황에서 살아남아 도망쳤어.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100090	3	10	Images/standingCG/Flashback_Cutscene1	그리고 도망가는 곳에는 언제나 영웅이라고 자신을 소개하는 자들이 있었지.	상점 주인 과거회상 1	호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화) / 배경 그림/스크립트는 나옴	2	기본
+100091	3	10	Images/standingCG/Flashback_Cutscene2	자신을 믿으라며 꼭 괴물을 해치우고 세상을 구하겠다고 했지.	상점 주인 과거회상 1	호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화) / 배경 그림/스크립트는 나옴	2	기본
+100092	3	10	Images/standingCG/Flashback_Cutscene3	그래. 너처럼 말이야.	상점 주인 과거회상 1	호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화) / 배경 그림/스크립트는 나옴	2	기본
+100093	3	10	Images/standingCG/Flashback_Cutscene4	많은 사람들은 그 영웅을 믿었어.	상점 주인 과거회상 2	호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화) / 배경 그림/스크립트는 나옴	2	기본
+100094	3	10	Images/standingCG/Flashback_Cutscene5	그래. 인간이란 자신이 못하는 걸 해내는 사람을 보면 그 사람을 믿게되는 나약한 자들이니까. 과거의 나도 그랬지.	상점 주인 과거회상 3	호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화) / 배경 그림/스크립트는 나옴	2	기본
+100095	2	10	Images/standingCG/ShopNPC1_LightSmile	죽었어.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100096	2	10	Images/standingCG/ShopNPC1_LightSmile	괴물한테 팔 다리가 뜯겨나가고 살려달라고 소리치면서 잡아먹혔지.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100097	1	10	Images/standingCG/Hero1_SmallShock	…그럴리가		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100098	2	10	Images/standingCG/ShopNPC1_Normal	자! 여기서 문제		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100099	2	10	Images/standingCG/ShopNPC1_Normal	그 영웅을 믿었던 사람들은 영웅이 죽고 나서 어떻게 됐을 것 같아?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100100	1	10	Images/standingCG/Hero1_AwkwardSmile	안전한 곳으로 도망쳤다…?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100101	2	10	Images/standingCG/ShopNPC1_LightSmile	안전? 도망?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100102	2	10	Images/standingCG/ShopNPC1_BigSmile	하하하하하하!!		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100103	2	10	Images/standingCG/ShopNPC1_BigSmile	넌 처음봤을 때부터 느꼈지만 참 이상해.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100104	2	10	Images/standingCG/ShopNPC1_LightSmile	틀렸어.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100105	2	10	Images/standingCG/ShopNPC1_LightSmile	모두 괴물한테 죽었어. 아무것도 못하고 무력하게 말이지.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100106	2	10	Images/standingCG/ShopNPC1_LightSmile	그리고 난 언제나 그 살육의 현장에서 운 좋게 살아남았지.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100107	1	10	Images/standingCG/Hero1_SmallShock	….		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100108	2	10	Images/standingCG/ShopNPC1_Normal	이제 도망치는 건 실증났어.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100109	2	10	Images/standingCG/ShopNPC1_Normal	누군가 죽는 걸 보는 건 더더욱 싫고		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100110	2	10	Images/standingCG/ShopNPC1_Normal	그래서 나 혼자 여기에 터를 잡은거야.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100111	2	10	Images/standingCG/ShopNPC1_Normal	죽어도 나 혼자 죽을 수 있도록.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100112	1	10	Images/standingCG/Hero1_WeakAnger	그래도 지금처럼 밖에서 행동하시는 건 너무 무모해요!!		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100113	2	10	Images/standingCG/ShopNPC1_Normal	알아.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100114	2	10	Images/standingCG/ShopNPC1_Normal	네가 아니었으면 난 벌써 잡혀 죽었겠지.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100115	2	10	Images/standingCG/ShopNPC1_Normal	그래도 괴물 녀석들한테 알려주고 싶어.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100116	2	10	Images/standingCG/ShopNPC1_LightSmile	이런 약자라도 발버둥을 칠 수 있다는 걸 말이야.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100117	1	10	Images/standingCG/Hero1_Embarrassed	…이해할 수 없어요.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100118	1	10	Images/standingCG/Hero1_Embarrassed	그냥 죽을 뿐이잖아요?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100119	2	10	Images/standingCG/ShopNPC1_Frown	…그냥 죽을 뿐이라고?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100120	2	10	Images/standingCG/ShopNPC1_Normal	하하…내 과거도 알려줬는데 다 쓸모없는 이야기였구나.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100121	2	10	Images/standingCG/ShopNPC1_LightSmile	뭐 딱히 이해를 바란 건 아니니까. 상관없나?		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100122	1	10	Images/standingCG/Hero1_Embarrassed	저기…		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100123	2	10	Images/standingCG/ShopNPC1_Normal	여기까지.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100124	2	10	Images/standingCG/ShopNPC1_Normal	여기서 대화를 더 이어가면 서로에게 좋을 게 없을 것 같아.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100125	2	10	Images/standingCG/ShopNPC1_Normal	하지만, 난 여기서 죽음을 기다릴 생각은 없어. 도망칠 생각도 없고.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100126	2	10	Images/standingCG/ShopNPC1_Normal	그들을 위해서라도 약자들의 발버둥을 괴물에게 보여줄거야.		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100127	1	10	Images/standingCG/Hero1_Worried	….		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100128	2	10	Images/standingCG/ShopNPC1_LightSmile	....		호감도 레벨 10 이상일 경우 대화 이벤트 실행시 발생하는 스크립트 챕터 3(대화)	2	기본
+100129	2	10	Images/standingCG/ShopNPC1_LightSmile	쓸데없는 시간을 뺏었네. 미안.		챕터 3 스크립트가 종료된 후 발생하는 반복 스크립트(반복)	3	기본
+100130	2	20	Images/standingCG/ShopNPC1_Tsundere	너구나?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100131	1	20	Images/standingCG/Hero1_Seriousness	…단도직입적으로 말할게요. 여기서 떠나세요.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100132	2	20	Images/standingCG/ShopNPC1_LightSmile	 전에 충분히 말해준 거 같은데?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100133	2	20	Images/standingCG/ShopNPC1_LightSmile	거절할게.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100134	1	20	Images/standingCG/Hero1_WeakAnger	위험하니까 떠나시라고요!!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100135	1	20	Images/standingCG/Hero1_WeakAnger	이제 제가 괴물을 해치울 수 있을 지 없을 지 확신이 안 선다고요!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100136	2	20	Images/standingCG/ShopNPC1_LightSmile	…크크큭, 왜? 이젠 진짜로 귀여운 괴물을 죽이는데 양심의 가책이라도 느끼는거야?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100137	2	20	Images/standingCG/ShopNPC1_LightSmile	더이상 못 죽이겠어?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100138	2	20	Images/standingCG/ShopNPC1_LightSmile	그게 정상이긴 하지.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100139	1	20	Images/standingCG/Hero1_WeakAnger	그게 아니라 뭔가 이상한 괴물들이 나타나기 시작했다고요…!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100140	1	20	Images/standingCG/Hero1_BigShock	징그럽고…뭔가 기괴한…		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100141	2	20	Images/standingCG/ShopNPC1_Normal	…흔한 괴물이잖아.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100142	1	20	Images/standingCG/Hero1_Embarrassed	무슨 말을 하시는 거예요?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100143	1	20	Images/standingCG/Hero1_Embarrassed	괴물들은 기본적으로 귀엽게 생겼….		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100144	2	20	Images/standingCG/ShopNPC1_Embarrassed	…?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100145	2	20	Images/standingCG/ShopNPC1_Frown	……????		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100146	1	20	Images/standingCG/Hero1_AwkwardSmile	왜 그렇게 보시는거죠?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100147	2	20	Images/standingCG/ShopNPC1_Embarrassed	너 설마 진짜 괴물들이 귀엽게 보이는거야?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100148	1	20	Images/standingCG/Hero1_AwkwardSmile	그, 그런데요? 뭔가 문제가 있나요?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100149	2	20	Images/standingCG/ShopNPC1_LightSmile	너와 대화하다보면 언제나 위화감이 느껴지곤 했는데…기분탓이 아니었구나.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100150	1	20	Images/standingCG/Hero1_Seriousness	위, 위화감이라니…		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100151	2	20	Images/standingCG/ShopNPC1_Normal	괴물이 귀엽게 보이고, 세상에 안전한 장소가 있다고 믿고 있다는 게 정상은 아니었지.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100152	1	20	Images/standingCG/Hero1_Embarrassed	대체 무슨 말씀을 하시는거예요?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100153	2	20	Images/standingCG/ShopNPC1_LightSmile	아. 그래		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100154	2	20	Images/standingCG/ShopNPC1_LightSmile	그래서 나보고 계속 떠나라고 한 거였나?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100155	1	20	Images/standingCG/Hero1_Embarrassed	아랫마을에 가시면 안전하게 있을 수 있으니까요!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100156	2	20	Images/standingCG/ShopNPC1_Embarrassed	아랫마을?? 설마 [프라이둠]?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100157	1	20	Images/standingCG/Hero1_Unrest	맞, 맞아요.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100158	1	20	Images/standingCG/Hero1_Unrest	문제가 있나요..?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100159	2	20	Images/standingCG/ShopNPC1_BigSmile	하하하하하하하하하!!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100160	1	20	Images/standingCG/Hero1_Embarrassed	….?!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100161	1	20	Images/standingCG/Hero1_Embarrassed	왜 그러세요..?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100162	1	20	Images/standingCG/Hero1_Embarrassed	오늘따라 이상하세요…!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100163	2	20	Images/standingCG/ShopNPC1_BigSmile	반대야.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100164	2	20	Images/standingCG/ShopNPC1_LightSmile	이상한 건 너야. 자칭 영웅		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100165	1	20	Images/standingCG/Hero1_Embarrassed	네?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100166	2	20	Images/standingCG/ShopNPC1_LightSmile	프라이둠은 괴물이 세상에 나타난 뒤, 가장 먼저 파괴되었어.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100167	2	20	Images/standingCG/ShopNPC1_LightSmile	그 소식으로 모두가 괴물의 등장을 알게 됐는 걸?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100168	2	20	Images/standingCG/ShopNPC1_LightSmile	넌 그 마을의 생존자인 모양인데…		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100169	1	20	Images/standingCG/Hero1_WeakAnger	그럴 일 없어요!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100170	1	20	Images/standingCG/Hero1_WeakAnger	제가 이곳에 오기 전까지만 해도 마을은 있었다고요!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100171	1	20	Images/standingCG/Hero1_WeakAnger	모두…		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100172	2	20	Images/standingCG/ShopNPC1_LightSmile	넌 마을이 파괴될 때 충격을 못이겨 모든 걸 보고 싶은대로 보고 있는거야.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100173	2	20	Images/standingCG/ShopNPC1_LightSmile	그래, 충분히 이해해.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100174	2	20	Images/standingCG/ShopNPC1_LightSmile	미쳐버린 세상에서 살아남기 위해선 스스로가 미쳐버려야 하지.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100175	2	20	Images/standingCG/ShopNPC1_LightSmile	점점 기괴한 괴물이 보인다며?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100176	2	20	Images/standingCG/ShopNPC1_LightSmile	환상 뿐인 마을에서 살다가 이곳으로 오면서 점점 현실을 깨달게 된 거지.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100177	1	20	Images/standingCG/Hero1_StrongAnger	아, 아니야!!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100178	2	20	Images/standingCG/ShopNPC1_LightSmile	현실을 받아들여.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100179	2	20	Images/standingCG/ShopNPC1_LightSmile	아니지.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100180	2	20	Images/standingCG/ShopNPC1_LightSmile	환상에 갇힌 채로 있는 게 더 좋으려나?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100181	1	20	Images/standingCG/Hero1_Unrest	난 정상이야.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100182	1	20	Images/standingCG/Hero1_MentalBreakdown	미쳐버린 건 오히려 당신이겠지!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100183	1	20	Images/standingCG/Hero1_MentalBreakdown	약한 주제에 괴물에게 덤벼들고…		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100184	1	20	Images/standingCG/Hero1_MentalBreakdown	그래, 처음부터 정상이 아니었어.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100185	1	20	Images/standingCG/Hero1_MentalBreakdown	나한테 다가오지마. 나까지 미치게 만들지 마!!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100186	2	20	Images/standingCG/ShopNPC1_LightSmile	그래. 나도 미쳐버린 걸 수도 있지.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100187	2	20	Images/standingCG/ShopNPC1_LightSmile	그런 세상이잖아?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100188	2	20	Images/standingCG/ShopNPC1_LightSmile	왜 새삼스럽게 그래?		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100189	1	20	Images/standingCG/Hero1_MentalBreakdown	난 아니야. 마을도, 부모님도 전부 그대로 있어.		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100190	2	20	Images/standingCG/ShopNPC1_LightSmile	   .....		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100191	2	20	Images/standingCG/ShopNPC1_BigSmile	하하하하하하하하!!		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100192	1	20	Images/standingCG/Hero1_MentalBreakdown	….		호감도 레벨 20 이상일 경우/ 최종 스테이지 돌입 전 / 대화 이벤트 실행시 발생하는 스크립트 챕터 4(대화)	6	기본
+100193	2	20	Images/standingCG/ShopNPC1_LightSmile	차라리 나도 너처럼 단단히 미쳐버렸다면 얼마나 좋았을까.		챕터 4 스크립트가 종료된 후 발생하는 반복 스크립트(반복)	3	기본
+100194	1	15	Images/standingCG/Hero1_SmallShock	뭐, 뭐였지.		호감도 레벨 15 달성 시 스테이지 클리어 후 스크립트 등장(스테이지 끝나고)	4	기본
+100195	1	15	Images/standingCG/Hero1_SmallShock	잘못 본건가…?		호감도 레벨 15 달성 시 스테이지 클리어 후 스크립트 등장(스테이지 끝나고)	4	기본
+100196	1	18	Images/standingCG/Hero1_SmallShock	잘못 본게 아니야…		호감도 레벨 18 달성 시 스테이지 클리어 후 스크립트 등장(스테이지 끝나고)	4	기본
+100197	1	18	Images/standingCG/Hero1_BigShock	새로운 형태의 괴물이…		호감도 레벨 18 달성 시 스테이지 클리어 후 스크립트 등장(스테이지 끝나고)	4	기본
+100198	1	18	Images/standingCG/Hero1_BigShock	지금까지 와는 다른 기괴한 괴물이 나타나기 시작했어.		호감도 레벨 18 달성 시 스테이지 클리어 후 스크립트 등장(스테이지 끝나고)	4	기본
+100199	1	18	Images/standingCG/Hero1_BigShock	내 육체가 본능적으로 위험하다고 말하고 있어.		호감도 레벨 18 달성 시 스테이지 클리어 후 스크립트 등장(스테이지 끝나고)	4	기본
+100200	1	18	Images/standingCG/Hero1_BigShock	위험해…		호감도 레벨 18 달성 시 스테이지 클리어 후 스크립트 등장(스테이지 끝나고)	4	기본
+100201	1	18	Images/standingCG/Hero1_BigShock	이건 정말 위험해…!		호감도 레벨 18 달성 시 스테이지 클리어 후 스크립트 등장(스테이지 끝나고)	4	기본
+100202	2	4	Images/standingCG/ShopNPC1_Tsundere	항상 구해줘서 고, 고마워.		호감도 3이상 달성 시 발생하는 반복 스크립트	3	기본
+100203	2	8	Images/standingCG/ShopNPC1_Awkward	아하하하...안녕? 고생하네?		호감도 8이상 달성 시 발생하는 반복 스크립트	3	기본
+100204	2	13	Images/standingCG/ShopNPC1_Embarrassed	...안녕? 구해줘서 고마워.		호감도 13이상 달성 시 발생하는 반복 스크립트	3	기본
+100205	2	16	Images/standingCG/ShopNPC1_Tsundere	표, 표정이 왜 그래? 무슨 일 있어?		호감도 16이상 달성 시 발생하는 반복 스크립트	3	기본
+200001	2	0	Images/standingCG/ShopNPC1_Costume_Bikini	바다도 아닌데 비키니라고? 너...변, 변태야??		코스튬 비키니 착용시 발생하는 일시 반복 스크립트	7	차이나드레스
+200002	2	0	Images/standingCG/ShopNPC1_Costume_Maid	주인님~ 뭘 드릴까요? 막 이래		코스튬 메이드복 착용시 발생하는 일시 반복 스크립트	7	메이드복
+200003	2	0	Images/standingCG/ShopNPC1_Costume_ChinaDress	내, 내 취향은 아닌데 특별히 너니까 입어주는 거야!		코스튬 치파오 착용 시 발생하는 일시 반복 스크립트	7	수영복

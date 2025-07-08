@@ -1,0 +1,7 @@
+										
+	캐릭터 고유 번호	캐릭터 이름	캐릭터 고유 장비 고유 번호	캐릭터 공격력	캐릭터 방어력	캐릭터 체력	캐릭터 공격 속도	캐릭터 이동 속도	캐릭터 스탠딩 스프라이트	캐릭터 플레이버 텍스트
+	CharacterID	CharacterName	CharUniqueItem	CharAtkStat	CharDefStat	CharHPStat	CharASStat	CharSpeedStat	CharStandingImg	CharFlavorTxt
+	int	string	int	int	int	int	int	int	string	string
+	1000	모험가	10001	10	10	10	10	5	(파일 없음)	포부를 갖고 집에서 뛰쳐나온 소녀. 열심히 아르바이트 해서 구한 구매한 검이 최고의 보물
+	1001	나무꾼	10002	10	10	10	10	5	(파일 없음)	가장 강해보이는 무기를 들고 나왔다. 작업 도구를 잃어버린 아버지 오열 중.
+	1002	마법사	10003	10	10	10	10	5	(파일 없음)	길가에 떨어진 나뭇가지를 주웠다. 모양만 그럴싸하나 본인의 재능 덕택에 마법이 나간다.

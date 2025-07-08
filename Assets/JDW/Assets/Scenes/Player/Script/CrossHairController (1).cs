@@ -1,11 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using ProjectVS.JDW;
-
-using UnityEngine;
-
-using static UnityEditor.Experimental.GraphView.GraphView;
+﻿using UnityEngine;
 
 public class CrossHairController : MonoBehaviour
 {

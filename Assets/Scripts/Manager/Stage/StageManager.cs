@@ -1,4 +1,6 @@
-﻿using ProjectVS.Data;
+﻿using System.Collections.Generic;
+
+using ProjectVS.Data;
 using ProjectVS.Dialogue.DialogueManagerR;
 using ProjectVS.Interface;
 using ProjectVS.Manager;
@@ -14,7 +16,9 @@ namespace ProjectVS.Stage
     public class StageManager : SimpleSingleton<StageManager>, IManager, IGameStateListener
     {
         private const string TEST_STAGE_SIMPLE_DATA = "SO/Stage/Stage_Simple_Data";
-        private StageDataSO _stageDataSo;
+        [SerializeField] private List<StageDataSO> _stageDataSOList = new();
+        [SerializeField] private int _stageCount = 0;
+        private StageDataSO _currentStageDataSo;
 
         private StageFlowMachine _flowMachine;
         private StageContext _context;
@@ -32,11 +36,18 @@ namespace ProjectVS.Stage
         public void Initialize()
         {
             if (GameManager.Instance.GamePlayType == GamePlayType.Test)
-                _stageDataSo = Resources.Load<StageDataSO>(TEST_STAGE_SIMPLE_DATA);
+                _currentStageDataSo = Resources.Load<StageDataSO>(TEST_STAGE_SIMPLE_DATA);
             else
-                _stageDataSo = Resources.Load<StageDataSO>(TEST_STAGE_SIMPLE_DATA);
+            {
+                int stagetCount = PlayerDataManager.Instance.CurrentStageFloor;
+                _stageCount = stagetCount;
+                var current = _stageDataSOList[_stageCount];
+                _currentStageDataSo = current;
+                _stageCount++;
+                PlayerDataManager.Instance.CurrentStageFloor = _stageCount;
+            }
 
-            _context = StageInitializer.BuildContext(this.gameObject, _stageDataSo);
+            _context = StageInitializer.BuildContext(this.gameObject, _currentStageDataSo);
             if (_context == null)
             {
                 Debug.LogError("[StageManager] StageContext 생성 실패");
