@@ -20,6 +20,9 @@ namespace ProjectVS.UIs.CutSceneEffect.CutSceneController
     {
         [SerializeField] private List<CutSceneTypeObjectPair> _cutSceneObjects;
 
+        [SerializeField] private GameObject _battlePanel;
+        [SerializeField] private GameObject _itemInventoryPanel;
+
         [System.Serializable]
         public class CutSceneTypeObjectPair
         {
@@ -29,6 +32,10 @@ namespace ProjectVS.UIs.CutSceneEffect.CutSceneController
 
         public void PlayCutScene(CutSceneType type)
         {
+            _battlePanel.SetActive(false);
+            _itemInventoryPanel.SetActive(false);
+
+
             var target = _cutSceneObjects.Find(p => p.Type == type);
             if (target != null && target.CutSceneObject != null)
             {

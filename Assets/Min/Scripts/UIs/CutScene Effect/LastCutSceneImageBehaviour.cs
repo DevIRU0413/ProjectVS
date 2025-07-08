@@ -19,6 +19,9 @@ namespace ProjectVS.UIs.CutSceneEffect.LastCutSceneImageBehaviour
 
         [SerializeField] private CutSceneControllerClass _cutSceneController;
 
+        [SerializeField] private GameObject _battlePanel;
+        [SerializeField] private GameObject _itemInventoryPanel;
+
         public void OnClickLastOpeningImage()
         {
             // 캐릭터 선택 끝나고
@@ -30,6 +33,9 @@ namespace ProjectVS.UIs.CutSceneEffect.LastCutSceneImageBehaviour
         {
             // 인게임 씬 들어가자마자
             _introScene.SetActive(false);
+
+            _battlePanel.SetActive(true);
+            _itemInventoryPanel.SetActive(true);
         }
 
         public void OnClickLastNormalEndImage()
