@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using ProjectVS.Manager;
 using ProjectVS.UIs.CutSceneEffect.CutSceneController;
 
 using UnityEngine;
@@ -34,12 +36,14 @@ namespace ProjectVS.UIs.CutSceneEffect.LastCutSceneImageBehaviour
         {
             // 노말엔딩 끝나고 호출해야될 것 여기서 호출
             _normalEndScene.SetActive(false);
+            SceneLoader.Instance.LoadSceneAsync(SceneID.StoreScene);
         }
 
         public void OnClickLastTrueEndImage()
         {
             // 트루엔딩 끝나고 호출해야될 것 여기서 호출
             _trueEndScene.SetActive(false);
+            SceneLoader.Instance.LoadSceneAsync(SceneID.StoreScene);
         }
     }
 }
