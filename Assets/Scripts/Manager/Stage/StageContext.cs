@@ -32,5 +32,22 @@ namespace ProjectVS.Manager
 
             return isTimeOver && isBossDead;
         }
+
+        public bool IsTrueEnding()
+        {
+            int requiredDialogueID = PlayerDataManager.Instance.LastDialogueID;
+
+            return IsWinConditionMet()
+                && PlayerDataManager.Instance.BattleSceneCount == 30
+                && PlayerDataManager.Instance.CurrentAffinityLevel == 20
+                && PlayerDataManager.Instance.ReadDialogeIDs.Contains(requiredDialogueID);
+        }
+
+        public bool IsNormalEnding()
+        {
+            return IsWinConditionMet()
+                && PlayerDataManager.Instance.BattleSceneCount == 30
+                && !IsTrueEnding();
+        }
     }
 }
