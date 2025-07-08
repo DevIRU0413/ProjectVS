@@ -1,7 +1,10 @@
-﻿using ProjectVS.Unit;
+﻿using System;
+
+using ProjectVS.Unit;
 
 namespace ProjectVS.Monster.Data
 {
+    [Serializable]
     public class MonsterStats : UnitStats
     {
         private int _exp;
