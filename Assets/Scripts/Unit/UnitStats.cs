@@ -32,7 +32,7 @@ namespace ProjectVS.Unit
         public float CurrentAtk => _baseAtk * _weightAtk;
         public float CurrentDfs => _baseDfs * _weightDfs;
         public float CurrentSpd => _baseSpd * _weightSpd;
-        public float AtkSpd => _baseAtkSpd * _weightAtkSpd;
+        public float CurrentAtkSpd => _baseAtkSpd * _weightAtkSpd;
 
         public UnitStats(float currentHp, float baseMaxHp, float baseAtk, float baseDfs, float baseSpd, float baseAtkSpd)
         {
