@@ -97,6 +97,11 @@ namespace ProjectVS.JDW
 
             var loadedStats = PlayerDataManager.Instance.Stats;
 
+            var mapManager = FindObjectOfType<LoopTilemapManager>();
+            if (mapManager != null)
+                mapManager.SetPlayer(newPlayer.transform);
+
+
             // 저장된 값이 있으면 TSV 초기화 생략
             if (loadedStats != null && loadedStats.Level > 1)
             {

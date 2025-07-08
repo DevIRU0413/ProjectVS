@@ -15,8 +15,6 @@ namespace ProjectVS.JDW
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (_movedThisFrame >= 2) return; // 2번까지만 이동 허용
-            _movedThisFrame++;
 
             if (!IsActive) return;
             // 벗어난 콜라이더가 "Area" 태그를 가지고 있지 않으면 아무 작업도 하지 않고 종료
@@ -57,15 +55,15 @@ namespace ProjectVS.JDW
                 case "Ground":
                     if (Mathf.Abs(diffx - diffy) < THRESHOLD && dirx != 0 && diry != 0)
                     {
-                        transform.Translate(new Vector3(dirx * 80, diry * 80, 0));
+                        transform.Translate(new Vector3(dirx * 120, diry * 120, 0));
                     }
                     else if (diffx > diffy && dirx != 0)
                     {
-                        transform.Translate(Vector3.right * dirx * 80);
+                        transform.Translate(Vector3.right * dirx * 120);
                     }
                     else if (diffx < diffy && diry != 0)
                     {
-                        transform.Translate(Vector3.up * diry * 80);
+                        transform.Translate(Vector3.up * diry * 120);
                     }
                     break;
                 case "Enemy":
@@ -83,10 +81,6 @@ namespace ProjectVS.JDW
             }
 
             return (_playerMove == null) ? Vector3.zero : _playerMove.MoveInput;
-        }
-        void LateUpdate()
-        {
-            _movedThisFrame = 0;
         }
     }
 }
