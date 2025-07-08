@@ -25,6 +25,7 @@ namespace ProjectVS.Manager.Stage
             if (_ctx.Player.Stats.CurrentHp <= 0)
             {
                 _ctx.StageResult = StageResult.Lose;
+                _ctx.IsPlayerLose = true;
                 _fsm.ChangeState(StageFlowState.Exit);
                 return;
             }

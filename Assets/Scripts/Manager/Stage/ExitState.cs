@@ -1,4 +1,5 @@
 ﻿using ProjectVS.Interface;
+using ProjectVS.Utils.UIManager;
 
 namespace ProjectVS.Manager.Stage
 {
@@ -15,7 +16,7 @@ namespace ProjectVS.Manager.Stage
         {
             UnityEngine.Debug.Log($"[Stage] 종료 상태 진입. 결과: {_ctx.StageResult}");
             // 결과창 UI 띄우기 등 처리
-
+            UIManager.Instance.Show("Lose Panel");
             // 이겼을 때, 인벤토리 저장
             if (_ctx.StageResult == StageResult.Win)
                 Item.ItemManager.ItemManager.Instance.SendInventory();

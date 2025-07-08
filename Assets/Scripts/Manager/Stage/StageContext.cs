@@ -18,6 +18,8 @@ namespace ProjectVS.Manager
         public StageFlowState FlowState { get; set; } = StageFlowState.None;
         public StageResult StageResult { get; set; } = StageResult.None;
 
+        public bool IsPlayerLose;
+
         /// <summary>
         /// 승리 조건 확인
         /// </summary>
