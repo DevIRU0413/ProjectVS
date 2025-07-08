@@ -39,10 +39,11 @@ namespace ProjectVS.Manager.Stage
             ctx.Player = playerConfig;
 
             // 3-1. 플레이어에게 아이템 주기
-            // ItemDatabase.Instance.GetItem();
+            var saveItem = PlayerDataManager.Instance.InventoryItems[0];
+            ItemManager.Instance.Inventory.AddItem(saveItem);
 
             // 4. 몬스터 스폰 초기화
-            var spawner = root.GetOrAddComponent<MonsterSpawnController>();
+            var spawner = new MonsterSpawnController();
             spawner.Init(playerGO, ctx.StageData.MaxSpawnableCount, ctx.StageData.spawnerConfig);
             ctx.Spawner = spawner;
 

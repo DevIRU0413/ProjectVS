@@ -1306,6 +1306,8 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 9fa64db7aeabf7744b583be8fd0a7524, type: 2}
   _normalSlashInterval: 0
   _finishSlashActionDelay: 2
+  _isNormalSlashCamShake: 0
+  _isFinishSlashCamShake: 0
   _normalHitScanner: {fileID: 5442597340470379425}
   _finishHitScanner: {fileID: 5442597340470379425}
   _attackRange: 15
@@ -1370,6 +1372,8 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 9fa64db7aeabf7744b583be8fd0a7524, type: 2}
   _normalSlashInterval: 0
   _finishSlashActionDelay: 2
+  _isNormalSlashCamShake: 0
+  _isFinishSlashCamShake: 0
   _normalHitScanner: {fileID: 5734617626533393539}
   _finishHitScanner: {fileID: 2477257253109287881}
   _attackRange: 25
@@ -1385,6 +1389,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 257882931130782202, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: <MonsterID>k__BackingField
+      value: 40010
+      objectReference: {fileID: 0}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.size
       value: 4

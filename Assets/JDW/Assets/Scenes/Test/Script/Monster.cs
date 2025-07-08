@@ -1,6 +1,4 @@
-﻿using ProjectVS;
-using ProjectVS.Data;
-using ProjectVS.Manager;
+﻿using ProjectVS.Manager;
 
 using UnityEngine;
 

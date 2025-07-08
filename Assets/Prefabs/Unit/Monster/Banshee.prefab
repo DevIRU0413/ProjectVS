@@ -303,7 +303,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4350536783758570103}
   - component: {fileID: 211638936342899880}
-  - component: {fileID: 7256501970955362073}
   - component: {fileID: 8287221502957274306}
   - component: {fileID: 8717279174655346626}
   - component: {fileID: 6582833408047252876}
@@ -361,24 +360,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &7256501970955362073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6051400608539244084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e75c4a0767410754783640c778641651, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <ID>k__BackingField: 0
-  <Hp>k__BackingField: 1
-  <ATK>k__BackingField: 1
-  <DFS>k__BackingField: 0
-  <SPD>k__BackingField: 3
-  <ATKSPD>k__BackingField: 1
 --- !u!114 &8287221502957274306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,6 +398,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 6703767989880988265}
+  <MonsterID>k__BackingField: 30030
+  <Name>k__BackingField: N/A
   <CurrentStateType>k__BackingField: 0
   <IsStateLock>k__BackingField: 0
   <Target>k__BackingField: {fileID: 0}

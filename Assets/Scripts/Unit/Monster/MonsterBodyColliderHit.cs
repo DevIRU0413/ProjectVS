@@ -29,14 +29,14 @@ namespace ProjectVS.Monster
         public virtual void HitTriggerStay(Collider2D coll)
         {
             if (_unitStats == null) return;
-            if (_hitTime + _unitStats.AtkSpd > Time.time) return;
+            if (_hitTime + _unitStats.CurrentAtkSpd > Time.time) return;
             Hit(coll.gameObject);
         }
 
         public virtual void HitCollisionStay(Collision2D coll)
         {
             if (_unitStats == null) return;
-            if (_hitTime + _unitStats.AtkSpd > Time.time) return;
+            if (_hitTime + _unitStats.CurrentAtkSpd > Time.time) return;
             Hit(coll.gameObject);
         }
 

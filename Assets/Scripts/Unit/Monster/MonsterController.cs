@@ -2,78 +2,64 @@
 using System.Collections.Generic;
 
 using ProjectVS.Interface;
-using ProjectVS.JDW;
 using ProjectVS.Monster.Data;
 using ProjectVS.Monster.State;
-using ProjectVS.Unit;
+using ProjectVS.Stage;
 using ProjectVS.Unit.Monster;
 using ProjectVS.Unit.Monster.Phase;
-using ProjectVS.Unit.Player;
 using ProjectVS.Util;
 
 using UnityEngine;
 
 namespace ProjectVS.Monster
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(UnitStatsConfig))]
-    [RequireComponent(typeof(MonsterPhaseController))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(MonsterPhaseController))]
     public class MonsterController : MonoBehaviour, IDamageable, IPoolable
     {
-        private bool _isInit = false;
-
+        #region Serialized Fields
         [SerializeField] private GameObject _body;
-        private Vector3 _bodyScale;
-
-        // FSM 상태 관리
-        private Dictionary<MonsterStateType, MonsterState> _states = new();
-        private MonsterState _currentState;
-
-        public int MonsterID { get; private set; }
-
+        [SerializeField] private float _stopMoveRange = 0.1f;
+        [field: SerializeField] public int MonsterID { get; private set; } = -1;
+        [field: SerializeField] public string Name { get; private set; } = "N/A";
         [field: SerializeField] public MonsterStateType CurrentStateType { get; private set; } = MonsterStateType.None;
         [field: SerializeField] public bool IsStateLock { get; private set; } = false;
-
         [field: SerializeField] public GameObject Target { get; private set; }
-
-        // 상태 판단 프로퍼티
-        public bool IsDeath => CurrentStateType == MonsterStateType.Death;
-        public bool IsMove => MoveDirection != Vector3.zero && MoveDirection.magnitude > _stopMoveRange;
-        public bool IsWin => false;
-
-        public MonsterAnimationPlayer Anim { get; private set; }
-        [field: SerializeField] public MonsterStats Stats { get; private set; }
-        public Vector3 MoveDirection { get; private set; } = Vector3.zero;
-
-        public Action OnHit { get; set; }
-        public Action OnDeath;
-
-        // 외부에서 효과 추가
-        public Action OnSpawn { get; set; }     // 예상 효과: 등장 이펙트, 사운드, 연출 추가
-        public Action OnDespawn { get; set; }   // 예상 효과: 데스 카운트 갱신, 등장 시 UI
-
-        // 이동 관련
-        [Header("Move State")]
-        [SerializeField]
-        private float _stopMoveRange = 0.1f;
-        private bool _isMovementDelegated = false;
-
-        // 사망 관련
         [field: Header("Death State")]
         [field: SerializeField, Min(0)] public float DespawnDelay { get; private set; } = 1.0f;
+        #endregion
 
+        #region Public Accessors
+        public bool IsDeath => CurrentStateType == MonsterStateType.Death;
+        public bool IsMove => MoveDirection.sqrMagnitude > _stopMoveRange * _stopMoveRange;
+        public bool IsWin => false;
+        public MonsterAnimationPlayer Anim { get; private set; }
+        public MonsterStats Stats { get; private set; }
+        public Vector3 MoveDirection { get; private set; } = Vector3.zero;
+        public Action OnHit { get; set; }
+        public Action OnDeath;
+        public Action OnSpawn { get; set; }
+        public Action OnDespawn { get; set; }
+        #endregion
 
+        #region Private State
+        private Vector3 _bodyScale;
+        private bool _isInit = false;
+        private bool _isMovementDelegated = false;
+        private Dictionary<MonsterStateType, MonsterState> _states = new();
+        private MonsterState _currentState;
+        #endregion
+
+        #region Unity Callbacks
         private void Awake() => Init();
+
         private void Update()
         {
-            // 체력이 없는데, 죽지 않았을 때
-            if (Stats.CurrentHp <= 0 && CurrentStateType != MonsterStateType.Death)
+            if (Stats?.CurrentHp <= 0 && CurrentStateType != MonsterStateType.Death)
             {
                 UnLockChangeState();
                 ChangeState(MonsterStateType.Death, true);
             }
 
-            // 이동 권한 위임이 안일어났을 때
             if (!_isMovementDelegated && Target != null)
                 SetMoveDirection(Target.transform.position);
 
@@ -83,145 +69,165 @@ namespace ProjectVS.Monster
 
         private void FixedUpdate()
         {
-            if (_currentState.UseFixedUpdate)
-                _currentState?.Update();
+            if (_currentState?.UseFixedUpdate == true)
+                _currentState.Update();
         }
 
         private void OnDrawGizmos()
         {
             if (!Application.isPlaying) return;
 
-            // 방향
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, transform.position + MoveDirection.normalized * 3.0f);
-
             Gizmos.DrawWireSphere(transform.position, _stopMoveRange);
         }
+        #endregion
 
-        // 기본 데이터 세팅
+        #region Initialization
         private void Init()
         {
             if (_isInit) return;
 
-            // 리지드바디 세팅
-            var rig = gameObject.GetOrAddComponent<Rigidbody2D>();
-            rig.gravityScale = 0.0f;
-            rig.freezeRotation = true;
+            SetupRigidbody();
+            CacheBodyScale();
+            SetupAnimator();
+            SetupStates();
+            SettingData();
+            SetupInitialState();
 
+            _isInit = true;
+        }
+
+        private void SetupRigidbody()
+        {
+            var rb = gameObject.GetOrAddComponent<Rigidbody2D>();
+            rb.gravityScale = 0f;
+            rb.freezeRotation = true;
+        }
+
+        private void CacheBodyScale()
+        {
             if (_body != null)
                 _bodyScale = _body.transform.localScale;
+        }
 
-            // 애니메이션 플레이어
+        private void SetupAnimator()
+        {
             var anim = GetComponentInChildren<Animator>();
             Anim = new MonsterAnimationPlayer(anim, this);
+        }
 
-            // 상태 추가
+        private void SetupStates()
+        {
             _states.Add(MonsterStateType.Idle, new MonsterIdleState(this, Anim.Animator));
             _states.Add(MonsterStateType.Move, new MonsterMoveState(this, Anim.Animator));
             _states.Add(MonsterStateType.Win, new MonsterWinState(this, Anim.Animator));
             _states.Add(MonsterStateType.Death, new MonsterDeathState(this, Anim.Animator));
+        }
 
-            // 상태 락 관련 세팅
-            IsStateLock = false;
-
-            var config = GetComponent<UnitStatsConfig>();
-            if (config != null)
-                Stats = new MonsterStats(config.Hp, config.ATK, config.DFS, config.SPD, config.ATKSPD);
-
-            // 초기 상태 세팅
+        private void SetupInitialState()
+        {
             if (Stats == null)
                 ChangeState(MonsterStateType.Death, true);
             else
-            {
-                if (Stats.CurrentHp > 0)
-                    ChangeState(MonsterStateType.Idle);
-                else
-                    ChangeState(MonsterStateType.Death);
-            }
-            _isInit = true;
+                ChangeState(Stats.CurrentHp > 0 ? MonsterStateType.Idle : MonsterStateType.Death);
+        }
+        #endregion
+
+        #region State Control
+        public void ChangeState(MonsterStateType type, bool force = false)
+        {
+            if (IsStateLock || (!force && CurrentStateType == type) || (CurrentStateType == MonsterStateType.Death && !force))
+                return;
+
+            _currentState?.Exit();
+            CurrentStateType = type;
+            _currentState = _states[type];
+            _currentState.Enter();
+        }
+
+        public void LockChangeState() => IsStateLock = true;
+        public void UnLockChangeState() => IsStateLock = false;
+        #endregion
+
+        #region Movement
+        public void DelegateMovementAuthority() => _isMovementDelegated = true;
+        public void RevokeMovementAuthority() => _isMovementDelegated = false;
+
+        public void SetMoveDirection(Vector3 targetPoint, bool raw = false)
+        {
+            MoveDirection = raw ? targetPoint : (targetPoint - transform.position);
+            if (_body == null) return;
+
+            if (MoveDirection.x > 0.01f)
+                _body.transform.localScale = _bodyScale;
+            else if (MoveDirection.x < -0.01f)
+                _body.transform.localScale = new Vector3(-_bodyScale.x, _bodyScale.y, _bodyScale.z);
         }
 
         public void SetTarget(GameObject target) => Target = target;
+        #endregion
 
-        // 상태 전환 관련
-        public void ChangeState(MonsterStateType stateType, bool isForceChange = false)
-        {
-            if (CurrentStateType == MonsterStateType.Death && !isForceChange) return;
-            if (IsStateLock) return;
-            if (CurrentStateType == stateType) return;
-
-            CurrentStateType = stateType;
-
-            _currentState?.Exit();
-            _currentState = _states[CurrentStateType];
-            _currentState.Enter();
-        }
-        public void LockChangeState()
-        {
-            IsStateLock = true;
-        }
-        public void UnLockChangeState()
-        {
-            IsStateLock = false;
-        }
-
-        // 이동 권한 위임, 해제
-        public void DelegateMovementAuthority()
-        {
-            if (_isMovementDelegated) return;
-            _isMovementDelegated = true;
-        }
-        public void RevokeMovementAuthority()
-        {
-            if (!_isMovementDelegated) return;
-            _isMovementDelegated = false;
-        }
-
-        public void SetMoveDirection(Vector3 movePoint, bool onlySetMovePoint = false)
-        {
-            MoveDirection = (onlySetMovePoint) ? movePoint : (movePoint - transform.position);
-
-            if (MoveDirection.x > 0.01f)
-            {
-                _body.transform.localScale = _bodyScale;
-            }
-            else if (MoveDirection.x < -0.01f)
-            {
-                Vector3 flipped = _bodyScale;
-                flipped.x *= -1; // 좌우 반전
-                _body.transform.localScale = flipped;
-            }
-        }
-
-        // IDamageable
+        #region IDamageable
         public void TakeDamage(DamageInfo info)
         {
-            Debug.Log($"데미지 입는 대상: {this.gameObject.name}\n" +
-                $"현재 체력 {Stats.CurrentHp} / 피격후 예상 체력 {Stats.CurrentHp - info.Amount}");
             Stats.CurrentHp -= info.Amount;
-            OnHit.Invoke();
+            Debug.Log($"{gameObject.name} 피격 → HP: {Stats.CurrentHp}/{Stats.CurrentMaxHp}");
+            OnHit?.Invoke();
         }
+        #endregion
 
-        // IPoolable
+        #region IPoolable
         public void OnSpawned()
         {
-            if (!_isInit) Init();
+            SettingData();
+            if (Stats != null)
+                Stats.CurrentHp = Stats.CurrentMaxHp;
 
-            var config = GetComponent<UnitStatsConfig>();
-            if (config != null)
-                Stats = new MonsterStats(config.Hp, config.ATK, config.DFS, config.SPD, config.ATKSPD);
-
-            if (Stats.CurrentHp > 0)
-                ChangeState(MonsterStateType.Idle, true);
-            else
-                ChangeState(MonsterStateType.Death, true);
-
+            ChangeState(Stats.CurrentHp > 0 ? MonsterStateType.Idle : MonsterStateType.Death, true);
             Target = Unit.Player.PlayerSpawner.Instance.CurrentPlayer;
+
             OnSpawn?.Invoke();
         }
-        public void OnDespawned()
+
+        public void OnDespawned() => OnDespawn?.Invoke();
+        #endregion
+
+        #region Stat Setting
+        private void SettingData()
         {
-             OnDespawn?.Invoke();
+            if (StageManager.Instance.Context != null)
+            {
+                var config = StageManager.Instance.Context.Spawner.GetMonsterStatsConfig(MonsterID);
+                if (config != null)
+                {
+                    Name = config.MonsterName;
+                    Stats = new MonsterStats(config.Hp, config.ATK, config.DFS, config.SPD, config.ATKSPD,
+                        config.Exp, config.DropGold, config.DropGoldPer, config.DropDiamond, config.DropDiamondPer);
+                    Debug.Log(ToString());
+                    return;
+                }
+            }
+
+            // fallback
+            if (Stats == null)
+                Stats = new MonsterStats(1, 1, 1, 1, 1, 0, 0, 0, 0, 0);
+            Debug.Log(ToString());
+        }
+        #endregion
+
+        public override string ToString()
+        {
+            return $"[MonsterController]\n" +
+                   $"- ID              : {MonsterID}\n" +
+                   $"- Name            : {Name}\n" +
+                   $"- State           : {CurrentStateType} (Locked: {IsStateLock})\n" +
+                   $"- Target          : {(Target != null ? Target.name : "None")}\n" +
+                   $"- Position        : {transform.position}\n" +
+                   $"- Move Direction  : {MoveDirection}\n" +
+                   $"- Delegated Move? : {_isMovementDelegated}\n" +
+                   $"- IsDead          : {IsDeath}\n" +
+                   $"- Stats           :\n{(Stats != null ? Stats.ToString() : "  - (No Stats)")}";
         }
     }
 }
