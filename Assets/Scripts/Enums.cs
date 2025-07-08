@@ -16,6 +16,7 @@
         NPCAffinityModel,
         DialogueManager,
         StageManager,
+        MonsterSpawnController,
     }
 
     #region GameManager Enums
@@ -177,6 +178,14 @@
         None,
         Play,
         Done,
+    }
+
+    public enum MonsterClass
+    {
+        Normal,
+        Special,
+        Boss,
+        LastBoss,
     }
     #endregion
 }
