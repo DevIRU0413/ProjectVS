@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using ProjectVS.JDW;
+﻿
+using ProjectVS.Unit.Player;
 
 using UnityEngine;
 
 public class LoopTilemapManager : MonoBehaviour
 {
     [Header("필수 설정")]
-    public Transform player;       // 플레이어 Transform (혹은 카메라)
+    private Transform _playerTr;
+    public Transform PlayerTr => _playerTr ??= GameObject.FindWithTag("Player")?.transform;
+    
+        // 플레이어 Transform (혹은 카메라)
     public GameObject[] tilePrefabs;  // Tilemap 프리팹 (Pivot: Center)
 
     [Header("그리드 설정")]
@@ -17,6 +18,17 @@ public class LoopTilemapManager : MonoBehaviour
 
     private GameObject[,] tiles;   // 실시간 배치될 3×3 타일 배열
     void Start()
+    {
+        SetPlayer(PlayerTr);
+    }
+
+    public void SetPlayer(Transform playerTr)
+    {
+        _playerTr = playerTr;
+        Init();
+    }
+
+    private void Init()
     {
         // 배열 생성 및 인스턴스화 (위치는 나중에 Update 에서 세팅)
         tiles = new GameObject[gridSize, gridSize];
@@ -31,10 +43,7 @@ public class LoopTilemapManager : MonoBehaviour
             }
         }
     }
-    public void SetPlayer(Transform newPlayer)
-    {
-        this.player = newPlayer;
-    }
+    
     Vector3 GetTilePosition(int x, int y)
     {
         return new Vector3(
@@ -43,17 +52,18 @@ public class LoopTilemapManager : MonoBehaviour
             0
         );
     }
+
     void Update()
     {
-        if (player == null)
+        if (PlayerTr == null)
             return;
         // 타일맵 관련 코드
-        int cx = Mathf.FloorToInt(player.position.x / tileSize);
-        int cy = Mathf.FloorToInt(player.position.y / tileSize);
+        int cx = Mathf.FloorToInt(PlayerTr.position.x / tileSize);
+        int cy = Mathf.FloorToInt(PlayerTr.position.y / tileSize);
 
         // 1) 플레이어 기준으로 “격자 좌표” 계산 (정수로 내림)
-        int centerX = Mathf.FloorToInt(player.position.x / tileSize);
-        int centerY = Mathf.FloorToInt(player.position.y / tileSize);
+        int centerX = Mathf.FloorToInt(PlayerTr.position.x / tileSize);
+        int centerY = Mathf.FloorToInt(PlayerTr.position.y / tileSize);
 
         // 2) 3×3 배열을 모두 재배치 (각 타일의 월드 포지션을 스냅)
         int half = gridSize / 2;

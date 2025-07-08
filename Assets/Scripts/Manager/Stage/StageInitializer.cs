@@ -1,9 +1,7 @@
 ﻿using ProjectVS.Data;
-using ProjectVS.Item;
 using ProjectVS.Item.ItemManager;
 using ProjectVS.Monster;
 using ProjectVS.Unit.Player;
-using ProjectVS.Util;
 
 using UnityEngine;
 
@@ -37,6 +35,12 @@ namespace ProjectVS.Manager.Stage
             playerGO = PlayerSpawner.Instance.CurrentPlayer;
             JDW.PlayerConfig playerConfig = playerGO.GetComponent<JDW.PlayerConfig>();
             ctx.Player = playerConfig;
+
+            LoopTilemapManager tile = null;
+            tile ??= GameObject.FindObjectOfType<LoopTilemapManager>();
+
+            // Debug.Log($"{playerGO} / {tile}");
+            tile.SetPlayer(playerGO.transform);
 
             // 3-1. 플레이어에게 아이템 주기
             var saveItem = PlayerDataManager.Instance.InventoryItems[0];

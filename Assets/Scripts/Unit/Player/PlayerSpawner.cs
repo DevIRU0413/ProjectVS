@@ -29,30 +29,6 @@ namespace ProjectVS.Unit.Player
             _playerDataManager = PlayerDataManager.Instance;
         }
 
-        /*public GameObject SpawnPlayer(Vector3 position, CharacterClass classType, PlayerStats stats)
-        {
-            if (CurrentPlayer != null)
-            {
-                Destroy(CurrentPlayer); // 리스폰 시 기존 제거
-            }
-
-            // 프리팹 생성
-            GameObject prefab = GetPrefab(classType);
-            if (prefab == null)
-            {
-                Debug.LogError($"[PlayerSpawner] 클래스에 해당하는 프리팹이 없습니다: {classType}");
-                return null;
-            }
-
-            // 세팅
-            GameObject player = Instantiate(prefab, position, Quaternion.identity);
-            var config = player.GetComponent<PlayerConfig>();
-            config.Init(stats);
-
-            CurrentPlayer = player;
-            return player;
-        }*/
-
         public GameObject SpawnPlayer(Vector3 position)
         {
             // 리스폰 시 기존 제거
