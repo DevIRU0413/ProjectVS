@@ -77,10 +77,11 @@ MonoBehaviour:
   body: {fileID: 2517954629083615587}
   speed: 0
   rotSpeed: 180
-  damping: 0
+  speedDamping: 0
+  rotDamping: 0
   useGravity: 0
-  target: {fileID: 0}
-  homingTime: 2
+  isHoming: 0
+  lifeTime: 5
 --- !u!114 &412270097837587605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +255,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0.5019608}
   m_FlipX: 0
@@ -283,4 +284,4 @@ MonoBehaviour:
   changeTime: 3
   forward: 1
   useColor: {r: 1, g: 0, b: 0, a: 0}
-  spriteRenderer: {fileID: 4099230263593577467}
+  spriteRenderers: []

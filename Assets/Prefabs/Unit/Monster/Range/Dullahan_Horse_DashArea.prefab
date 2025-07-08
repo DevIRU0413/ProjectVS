@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 232900230950082488}
   m_Layer: 0
-  m_Name: DashArea
+  m_Name: Dullahan_Horse_DashArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,12 +45,20 @@ PrefabInstance:
       value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 3395762088015795241, guid: 781aaa5a2e3f2324898a87e5ddf77720, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3395762088015795241, guid: 781aaa5a2e3f2324898a87e5ddf77720, type: 3}
       propertyPath: m_MaskInteraction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3509032506113043475, guid: 781aaa5a2e3f2324898a87e5ddf77720, type: 3}
       propertyPath: m_Name
       value: Running_Attack_Range
+      objectReference: {fileID: 0}
+    - target: {fileID: 5096919055905429256, guid: 781aaa5a2e3f2324898a87e5ddf77720, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9034144016503270132, guid: 781aaa5a2e3f2324898a87e5ddf77720, type: 3}
       propertyPath: m_LocalPosition.x

@@ -13,6 +13,22 @@ PrefabInstance:
       value: 10050
       objectReference: {fileID: 0}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: _phases.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: _phases.Array.data[0].MonsterHp
+      value: 0.691
+      objectReference: {fileID: 0}
+    - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: _phases.Array.data[0].MonsterPatternList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[0].Weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[0].monsterPattern
       value: 
       objectReference: {fileID: 4674166924770414428}

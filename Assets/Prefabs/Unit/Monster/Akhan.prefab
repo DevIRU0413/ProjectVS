@@ -1394,6 +1394,14 @@ PrefabInstance:
       value: 40010
       objectReference: {fileID: 0}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: _phases.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
+      propertyPath: _phases.Array.data[0].MonsterHp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -1411,7 +1419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[3].Weight
-      value: 0.902
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[0].monsterPattern
@@ -1431,15 +1439,15 @@ PrefabInstance:
       objectReference: {fileID: 3677660476599076438}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[1].AamageMultiplier
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[2].AamageMultiplier
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 607968483408253690, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: _phases.Array.data[0].MonsterPatternList.Array.data[3].AamageMultiplier
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1126034904811091071, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
       propertyPath: m_Size.x

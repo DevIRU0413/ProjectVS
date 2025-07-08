@@ -112,10 +112,11 @@ MonoBehaviour:
   body: {fileID: 5623573104532427514}
   speed: 25
   rotSpeed: 1.5
-  damping: 0
+  speedDamping: 0
+  rotDamping: 0
   useGravity: 0
-  isHoming: 1
-  lifeTime: 1
+  isHoming: 0
+  lifeTime: 5
 --- !u!1 &5623573104532427514
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +221,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0

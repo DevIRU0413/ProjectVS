@@ -1249,7 +1249,12 @@ MonoBehaviour:
   SpawnPoint: {fileID: 317204340}
   _repeatText: {fileID: 1704752840}
   _eventText: {fileID: 167999433}
-  _buyItems: []
+  _buyItems:
+  - {fileID: 2143563301}
+  - {fileID: 73397733}
+  - {fileID: 264432509}
+  - {fileID: 1428625665}
+  - {fileID: 1168579185}
 --- !u!1 &207006042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2877,52 +2882,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391184945}
   m_CullTransparentMesh: 1
---- !u!1 &410487431
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 410487433}
-  - component: {fileID: 410487432}
-  m_Layer: 0
-  m_Name: AudioManager (When combine scene, This will be unnecessary)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &410487432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410487431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2caea751e178834b91e21c8f9c536fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_isDontDestroyOnLoad: 1
-  m_defaultBGM: {fileID: 0}
---- !u!4 &410487433
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410487431}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.1856331, y: 4.7243595, z: -0.04327814}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &437764373
 GameObject:
   m_ObjectHideFlags: 0
@@ -3284,51 +3243,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 514491046}
   m_CullTransparentMesh: 1
---- !u!1 &517770077
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 517770079}
-  - component: {fileID: 517770078}
-  m_Layer: 0
-  m_Name: NPC Affinity Model (When combine scene, This will be unnecessary)
-  m_TagString: Manager
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &517770078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517770077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5835c511b670b84cb93f74fef2a6904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_isDontDestroyOnLoad: 1
---- !u!4 &517770079
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517770077}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.0799468, y: -2.316288, z: -0.008546569}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &522822515
 GameObject:
   m_ObjectHideFlags: 0
@@ -15382,8 +15296,6 @@ SceneRoots:
   - {fileID: 1489142644}
   - {fileID: 2059575503}
   - {fileID: 1290985204}
-  - {fileID: 517770079}
   - {fileID: 179539448}
   - {fileID: 317204341}
-  - {fileID: 410487433}
   - {fileID: 1943503708}

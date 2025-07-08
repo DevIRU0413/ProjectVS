@@ -14,7 +14,7 @@ namespace ProjectVS.Item
         [SerializeField] private List<ItemData> itemDataList = new();
         private Dictionary<int, ItemData> _itemDict = new();
 
-        public int Priority => (int)ManagerPriority.ItemManager;
+        public int Priority => (int)ManagerPriority.ItemDataBase;
         public bool IsDontDestroy => IsDontDestroyOnLoad;
         public GameObject GetGameObject() => this.gameObject;
 

@@ -1,7 +1,6 @@
 ﻿using ProjectVS.Util;
 
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 namespace ProjectVS.Monster.State
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.Cheat.CheatUIManager;
 using ProjectVS.Data;
 using ProjectVS.Interface;
 using ProjectVS.Manager;
@@ -11,6 +12,7 @@ using ProjectVS.Utils.UIManager;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 using CharacterSelectionDataClass = ProjectVS.CharacterSelectionData.CharacterSelectionData.CharacterSelectionData;
 
@@ -21,6 +23,7 @@ namespace ProjectVS.JDW
     public class PlayerConfig : MonoBehaviour, IDamageable
     {
         [HideInInspector]public PlayerDataManager PlayerDataManager;
+        [SerializeField] public CheatUIManager _cheatUIManager;
 
         public CharacterClass SelectedClass;
         public Timer Timer;
@@ -38,6 +41,8 @@ namespace ProjectVS.JDW
         {
             _anim = GetComponent<Animator>();
             Scanner = GetComponent<Scanner>();
+
+            _cheatUIManager = FindObjectOfType<CheatUIManager>();
 
             // 타이머 자동 할당
             if (Timer == null)
@@ -196,6 +201,12 @@ namespace ProjectVS.JDW
             {
                 Die();
             }
+        }
+
+        private void ActiveSelfCheatPanel()
+        {
+            if (Keyboard.current.cKey.wasPressedThisFrame)
+                _cheatUIManager.gameObject.SetActive(!_cheatUIManager.gameObject.activeSelf);
         }
     }
 }
