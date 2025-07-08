@@ -40,6 +40,14 @@ namespace ProjectVS.Manager.Stage
             else if (gameState == GameState.Play && _currentState is PauseState)
                 ChangeState(StageFlowState.Play);
         }
+
+        public void CheatWin()
+        {
+            if (_currentState is PlayState playState)
+            {
+                playState.CheatWinStage();
+            }
+        }
     }
 
 }

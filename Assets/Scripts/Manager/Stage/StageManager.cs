@@ -22,6 +22,8 @@ namespace ProjectVS.Stage
 
         public StageContext Context => _context;
 
+        public StageFlowMachine FlowMachine => _flowMachine;
+
         // IManager
         public int Priority => (int)ManagerPriority.StageManager;
         public bool IsDontDestroy => IsDontDestroyOnLoad;

@@ -42,6 +42,12 @@ namespace ProjectVS.Manager.Stage
             }
         }
 
+        public void CheatWinStage()
+        {
+            _ctx.StageResult = StageResult.Win;
+            _fsm.ChangeState(StageFlowState.Exit);
+        }
+
         public void Exit() { }
     }
 }
