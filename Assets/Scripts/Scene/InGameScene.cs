@@ -1,4 +1,8 @@
-﻿using ProjectVS.Manager;
+﻿using System.Collections.Generic;
+
+using ProjectVS.Item.GetItemButtonBehaviour;
+using ProjectVS.Item.ItemManager;
+using ProjectVS.Manager;
 using ProjectVS.UIs.CutSceneEffect.CutSceneController;
 using ProjectVS.Unit.Player;
 
@@ -12,7 +16,7 @@ namespace ProjectVS.Scene
 
         public GameObject SpawnPoint;
 
-        [SerializeField] private CutSceneController _cutSceneController;
+        [SerializeField] private List<GetItemButtonBehaviour> _buttons;
 
         protected override void Initialize()
         {
@@ -22,6 +26,7 @@ namespace ProjectVS.Scene
         private void Start()
         {
             CheckCanShowCGScene();
+            AssignItemManagerField();
         }
 
         private void SpawnPlayer()
@@ -45,8 +50,20 @@ namespace ProjectVS.Scene
         {
             if (PlayerDataManager.Instance.BattleSceneCount <= 1)
             {
-                _cutSceneController.PlayCutScene(CutSceneType.Opening);
+                if (CutSceneController.Instance == null)
+                {
+                    Debug.LogWarning($"[InGameScene] CutSceneController.Instance를 찾을 수 없습니다");
+                }
+                else
+                {
+                    CutSceneController.Instance.PlayCutScene(CutSceneType.Opening);
+                }
             }
+        }
+
+        private void AssignItemManagerField()
+        {
+            ItemManager.Instance.AssignGetItemButtons(_buttons);
         }
     }
 }
