@@ -2190,6 +2190,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 186644433}
   m_CullTransparentMesh: 1
+--- !u!1 &192547102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 192547104}
+  - component: {fileID: 192547103}
+  m_Layer: 0
+  m_Name: UIManager (When combine scene, This will be unnecessary)
+  m_TagString: Manager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &192547103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192547102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72dcf3e8e21188f4d8a07ab316e23790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isDontDestroyOnLoad: 0
+--- !u!4 &192547104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192547102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6234266, y: 1.8091706, z: -0.04868854}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &198633898
 GameObject:
   m_ObjectHideFlags: 0
@@ -13564,6 +13609,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039124835}
   m_CullTransparentMesh: 1
+--- !u!1 &1056108221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1056108222}
+  - component: {fileID: 1056108223}
+  m_Layer: 0
+  m_Name: DialogueSceneTextAssigner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1056108222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056108221}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 928.31506, y: 873.9398, z: -1.2165029}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1494990905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1056108223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056108221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54f51764e505b8a49ad634de90a24bb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shopEnterText: {fileID: 1279579227}
+  _repeatText: {fileID: 0}
+  _eventText: {fileID: 1279579227}
+  _stageClearText: {fileID: 1279579227}
 --- !u!1 &1056260475
 GameObject:
   m_ObjectHideFlags: 0
@@ -15415,6 +15508,9 @@ MonoBehaviour:
   - {fileID: 1039124837}
   - {fileID: 439622684}
   - {fileID: 419342019}
+  _dialogueLogManager: {fileID: 919768224}
+  _choiceDialogueManager: {fileID: 412159237}
+  _eventSpriteChangeManager: {fileID: 826411978}
 --- !u!4 &1164496036
 Transform:
   m_ObjectHideFlags: 0
@@ -20641,6 +20737,7 @@ Transform:
   - {fileID: 919768225}
   - {fileID: 412159238}
   - {fileID: 826411977}
+  - {fileID: 1056108222}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1497610294
@@ -22542,7 +22639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1585703497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26380,7 +26477,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1817646483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30000,3 +30097,4 @@ SceneRoots:
   - {fileID: 865005964}
   - {fileID: 1068477028}
   - {fileID: 2012074602}
+  - {fileID: 192547104}

@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
 
+using ProjectVS.CharacterImages.EventSpriteChangeManager;
+using ProjectVS.Dialogue.ChoiceDialogueManager;
+using ProjectVS.Dialogue.DialogueLogManager;
+using ProjectVS.Dialogue.DialogueManagerR;
 using ProjectVS.Item.GetItemButtonBehaviour;
 using ProjectVS.Item.ItemManager;
 using ProjectVS.Manager;
@@ -18,6 +22,11 @@ namespace ProjectVS.Scene
 
         [SerializeField] private List<GetItemButtonBehaviour> _buttons;
 
+        [SerializeField] private DialogueLogManager _dialogueLogManager;
+        [SerializeField] private ChoiceDialogueManager _choiceDialogueManager;
+        [SerializeField] private EventSpriteChangeManager _eventSpriteChangeManager;
+
+
         protected override void Initialize()
         {
             SpawnPlayer();
@@ -27,6 +36,7 @@ namespace ProjectVS.Scene
         {
             CheckCanShowCGScene();
             AssignItemManagerField();
+            AssignDialogueSubManagers();
         }
 
         private void SpawnPlayer()
@@ -64,6 +74,11 @@ namespace ProjectVS.Scene
         private void AssignItemManagerField()
         {
             ItemManager.Instance.AssignGetItemButtons(_buttons);
+        }
+
+        private void AssignDialogueSubManagers()
+        {
+            DialogueManagerR.Instance.AssignSubManagers(_dialogueLogManager, _choiceDialogueManager, _eventSpriteChangeManager);
         }
     }
 }

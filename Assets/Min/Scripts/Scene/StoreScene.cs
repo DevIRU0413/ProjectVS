@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using ProjectVS.CharacterImages.EventSpriteChangeManager;
+using ProjectVS.Dialogue.ChoiceDialogueManager;
+using ProjectVS.Dialogue.DialogueLogManager;
 using ProjectVS.Dialogue.DialogueManagerR;
 using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
 using ProjectVS.Item.BuyItemObjBehaviour;
@@ -24,10 +27,15 @@ namespace ProjectVS.Scene.StoreScene
 
         [SerializeField] private List<BuyItemObjBehaviour> _buyItems;
 
+        [SerializeField] private DialogueLogManager _dialogueLogManager;
+        [SerializeField] private ChoiceDialogueManager _choiceDialogueManager;
+        [SerializeField] private EventSpriteChangeManager _eventSpriteChangeManager;
+
         protected override void Initialize()
         {
             SpawnPlayer();
             AssignText();
+            AssignDialogueSubManagers();
         }
 
         private void Start()
@@ -64,6 +72,11 @@ namespace ProjectVS.Scene.StoreScene
         private void AssignBuyObjects()
         {
             ItemManager.Instance.AssignBuyItemObjects(_buyItems);
+        }
+
+        private void AssignDialogueSubManagers()
+        {
+            DialogueManagerR.Instance.AssignSubManagers(_dialogueLogManager, _choiceDialogueManager, _eventSpriteChangeManager);
         }
     }
 }

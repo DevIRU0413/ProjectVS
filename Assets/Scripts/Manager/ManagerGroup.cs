@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-
-using ProjectVS.Util;
-
-using ProjectVS.Interface;
-
 using UnityEngine;
+using ProjectVS.Interface;
+using ProjectVS.Util;
 
 namespace ProjectVS.Managers
 {
@@ -34,35 +31,23 @@ namespace ProjectVS.Managers
         }
         #endregion
 
-        #region PrivateVariables
-        private List<IManager> _unregisteredManagers  = new(); // 미등록
-        private List<IManager> _registeredManagers = new(); // 등록됨
+        private List<IManager> _unregisteredManagers = new();
+        private List<IManager> _registeredManagers = new();
 
-        private bool _isManagersInitialized = false; // 초기화 중간 확인 및 매니저들 사용 여부 확인용
-        #endregion
+        private bool _isManagersInitialized = false;
 
-        #region PublicMethod
+        public bool IsUseAble() => _isManagersInitialized;
 
-        public bool IsUseAble()
-        {
-            return _isManagersInitialized;
-        }
-
+        #region Register
         public void RegisterManager(IManager manager)
         {
-            if (manager == null || _registeredManagers.Contains(manager) || _unregisteredManagers.Contains(manager))
+            if (manager == null) return;
+
+            System.Type type = manager.GetType();
+            if (ContainsManagerOfType(type))
+            {
+                Debug.LogWarning($"[RegisterManager] 이미 {type.Name} 이 존재하여 등록되지 않습니다.");
                 return;
-
-            foreach (var m in _registeredManagers)
-            {
-                if (m.Equals(manager))
-                    return;
-            }
-
-            foreach (var m in _unregisteredManagers)
-            {
-                if (m.Equals(manager))
-                    return;
             }
 
             _unregisteredManagers.Add(manager);
@@ -70,19 +55,37 @@ namespace ProjectVS.Managers
 
         public void RegisterManager(GameObject managerObject)
         {
-            RegisterManager(managerObject?.GetComponent<IManager>());
+            if (managerObject == null) return;
+
+            IManager newManager = managerObject.GetComponent<IManager>();
+            if (newManager == null) return;
+
+            System.Type type = newManager.GetType();
+
+            if (ContainsManagerOfType(type))
+            {
+                Debug.LogWarning($"[RegisterManager] 이미 {type.Name} 이 존재하여 새 오브젝트는 삭제됩니다.");
+                Destroy(managerObject);
+                return;
+            }
+
+            _unregisteredManagers.Add(newManager);
         }
 
         public void RegisterManager(params IManager[] managers)
         {
-            foreach (IManager m in managers) RegisterManager(m);
+            foreach (IManager m in managers)
+                RegisterManager(m);
         }
 
         public void RegisterManager(params GameObject[] managerObjects)
         {
-            foreach (GameObject go in managerObjects) RegisterManager(go);
+            foreach (GameObject go in managerObjects)
+                RegisterManager(go);
         }
+        #endregion
 
+        #region Init & Cleanup
         public void InitializeManagers()
         {
             _isManagersInitialized = false;
@@ -91,35 +94,32 @@ namespace ProjectVS.Managers
             foreach (var manager in _unregisteredManagers)
             {
                 manager.Initialize();
-                GameObject goM = manager.GetGameObject();
-                if (goM == null)
+                GameObject go = manager.GetGameObject();
+                if (go == null)
                 {
-                    Debug.LogError($"[Dnot Init] {goM.name} !!!");
+                    Debug.LogError($"[Dnot Init] {manager.GetType().Name} 의 GameObject가 null입니다.");
                     continue;
                 }
 
-                Debug.Log($"[Init] {goM.name}");
+                Debug.Log($"[Init] {go.name}");
                 _registeredManagers.Add(manager);
-                goM.transform.parent = transform;
+                go.transform.parent = transform;
             }
 
             _unregisteredManagers.Clear();
             _isManagersInitialized = true;
         }
 
-        /// <summary>
-        /// 매니저들 내부 데이터 종료 처리 밎 정리
-        /// </summary>
         public void CleanupManagers()
         {
-            for (int i = 0; i < _registeredManagers.Count; i++)
+            for (int i = _registeredManagers.Count - 1; i >= 0; i--)
             {
                 IManager manager = _registeredManagers[i];
                 GameObject go = manager.GetGameObject();
 
                 if (go == null)
                 {
-                    _registeredManagers.Remove(manager);
+                    _registeredManagers.RemoveAt(i);
                     continue;
                 }
 
@@ -128,22 +128,17 @@ namespace ProjectVS.Managers
             }
         }
 
-        /// <summary>
-        /// 지속적인 생존이 필요하지 않은 매니저 정리
-        /// </summary>
-        /// <param name="forceClear">강제 정리 여부</param>
         public void ClearManagers(bool forceClear = false)
         {
-            for (int i = 0; i < _registeredManagers.Count; i++)
+            for (int i = _registeredManagers.Count - 1; i >= 0; i--)
             {
                 IManager manager = _registeredManagers[i];
                 if (!manager.IsDontDestroy || forceClear)
                 {
                     GameObject go = manager.GetGameObject();
-
                     if (go == null)
                     {
-                        _registeredManagers.Remove(manager);
+                        _registeredManagers.RemoveAt(i);
                         continue;
                     }
 
@@ -161,40 +156,38 @@ namespace ProjectVS.Managers
         }
         #endregion
 
-        #region PrivateMethod
+        #region Utils
+        private bool ContainsManagerOfType(System.Type type)
+        {
+            foreach (var m in _registeredManagers)
+                if (m.GetType() == type) return true;
+
+            foreach (var m in _unregisteredManagers)
+                if (m.GetType() == type) return true;
+
+            return false;
+        }
+
+        public T GetManager<T>() where T : class, IManager
+        {
+            foreach (var m in _registeredManagers)
+                if (m is T t) return t;
+
+            foreach (var m in _unregisteredManagers)
+                if (m is T t) return t;
+
+            return null;
+        }
 
         private void SortManagersByPriorityAscending(List<IManager> list)
         {
-            for (int i = 0; i < list.Count - 1; i++)
-            {
-                for (int j = 0; j < list.Count - i - 1; j++)
-                {
-                    if (list[j].Priority > list[j + 1].Priority)
-                    {
-                        IManager temp = list[j];
-                        list[j] = list[j + 1];
-                        list[j + 1] = temp;
-                    }
-                }
-            }
+            list.Sort((a, b) => a.Priority.CompareTo(b.Priority));
         }
 
         private void SortManagersByPriorityDescending(List<IManager> list)
         {
-            for (int i = 0; i < list.Count - 1; i++)
-            {
-                for (int j = 0; j < list.Count - i - 1; j++)
-                {
-                    if (list[j].Priority < list[j + 1].Priority)
-                    {
-                        IManager temp = list[j];
-                        list[j] = list[j + 1];
-                        list[j + 1] = temp;
-                    }
-                }
-            }
+            list.Sort((a, b) => b.Priority.CompareTo(a.Priority));
         }
-
         #endregion
     }
 }

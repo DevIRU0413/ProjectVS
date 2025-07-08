@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using ProjectVS.Dialogue.TextEffect.DialogueTextTyper;
-using DialogueManagerClass = ProjectVS.Dialogue.DialogueManager.DialogueManager;
 using UnityEngine;
 
 
@@ -22,7 +21,7 @@ namespace ProjectVS.Dialogue.DialogueSceneTextAssigner
 
         private void AssignText()
         {
-            DialogueManagerClass.Instance.AssignTextWhenSceneChanged(_shopEnterText, _repeatText, _eventText, _stageClearText);
+            DialogueManagerR.DialogueManagerR.Instance.AssignTextWhenSceneChanged(_shopEnterText, _repeatText, _eventText, _stageClearText);
         }
     }
 }

@@ -418,6 +418,14 @@ namespace ProjectVS.Dialogue.DialogueManagerR
             }
         }
 
+
+        public void AssignSubManagers(DialogueLogManagerClass dialogueLogManager, ChoiceDialogueManagerClass choiceDialogueManager, SpriteChangeManagerClass spriteChangeManager)
+        {
+            _dialogueLogManager = dialogueLogManager;
+            _choiceDialogueManager = choiceDialogueManager;
+            _spriteChangeManager = spriteChangeManager;
+        }
+
         public void Initialize()
         {
             //ChangeIsPrintedBySaveData();

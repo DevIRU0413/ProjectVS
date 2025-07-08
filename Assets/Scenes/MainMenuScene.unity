@@ -2975,6 +2975,8 @@ MonoBehaviour:
   _rightSlot: {fileID: 1729262691}
   _moveDuration: 0.5
   _curveHeight: 50
+  _mainCharacterScale: 3
+  _subCharacterScale: 2
   _characterDescriptionList:
   - {fileID: 1002548855}
   - {fileID: 845678371}
@@ -3031,6 +3033,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c40665f1803724b9946345e7f8c42e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _controlFilePanel: {fileID: 0}
+  _characterDisc: {fileID: 0}
+  _selectionEffectClass: {fileID: 0}
 --- !u!1 &497312540
 GameObject:
   m_ObjectHideFlags: 0
@@ -6157,7 +6162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1217411441
 Transform:
   m_ObjectHideFlags: 0
@@ -6185,6 +6190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72dcf3e8e21188f4d8a07ab316e23790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isDontDestroyOnLoad: 1
 --- !u!1 &1220608849
 GameObject:
   m_ObjectHideFlags: 0
@@ -6604,10 +6610,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterSelectionDataPath: Min/Resources/CharacterSelectionData.tsv
-  _characterTextsList:
-  - {fileID: 1572859076}
-  - {fileID: 2123499595}
-  - {fileID: 2055652880}
+  _nameTextList: []
+  _descTextList: []
+  _uniqueWeaponsTextList: []
 --- !u!4 &1421193390
 Transform:
   m_ObjectHideFlags: 0
