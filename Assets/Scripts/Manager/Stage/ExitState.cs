@@ -16,11 +16,13 @@ namespace ProjectVS.Manager.Stage
         public void Enter()
         {
             UnityEngine.Debug.Log($"[Stage] 종료 상태 진입. 결과: {_ctx.StageResult}");
-            // 결과창 UI 띄우기 등 처리
-            UIManager.Instance.Show("Lose Panel");
+            
             // 이겼을 때, 인벤토리 저장
             if (_ctx.StageResult == StageResult.Win)
+            {
                 Item.ItemManager.ItemManager.Instance.SendInventory();
+                SceneLoader.Instance.LoadSceneAsync(SceneID.StoreScene);
+            }
 
             if (_ctx.IsTrueEnding())
             {
@@ -32,6 +34,9 @@ namespace ProjectVS.Manager.Stage
             {
                 CutSceneController.Instance.PlayCutScene(CutSceneType.NormalEnding);
             }
+
+            // 결과창 UI 띄우기 등 처리
+            UIManager.Instance.Show("Lose Panel");
         }
 
         public void Update() { }
