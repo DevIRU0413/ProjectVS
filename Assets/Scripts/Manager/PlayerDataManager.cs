@@ -10,6 +10,7 @@ using sItem = ProjectVS.Item.SerializableItemData.SerializableItemData;
 using UnityEngine;
 using ProjectVS.Item.SerializableItemData;
 using ProjectVS.Item;
+using System;
 
 namespace ProjectVS.Manager
 {
@@ -56,7 +57,8 @@ namespace ProjectVS.Manager
         public float TotalPlayTime; // 총 플레이 시간 (초 단위)
         public int BattleSceneCount; // 전투씬 진입 횟수
 
-        
+        [Header("Current File Index")]
+        public int CurrentdFileIndex;
 
         public int Priority => (int)ManagerPriority.PlayerDataManager;
         public bool IsDontDestroy => IsDontDestroyOnLoad;
@@ -116,8 +118,9 @@ namespace ProjectVS.Manager
             data.TotalPlayTime = TotalPlayTime;
             data.BattleSceneCount = BattleSceneCount;
 
-            Debug.Log($"[저장 직전] HP: {Stats.CurrentHp}, Atk: {Stats.CurrentAtk}, 레벨: {Stats.Level}, Exp: {Stats.CurrentExp}");
+            CurrentdFileIndex = index;
 
+            Debug.Log($"[저장 직전] HP: {Stats.CurrentHp}, Atk: {Stats.CurrentAtk}, 레벨: {Stats.Level}, Exp: {Stats.CurrentExp}");
 
             // Save
             SaveFileSystem.Save(data, index);
@@ -170,6 +173,8 @@ namespace ProjectVS.Manager
             TotalPlayTime = data.TotalPlayTime;
             BattleSceneCount = data.BattleSceneCount;
 
+            CurrentdFileIndex = index;
+
             print("불러오기");
 
             Stats = new PlayerStats();// 비어 있는 Stats 객체 생성
@@ -179,6 +184,11 @@ namespace ProjectVS.Manager
         public void DeletePlayerData(int index)
         {
             SaveFileSystem.Delete(index);
+        }
+
+        public void DeletePlayerData()
+        {
+            SaveFileSystem.Delete(CurrentdFileIndex);
         }
 
         public bool CheckPlayerData(int index)
