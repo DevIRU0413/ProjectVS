@@ -27,7 +27,7 @@ namespace ProjectVS.JDW
         private void Awake()
         {
             // TSV 데이터 불러옴
-            CsvTable table = new CsvTable("Min/Resources/CharacterSelectionData.tsv", '\t');
+            CsvTable table = new CsvTable("Resources/CharacterSelectionData.tsv", '\t');
             CsvReader.Read(table);
             _characterDataList = CharacterSelectionDataParser.Parse(table);
         }
