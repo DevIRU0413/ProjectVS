@@ -33,10 +33,12 @@ namespace ProjectVS.Monster
         public bool IsMove => MoveDirection.sqrMagnitude > _stopMoveRange * _stopMoveRange;
         public bool IsWin => false;
         public MonsterAnimationPlayer Anim { get; private set; }
-        public MonsterStats Stats { get; private set; }
+        [field: SerializeField] public MonsterStats Stats { get; private set; }
         public Vector3 MoveDirection { get; private set; } = Vector3.zero;
-        public Action OnHit { get; set; }
+
+        public Action OnHit;
         public Action OnDeath;
+
         public Action OnSpawn { get; set; }
         public Action OnDespawn { get; set; }
         #endregion
