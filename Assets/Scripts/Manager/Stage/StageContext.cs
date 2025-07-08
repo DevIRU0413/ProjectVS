@@ -10,7 +10,7 @@ namespace ProjectVS.Manager
     {
         // 필드
         public JDW.PlayerConfig Player { get; set; }
-        public TimerPresenter Timer { get; set; }
+        public Timer Timer { get; set; }
         public MonsterSpawnController Spawner { get; set; }
         public MonsterController BossController { get; set; }
 

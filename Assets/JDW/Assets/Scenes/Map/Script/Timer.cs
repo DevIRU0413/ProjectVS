@@ -15,6 +15,9 @@ public class Timer : MonoBehaviour
 
     private bool _paused = false;
 
+    public bool IsTimeOver() => 0 >= CurrentTime;
+
+
     private void Start()
     {
         CurrentTime = TotalTime;

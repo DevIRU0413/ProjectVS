@@ -30,8 +30,8 @@ namespace ProjectVS.Manager.Stage
                 return;
             }
 
-            if (_ctx.Timer != null)
-                _ctx.Timer.Update(Time.deltaTime);
+            /*if (_ctx.Timer != null)
+                _ctx.Timer.Update(Time.deltaTime);*/
 
             _ctx.Spawner?.Update();
 

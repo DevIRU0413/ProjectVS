@@ -1,4 +1,5 @@
-﻿using ProjectVS.Util;
+﻿using ProjectVS.Interface;
+using ProjectVS.Util;
 
 using UnityEngine;
 
@@ -28,16 +29,26 @@ namespace ProjectVS.Monster
 
         public virtual void HitTriggerStay(Collider2D coll)
         {
-            if (_unitStats == null) return;
-            if (_hitTime + _unitStats.CurrentAtkSpd > Time.time) return;
-            Hit(coll.gameObject);
+            if (_controller == null) return;
+            if (_controller.Stats == null) return;
+            if (_controller.IsDeath) return;
+            if (_hitTime + _controller.Stats.CurrentAtkSpd > Time.time) return;
+
+            var damageable = coll.GetComponentInParent<Damageable>();
+            if (damageable == null) return;
+            Hit(damageable.gameObject);
         }
 
         public virtual void HitCollisionStay(Collision2D coll)
         {
-            if (_unitStats == null) return;
-            if (_hitTime + _unitStats.CurrentAtkSpd > Time.time) return;
-            Hit(coll.gameObject);
+            if (_controller == null) return;
+            if (_controller.Stats == null) return;
+            if (_controller.IsDeath) return;
+            if (_hitTime + _controller.Stats.CurrentAtkSpd > Time.time) return;
+
+            var damageable = coll.gameObject.GetComponentInParent<Damageable>();
+            if (damageable == null) return;
+            Hit(damageable.gameObject);
         }
 
         private void HitTimeCheck()
@@ -48,8 +59,6 @@ namespace ProjectVS.Monster
 
         private void OnSpawn()
         {
-            if (_controller.IsDeath) return;
-
             OnEnterHitEnd -= HitTimeCheck;
             OnEnterHitEnd += HitTimeCheck;
 

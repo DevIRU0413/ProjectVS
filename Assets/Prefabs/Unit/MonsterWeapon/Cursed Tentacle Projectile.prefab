@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 971855163411011684}
   - component: {fileID: 9130363640209753883}
   - component: {fileID: 5513732908419213842}
+  - component: {fileID: 8500546447350331899}
   m_Layer: 0
   m_Name: Cursed Tentacle Projectile
   m_TagString: Untagged
@@ -117,6 +118,20 @@ MonoBehaviour:
   useGravity: 0
   isHoming: 0
   lifeTime: 5
+--- !u!114 &8500546447350331899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3942935392967977735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b223efe12d55fda4d801b603d599c3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delayDstory: 0
+  _vfx: {fileID: 0}
 --- !u!1 &5623573104532427514
 GameObject:
   m_ObjectHideFlags: 0
