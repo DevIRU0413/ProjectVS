@@ -11,7 +11,6 @@ using UnityEngine;
 
 namespace ProjectVS.Stage
 {
-    [RequireComponent(typeof(MonsterSpawnController))]
     public class StageManager : SimpleSingleton<StageManager>, IManager, IGameStateListener
     {
         private const string TEST_STAGE_SIMPLE_DATA = "SO/Stage/Stage_Simple_Data";
@@ -19,6 +18,9 @@ namespace ProjectVS.Stage
 
         private StageFlowMachine _flowMachine;
         private StageContext _context;
+
+
+        public StageContext Context => _context;
 
         // IManager
         public int Priority => (int)ManagerPriority.StageManager;
