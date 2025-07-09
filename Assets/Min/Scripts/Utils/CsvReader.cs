@@ -49,7 +49,7 @@ namespace ProjectVS.Utils.CsvReader
 #if UNITY_EDITOR
                 return Application.dataPath + Path.DirectorySeparatorChar;
 #else
-                    return Application.persistentDataPath + Path.DirectorySeparatorChar;
+                    return Application.dataPath + Path.DirectorySeparatorChar;
 #endif
             }
         }
@@ -157,6 +157,8 @@ namespace ProjectVS.Utils.CsvReader
         /// <returns>True if the file exists, otherwise false. 파일이 존재하면 true, 그렇지 않으면 false.</returns>
         private static bool IsValidPath(CsvClass csv)
         {
+            Debug.LogError($"{csv.FilePath}");
+
             if (!File.Exists(csv.FilePath))
             {
 #if UNITY_EDITOR

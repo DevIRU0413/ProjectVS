@@ -84,7 +84,7 @@ namespace ProjectVS.Dialogue.DialogueManagerR
             base.Awake();
 
             _dataService = new DialogueDataService();
-            _dataService.Load("Resources/DialogueData.tsv", "Resources/ChoiceData.tsv");
+            _dataService.Load("Resources/DataSheet/DialogueData.tsv", "Resources/DataSheet/ChoiceData.tsv");
 
             _affinityChecker = new();
             _evaluator = new EvaluatorClass(_dataService, _affinityChecker);

@@ -759,11 +759,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4269024868044964184, guid: f14488ba914d8824c945ca0b6fa8acac, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3618693426564362288, guid: f14488ba914d8824c945ca0b6fa8acac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1756147533}
   m_SourcePrefab: {fileID: 100100000, guid: f14488ba914d8824c945ca0b6fa8acac, type: 3}
+--- !u!1 &1756147532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3618693426564362288, guid: f14488ba914d8824c945ca0b6fa8acac, type: 3}
+  m_PrefabInstance: {fileID: 1756147531}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1756147533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756147532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e56f3847a3f3ec442957dcaaefb559ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isDontDestroyOnLoad: 1
+  _shopEnterText: {fileID: 0}
+  _repeatText: {fileID: 0}
+  _eventText: {fileID: 0}
+  _stageClearText: {fileID: 0}
+  _autoNextDelay: 1
+  _dialogueLogManager: {fileID: 0}
+  _choiceDialogueManager: {fileID: 0}
+  _spriteChangeManager: {fileID: 0}
+  IsClosed: 0
 --- !u!1 &1841829563
 GameObject:
   m_ObjectHideFlags: 0

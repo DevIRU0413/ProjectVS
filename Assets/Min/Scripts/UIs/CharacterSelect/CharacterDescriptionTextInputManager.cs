@@ -14,7 +14,7 @@ namespace ProjectVS.UIs.CharacterSelect.CharacterDescriptionTextInputManager
     public class CharacterDescriptionTextInputManager : MonoBehaviour
     {
         [Header("TSV 파일 경로")]
-        [SerializeField] private string _characterSelectionDataPath = "Resources/CharacterSelectionData.tsv";
+        private string _characterSelectionDataPath = "Resources/DataSheet/CharacterSelectionData.tsv";
 
         private CsvTable _characterSelectionDataTable;
 
