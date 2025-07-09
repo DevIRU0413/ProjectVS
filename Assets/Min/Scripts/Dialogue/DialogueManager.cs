@@ -38,8 +38,8 @@ namespace ProjectVS.Dialogue.DialogueManager
         private DialogueTextTyperClass _currentText;
 
         [Header("TSV 파일 경로")]
-        [SerializeField] private string _dialoguePath = "Resources/DialogueData.tsv";
-        [SerializeField] private string _choicePath = "Resources/ChoiceData.tsv";
+        private string _dialoguePath = "Resources/DataSheet/DialogueData.tsv";
+        private string _choicePath = "Resources/DataSheet/ChoiceData.tsv";
 
         private CsvTable _dialogueTable;
         private CsvTable _choiceTable;

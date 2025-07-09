@@ -12,7 +12,7 @@ using System.Linq;
 
 public class SetItemDataManager : SimpleSingleton<SetItemDataManager>
 {
-    [SerializeField] private string _setDataPath = "Resources/SetData.tsv";
+    private string _setDataPath = "Resources/DataSheet/SetData.tsv";
     CsvTable _table;
 
     private List<SetItemData> _setItems;
