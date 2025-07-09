@@ -18,10 +18,16 @@ namespace ProjectVS.Manager.Stage
             UnityEngine.Debug.Log($"[Stage] 종료 상태 진입. 결과: {_ctx.StageResult}");
             
             // 이겼을 때, 인벤토리 저장
+            //if (_ctx.StageResult == StageResult.Win)
+            //{
+            //    Item.ItemManager.ItemManager.Instance.SendInventory();
+            //    SceneLoader.Instance.LoadSceneAsync(SceneID.InGameScene);
+            //}
+
             if (_ctx.StageResult == StageResult.Win)
             {
                 Item.ItemManager.ItemManager.Instance.SendInventory();
-                SceneLoader.Instance.LoadSceneAsync(SceneID.InGameScene);
+                SceneLoader.Instance.LoadSceneAsync(SceneID.StoreScene);
             }
 
             if (_ctx.IsTrueEnding())
