@@ -376,7 +376,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isDontDestroyOnLoad: 1
-  _setDataPath: Min/Resources/SetData.tsv
 --- !u!1 &1147676835
 GameObject:
   m_ObjectHideFlags: 0

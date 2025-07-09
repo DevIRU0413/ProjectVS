@@ -5297,7 +5297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &728727203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9567,7 +9567,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50adff8b01ae5d04cb1cf33b646daed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterSelectionDataPath: Min/Resources/CharacterSelectionData.tsv
   _nameTextList:
   - {fileID: 521843282}
   - {fileID: 1609196300}
