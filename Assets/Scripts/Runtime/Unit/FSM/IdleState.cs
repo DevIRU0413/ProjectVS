@@ -2,7 +2,7 @@
 {
     public class IdleState : UnitState
     {
-        public IdleState(UnitController unit) : base(unit) { }
+        public IdleState(BaseUnitController unit) : base(unit) { }
 
         public override UnitStateType StateType => UnitStateType.Idle;
 
@@ -16,7 +16,7 @@
             // 입력 또는 AI 등으로 이동 조건 발생 시
             if (ShouldMove())
             {
-                unit.StateMachine.ChangeState(UnitStateType.Move);
+                unit.FSM.ChangeState(UnitStateType.Move);
             }
         }
 

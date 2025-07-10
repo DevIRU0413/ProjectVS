@@ -1,4 +1,8 @@
-﻿namespace ProjectVS.Core.Stat
+﻿using System.Collections.Generic;
+
+using ProjectPV.Core.Stat;
+
+namespace ProjectVS.Core.Stat
 {
     public interface IStatProvider
     {

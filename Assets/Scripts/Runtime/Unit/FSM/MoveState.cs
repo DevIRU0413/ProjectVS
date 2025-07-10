@@ -4,7 +4,7 @@ namespace ProjectVS.Runtime.Unit.FSM
 {
     public class MoveState : UnitState
     {
-        public MoveState(UnitController unit) : base(unit) { }
+        public MoveState(BaseUnitController unit) : base(unit) { }
 
         public override UnitStateType StateType => UnitStateType.Move;
 
@@ -15,27 +15,22 @@ namespace ProjectVS.Runtime.Unit.FSM
 
         public override void Tick(float deltaTime)
         {
-            Vector3 inputDir = GetInputDirection();
-            if (inputDir == Vector3.zero)
-            {
-                unit.StateMachine.ChangeState(UnitStateType.Idle);
-                return;
-            }
+            // 컨트롤러 쪽에서 모듈로 처리할 예정
+            // Vector3 inputDir = GetInputDirection();
 
-            unit.Move(inputDir);
+            /*if (inputDir == Vector3.zero)
+            {
+                unit.FSM.ChangeState(UnitStateType.Idle);
+                return;
+            }*/
+
+            // 이동도 모듈만들어서 처리할 예정
+            //unit.Move(inputDir);
         }
 
         public override void Exit()
         {
             // 이동 상태 종료 시
-        }
-
-        private Vector3 GetInputDirection()
-        {
-            // 예: WASD 입력 받기
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
-            return new Vector3(h, 0f, v);
         }
     }
 }
