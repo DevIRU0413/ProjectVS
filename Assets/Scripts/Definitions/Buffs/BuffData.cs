@@ -12,9 +12,11 @@ namespace ProjectPV.Definitions.Buff
     {
         public string id;
         public string displayName;
-        public float duration; // 0이면 무한 지속
+        public float duration;          // 0이면 무한 지속
+        public bool isStackable = false;// 중첩 가능 여부
+        public int maxStack = 1;
 
-        public List<StatModifier> modifiers = new();
-        public List<UnitStatusEffect> statusEffects = new();
+        public List<StatModifier> modifiers;
+        public List<UnitStatusEffect> statusEffects;
     }
 }
