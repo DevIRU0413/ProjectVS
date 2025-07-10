@@ -3,14 +3,12 @@
     [System.Serializable]
     public class StatModifier
     {
-        public string sourceId;              // Buff ID, Equipment ID 등
         public UnitStatType statsType;
-        public float additive = 0f;          // +10 같은 고정 증가
-        public float multiplier = 1f;        // *1.2 같은 배율 증가
+        public float additive = 0f;
+        public float multiplier = 1f;
 
-        public StatModifier(string id, UnitStatType type, float add, float mul)
+        public StatModifier(UnitStatType type, float add, float mul)
         {
-            sourceId = id;
             statsType = type;
             additive = add;
             multiplier = mul;
