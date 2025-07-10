@@ -6,12 +6,13 @@ using UnityEngine;
 
 namespace ProjectVS.Core.Equipment
 {
-    [CreateAssetMenu(menuName = "Game/Equipment/EquipmentData")]
+    [CreateAssetMenu(menuName = "ProjectVS/Equipment/EquipmentData")]
     public class EquipmentData : ScriptableObject
     {
-        public string id;
-        public string displayName;
-        public EquipmentSlot slot;
-        public List<StatModifier> statModifiers;
+        public string ID;
+        public string DisplayName;
+        public EquipmentSlot Slot;
+
+        public List<StatModifier> StatModifiers = new();
     }
 }

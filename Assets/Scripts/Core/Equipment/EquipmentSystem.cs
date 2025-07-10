@@ -1,60 +1,61 @@
 ﻿using System.Collections.Generic;
 
-using ProjectPV.Core.Stat;
-
 namespace ProjectVS.Core.Equipment
 {
     public class EquipmentSystem
     {
-        private readonly UnitStats _stats;
-        private readonly Dictionary<EquipmentSlot, EquipmentData> _equipped = new();
+        private readonly UnitStats _unitStats;
+        private readonly Dictionary<EquipmentSlot, EquipmentInstance> _equipped = new();
 
         public EquipmentSystem(UnitStats stats)
         {
-            _stats = stats;
+            _unitStats = stats;
         }
 
-        public bool Equip(EquipmentData data)
+        /// <summary>
+        /// 장비 장착
+        /// </summary>
+        public void Equip(EquipmentData data)
         {
-            if (data == null) return false;
+            var slot = data.Slot;
 
-            if (_equipped.TryGetValue(data.slot, out var current))
-            {
-                Unequip(data.slot);
-            }
+            // 기존 장비 제거
+            if (_equipped.TryGetValue(slot, out var existing))
+                Unequip(slot);
 
-            _equipped[data.slot] = data;
-
-            foreach (var mod in data.statModifiers)
-            {
-                var equippedMod = new StatModifier(data.id, mod.statsType, mod.additive, mod.multiplier);
-                _stats.AddModifier(equippedMod);
-            }
-
-            return true;
+            var instance = new EquipmentInstance(data);
+            _equipped[slot] = instance;
+            _unitStats.AddProvider(instance);
         }
 
+        /// <summary>
+        /// 장비 해제
+        /// </summary>
         public void Unequip(EquipmentSlot slot)
         {
-            if (!_equipped.TryGetValue(slot, out var data)) return;
+            if (!_equipped.TryGetValue(slot, out var instance))
+                return;
 
-            _stats.RemoveModifier(data.id);
+            _unitStats.RemoveProvider(instance.Id);
             _equipped.Remove(slot);
         }
 
-        public EquipmentData GetEquipped(EquipmentSlot slot)
-        {
-            _equipped.TryGetValue(slot, out var data);
-            return data;
-        }
-
+        /// <summary>
+        /// 모든 장비 제거
+        /// </summary>
         public void UnequipAll()
         {
-            foreach (var kvp in _equipped)
-            {
-                _stats.RemoveModifier(kvp.Value.id);
-            }
+            foreach (var kv in _equipped)
+                _unitStats.RemoveProvider(kv.Value.Id);
+
             _equipped.Clear();
         }
+
+        public EquipmentInstance GetEquipped(EquipmentSlot slot)
+        {
+            return _equipped.TryGetValue(slot, out var item) ? item : null;
+        }
+
+        public IReadOnlyDictionary<EquipmentSlot, EquipmentInstance> AllEquipped => _equipped;
     }
 }
