@@ -4,7 +4,7 @@
     {
         Idle,
         Move,
-        Attack,
+        Skill,
         Dead
     }
 }
