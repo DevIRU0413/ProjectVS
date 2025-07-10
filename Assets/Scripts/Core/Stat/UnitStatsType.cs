@@ -1,4 +1,4 @@
-﻿namespace Game.Core.Stat
+﻿namespace ProjectPV.Core.Stat
 {
     public enum UnitStatType
     {

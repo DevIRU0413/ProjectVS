@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace Game.Core.Stat
+namespace ProjectPV.Core.Stat
 {
     [Serializable]
     public class UnitStat
     {
         [SerializeField] private float _currentHp;
 
-        [SerializeField] private Dictionary<UnitStatType, float> _baseStats = new();
-        private readonly Dictionary<UnitStatType, float> _additiveCache = new();
-        private readonly Dictionary<UnitStatType, float> _multiplierCache = new();
+        [SerializeField] private Dictionary<UnitStatType, float> _baseStats = new();    // 베이스
+        private readonly Dictionary<UnitStatType, float> _additiveCache = new();        // 추가   (합연산)
+        private readonly Dictionary<UnitStatType, float> _multiplierCache = new();      // 곱연산 (곱연산)
 
         private readonly List<StatModifier> _modifiers = new();
 

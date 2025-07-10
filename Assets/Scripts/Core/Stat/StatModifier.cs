@@ -1,4 +1,4 @@
-﻿namespace Game.Core.Stat
+﻿namespace ProjectPV.Core.Stat
 {
     [System.Serializable]
     public class StatModifier
