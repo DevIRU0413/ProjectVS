@@ -11,11 +11,11 @@ namespace ProjectVS.Core.Buff
 {
     public class BuffSystem
     {
-        private readonly UnitStat _unitStat;
+        private readonly UnitStats _unitStat;
         private readonly HashSet<UnitStatusEffect> _activeStatusEffects = new();
         private readonly Dictionary<string, BuffInstance> _activeBuffs = new();
 
-        public BuffSystem(UnitStat unitStat)
+        public BuffSystem(UnitStats unitStat)
         {
             _unitStat = unitStat;
         }
@@ -90,7 +90,7 @@ namespace ProjectVS.Core.Buff
             {
                 var scaled = new StatModifier(
                     instance.Data.id,
-                    mod.statType,
+                    mod.statsType,
                     mod.additive * instance.Stack,
                     Mathf.Pow(mod.multiplier, instance.Stack)
                 );

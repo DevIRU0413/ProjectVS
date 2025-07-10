@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ProjectPV.Core.Stat
 {
     [Serializable]
-    public class UnitStat
+    public class UnitStats
     {
         [SerializeField] private float _currentHp;
 
@@ -60,14 +60,14 @@ namespace ProjectPV.Core.Stat
 
             foreach (var modifier in _modifiers)
             {
-                if (!_additiveCache.ContainsKey(modifier.statType))
-                    _additiveCache[modifier.statType] = 0f;
+                if (!_additiveCache.ContainsKey(modifier.statsType))
+                    _additiveCache[modifier.statsType] = 0f;
 
-                if (!_multiplierCache.ContainsKey(modifier.statType))
-                    _multiplierCache[modifier.statType] = 1f;
+                if (!_multiplierCache.ContainsKey(modifier.statsType))
+                    _multiplierCache[modifier.statsType] = 1f;
 
-                _additiveCache[modifier.statType] += modifier.additive;
-                _multiplierCache[modifier.statType] *= modifier.multiplier;
+                _additiveCache[modifier.statsType] += modifier.additive;
+                _multiplierCache[modifier.statsType] *= modifier.multiplier;
             }
         }
 
