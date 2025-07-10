@@ -1,80 +1,72 @@
-﻿using System;
+﻿using ProjectPV.Core.Stat;
+using ProjectVS.Core.Stat;
 using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace ProjectPV.Core.Stat
+public class UnitStats
 {
-    [Serializable]
-    public class UnitStats
+    private float _currentHp;
+
+    private readonly Dictionary<UnitStatType, float> _baseStats = new();
+    private readonly Dictionary<string, IStatProvider> _providers = new();
+
+    private readonly Dictionary<UnitStatType, float> _additiveCache = new();
+    private readonly Dictionary<UnitStatType, float> _multiplierCache = new();
+
+    public float CurrentHp
     {
-        [SerializeField] private float _currentHp;
+        get => _currentHp;
+        set => _currentHp = Mathf.Clamp(value, 0, GetFinalStat(UnitStatType.MaxHp));
+    }
 
-        [SerializeField] private Dictionary<UnitStatType, float> _baseStats = new();    // 베이스
-        private readonly Dictionary<UnitStatType, float> _additiveCache = new();        // 추가   (합연산)
-        private readonly Dictionary<UnitStatType, float> _multiplierCache = new();      // 곱연산 (곱연산)
+    public void SetBaseStat(UnitStatType type, float value) => _baseStats[type] = value;
+    public float GetBaseStat(UnitStatType type) => _baseStats.TryGetValue(type, out var val) ? val : 0f;
 
-        private readonly List<StatModifier> _modifiers = new();
+    public void AddProvider(IStatProvider provider)
+    {
+        _providers[provider.Id] = provider;
+        Recalculate();
+    }
 
-        public float CurrentHp
+    public void RemoveProvider(string id)
+    {
+        if (_providers.Remove(id))
+            Recalculate();
+    }
+
+    public void ClearProviders()
+    {
+        _providers.Clear();
+        Recalculate();
+    }
+
+    public float GetFinalStat(UnitStatType type)
+    {
+        float baseValue = GetBaseStat(type);
+        float additive = _additiveCache.TryGetValue(type, out var a) ? a : 0f;
+        float multiplier = _multiplierCache.TryGetValue(type, out var m) ? m : 1f;
+        return (baseValue + additive) * multiplier;
+    }
+
+    private void Recalculate()
+    {
+        _additiveCache.Clear();
+        _multiplierCache.Clear();
+
+        foreach (var provider in _providers.Values)
         {
-            get => _currentHp;
-            set => _currentHp = Mathf.Clamp(value, 0, GetFinalStat(UnitStatType.MaxHp));
-        }
-
-        public void SetBaseStat(UnitStatType type, float value)
-        {
-            _baseStats[type] = value;
-        }
-
-        public float GetBaseStat(UnitStatType type)
-        {
-            return _baseStats.TryGetValue(type, out float value) ? value : 0f;
-        }
-
-        public void AddModifier(StatModifier modifier)
-        {
-            _modifiers.Add(modifier);
-            RecalculateCaches();
-        }
-
-        public void RemoveModifier(string sourceId)
-        {
-            _modifiers.RemoveAll(m => m.sourceId == sourceId);
-            RecalculateCaches();
-        }
-
-        public float GetFinalStat(UnitStatType type)
-        {
-            float baseValue = GetBaseStat(type);
-            float additive = _additiveCache.TryGetValue(type, out var add) ? add : 0f;
-            float multiplier = _multiplierCache.TryGetValue(type, out var mul) ? mul : 1f;
-
-            return (baseValue + additive) * multiplier;
-        }
-
-        private void RecalculateCaches()
-        {
-            _additiveCache.Clear();
-            _multiplierCache.Clear();
-
-            foreach (var modifier in _modifiers)
+            foreach (var mod in provider.GetModifiers())
             {
-                if (!_additiveCache.ContainsKey(modifier.statsType))
-                    _additiveCache[modifier.statsType] = 0f;
+                if (!_additiveCache.ContainsKey(mod.StatType))
+                    _additiveCache[mod.StatType] = 0f;
 
-                if (!_multiplierCache.ContainsKey(modifier.statsType))
-                    _multiplierCache[modifier.statsType] = 1f;
+                if (!_multiplierCache.ContainsKey(mod.StatType))
+                    _multiplierCache[mod.StatType] = 1f;
 
-                _additiveCache[modifier.statsType] += modifier.additive;
-                _multiplierCache[modifier.statsType] *= modifier.multiplier;
+                _additiveCache[mod.StatType] += mod.Additive;
+                _multiplierCache[mod.StatType] *= mod.Multiplier;
             }
-        }
-
-        public void ClearAllModifiers()
-        {
-            _modifiers.Clear();
-            RecalculateCaches();
         }
     }
 }
