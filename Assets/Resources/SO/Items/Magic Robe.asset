@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1441fe75217ba0a43bcdabc169935e85, type: 3}
-  m_Name: "\uAF2C\uAE54\uBAA8\uC790"
+  m_Name: Magic Robe
   m_EditorClassIdentifier: 
-  ItemID: 11102
+  ItemID: 11132
   ItemRank: 3
-  ItemName: "\uAF2C\uAE54\uBAA8\uC790"
+  ItemName: "\uB9C8\uBC95\uB85C\uBE0C"
   ItemType: 4
   Price: -1
-  Description: "\uC870\uD569 \uC544\uC774\uD15C '\uAF2C\uAE54\uBAA8\uC790'"
+  Description: "\uC870\uD569 \uC544\uC774\uD15C '\uB9C8\uBC95\uB85C\uBE0C'"
   ItemAtkSpeed: -1
-  ItemEffect: 6
+  ItemEffect: 7
   ItemEffectValue: 4
-  ItemAddID1: 10200
-  ItemAddID2: 10202
+  ItemAddID1: 10231
+  ItemAddID2: 10232
   ItemSetEffect: 1
   ItemSetNum: 4
   ItemMaxLevel: 5
@@ -30,6 +30,6 @@ MonoBehaviour:
   ItemValue: 0
   ItemRange: -1
   ItemSize: -1
-  ItemIcon: {fileID: 21300000, guid: cdd6567e3bd03044daf92839c7898e98, type: 3}
-  ItemIconPath: Images/Sprite/Item/Cocklehat
+  ItemIcon: {fileID: 21300000, guid: bc8afc4d2542a81469e524ae7bbac6c5, type: 3}
+  ItemIconPath: Images/Sprite/Item/Magicrobe
   IsComposited: 0

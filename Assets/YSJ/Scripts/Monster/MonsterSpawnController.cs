@@ -44,7 +44,7 @@ namespace ProjectVS.Monster
 
             if (_monsterDatas.Count == 0)
             {
-                var table = new CsvTable("Resources/DataSheet/MonsterData.tsv", '\t');
+                var table = new CsvTable("StreamingAssets/DataSheet/MonsterData.tsv", '\t');
                 var list = MonsterDataParser.Parse(table);
                 SetDataListUp(list);
             }

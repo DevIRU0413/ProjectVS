@@ -16,39 +16,33 @@ MonoBehaviour:
   - GroupName: Radius
     SpawnGroupType: 1
     SpawnableObjects:
-    - {fileID: 2924864599327088652, guid: 423aeb164f3af254798cc25f6bb8cc5e, type: 3}
-    - {fileID: 6773870201672131864, guid: e12a49b4c9116cb44b24f5c30191dac2, type: 3}
-    - {fileID: 7388677132878714472, guid: 2983511bfcb77f84c9b4b25eec409c37, type: 3}
-    - {fileID: 2459041630460869292, guid: e5af0e5fee5dacc449a86d4598107b89, type: 3}
-    - {fileID: 6150469384424873328, guid: 333638d2b878cd842b4a8373fde59ff8, type: 3}
-    - {fileID: 1352360658915763524, guid: fe9332272d5b4cf449d2d1f1d57f6b85, type: 3}
-    - {fileID: 308987885835554314, guid: f5908aa1ec854574cb4712fd581eafe0, type: 3}
-    GroupUnitSpawnCount: 2
-    Interval: 4
+    - {fileID: 6051400608539244084, guid: 73badf2e9ba26624f961670670812f54, type: 3}
+    GroupUnitSpawnCount: 1
+    Interval: 2000
     AutoStart: 1
     StopAfterTime: 900
-    timer: 2.4103856
-    activeTime: 22.448498
+    timer: 50.898773
+    activeTime: 56.865665
   - GroupName: Line
-    SpawnGroupType: 2
+    SpawnGroupType: 0
     SpawnableObjects:
     - {fileID: 3899817991138024775, guid: c741362187684d0428ef75cb2ad0843f, type: 3}
     GroupUnitSpawnCount: 30
     Interval: 180
     AutoStart: 0
     StopAfterTime: 900
-    timer: 22.448498
-    activeTime: 22.448498
+    timer: 0
+    activeTime: 0
   - GroupName: Circle
-    SpawnGroupType: 3
+    SpawnGroupType: 0
     SpawnableObjects:
     - {fileID: 3899817991138024775, guid: c741362187684d0428ef75cb2ad0843f, type: 3}
     GroupUnitSpawnCount: 40
     Interval: 300
     AutoStart: 0
     StopAfterTime: 900
-    timer: 22.448498
-    activeTime: 22.448498
+    timer: 0
+    activeTime: 0
   radius: 16
   isReverseLine: 1
   offset: 2

@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1441fe75217ba0a43bcdabc169935e85, type: 3}
-  m_Name: "\uB2E4\uC774\uC544"
+  m_Name: Axe
   m_EditorClassIdentifier: 
-  ItemID: 1001
-  ItemRank: 0
-  ItemName: "\uB2E4\uC774\uC544"
-  ItemType: 0
+  ItemID: 10002
+  ItemRank: 2
+  ItemName: "\uB3C4\uB07C"
+  ItemType: 3
   Price: -1
-  Description: "\uBCF4\uC874\uC131 \uC7AC\uD654 '\uB2E4\uC774\uC544'"
-  ItemAtkSpeed: -1
-  ItemEffect: 0
-  ItemEffectValue: -1
+  Description: "\uACE0\uC720 \uC544\uC774\uD15C '\uB3C4\uB07C'"
+  ItemAtkSpeed: 0.8
+  ItemEffect: 2
+  ItemEffectValue: 15
   ItemAddID1: -1
   ItemAddID2: -1
   ItemSetEffect: -1
   ItemSetNum: -1
-  ItemMaxLevel: -1
+  ItemMaxLevel: 5
   ItemCurLevel: 0
   ItemValue: 0
-  ItemRange: -1
-  ItemSize: -1
-  ItemIcon: {fileID: 0}
-  ItemIconPath: Images/Sprite/Item/money_diamond
+  ItemRange: 15
+  ItemSize: 1.2
+  ItemIcon: {fileID: 21300000, guid: 1bf91cd33e8f45d4cb76b4595a99c06a, type: 3}
+  ItemIconPath: Images/Sprite/Item/Axe
   IsComposited: 0

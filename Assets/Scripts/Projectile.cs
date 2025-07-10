@@ -1,8 +1,4 @@
-﻿using System;
-
-using ProjectVS.Util;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ProjectVS
 {
@@ -19,6 +15,7 @@ namespace ProjectVS
         [SerializeField] private float rotDamping = 0.0f;
         [SerializeField] private bool useGravity = false;
         [SerializeField] private bool isHoming = false;
+        [SerializeField] private float homingTime = 0.0f;
 
         [Header("Lifetime")]
         [SerializeField] private float lifeTime = 5f;
@@ -44,10 +41,17 @@ namespace ProjectVS
                 direction = rotated;
                 rb.velocity = direction * speed;
 
+                if (speed == 0.0f)
+                    RotateVisual(direction);
+
                 if (rotDamping > 0f)
                 {
                     rotSpeed *= Mathf.Clamp01(1 - rotDamping * Time.fixedDeltaTime);
                 }
+
+                homingTime -= Time.deltaTime;
+                if (homingTime < 0f)
+                    isHoming = false;
             }
 
             if (speedDamping > 0f)

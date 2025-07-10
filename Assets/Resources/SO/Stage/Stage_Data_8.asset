@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4809bd8f55fdbc740a1792cbe4020008, type: 3}
   m_Name: Stage_Data_8
   m_EditorClassIdentifier: 
-  ClearTime: 10
+  ClearTime: 900
   DifficultyLevel: 1
   MaxSpawnableCount: 100
-  spawnerConfig: {fileID: 11400000, guid: 2fddbaa8f3ae10c478fda7b9f77e0a2c, type: 2}
+  spawnerConfig: {fileID: 0}
   BossPrefab: {fileID: 0}
   Reward:
     rewardName: "\uAE30\uBCF8 \uBCF4\uC0C1"

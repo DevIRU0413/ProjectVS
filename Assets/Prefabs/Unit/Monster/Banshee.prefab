@@ -48,7 +48,7 @@ MonoBehaviour:
   patternActionClips: {fileID: 0}
   patternRecoveryClips: {fileID: 0}
   <castDelay>k__BackingField: 0
-  <recoveryTime>k__BackingField: 4
+  <recoveryTime>k__BackingField: 5
   _cooldown: 4
   _shootableRange: 5
   _projectilePrefab: {fileID: 1988102773127943700, guid: 99f8268500062c14482d38a2237f413e, type: 3}
@@ -725,7 +725,7 @@ MonoBehaviour:
   patternActionClips: {fileID: 0}
   patternRecoveryClips: {fileID: 0}
   <castDelay>k__BackingField: 0
-  <recoveryTime>k__BackingField: 4
+  <recoveryTime>k__BackingField: 5
   _cooldown: 4
   _shootableRange: 5
   _projectilePrefab: {fileID: 1578519280804826849, guid: 0c4bd37fefb524649b8b07e64e640ef4, type: 3}

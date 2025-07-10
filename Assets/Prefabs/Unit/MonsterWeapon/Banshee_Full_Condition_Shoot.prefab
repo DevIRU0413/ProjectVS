@@ -80,7 +80,8 @@ MonoBehaviour:
   speedDamping: 0
   rotDamping: 0
   useGravity: 0
-  isHoming: 0
+  isHoming: 1
+  homingTime: 2
   lifeTime: 5
 --- !u!114 &1690730330454428651
 MonoBehaviour:
@@ -229,10 +230,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinAlpha: 0
   MaxAlpha: 0.7
-  changeTime: 3
+  changeTime: 5
   forward: 1
   useColor: {r: 1, g: 0, b: 0, a: 0}
-  spriteRenderers: []
+  spriteRenderers:
+  - {fileID: 3265974199507905597}
 --- !u!1 &4567313389501807586
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,8 +282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 50, y: 2}
   offset: {x: 25, y: 0}
-  buffer:
-  - {fileID: 0}
+  buffer: []
   targetMask:
     serializedVersion: 2
     m_Bits: 8
@@ -386,10 +387,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinAlpha: 0
   MaxAlpha: 0.7
-  changeTime: 3
+  changeTime: 5
   forward: 1
   useColor: {r: 1, g: 0, b: 0, a: 0}
-  spriteRenderers: []
+  spriteRenderers:
+  - {fileID: 2438207995240506122}
 --- !u!1 &5227998212605487620
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,8 +439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 50, y: 2}
   offset: {x: 25, y: 0}
-  buffer:
-  - {fileID: 0}
+  buffer: []
   targetMask:
     serializedVersion: 2
     m_Bits: 8
@@ -491,8 +492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 50, y: 2}
   offset: {x: 25, y: 0}
-  buffer:
-  - {fileID: 0}
+  buffer: []
   targetMask:
     serializedVersion: 2
     m_Bits: 8
@@ -597,7 +597,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinAlpha: 0
   MaxAlpha: 0.7
-  changeTime: 3
+  changeTime: 5
   forward: 1
   useColor: {r: 1, g: 0, b: 0, a: 0}
-  spriteRenderers: []
+  spriteRenderers:
+  - {fileID: 94136367770552075}

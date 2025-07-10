@@ -80,7 +80,8 @@ MonoBehaviour:
   speedDamping: 0
   rotDamping: 0
   useGravity: 0
-  isHoming: 0
+  isHoming: 1
+  homingTime: 2
   lifeTime: 5
 --- !u!114 &412270097837587605
 MonoBehaviour:

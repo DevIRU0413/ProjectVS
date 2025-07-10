@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1441fe75217ba0a43bcdabc169935e85, type: 3}
-  m_Name: "\uAC80"
+  m_Name: Mask
   m_EditorClassIdentifier: 
-  ItemID: 10001
-  ItemRank: 2
-  ItemName: "\uAC80"
-  ItemType: 3
+  ItemID: 11101
+  ItemRank: 3
+  ItemName: "\uB9C8\uC2A4\uD06C"
+  ItemType: 4
   Price: -1
-  Description: "\uACE0\uC720 \uC544\uC774\uD15C '\uAC80'"
-  ItemAtkSpeed: 1.5
-  ItemEffect: 2
-  ItemEffectValue: 8
-  ItemAddID1: -1
-  ItemAddID2: -1
-  ItemSetEffect: -1
+  Description: "\uC870\uD569 \uC544\uC774\uD15C '\uB9C8\uC2A4\uD06C'"
+  ItemAtkSpeed: -1
+  ItemEffect: 6
+  ItemEffectValue: 6
+  ItemAddID1: 10201
+  ItemAddID2: 10202
+  ItemSetEffect: 3
   ItemSetNum: -1
   ItemMaxLevel: 5
   ItemCurLevel: 0
   ItemValue: 0
-  ItemRange: 10
-  ItemSize: 1
-  ItemIcon: {fileID: 21300000, guid: 09e99782223a1294fa8ed574944e6df4, type: 3}
-  ItemIconPath: Images/Sprite/Item/Sword
+  ItemRange: -1
+  ItemSize: -1
+  ItemIcon: {fileID: 21300000, guid: 84d6c5737d2180e4abb5ee58a0c72e67, type: 3}
+  ItemIconPath: Images/Sprite/Item/Mask
   IsComposited: 0

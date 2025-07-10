@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1441fe75217ba0a43bcdabc169935e85, type: 3}
-  m_Name: "\uB808\uB354\uC544\uBA38"
+  m_Name: Gold
   m_EditorClassIdentifier: 
-  ItemID: 10231
+  ItemID: 1000
   ItemRank: 0
-  ItemName: "\uB808\uB354\uC544\uBA38"
-  ItemType: 4
-  Price: 30
-  Description: "\uD328\uC2DC\uBE0C \uC544\uC774\uD15C '\uB808\uB354\uC544\uBA38'"
+  ItemName: "\uACE8\uB4DC"
+  ItemType: 0
+  Price: -1
+  Description: "\uD718\uBC1C\uC131 \uC7AC\uD654 '\uACE8\uB4DC'"
   ItemAtkSpeed: -1
-  ItemEffect: 7
-  ItemEffectValue: 2
+  ItemEffect: 0
+  ItemEffectValue: -1
   ItemAddID1: -1
   ItemAddID2: -1
-  ItemSetEffect: 0
-  ItemSetNum: 4
-  ItemMaxLevel: 5
+  ItemSetEffect: -1
+  ItemSetNum: -1
+  ItemMaxLevel: -1
   ItemCurLevel: 0
-  ItemValue: 30
+  ItemValue: 0
   ItemRange: -1
   ItemSize: -1
-  ItemIcon: {fileID: 21300000, guid: 99504cdfe01919c47a84c1e20f235242, type: 3}
-  ItemIconPath: Images/Sprite/Item/Leatheramor
+  ItemIcon: {fileID: 21300000, guid: 10fa389a8b68ccd45ac7b3add47ddd12, type: 3}
+  ItemIconPath: Images/Sprite/Item/money_gold
   IsComposited: 0

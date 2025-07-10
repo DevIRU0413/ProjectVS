@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4809bd8f55fdbc740a1792cbe4020008, type: 3}
   m_Name: Stage_Data_1
   m_EditorClassIdentifier: 
-  ClearTime: 10
+  ClearTime: 900
   DifficultyLevel: 1
   MaxSpawnableCount: 100
   spawnerConfig: {fileID: 11400000, guid: f0a6a2715c0a2b342b4d83e8abfac0cb, type: 2}

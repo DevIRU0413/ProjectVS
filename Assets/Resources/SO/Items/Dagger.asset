@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1441fe75217ba0a43bcdabc169935e85, type: 3}
-  m_Name: "\uB85C\uBE0C"
+  m_Name: Dagger
   m_EditorClassIdentifier: 
-  ItemID: 10232
+  ItemID: 10103
   ItemRank: 0
-  ItemName: "\uB85C\uBE0C"
-  ItemType: 4
+  ItemName: "\uB2E8\uAC80"
+  ItemType: 3
   Price: 30
-  Description: "\uD328\uC2DC\uBE0C \uC544\uC774\uD15C '\uB85C\uBE0C'"
-  ItemAtkSpeed: -1
-  ItemEffect: 7
-  ItemEffectValue: 1
+  Description: "\uC77C\uBC18 \uC544\uC774\uD15C '\uB2E8\uAC80'"
+  ItemAtkSpeed: 0.8
+  ItemEffect: 5
+  ItemEffectValue: 8
   ItemAddID1: -1
   ItemAddID2: -1
-  ItemSetEffect: -1
-  ItemSetNum: -1
+  ItemSetEffect: 0
+  ItemSetNum: 4
   ItemMaxLevel: 5
   ItemCurLevel: 0
   ItemValue: 30
-  ItemRange: -1
-  ItemSize: -1
-  ItemIcon: {fileID: 21300000, guid: 7e5e941ef833117488f80458c5db3585, type: 3}
-  ItemIconPath: Images/Sprite/Item/Robe
+  ItemRange: 10
+  ItemSize: 1
+  ItemIcon: {fileID: 21300000, guid: 93a5185915dd17644a353ab15b70ba20, type: 3}
+  ItemIconPath: Images/Sprite/Item/Dagger
   IsComposited: 0
