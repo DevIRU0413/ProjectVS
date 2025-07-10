@@ -1,8 +1,0 @@
-								
-	이벤트 고유 번호	이벤트 유형	이벤트 발생 시점	이벤트 보상	이벤트 발생 호감도	이벤트 호감도 증감 여부	이벤트 호감도 경험치 수치	개발자 확인란
-	EventID	EventType	EventPlaytime	EventReward	EventPlayLike	EventLikeExptType	EventLikeExp	
-	int	Enum<int>	Enum<int>	Enum<int>	int	Enum<int>	int	
-	1000	1	1	1	0	1	20	구출 시 다음 상점에서 아이템 랜덤 지급
-	1001	1	1	4	0	1	20	구출 시 다음 상점에서 무작위 아이템 하나 할인
-	1002	1	2	2	0	2	30	갈취 시 즉시 무작위 재화 지급 (골드, 다이아)
-	1003	2	3	3	6	0	-	호감도 6레벨 달성 시 해당 목숨에서 영구적 할인 3% 발생
