@@ -1,63 +1,54 @@
-﻿using ProjectPV.Definitions.Buff;
+﻿using System.Collections.Generic;
+
+using ProjectPV.Core.Stat;
+using ProjectPV.Definitions.Buff;
+
+using ProjectVS.Core.Stat;
 
 using UnityEngine;
 
-namespace ProjectPV.Core.Buff
+namespace ProjectVS.Core.Buff
 {
-    public class BuffInstance
+    public class BuffInstance : IStatProvider
     {
-        public BuffData Data { get; private set; }
+        public readonly BuffData Data;
+        public int Stack { get; private set; }
         public float RemainingTime { get; private set; }
-        public int Stack { get; private set; } = 1;
 
-        public string SourceId => Data.id;
-        public bool IsStackable => Data.isStackable;
-        public bool IsExpired => Data.duration > 0 && RemainingTime <= 0;
+        public string Id => $"buff:{Data.ID}";
 
         public BuffInstance(BuffData data)
         {
             Data = data;
-            RemainingTime = data.duration;
+            Stack = 1;
+            RemainingTime = data.Duration;
         }
 
-        /// <summary>
-        /// 타이머 감소 처리
-        /// </summary>
-        public void Tick(float deltaTime)
+        public void Tick(float dt)
         {
-            if (Data.duration <= 0) return; // 무한 지속
-            RemainingTime -= deltaTime;
+            RemainingTime -= dt;
         }
 
-        /// <summary>
-        /// 버프 중첩 시 처리 (스택 증가 또는 리셋)
-        /// </summary>
+        public bool IsExpired => RemainingTime <= 0f;
+
         public void RefreshOrStack()
         {
-            if (IsStackable)
+            if (Data.IsStackable)
+                Stack++;
+            else
+                RemainingTime = Data.Duration;
+        }
+
+        public IEnumerable<StatModifier> GetModifiers()
+        {
+            foreach (var mod in Data.Modifiers)
             {
-                if (Stack < Data.maxStack)
-                    Stack++;
+                yield return new StatModifier(
+                    mod.StatType,
+                    mod.Additive * Stack,
+                    Mathf.Pow(mod.Multiplier, Stack)
+                );
             }
-
-            RemainingTime = Data.duration;
-        }
-
-        /// <summary>
-        /// 강제로 스택 초기화
-        /// </summary>
-        public void ResetStack()
-        {
-            Stack = 1;
-            RemainingTime = Data.duration;
-        }
-
-        /// <summary>
-        /// 해당 스택 수에 따른 가중치 반환 (예: Tick 데미지 등)
-        /// </summary>
-        public float GetStackMultiplier()
-        {
-            return Stack;
         }
     }
 }

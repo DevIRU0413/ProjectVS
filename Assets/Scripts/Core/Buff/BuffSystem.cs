@@ -1,120 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using ProjectPV.Definitions.Buff;
+using ProjectVS.Core.Buff;
+using System.Collections.Generic;
 
-using ProjectPV.Core.Buff;
-using ProjectPV.Core.FSM;
-using ProjectPV.Core.Stat;
-using ProjectPV.Definitions.Buff;
-
-using UnityEngine;
-
-namespace ProjectVS.Core.Buff
+public class BuffSystem
 {
-    public class BuffSystem
+    private readonly UnitStats _unitStat;
+    private readonly Dictionary<string, BuffInstance> _activeBuffs = new();
+
+    public BuffSystem(UnitStats stat) => _unitStat = stat;
+
+    public void AddBuff(BuffData data)
     {
-        private readonly UnitStats _unitStat;
-        private readonly HashSet<UnitStatusEffect> _activeStatusEffects = new();
-        private readonly Dictionary<string, BuffInstance> _activeBuffs = new();
-
-        public BuffSystem(UnitStats unitStat)
+        if (_activeBuffs.TryGetValue(data.ID, out var existing))
         {
-            _unitStat = unitStat;
+            existing.RefreshOrStack();
+            return;
         }
 
-        public void AddBuff(BuffData data)
+        var instance = new BuffInstance(data);
+        _activeBuffs[instance.Id] = instance;
+        _unitStat.AddProvider(instance);
+    }
+
+    public void RemoveBuff(string buffId)
+    {
+        string fullId = $"buff:{buffId}";
+        if (_activeBuffs.Remove(buffId))
+            _unitStat.RemoveProvider(fullId);
+    }
+
+    public void Tick(float dt)
+    {
+        List<string> expired = null;
+
+        foreach (var kv in _activeBuffs)
         {
-            if (_activeBuffs.TryGetValue(data.id, out var existing))
+            kv.Value.Tick(dt);
+            if (kv.Value.IsExpired)
             {
-                existing.RefreshOrStack();
-                return;
-            }
-
-            var instance = new BuffInstance(data);
-            _activeBuffs[data.id] = instance;
-
-            ApplyModifiers(instance);
-            ApplyStatusEffects(instance);
-        }
-
-        public void RemoveBuff(string buffId)
-        {
-            if (!_activeBuffs.TryGetValue(buffId, out var instance))
-                return;
-
-            RemoveModifiers(instance);
-            RemoveStatusEffects(instance);
-            _activeBuffs.Remove(buffId);
-        }
-
-        public void Tick(float deltaTime)
-        {
-            List<string> expiredBuffs = null;
-
-            foreach (var pair in _activeBuffs)
-            {
-                var instance = pair.Value;
-                instance.Tick(deltaTime);
-
-                if (instance.IsExpired)
-                {
-                    expiredBuffs ??= new List<string>();
-                    expiredBuffs.Add(pair.Key);
-                }
-            }
-
-            if (expiredBuffs != null)
-            {
-                foreach (var buffId in expiredBuffs)
-                    RemoveBuff(buffId);
+                expired ??= new List<string>();
+                expired.Add(kv.Key);
             }
         }
 
-        public bool HasBuff(string id) => _activeBuffs.ContainsKey(id);
-
-        public bool HasStatus(UnitStatusEffect status) => _activeStatusEffects.Contains(status);
-
-        public void ClearAll()
+        if (expired != null)
         {
-            foreach (var instance in _activeBuffs.Values)
-            {
-                RemoveModifiers(instance);
-                RemoveStatusEffects(instance);
-            }
-
-            _activeBuffs.Clear();
-            _activeStatusEffects.Clear();
+            foreach (var id in expired)
+                RemoveBuff(id);
         }
-
-        private void ApplyModifiers(BuffInstance instance)
-        {
-            foreach (var mod in instance.Data.modifiers)
-            {
-                var scaled = new StatModifier(
-                    instance.Data.id,
-                    mod.statsType,
-                    mod.additive * instance.Stack,
-                    Mathf.Pow(mod.multiplier, instance.Stack)
-                );
-                _unitStat.AddModifier(scaled);
-            }
-        }
-
-        private void RemoveModifiers(BuffInstance instance)
-        {
-            _unitStat.RemoveModifier(instance.Data.id);
-        }
-
-        private void ApplyStatusEffects(BuffInstance instance)
-        {
-            foreach (var effect in instance.Data.statusEffects)
-                _activeStatusEffects.Add(effect);
-        }
-
-        private void RemoveStatusEffects(BuffInstance instance)
-        {
-            foreach (var effect in instance.Data.statusEffects)
-                _activeStatusEffects.Remove(effect);
-        }
-
-        public IEnumerable<BuffInstance> GetAllBuffs() => _activeBuffs.Values;
     }
 }
