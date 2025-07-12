@@ -54,12 +54,16 @@ namespace ProjectVS.Runtime.Unit
         {
             float dt = Time.deltaTime;
 
-            i/*f (!FSM.IsControllable)
+            /* 
+            
+            if (!FSM.IsControllable)
                 return;
 
             _movement?.Tick(dt);
-            _attack?.Tick(dt);*/
+            _attack?.Tick(dt);
             Buffs?.Tick(dt);
+            
+            */
         }
 
         // ===== External Control =====

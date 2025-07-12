@@ -12,12 +12,9 @@
         Poisoned,       // 지속 데미지 (중첩 가능)
         Frozen,         // 완전 정지
         Invincible,     // 무적
-        Haste,          // 공격 속도 증가
         Shielded,       // 방어막
-        Berserk,        // 공격력 증가, 방어력 감소
         Taunted,        // 특정 타겟 강제 공격
         Feared,         // 무작위 이동
-        KnockedBack,    // 넉백 처리
         Charmed         // 적을 아군처럼 행동
     }
 }

@@ -7,7 +7,7 @@ namespace ProjectVS.Core.FSM
         where TState : IState<TStateType>
     {
         private readonly Dictionary<TStateType, TState> _states = new();
-        private TState? _current;
+        private TState _current;
 
         public TState Current => _current;
         public TStateType? CurrentStateType => _current?.StateType;
